@@ -35,7 +35,7 @@ Person.prototype.reproduce = function(person) {
 
 	return this.create(person);
 };
-Person.prototype.create = function(person) {
+Person.prototype.create = function(person) {	
 	return new Person('', person.surname);
 };
 

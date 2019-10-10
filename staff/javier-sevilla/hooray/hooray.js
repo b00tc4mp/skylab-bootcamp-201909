@@ -33,3 +33,33 @@ Hooray.prototype.push = function() {
 
 	return this.length;
 };
+
+/**
+ * 
+ * @param {*} expression The expression to evaluate in each item of the array.
+ * 
+ * @throws {TypeError} If expression is not a function.
+ */
+
+Hooray.prototype.map = function(expression) { 	
+	if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+	
+	var result =[];
+	for (var i = 0; i < this.length; i++) 
+		result[i] = expression(this[i], i , this);
+
+		return result;
+}
+
+/**
+ * 
+ * @returns {string} value of last array.
+ * 
+ * @throws {TypeError} If expression is not a function.
+ */
+
+Hooray.prototype.pop = function() { 
+	var deletedElement = this[this.length - 1]
+    this.length = this.length - 1;    
+    return deletedElement;
+}	
