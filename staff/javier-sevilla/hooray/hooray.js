@@ -2,7 +2,9 @@ function Hooray() {
     for (var i = 0; i  < arguments.length; i++)
         this[i] = arguments[i];
 
-    this.length = arguments.length;
+	this.length = arguments.length;
+	
+	
 }
 
 /**
@@ -60,6 +62,7 @@ Hooray.prototype.map = function(expression) {
 
 Hooray.prototype.pop = function() { 
 	var deletedElement = this[this.length - 1]
-    this.length = this.length - 1;    
+	delete this[this.length - 1]  
+	this.length = this.length - 1
     return deletedElement;
 }	
