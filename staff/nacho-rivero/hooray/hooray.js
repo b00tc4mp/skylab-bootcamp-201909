@@ -66,9 +66,9 @@ Hooray.prototype.pop = function() {
  * @returns {result} result[i] Result is the new array composed by the elements created through the callback function.
  */
 
-Hooray.prototype.map = function() {
+Hooray.prototype.map = function(expression) {
 
-	if (!(this instanceof this)) throw TypeError(array + ' NaN valid');
+	if (!(this instanceof Array)) throw TypeError(array + ' NaN valid');
 	 
 	var result = [];           
    
@@ -80,3 +80,45 @@ Hooray.prototype.map = function() {
  
    }
    
+   /**
+ * Modifies the array from the start index (default zero) to an end index (default array length). Returns the modified array
+ * @param {*} array The array to modificate.
+ * @param {*} value The value to introduce in the array.
+ * @param {*} start The index in the array to start the introduction of the value.
+ * @param {*} end The last index to introduce the value.
+ */
+
+Hooray.prototype.fill = function(value, start, end) {
+	debugger
+    if(!(this instanceof Array)) throw TypeError (this + ' is not an array');
+    if(!(this instanceof Function)) throw TypeError (this + ' is not a function');
+
+    if (end){
+       
+        for (i = start; i<end; i++){
+            this[i]=value;
+        }
+
+        return  this[i]=value;
+        
+    } 
+
+    else if (start){
+
+        for (j=start-1; j<this.length-1; j++){ //  
+            this[j]=value;
+        }
+
+        return  this[j]=value;
+
+    } else 
+    
+        {
+
+        for (var j=0; j<this.length-1; j++){
+            this[j]=value;
+        }
+
+        return  this[j]=value;
+    }
+}
