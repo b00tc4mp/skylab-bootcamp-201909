@@ -45,6 +45,7 @@ Hooray.prototype.push = function() {
  */
 
 Hooray.prototype.pop = function() {
+    if(this.length === 0) throw TypeError(this + 'is not a Hooray');
 
 	var last = this[this.length - 1];
  
