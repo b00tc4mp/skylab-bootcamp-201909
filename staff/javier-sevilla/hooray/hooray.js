@@ -52,7 +52,7 @@ Hooray.prototype.map = function(expression) {
 
 	hoorayAux.length = this.length;
 	return hoorayAux;
-}
+};
 
 // --------------------------POP---------------------------------------
 /**
@@ -65,7 +65,7 @@ Hooray.prototype.pop = function() {
 	delete this[this.length - 1]  
 	this.length = this.length - 1
     return deletedElement;
-}	
+};
 
 
 // --------------------------CONCAT--------------------------------------
@@ -79,7 +79,6 @@ Hooray.prototype.pop = function() {
  * 
  */
 Hooray.prototype.concat = function() { 	
-
 	var hoorayAux = new Hooray();	
 	
     for (var y = 0; y < this.length; y++){
@@ -100,4 +99,48 @@ Hooray.prototype.concat = function() {
 	hoorayAux.length = y;
     return hoorayAux;
     
-}
+};
+
+
+// --------------------------INCLUDES--------------------------------------
+/**
+ * 
+ * 
+ * @param {*} array The array to concatenate elements to newArray
+ * 
+ * 
+ * @returns newArray contains: array + arguments.
+ * 
+ */
+Hooray.prototype.includes  = function() { 	    
+    var finded = true;
+    var continua = true;
+    for (var i = 0; i < arguments.length && finded; i++) {
+        continua = true;
+        for (var j = 0; j < this.length&&continua; j++) {
+            if (arguments[i]===this[j]) {
+               continua = false               
+            }              
+        } 
+        if (continua) finded=false;     
+    }       
+    return finded;
+    
+};
+
+// --------------------------SHIFT--------------------------------------
+/**
+ * Delete the first element of elements
+ * 
+ * 
+ * @returns {elementDeleted} return element deleted.
+ */
+Hooray.prototype.shift = function() { 
+	var elementDeleted = this[0]
+	for (var i = 1; i < this.length; i++) {
+		this[i-1] = this[i]; 
+	}
+	delete this[this.length-1]  
+    this.length = this.length - 1;
+    return elementDeleted;
+};
