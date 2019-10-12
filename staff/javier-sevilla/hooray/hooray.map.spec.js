@@ -12,6 +12,10 @@ describe('Hooray.prototype.map', function () {
         expect(result[0]).toBe(2);
         expect(result[1]).toBe(4);
         expect(result[2]).toBe(6);
+
+        expect(hooray[0]).toBe(1);
+        expect(hooray[1]).toBe(2);
+        expect(hooray[2]).toBe(3);
     });
 
     it('should succeed on correct array and expression, concatenating all numbers', function () {
