@@ -1,10 +1,9 @@
-describe('filter', function () {
-    it('should create a table applying the expression', function () {
+describe('Hooray.prototype.filter', function () {
+    it('should create a new hooray adding the elements that meet the expression', function () {
         var hooray = new Hooray(1,2,3,4,5,6,7,8);
         var expression = function(currentValue) { return currentValue < 5; }
 
         var result = hooray.filter(expression);
-
 
         expect(result).not.toBe(hooray);
         expect(result).toBeInstanceOf(Hooray);

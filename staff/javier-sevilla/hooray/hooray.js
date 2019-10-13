@@ -282,11 +282,123 @@ Hooray.prototype.filter = function(expression) {
     var j = 0;
 	for (var i = 0; i < this.length; i++) {    
         boleana = expression(this[i])   
-        if (boleana) {
+        if (boleana) {  
             hoorayAux[j]=this[i]
             j++
         }           
     }
     hoorayAux.length=j;
     return hoorayAux;
+};
+
+// --------------------------FIND--------------------------------------
+/**
+ * returns the value of the first element in the provided array that satisfies the expresion.
+ * 
+ * @param {*} array array The array to iterate.
+ * @param {*} expression The expression to evaluate in each item of the array.
+ * 
+ * @return{result} returns the value ​​that meet the expression
+ */
+Hooray.prototype.find = function(expression) { 	
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+    var result;
+    var boleana = false;
+	for (var i = 0; i < this.length&&boleana===false; i++) {    
+        boleana = expression(this[i])   
+        if (boleana) {
+            result=this[i]
+        }           
+    }
+    return result;
+};
+
+// --------------------------FINDINDEX--------------------------------------
+/**
+ * returns the index of the first element in the array that satisfies the expression
+ * 
+ * @param {*} array array The array to iterate.
+ * @param {*} expression The expression to evaluate in each item of the array.
+ * 
+ * @return{index} returns the index of array ​​that meet the expression
+ */
+Hooray.prototype.findIndex = function(expression) { 	
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+    var result;
+    var boleana = false;
+	for (var i = 0; i < this.length&&boleana===false; i++) {    
+        boleana = expression(this[i])   
+        if (boleana) result=i;      
+    }
+    return result;
+};
+
+// --------------------------SOME--------------------------------------
+/**
+ * check if one array elements pass the test implemented by the expression
+ * 
+ * @param {*} array array The array to iterate.
+ * @param {*} expression The expression to evaluate in each item of the array.
+ * 
+ * @return{result} return true or false
+ */
+Hooray.prototype.some = function(expression) { 	
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+    var boleana;;
+	for (var i = 0; i < this.length; i++) {    
+        boleana = expression(this[i])
+        if (boleana) return true;        
+    }
+    return false;
+};
+
+// --------------------------UNSHIFT--------------------------------------
+/**
+ * Insert in the start of hooray all the arguments
+ * 
+ * @param {*} array The array to unshift elements to.
+ * @param {...any} item The item (or items) to unshift.
+ * 
+ * @returns {number} The new lenth of the array.
+ */
+Hooray.prototype.unshift = function() { 	
+    
+    var newArray = [];
+
+    for (var i = 0; i < arguments.length; i++) {
+        newArray[i] = arguments[i];
+    }
+
+    for (var j = 0; j < this.length; j++) {
+        newArray[j+i] = this[j];
+    }
+
+    for (var x = 0; x < newArray.length; x++) {
+        this[x] = newArray[x];
+    }
+
+    this.length = x;
+    return this.length;
+};
+
+// --------------------------SORT--------------------------------------
+/**
+ * sort array from low value to high value
+ * 
+ * @param {*} array 
+ * 
+ * 
+ */
+Hooray.prototype.sort = function() { 	
+    var aux;
+    for (var i = 1; i < this.length; i++) {
+        for (var j = 0; j < this.length - i; j++) {
+            if (this[j].toString() > this[j+1].toString()) {
+                aux = this[j];
+                this[j] = this[j+1];
+                this[j+1] = aux;
+            }         
+        }               
+    }
+    return this;
 }
