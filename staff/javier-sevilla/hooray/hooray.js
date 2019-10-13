@@ -178,3 +178,115 @@ Hooray.prototype.slice = function slice(begin, end) {
     
     return hoorayAux;
 };
+
+// --------------------------JOIN--------------------------------------
+/**
+ * reates and returns a new string by concatenating all of the elements in an array
+ *  separated by commas or a specified separator string.
+ * 
+ * @param {*} array origin array
+ * @param {*} sep separator
+ * 
+ * @return{index} return the index where it finds the value passed by parameters
+ * 
+ */
+Hooray.prototype.join = function(sep){
+
+    if(sep === undefined)
+        sep =',';
+    result = '';
+    for (var i = 0; i < this.length; i++) {
+        if (i === this.length - 1)
+            result += this[i];
+        else
+            result +=this[i] + sep;
+	} 
+    return result;
+}
+
+// --------------------------EVERY--------------------------------------
+/**
+ * check if all array elements pass the test implemented by the expression
+ * 
+ * @param {*} array array The array to iterate.
+ * @param {*} expression The expression to evaluate in each item of the array.
+ * 
+ * retunr {bolean} return true or false
+ */
+Hooray.prototype.every = function (expression) {
+	if (typeof expression !== 'function') throw TypeError(expression + ' is not a function');
+	
+    for (let i = 0; i < this.length; i++) {
+        if (!expression(this[i])) return false;
+    }
+    return true;
+};
+
+// --------------------------FILL--------------------------------------
+    /**
+     * Modifies all the elements of an array from a start index 
+     * (default zero) to an end index (default array length) with a static value.
+     * 
+     * @param {*} value static value
+     * @param {*} begin start index 
+     * @param {*} end  end index
+     * 
+     */
+Hooray.prototype.fill  = function(value, begin, end) {
+	if (begin > this.length) return;
+	
+    begin = begin || 0;
+    if (begin < 0){
+        begin = this.length + begin;
+        if (begin < 0) begin = 0;
+    };
+    end = end || this.length;
+    end = end < 0? this.length + end : end; 
+       
+    for (var i = begin; i < end; i++)
+        this[i] = value;
+};
+
+// --------------------------REVERSE--------------------------------------
+/**
+ * 
+ * @param {*} array The array to reverse sort elements to. 
+ */
+Hooray.prototype.reverse = function() { 	
+
+    var arrayAux = [];
+    var j = 0;
+    for (var i = (this.length-1); i > -1; i--) {
+        arrayAux[j] = this[i];       
+        j += 1;
+    }
+    for (var x = 0; x < this.length; x++) {
+        this[x] = arrayAux[x];       
+    }
+
+    return this;
+};
+
+// --------------------------FILTER--------------------------------------
+/**
+ * creates a new array with all elements that pass the test implemented by the expresion.
+ *
+ * @param {*} expression The expression to evaluate in each item of the array.
+ * 
+ * @return{newArray} returns in a new array with the values ​​that meet the expression
+ */
+Hooray.prototype.filter = function(expression) { 	
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+    var hoorayAux = new Hooray();
+    var boleana;
+    var j = 0;
+	for (var i = 0; i < this.length; i++) {    
+        boleana = expression(this[i])   
+        if (boleana) {
+            hoorayAux[j]=this[i]
+            j++
+        }           
+    }
+    hoorayAux.length=j;
+    return hoorayAux;
+}
