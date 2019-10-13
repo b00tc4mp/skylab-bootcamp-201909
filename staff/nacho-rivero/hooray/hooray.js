@@ -123,3 +123,234 @@ Hooray.prototype.fill = function(value, start, end) {
         return  this[j]=value;
     }
 }
+
+/**
+ * To join two or more arrays. This method does not change existing arrays.
+ * 
+ * @param {...any} item The items array to start joining.
+ * @param {...any} item The item (or items) to join.
+ * @returns {Array} the new array created with all items joined
+ */
+
+
+Hooray.prototype.concat = function() {
+  
+  if(!(arguments instanceof Array)) throw TypeError (arguments + 'is not an array');
+
+  var newArray = [];
+
+  for (var i = 0; i < this.length; i++) {
+     newArray[newArray.length++] = this[i]; 
+  }
+      
+  for (var i = 0; i < arguments.length; i++) {
+
+    if (arguments[i] instanceof Array) {
+
+        for (var j = 0; j < arguments[i].length; j++) {
+        newArray[newArray.length++] = arguments[i][j];
+      
+    } else {
+        
+        newArray[newArray.length++] = arguments[i];
+      
+      }
+    }
+  }
+  return newArray;
+};
+
+
+/**
+ * Checks if all the elements in the array pass the condition implemented by the given function
+ * 
+ * @param {Array} array The array to evaluate elements to the condition given 
+ * 
+ * @param {Function} expression The expression to evaluate in each item of the array.
+ * 
+ * @returns {boolean} returns true if all the elements in the array pass the condition; otherwise, false.
+ * 
+ */
+
+Hooray.prototype.every = function (expression) {
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function');
+    
+    for (let i = 0; i < this.length; i++) {
+        if (!expression(this[i])) return false;
+    }
+    return true;
+};
+
+/**
+ * Filter method creates a new array with all the elements that fullfill
+ * the established condition by the given function. the results of the function 
+ * 
+ * @param {Array} array The array to be filtered.
+ * @param {Condition} condition Callback that checks the condition on each element of the array.
+ * @param {currentValue} array[i] The current element of the array that its being processed.
+ * @param {index} i The current index inside the array.
+ * @returns {result} result[i] Result is the new array composed by the elements created through the callback function.
+ */
+
+ Hooray.prototype.filter = function(expression) {
+  
+  if (!(this instanceof Array))throw TypeError (this + ' is not an array');
+  if (!(expression instanceof Function)) throw TypeError(expression + ' is not a function');
+
+  var result = [];
+  var count = 0;
+
+  for (var i = 0; i < this.length; i++) {
+    if (expression(this[i])){
+        result[count] = this[i];
+        count++;
+    } 
+    return result;
+  }
+  
+};
+
+/**
+ * Returns de value of the fisrt element in the array that satisfies the condition.
+ * @param {array} Array The array to be inspected.
+ * @param {condition} expression that specifies what condition should be provided.
+ */
+
+Hooray.prototype.find = function (expression){
+    if(!arguments.length) throw TypeError('no declared arguments');
+    if(!(this instanceof Array))  throw TypeError (this + ' is not an array');
+    if(!(expression instanceof Function)) throw TypeError(expression + ' is not a function');
+
+    for(var i = 0 ; i<this.length ; i++){
+        if(expression(this[i])){
+            return this[i];
+    };
+}
+}
+
+/**
+ * Returns the index of the fisrt element in the array that satisfies the providing test function. If any element pass the test, it returs -1.
+ * @param {*} array The array given.
+ * @param {*} expression The test function.
+ */
+
+Hooray.prototype.findIndex = function(expression){
+
+    if(!arguments.length) throw TypeError ('missing argument 0 when calling function');
+    if(!(this instanceof Array)) throw TypeError(`${this} is not an array`);
+    if(!(expression instanceof Function)) throw TypeError (`${expression} is not a function`);
+
+    for(var i = 0 ; i<this.length ; i++){
+        if(expression(this[i])){
+            return i;
+        }
+        return -1
+    }
+}
+
+/**
+ * Method determines if the element it is included in the array or not. Returns a boolean.
+ * @param {*} array The array given.
+ * @param {*} value The element to find in the array.
+ */
+
+Hooray.prototype.includes = function (value){
+    
+    var found = false;
+    
+    for(i=0; i<this.length; i++){
+      
+        if(this[i] === value){
+            found = true;
+
+            return found;
+        } 
+      return found;  
+    } 
+}
+
+/**
+ * Returns the first index at element can be found in the array. Otherwise,  it returns -1.
+ * @param {*} element The element to locate in the array.
+ * @param {*} index Optional. The index to start to search
+ */
+
+Hooray.prototype.indexOf = function (element) {
+
+  if (!(this instanceof Array)) throw TypeError(this + ' is not an array');
+  if (!(typeof element === 'number' || typeof element === 'string')) throw TypeError(typeof element + ' is not a string or a number');
+
+    for (var i = 0; i < this.length; i++) {
+      if (element === this[i]) {
+        
+        return i;
+        }
+    }
+    return -1;
+  }
+
+/**
+ * Method removes the first element from an array and it returns the removed element.
+ * @param {array} array The array to be shifted.
+ * 
+ */
+
+Hooray.prototype.shift = function () {
+
+  if (!(this instanceof Array)) throw TypeError(this + ' is not an array');
+
+    var first = this[0];
+
+    for(var i = 1; i < this.length; i++) {
+        this[i-1] = this[i];
+      }
+
+    this.length = this.length - 1;
+    
+    return first;
+}
+
+/**
+ * Copies a part of the hooray within a new array starting from beginning
+ *  to end (end not included). The original array will not be modified.
+ * 
+ * @param {number} begin Index for starting position 
+ * 
+ * @param {number} end Index for ending position 
+ * 
+ * @returns {Hooray} New hooray with the extracted values 
+ */
+
+Hooray.prototype.slice = function(begin, end) {
+    
+    var result = []; 
+    begin = begin || 0;
+    begin = begin < 0? this.length + begin : begin;
+    end = end || this.length;
+    end = end < 0? this.length + end : end;
+    for (var i = begin; i < end; i++)
+        result[i - begin] = this[i];
+    
+    return result;
+}
+
+/**
+ * Method test whether at least one element in the array pass the test. It returns a boolean expression.
+ * @param {array} array The array to do the test.
+ * @param {expression} expression The function test provided.
+ */
+ 
+Hooray.prototype.some = function (expression){
+
+    if(!(this instanceof Array)) throw TypeError(`${this} is not an array`);
+    if(!(expression instanceof Function)) throw TypeError (`${expression} is not a function`);
+
+    var pass = false;
+    for (var i=0; i<this.length; i++){
+        
+        if (expression(this[i])){
+            pass = true;
+        }
+    }
+    return pass;
+}
