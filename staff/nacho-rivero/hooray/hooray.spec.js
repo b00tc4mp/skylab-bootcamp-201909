@@ -26,7 +26,7 @@ describe('Hooray prototype', function () {
         })
     });
 
-    xdescribe('push', function () {
+    describe('push', function () {
 
         var hooray;
 
@@ -58,7 +58,7 @@ describe('Hooray prototype', function () {
         });
     });
 
-    xdescribe('forEach', function () {
+    describe('forEach', function () {
 
         var numbers, hooray;
 
