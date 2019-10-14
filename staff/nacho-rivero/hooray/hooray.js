@@ -147,18 +147,16 @@ Hooray.prototype.concat = function() {
 
     if (arguments[i] instanceof Array) {
 
-        for (var j = 0; j < arguments[i].length; j++) {
+      for (var j = 0; j < arguments[i].length; j++) {
+
         newArray[newArray.length++] = arguments[i][j];
-      
-    } else {
-        
+        }
+      } else {
         newArray[newArray.length++] = arguments[i];
-      
       }
-    }
+      return newArray;
   }
-  return newArray;
-};
+} 
 
 
 /**

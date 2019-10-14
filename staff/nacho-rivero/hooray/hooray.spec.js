@@ -116,7 +116,7 @@ describe('Hooray prototype', function () {
         });
     });
 
-    describe('Hooray.prototype.concat', function(){
+    xdescribe('Hooray.prototype.concat', function(){
         it('should merge several arrays', function(){
             var array1 = [1, 2, 3];
             var array2 = [1, 2, 3];
