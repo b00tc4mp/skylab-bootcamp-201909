@@ -13,7 +13,7 @@ function Hooray() {
  * @throws {TypeError} If expression is not a function.
  */
 Hooray.prototype.forEach = function(expression) {
-	if(!(typeof expression !== 'function')) throw TypeError(expression + ' is not a function');
+	//if(!(typeof expression !== 'function')) throw TypeError(expression + ' is not a function');
 
 	//throw Error('🤡');
 	for (var i = 0; i < this.length; i++) 
