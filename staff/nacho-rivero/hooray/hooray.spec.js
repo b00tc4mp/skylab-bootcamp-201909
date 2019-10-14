@@ -70,7 +70,7 @@ describe('Hooray prototype', function () {
         it('should succeed on correct hooray and expression, adding all numbers', function () {
 
             var result = 0;
-            var add = function (number) { result += number; };
+            var add = function (number) { result += number; return result;};
 
             numbers.forEach(add);
 
@@ -80,7 +80,7 @@ describe('Hooray prototype', function () {
         it('should succeed on correct hooray and expression, concatenating all numbers', function () {
 
             var result = '';
-            var concatenate = function (number) { result += number; };
+            var concatenate = function (number) { result = result += number; };
 
             numbers.forEach(concatenate);
 
