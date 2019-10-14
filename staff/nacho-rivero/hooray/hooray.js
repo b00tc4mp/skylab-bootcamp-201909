@@ -43,7 +43,7 @@ Hooray.prototype.push = function() {
  * 
  * 
  */
-
+ 
 Hooray.prototype.pop = function() {
     if(this.length === 0) throw TypeError(this + 'is not a Hooray');
 
@@ -217,6 +217,7 @@ Hooray.prototype.every = function (expression) {
  */
 
 Hooray.prototype.find = function (expression){
+    
     if(!arguments.length) throw TypeError('no declared arguments');
     if(!(this instanceof Array))  throw TypeError (this + ' is not an array');
     if(!(expression instanceof Function)) throw TypeError(expression + ' is not a function');
@@ -323,6 +324,7 @@ Hooray.prototype.join = function (separator) {
  */
 
 Hooray.prototype.reduce = function (expression) {
+
     if (arguments.length !== 2 && arguments.length !== 3) throw TypeError("Wrong number of arguments: two expected (Array, Callback function).");
     if (!(this instanceof Array)) throw TypeError("First argument must be an array.");
     
