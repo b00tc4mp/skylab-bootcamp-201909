@@ -275,6 +275,79 @@ describe('Hooray.prototype.indexOf', function() {
     });
    });
 
+   describe('join', function() {
+    it('should throw error on undefined array', function() {
+      var array;
+      var separator = ',';
+      expect(function() { join(array, separator); }).toThrowError(TypeError, 'undefined is not an array');
+    });
+    it('should fail on different type to array passed', function() {
+    
+      var separator = ',';
+      expect(function() { join('Darth Maul', separator); }).toThrowError(TypeError, 'Darth Maul is not an array');
+      expect(function() { join(123, separator); }).toThrowError(TypeError, '123 is not an array');
+    });
+    it('should fail on function passed as separator', function() {
+      
+      var array = [1, 2, 3, 'aragorn', 'gimli', 'legolas'];
+      var space = function(a) { return a + ' ' }
+      expect(function() { join(array, space) }).toThrowError(TypeError, 'separator cannot be a function');
+    })
+   })
+
+   describe('reduce', function(){
+    
+    it('should fail when no declared arguments', function(){
+        var array;
+        var expression;
+        expect(function(){ reduce(array, expression); }).toThrowError(TypeError, 'array and expression are undefined');
+    });
+    it('should fail if is not an array', function(){
+        var array = 123;
+        var expression = function(a) { a > 1; };
+        expect(function(){ reduce(array, expression); }).toThrowError(TypeError, '123 is not an array');
+    });
+    it('should fail if is not an expression', function(){
+        var array = [1, 2, 3];
+        var expression = 123;;
+        expect(function(){ reduce(array, expression); }).toThrowError(TypeError, '123 is not an array');
+    });
+    it('should fail if the array is not defined', function(){
+        var array;
+        var expression = function(a) { a > 1; };
+        expect(function(){ reduce(array, expression); }).toThrowError(TypeError, 'array is not defined');
+    });
+    it(' is not a function', function(){
+        var array = [1, 2, 3];
+        var expression;
+        
+        expect(function(){ reduce(array, expression); }).toThrowError(TypeError, 'expression is not defined');
+    });
+})
+
+describe('reverse', function(){
+    it('should fail when others types different to array are passed', function() {
+        var array;
+        expect(function() { reverse('Lt O Neal'); }).toThrowError(TypeError, 'Lt O Neal is not an array');
+        expect(function() { reverse(123); }).toThrowError(TypeError, '123 is not an array');
+        expect(function() { reverse(array); }).toThrowError(TypeError, 'undefined is not an array');
+      });
+})
+
+describe('sort', function(){
+    it('should throw error on undefined array', function() {
+    
+      var array;
+    
+      expect(function() { sort(array); }).toThrowError(TypeError, 'undefined is not an array');
+      
+    });
+    it('should throw error when you introduce an argument that is not an array', function(){
+      expect(function() { sort(123); }).toThrowError(TypeError, '123 is not an array');
+      expect(function() { sort('i am an array'); }).toThrowError(TypeError, 'i am an array is not an array');
+    });
+  })
+
 describe('Hooray.prototype.shift', function(){
     it('should fail when others types different to array are passed', function() {
         var array;
@@ -312,7 +385,7 @@ describe('Hooray.prototype.slice', function() {
     });
   });
 
-})
+
 
 describe('Hooray.prototype.some', function() {
     it('should throw an error on undefined array', function() {
@@ -336,3 +409,23 @@ describe('Hooray.prototype.some', function() {
       expect(function() { some(array, 123) }).toThrowError(TypeError, '1 is not a function');
     });
    });
+
+   describe('unshift', function(){
+    it('should throw error on undefined array', function() {
+    
+      var array;
+    
+      expect(function() { unshift(array); }).toThrowError(TypeError, 'undefined is not an array');
+      
+    });
+  
+    it('should throw error when you introduce an argument that is not an array', function(){
+  
+      expect(function() { unshift(123); }).toThrowError(TypeError, '123 is not an array');
+      expect(function() { unshift('i am an array'); }).toThrowError(TypeError, 'i am an array is not an array');
+  
+    });
+  
+  })
+
+})

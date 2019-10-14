@@ -290,6 +290,105 @@ Hooray.prototype.indexOf = function (element) {
   }
 
 /**
+ * Method returns a new string concatening all elements with a separator introduced. If is not introduced () or it is (',') (''), it returns the elements separated with coma.
+ * @param {*} array The array to modificate.
+ * @param {*} separator The element to add and use to separate each element.
+ */
+
+Hooray.prototype.join = function (separator) {
+
+    if (!(this instanceof Array)) throw TypeError(array + ' is not an array');
+    if ((separator instanceof Function)) throw TypeError('separator cannot be a value');
+    if ((separator instanceof Function)) throw TypeError('separator cannot be a function');
+    if ((separator instanceof Function)) throw TypeError('separator cannot be an array');
+
+      var string = '';
+      if (separator == '' || separator == undefined) {
+        separator = ',';
+      };
+        for (var i = 0; i < this.length; i++) {
+          if (i === this.length - 1) {
+            string += this[i];
+          } else {
+            string += this[i] + separator;
+          }
+          return string;
+          
+        }
+      }
+
+/**
+ * Executed a reducer function on each element of the array, resulting a single output value.
+ * @param {array} array The array to reduce.
+ */
+
+Hooray.prototype.reduce = function (expression) {
+    if (arguments.length !== 2 && arguments.length !== 3) throw TypeError("Wrong number of arguments: two expected (Array, Callback function).");
+    if (!(this instanceof Array)) throw TypeError("First argument must be an array.");
+    
+    var accumulator = 0;
+    
+    for (var i = 0; i < this.length; i++){
+        if (i === 0) {
+            
+            expression(0, this[i], i, this);
+        }
+        if(i === 1){
+            accumulator = expression(this[0], this[i], i, this);
+        }
+        if(i > 1) {
+            accumulator = expression(accumulator, this[i], i, this);
+        } 
+    };
+        
+    return accumulator;
+};
+
+/**
+ * Method to reverse the array. It returns the array modified. The last input becomes the first.
+ * @param {array} array The array to reverse its numbers.
+ */
+
+Hooray.prototype.reverse = function () {
+    if(!(this instanceof Array)) throw TypeError(this + ' is not an array');
+    
+    var rarray = [];
+    for (var i = 0; i < this.length; i++) {
+        
+        rarray[i] = this[this.length - 1 - i];
+        
+        for(var j = 0; j < rarray.length; j++){
+            this[i] = rarray[j];
+        }
+    }
+    return array;
+  }
+
+/**
+ * Sort the elements of the array and returns the sorted array.
+ * @param {*} array array to be sorted.
+ */
+
+Hooray.prototype.sort = function (){
+
+    if (!(this instanceof Array)) throw TypeError(array + ' is not an array');
+
+      var temp = []; 
+      for (var i = 1; i < this.length; i++) {
+        for (var j = 0; j < this.length - i; j++){
+          if(array[i] > array[j]){
+            temp = array[i];
+            array[i] = array [j];
+            array[j] = temp;
+          }
+         }
+        }
+      return array;
+      }
+
+
+      
+/**
  * Method removes the first element from an array and it returns the removed element.
  * @param {array} array The array to be shifted.
  * 
@@ -309,6 +408,7 @@ Hooray.prototype.shift = function () {
     
     return first;
 }
+
 
 /**
  * Copies a part of the hooray within a new array starting from beginning
@@ -353,4 +453,26 @@ Hooray.prototype.some = function (expression){
         }
     }
     return pass;
+}
+
+/**
+ * The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
+ * Add new elements to the begin of an array. Mutates array and return mutated array length.
+ * 
+ * @param {Array} array Array to modify, followed by any new element to place at arr begining.
+ */
+
+Hooray.prototype.unshifty = function () {
+    
+    if (!(this instanceof Array)) throw TypeError("unshifty this is not an array");
+
+    var item = arguments.length - 1;
+    var length = this.length;
+    for (var i = length - 1; i >= 0; i--){
+        this[i + item] = this[i]
+    }
+    for (var j = item; j < arguments.length; j++)
+        this[j - item] = arguments[j];
+    
+    return array.length;
 }
