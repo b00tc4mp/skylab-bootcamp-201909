@@ -71,7 +71,7 @@ describe('Hooray prototype', function () {
 
             var result = 0;
             var add = function (number) { result += number; return result;};
-
+            
             numbers.forEach(add);
 
             expect(result).toBe(6);
@@ -102,17 +102,17 @@ describe('Hooray prototype', function () {
         });
 
         it('should fail on undefined expression', function () {
-
+            var hooray = new Hooray(1, 2, 3);
             var expression; // = console.log;
-
-            expect(function () { hooray.forEach(expression); }).toThrow(TypeError, 'undefined is not a function');
+            debugger
+            expect(function () { hooray.forEach(expression); }).toThrowError(TypeError, 'undefined is not a function');
         });
 
         it('should fail on non-function expression', function () {
 
-            expect(function () { hooray.forEach(undefined); }).toThrow(TypeError, 'undefined is not a function');
-            expect(function () { hooray.forEach(true); }).toThrow(TypeError, 'true is not a function');
-            expect(function () { hooray.forEach(1); }).toThrow(TypeError, '1 is not a function');
+            expect(function () { hooray.forEach(undefined); }).toThrowError(TypeError, 'undefined is not a function');
+            expect(function () { hooray.forEach(true); }).toThrowError(TypeError, 'true is not a function');
+            expect(function () { hooray.forEach(1); }).toThrowError(TypeError, '1 is not a function');
         });
     });
 
@@ -363,7 +363,7 @@ describe('Hooray.prototype.slice', function() {
     it('should return a new hooray with the same values of the original hooray when no beginning and no ending', function() {
         var numbers = new Hooray(1, 2, 3, 4, 5, 6);
         var result = numbers.slice();
-        expect(result).not.toBe(numbers);
+        expect(result).toEqual(numbers);
         expect(numbers).toContain(1, 2, 3, 4, 5, 6);
         expect(result).toContain(1, 2, 3, 4, 5, 6);
     });
