@@ -10,17 +10,18 @@
  * @throws {TypeError} When array is not defined
  */
 function fill(array, value, start, end) {
-    if (value !== undefined || value !== null) throw TypeError(array + " is not defined");
+    if (!(array instanceof Array)) throw TypeError(array + " is not an Array");
+    if (!(typeof start === 'number') && !(start === undefined)) throw TypeError("expected expression, got ,");
+    if (!(typeof end === 'number' || end === undefined)) throw TypeError("expected expression, got ,");
 
-    if (start === undefined || start === null) {
+    if (start === undefined && end === undefined) {
         for (var a = 0; a < array.length; a++)
             array[a] = value;
-    } else if (start !== undefined && end !== undefined) {
-        for (var a = start; a < end; a++)
+    } else if (start !== undefined) {
+        for (var a = (start || 0); a < (end || array.length); a++) {
             array[a] = value;
-    } else {
-        for (var a = start; a < array.length; a++)
-            array[a] = value;
+        }
     }
 
+    return array;
 }
