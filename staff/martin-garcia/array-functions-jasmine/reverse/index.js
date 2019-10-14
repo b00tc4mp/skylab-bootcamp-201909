@@ -6,8 +6,7 @@
  *  */
 function reverse(arr) {
 
-    if (arr === undefined) throw TypeError(arr + " is not defined");
-
+    if (!(arr instanceof Array)) throw TypeError(arr + " is not an Array");
     var index = arr.length - 1;
     var arrAux = [];
 
