@@ -23,33 +23,36 @@ form.addEventListener('submit', function (e) {
                 li.classList.add("duck-list__item");
 
                 var img = document.createElement('img');
-                img.classList.add("duck-list__item-image");
+                img.classList.add("duck__image");
                 img.src = duck.imageUrl;
 
 
                 var h2 = document.createElement('h2');
-                h2.classList.add("duck-list__item-title");
+                h2.classList.add("duck__title");
                 h2 = duck.title;
 
 
                 var p = document.createElement('p');
-                p.classList.add("duck-list__item-price");
+                p.classList.add("duck__price");
                 p = duck.price;
 
+                var article = document.createElement("article")
+                article.classList.add("duck")
 
                 var link = document.createElement('a');
-
                 link.classList.add("duck-list__item-link");
                 link.addEventListener('click', function (e) {
                     detalle(duck.id);
                 });
+                
+                
 
-                link.append(img);
-                link.append(h2);
-                link.append(p);
+                article.append(h2);
+                article.append(img);
+                article.append(p);
 
+                link.append(article);
                 li.append(link);
-
                 ul.append(li);
 
 

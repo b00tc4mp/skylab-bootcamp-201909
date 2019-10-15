@@ -1,3 +1,39 @@
+li {
+  list-style: none;
+}
 
+input {
+  border: 0.1rem solid white;
+  background-color: #cdcdfaee;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #bbee;
+  text-align: center;
+}
+
+.header__title {
+  color: white;
+}
+.header__form-button {
+  background-color: white;
+  color: #9595eeee;
+}
+
+.duck-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+.duck-list__item {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border: 0.1rem solid black;
+}
+.duck-list__item-image {
+  width: 50%;
+}
 
 /*# sourceMappingURL=style.css.map */
