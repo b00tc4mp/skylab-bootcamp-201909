@@ -297,10 +297,21 @@ describe('Hooray.prototype.indexOf', function() {
 
    fdescribe('reduce', function(){
     
+    it('+', function() { 
+        var numbers = new Hooray(1, 2, 3, 4, 5);
+        function callback (acc, cur) {return acc + cur}
+        var result = number.reduce(callback);
+    })
+
+
+
+
+
+
     fit('should fail when no declared arguments', function(){
-        var hooray = new Hooray;
+        var numbers = new Hooray(1);
  debugger
-        expect(function(){ hooray.reduce(expression); }).toThrowError(TypeError, 'hooray is empty');
+        expect(function(){ numbers.reduce(expression); }).toThrowError(TypeError, 'hooray is empty');
     });
     it('should fail if is not an array', function(){
         var array = 123;
