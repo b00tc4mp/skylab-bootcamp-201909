@@ -33,20 +33,20 @@ form.addEventListener('submit', function (e) {
 
                 //creo imagen y le pongo la url del pato
                 var img = document.createElement('img');
-                img.classList.add("duck__image");
+                img.classList.add("duck-list__item-image");
                 img.src = duck.imageUrl;
 
                 //creo h2  y le pongo el title del pato
                 
                 var h2 = document.createElement("h2");
                 var text = document.createTextNode(duck.title);
-                h2.classList.add("duck__title");
+                h2.classList.add("duck-list__item-title");
                 h2.appendChild(text);
 
                 //creo p y le pongo el precio
                 var p = document.createElement("p");
                 var price = document.createTextNode(duck.price)
-                p.classList.add("duck__price");
+                p.classList.add("duck-list__item-price");
                 p.appendChild(price);
                 
                 //creo article contenedor
@@ -105,7 +105,7 @@ function detalle(id) { //le pasamos el id como argumento
 
             var p = document.createElement("p");
             var price = document.createTextNode(duck.price)
-            p.classList.add("duck__price");
+            p.classList.add("duck-list__item-price");
             p.appendChild(price);
 
             //añadimos descripción
@@ -124,7 +124,7 @@ function detalle(id) { //le pasamos el id como argumento
             })
             //creamos article sección para colgar los demás items
             var article = document.createElement('article');
-            article.classList.add("duck-list__item");
+            article.classList.add("duck");
             //colgamos título, img, descripción, precio y boton de article
             article.append(h2);
             article.append(img);

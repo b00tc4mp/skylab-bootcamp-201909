@@ -30,10 +30,9 @@ body {
 .duck-list__item {
   margin-top: 2em;
   margin-bottom: 2em;
-  border: 0.1rem solid black;
 }
 .duck-list__item-image {
-  width: 50%;
+  width: 50vw;
 }
 
 /*# sourceMappingURL=style.css.map */
