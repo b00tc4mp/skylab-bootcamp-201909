@@ -104,7 +104,7 @@ describe('Hooray prototype', function () {
         it('should fail on undefined expression', function () {
             var hooray = new Hooray(1, 2, 3);
             var expression; // = console.log;
-            debugger
+            
             expect(function () { hooray.forEach(expression); }).toThrowError(TypeError, 'undefined is not a function');
         });
 
@@ -116,7 +116,7 @@ describe('Hooray prototype', function () {
         });
     });
 
-    xdescribe('Hooray.prototype.concat', function(){
+    describe('Hooray.prototype.concat', function(){
         it('should merge several arrays', function(){
             var array1 = [1, 2, 3];
             var array2 = [1, 2, 3];
@@ -295,12 +295,12 @@ describe('Hooray.prototype.indexOf', function() {
     })
    })
 
-   describe('reduce', function(){
+   fdescribe('reduce', function(){
     
-    it('should fail when no declared arguments', function(){
-        var array;
-        var expression;
-        expect(function(){ reduce(array, expression); }).toThrowError(TypeError, 'array and expression are undefined');
+    fit('should fail when no declared arguments', function(){
+        var hooray = new Hooray;
+ debugger
+        expect(function(){ hooray.reduce(expression); }).toThrowError(TypeError, 'hooray is empty');
     });
     it('should fail if is not an array', function(){
         var array = 123;
@@ -317,7 +317,7 @@ describe('Hooray.prototype.indexOf', function() {
         var expression = function(a) { a > 1; };
         expect(function(){ reduce(array, expression); }).toThrowError(TypeError, 'array is not defined');
     });
-    it(' is not a function', function(){
+    xit(' is not a function', function(){
         var array = [1, 2, 3];
         var expression;
         

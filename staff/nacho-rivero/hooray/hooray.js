@@ -12,6 +12,7 @@ function Hooray() {
  * 
  * @throws {TypeError} If expression is not a function.
  */
+
 Hooray.prototype.forEach = function(expression) {
 	if(typeof expression !== 'function') throw TypeError(expression + ' is not a function');
 
@@ -90,7 +91,7 @@ Hooray.prototype.map = function(expression) {
  */
 
 Hooray.prototype.fill = function(value, start, end) {
-	debugger
+	
     if(!(this instanceof Array)) throw TypeError (this + ' is not an array');
     if(!(this instanceof Function)) throw TypeError (this + ' is not a function');
 
@@ -322,9 +323,9 @@ Hooray.prototype.join = function (separator) {
  */
 
 Hooray.prototype.reduce = function (expression) {
-
-    if (arguments.length !== 2 && arguments.length !== 3) throw TypeError("Wrong number of arguments: two expected (Array, Callback function).");
-    if (!(this instanceof Array)) throw TypeError("First argument must be an array.");
+  debugger
+    if (this.length > 0) throw TypeError("hooray is empty");
+    // if (!(this instanceof Array)) throw TypeError("First argument must be an array.");
     
     var accumulator = 0;
     
@@ -386,8 +387,6 @@ Hooray.prototype.sort = function (){
       return array;
       }
 
-
-      
 /**
  * Method removes the first element from an array and it returns the removed element.
  * @param {array} array The array to be shifted.
@@ -423,7 +422,7 @@ Hooray.prototype.shift = function () {
 
 Hooray.prototype.slice = function(begin, end) {
     
-    var result = []; 
+    var result = new Hooray(); 
     begin = begin || 0;
     begin = begin < 0? this.length + begin : begin;
     end = end || this.length;
@@ -432,6 +431,7 @@ Hooray.prototype.slice = function(begin, end) {
         result[i - begin] = this[i];
     
     return result;
+
 }
 
 /**
@@ -464,7 +464,7 @@ Hooray.prototype.some = function (expression){
 
 Hooray.prototype.unshifty = function () {
     
-    if (!(this instanceof Array)) throw TypeError("unshifty this is not an array");
+    if (!(this instanceof Array)) throw TypeError("${this} this is not an array");
 
     var item = arguments.length - 1;
     var length = this.length;
@@ -474,5 +474,7 @@ Hooray.prototype.unshifty = function () {
     for (var j = item; j < arguments.length; j++)
         this[j - item] = arguments[j];
     
-    return array.length;
+    return this.length;
+
+  
 }
