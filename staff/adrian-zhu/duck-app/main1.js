@@ -1,21 +1,10 @@
 var searchInput = document.getElementsByClassName('header__search-input')[0];
 var searchButton = document.getElementsByClassName('header__search-button')[0];
-var ducksPanel = document.getElementsByClassName('ducks__panel')[0];
-var detailPanel = document.getElementsByClassName('detail__panel')[0];
-var formBox = document.getElementsByClassName('form__box')[0];
+var ducksPanel = document.getElementsByClassName('ducks-panel')[0];
+var detailPanel = document.getElementsByClassName('detail-panel')[0];
 var searchResult;
 
-/* 
-    functions:
-        - searchDucks
-        - printDucks
-        - searchDuckuno
-        - printDuckuno
-*/
-
-formBox.addEventListener('submit', function (e) {
-    
-    e.preventDefault();
+searchButton.addEventListener('click', function (e) {
     var xhr = new XMLHttpRequest;
     var url = 'https://duckling-api.herokuapp.com/api/search?q=' + searchInput.value;
     xhr.open('GET', url);
@@ -41,7 +30,6 @@ formBox.addEventListener('submit', function (e) {
                 var price = document.createElement('p');
                 price.classList.add('duck__price');
                 price.innerText = duck.price;
-                
                 article.append(title);
                 article.append(img);
                 article.append(price);
@@ -49,7 +37,6 @@ formBox.addEventListener('submit', function (e) {
                 li.append(link);
                 ul.append(li);
             });
-            
             ducksPanel.innerHTML = '';
             ducksPanel.append(ul);
         }
@@ -59,6 +46,7 @@ formBox.addEventListener('submit', function (e) {
 function showDetail(id) {
     ducksPanel.innerHTML = '';
     ducksPanel.style.display = 'none';
+    //detailPanel.innerText = id;
     detailPanel.innerHTML = '';
     var xhr = new XMLHttpRequest;
     var url = 'https://duckling-api.herokuapp.com/api/ducks/' + id;
@@ -86,19 +74,7 @@ function showDetail(id) {
             article.append(descript);
             article.append(price);
             detailPanel.append(article);
-
         }
     };
     xhr.send();
-}
-
-function goback(){
-
-    var backButton = document.getElementsByClassName('')[0];
-    backButton.innerText = 'back';
-    backButton.addEventListener('click', function (){
-        ducksPanel.style.display = "flex";
-        detailPanel.style.display = "none";
-    })
-    
 }

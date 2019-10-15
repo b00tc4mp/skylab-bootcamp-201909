@@ -14,7 +14,7 @@ var searchResult;
 */
 
 formBox.addEventListener('submit', function (e) {
-    
+    debugger
     e.preventDefault();
     var xhr = new XMLHttpRequest;
     var url = 'https://duckling-api.herokuapp.com/api/search?q=' + searchInput.value;
@@ -49,7 +49,7 @@ formBox.addEventListener('submit', function (e) {
                 li.append(link);
                 ul.append(li);
             });
-            
+            debugger
             ducksPanel.innerHTML = '';
             ducksPanel.append(ul);
         }
@@ -86,19 +86,7 @@ function showDetail(id) {
             article.append(descript);
             article.append(price);
             detailPanel.append(article);
-
         }
     };
     xhr.send();
-}
-
-function goback(){
-
-    var backButton = document.getElementsByClassName('')[0];
-    backButton.innerText = 'back';
-    backButton.addEventListener('click', function (){
-        ducksPanel.style.display = "flex";
-        detailPanel.style.display = "none";
-    })
-    
 }
