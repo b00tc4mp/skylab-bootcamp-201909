@@ -6,7 +6,7 @@ var color = document.getElementsByClassName('header__form-search')[0];
 // le añadimos comportamiento al form.
 form.addEventListener('submit', function (e) {
 // con submit, si el último elemento del form es un button, es como hacer un onclick, pero además funciona también con la tecla enter. 
-    e.preventDefault() // con esto paramos el bubbling?
+    e.preventDefault() // fenamos el comportamiento estandard del formulario,.
     main.innerHTML = ''; // limpiamos el main
     var xhr = new XMLHttpRequest; //creamos una petición en Ajax
 
@@ -141,4 +141,7 @@ function detalle(id) { //le pasamos el id como argumento
 //definimos función comeBack, que simplemente nos limpia el main. 
 var comeBack = function() {
     main.innerHTML = '';
+    var img = document.createElement('img');
+    img.classList.add("duck-icon");
+    img.src = "https://d29fhpw069ctt2.cloudfront.net/icon/image/85066/preview.svg" 
 }

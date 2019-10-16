@@ -58,8 +58,13 @@ body {
   font-weight: bold;
 }
 
+.duck-icon {
+  width: 40vw;
+  margin-top: 10vh;
+}
+
 .duck-list {
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
