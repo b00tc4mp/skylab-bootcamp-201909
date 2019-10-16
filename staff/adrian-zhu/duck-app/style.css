@@ -23,8 +23,8 @@ body {
   width: 100%;
  }
  .duck {
-  background-color: gray;
-  border: 0.15em solid black;
+  background-color: wheat;
+  border: 0.15em solid wheat;
   padding: 1em;
   margin: 1em;
   border-radius: 0.5em;
@@ -41,9 +41,49 @@ body {
  }
  .footer__copyright {
   text-align: center;
-  text-align: center;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 0.8em;
  }
  /# sourceMappingURL=style.css.map /
+
+ <!-- 
+ 
+ li {
+  list-style: none;
+}
+
+input {
+  border: 0.1rem solid white;
+  background-color: wheat;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: wheat;
+  text-align: center;
+}
+
+.header__title {
+  color: white;
+}
+.header__form-button {
+  background-color: white;
+  color: wheat;
+}
+
+.duck-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+.duck-list__item {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.duck-list__item-image {
+  width: 50vw;
+}
+
+ -->
