@@ -76,7 +76,7 @@ function detalle(id) {
             price.innerText = duck.price;
             boton.innerText= "Turn back";
             boton.addEventListener('click' , function (e){
-                BackPAge();
+                backPage();
             })
 
             article.classList.add("duck");
