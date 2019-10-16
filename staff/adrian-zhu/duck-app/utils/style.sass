@@ -4,33 +4,33 @@ body
     box-sizing: border-box
     font-family: 'Times New Roman', Times, serif
 
+
 ul 
-    padding-inline-start: unset    
+    padding-inline-start: unset 
+    list-style: none
+
+li  
+    list-style: none
+    border: dotted 1px
+    
 
 .header 
     display: flex
     flex-wrap: wrap
     justify-content: center
-
-    &__logo
-
-        &-img
-            width: 80%
-            padding: 10%
-            // margin-left: 10%
-
-        &-box
-            width: 20%
-
-    &__title
-
+    
 .nav__form 
     display: flex
     flex-wrap: wrap
     justify-content: center
     padding-top: 2.5%
 
-.ducks
+    &-button
+        background: url("./icon-24.png") transparent no-repeat center center
+        width: 50px
+        height: 50px
+
+.duck
     background-color: wheat
     border: 0.15em solid wheat
     padding: 1em
@@ -39,34 +39,35 @@ ul
     text-align: center
     cursor: pointer
 
-    &__title 
-    text-transform: uppercase
-    font-size: 1.2em
-
-    &__image
-    width: 90%
-    margin: 5% 5%
-
     &-list
         display: flex
-        flex-wrap: wrap
         justify-content: center
+        flex-wrap: wrap
         padding: 0
+        
         
         &__item
             margin-top: 2em
             margin-bottom: 2em
 
-        &__item-image
-            width: 50vw
+        &__item-title 
+            text-transform: uppercase
+            font-size: 1.2em
 
+
+        &__item-image
+            width: 90%
+            margin: 5% 5%
 
 .footer
     display: flex
     justify-content: center    
 
 
+@media screen and (min-width: 420px)
 
+
+@media screen and (min-width: 1000px)
 
 
 
