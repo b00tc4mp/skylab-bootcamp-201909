@@ -24,6 +24,15 @@ body {
     margin-bottom: 7%;
   }
 }
+@media (min-width: 1200px) {
+  body {
+    box-sizing: border-box;
+    background-color: #bbee;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 7%;
+  }
+}
 .header__title {
   color: white;
   margin-bottom: 0;
@@ -105,6 +114,23 @@ body {
     margin-top: 2em;
     margin-bottom: 2em;
     width: 50%;
+  }
+  .duck-list__item-image {
+    max-width: 340px;
+    border-radius: 20%;
+  }
+}
+@media (min-width: 1200px) {
+  .duck-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0;
+  }
+  .duck-list__item {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 30%;
   }
   .duck-list__item-image {
     max-width: 340px;
