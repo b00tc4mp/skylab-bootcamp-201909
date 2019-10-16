@@ -16,8 +16,8 @@ body
 
 .nav
     display: grid
-    grid-template-columns: 50px 2fr 1fr
-    grid-template-rows: 2fr 1fr
+    grid-template-columns: 1fr 2fr 1fr
+    grid-template-rows: 1fr 1fr
     grid-template-areas: "title title imagelogo" "search search imagelogo"
     background-color: rgb(247, 245, 127)
     padding: 1%
@@ -28,7 +28,7 @@ body
         grid-area: title
         display: flex
         font-weight: bold
-        font-size: 18px
+        font-size: 1.2rem
         justify-content: center
       
 
@@ -48,21 +48,21 @@ body
         display: flex
         justify-content: center
         
-    
 
         .searchspace
             border: none
             border-bottom: .15rem solid black
             background-color: rgb(241, 241, 191)
-            height: 20px
-            width: 60%
+            height: 4vw
+            width: 30vw
 
         .searchicon
             border: none
             border-bottom: .15rem solid black
             cursor: pointer
             background-color: rgb(241, 241, 191)
-            height: 20px
+            height: 4vw
+            
 
 .main 
     @extend %flex-center 
@@ -124,7 +124,7 @@ body
     border-top: 2px solid black
     font-weight: bold
     font-size: 18px
-    gap: 5%
+    
 
 .footer_copyright
     // display: flex
@@ -140,10 +140,57 @@ body
     width: 5rem
     align-items: center
     font-weight: bold
-
+    margin-left: 20%
 
 .gridduck
     display: grid
     grid-template-columns: 2fr 1fr
     grid-template-areas: "title price" "img img" "description description" 
     padding: .75rem 
+
+
+
+
+@media only screen and (min-width:768px)
+    .nav
+        grid-template-columns: 1fr 2fr 1fr
+        grid-template-rows: 1fr 50px
+        grid-template-areas: "title title imagelogo" "search search imagelogo"
+        background-color: skyblue
+        padding: 1%
+        border: black solid 3px
+
+        &__title
+            font-size: 2.5rem
+
+        &__search
+            
+            .searchspace
+                background-color: rgb(151, 212, 216)
+            .searchicon
+                background-color: rgb(151, 212, 216)
+
+    .footer
+            background-color: skyblue
+
+@media only screen and (min-width:1024px)
+    .nav
+        grid-template-columns: 1fr 2fr 1fr
+        grid-template-rows: 1fr 50px
+        grid-template-areas: "title title imagelogo" "search search imagelogo"
+        background-color: orange
+        padding: 1%
+        border: black solid 3px
+
+        &__title
+            font-size: 2.5rem
+
+        &__search
+            
+            .searchspace
+                background-color: rgb(245, 179, 125)
+            .searchicon
+                background-color: rgb(245, 179, 125)
+
+    .footer
+            background-color: orange
