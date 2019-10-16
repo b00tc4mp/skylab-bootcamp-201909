@@ -8,4 +8,40 @@
         margin-bottom: 2em
         
     &__item-image
-        width: 50vw
+        width: 70vw
+        border-radius: 20%
+
+    &__item-description
+        font-size: 1em
+        width: 80vw
+        margin: 3px auto
+    
+    &__item-price
+        font-size: 20px
+
+    &__button
+        background-color: white
+        color: #9595eeee
+        font-size: .9em
+        width: 20vw
+        height: 3em
+        margin: 0px
+
+    
+@media (min-width: 768px)
+    .duck-list
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-around
+        padding:0
+        &__item 
+            margin-top: 2em
+            margin-bottom: 2em
+            width: 50%
+        
+        &__item-image
+            max-width: 340px
+            border-radius: 20%
+
+     
+
