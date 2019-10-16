@@ -4,8 +4,8 @@
  * @param {*} expression 
  */
 function sort(array, expression) {
-    if (array === undefined || array === null) throw TypeError(array + " is not defined");
-    // if (expression === null) throw TypeError("No se que error va aquí");
+    if (!(array instanceof Array)) throw TypeError(array + " is not an Array");
+    if (!(expression instanceof Function)) throw TypeError(expression + " is not a Function");
 
     if (expression !== undefined && expression(1, 1) === 0) {
         return descendentOrder(array);
@@ -47,7 +47,7 @@ function ascendentOrder(array) {
 
 
 
-
+/* 
 console.log("DEMO sort");
 
 
@@ -58,4 +58,4 @@ var array = [2, 1, 3, 4, 5];
 console.log(sort(array, function(a, b) { return a - b }));
 
 var array = [2, 3, 4, 5];
-console.log(sort(array, (a, b) => a + b));
+console.log(sort(array, (a, b) => a + b)); */
