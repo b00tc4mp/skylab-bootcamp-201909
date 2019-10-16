@@ -104,6 +104,8 @@ body {
   max-width: 250px;
   margin-bottom: 10px;
   margin: 0 auto;
+  border: 3px solid #dd8117;
+  border-radius: 15rem;
 }
 
 .duckinfo__description {
