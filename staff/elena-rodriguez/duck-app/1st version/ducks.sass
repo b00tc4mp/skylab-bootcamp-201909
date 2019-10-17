@@ -1,27 +1,32 @@
-
-.duck-icon
-    width: 40vw
-    margin-top: 10vh
+.view
+    display: grid
+    flex-wrap: wrap
+    justify-content: center
+    padding: 0
 
 .duck-list
     display: grid
     flex-wrap: wrap
     justify-content: center
     padding:0
-    &__item 
+    &__duck 
         margin-top: 2em
         margin-bottom: 2em
+
+    &__title
+        family-font: helvetica
+
         
-    &__item-image
+    &__image
         width: 70vw
         border-radius: 20%
 
-    &__item-description
+    &__description
         font-size: 1em
         width: 80vw
         margin: 3px auto
     
-    &__item-price
+    &__price
         font-size: 20px
 
     &__button
@@ -32,6 +37,8 @@
         height: 3em
         margin: 0px
 
+
+
     
 @media (min-width: 768px)
     .duck-list
@@ -39,12 +46,12 @@
         flex-wrap: wrap
         justify-content: space-around
         padding:0
-        &__item 
+        &__duck 
             margin-top: 2em
             margin-bottom: 2em
             width: 50%
         
-        &__item-image
+        &__image
             max-width: 340px
             border-radius: 20%
 
@@ -54,12 +61,12 @@
         flex-wrap: wrap
         justify-content: space-around
         padding:0
-        &__item 
+        &__duck 
             margin-top: 2em
             margin-bottom: 2em
             width: 30%
         
-        &__item-image
+        &__image
             max-width: 340px
             border-radius: 20%
 
