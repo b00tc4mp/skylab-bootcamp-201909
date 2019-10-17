@@ -132,32 +132,38 @@ Hooray.prototype.fill = function(value, start, end) {
  * @param {...any} item The item (or items) to join.
  * @returns {Array} the new array created with all items joined
  */
-
-
-Hooray.prototype.concat = function() {
+/**
+ * Concat array with arguments and return a new array with all array elements  + arguments
+ * 
+ * @param {*} array The array to concatenate elements to newArray
+ * 
+ * 
+ * @returns {*} newArray contains: array + arguments.
+ * 
+ */
+Hooray.prototype.concat = function() { 	
   
-  if(!(arguments instanceof Array)) throw TypeError (arguments + 'is not an array');
-
-  var newArray = [];
-
-  for (var i = 0; i < this.length; i++) {
-     newArray[newArray.length++] = this[i]; 
-  }
-      
-  for (var i = 0; i < arguments.length; i++) {
-
-    if (arguments[i] instanceof Array) {
-
-      for (var j = 0; j < arguments[i].length; j++) {
-
-        newArray[newArray.length++] = arguments[i][j];
-        }
-      } else {
-        newArray[newArray.length++] = arguments[i];
-      }
-      return newArray;
-  }
-} 
+	var hoorayAux = new Hooray();	
+	
+    for (var y = 0; y < this.length; y++){
+        hoorayAux[y] = this[y];
+    }
+		
+    for (var i = 0; i < arguments.length; i++) {
+		if (arguments[i] instanceof Array) {
+			for (var j = 0; j < arguments[i].length; j++){
+				hoorayAux[y] = arguments[i][j];
+				++y
+			}
+		} else {
+			hoorayAux[y] = arguments[i];
+			++y			
+		}
+	}      
+	hoorayAux.length = y;
+    return hoorayAux;
+    
+};
 
 
 /**
@@ -191,23 +197,21 @@ Hooray.prototype.every = function (expression) {
  * @returns {result} result[i] Result is the new array composed by the elements created through the callback function.
  */
 
- Hooray.prototype.filter = function(expression) {
-  
-  if (!(this instanceof Array))throw TypeError (this + ' is not an array');
-  if (!(expression instanceof Function)) throw TypeError(expression + ' is not a function');
-
-  var result = [];
-  var count = 0;
-
-  for (var i = 0; i < this.length; i++) {
-    if (expression(this[i])){
-        result[count] = this[i];
-        count++;
-    } 
-    return result;
+Hooray.prototype.filter = function(expression) { 	
+  if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+  var hoorayAux = new Hooray();
+  var bool;
+  var j = 0;
+for (var i = 0; i < this.length; i++) {    
+      bool = expression(this[i])   
+      if (bool) {  
+          hoorayAux[j]=this[i]
+          j++
+      }           
   }
-  
-};
+  hoorayAux.length=j;
+  return hoorayAux;
+}
 
 /**
  * Returns de value of the fisrt element in the array that satisfies the condition.
@@ -216,17 +220,19 @@ Hooray.prototype.every = function (expression) {
  */
 
 Hooray.prototype.find = function (expression){
-    
-    if(!arguments.length) throw TypeError('no declared arguments');
-    if(!(this instanceof Array))  throw TypeError (this + ' is not an array');
-    if(!(expression instanceof Function)) throw TypeError(expression + ' is not a function');
+    	
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+    var result;
+    var bool = false;
+	for (var i = 0; i < this.length&&bool===false; i++) {    
+        bool = expression(this[i])   
+        if (bool) {
+            result=this[i]
+        }           
+    }
+    return result;
+}
 
-    for(var i = 0 ; i<this.length ; i++){
-        if(expression(this[i])){
-            return this[i];
-    };
-}
-}
 
 /**
  * Returns the index of the fisrt element in the array that satisfies the providing test function. If any element pass the test, it returs -1.
@@ -235,18 +241,16 @@ Hooray.prototype.find = function (expression){
  */
 
 Hooray.prototype.findIndex = function(expression){
-
-    if(!arguments.length) throw TypeError ('missing argument 0 when calling function');
-    if(!(this instanceof Array)) throw TypeError(`${this} is not an array`);
-    if(!(expression instanceof Function)) throw TypeError (`${expression} is not a function`);
-
-    for(var i = 0 ; i<this.length ; i++){
-        if(expression(this[i])){
-            return i;
-        }
-        return -1
+	
+    if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+    var result;
+    var bool = false;
+	for (var i = 0; i < this.length&&bool===false; i++) {    
+        bool = expression(this[i])   
+        if (bool) result=i;      
     }
-}
+    return result;
+};
 
 /**
  * Method determines if the element it is included in the array or not. Returns a boolean.
@@ -275,19 +279,18 @@ Hooray.prototype.includes = function (value){
  * @param {*} index Optional. The index to start to search
  */
 
-Hooray.prototype.indexOf = function (element) {
+  Hooray.prototype.indexOf = function (item) {
+    var start = arguments[1] || 0;
 
-  if (!(this instanceof Array)) throw TypeError(this + ' is not an array');
-  if (!(typeof element === 'number' || typeof element === 'string')) throw TypeError(typeof element + ' is not a string or a number');
+    if (typeof(start) !== "number") start=0;
 
-    for (var i = 0; i < this.length; i++) {
-      if (element === this[i]) {
-        
-        return i;
-        }
+    start = start < 0 ? this.length + start : start;
+
+    for (var i=start; i<this.length; i++) {
+        if (this[i]===item) return i;
     }
     return -1;
-  }
+}
 
 /**
  * Method returns a new string concatening all elements with a separator introduced. If is not introduced () or it is (',') (''), it returns the elements separated with coma.
@@ -297,95 +300,82 @@ Hooray.prototype.indexOf = function (element) {
 
 Hooray.prototype.join = function (separator) {
 
-    if (!(this instanceof Array)) throw TypeError(array + ' is not an array');
-    if ((separator instanceof Function)) throw TypeError('separator cannot be a value');
-    if ((separator instanceof Function)) throw TypeError('separator cannot be a function');
-    if ((separator instanceof Function)) throw TypeError('separator cannot be an array');
+    if(separator === undefined)
+    separator =',';
+    result = '';
+    for (var i = 0; i < this.length; i++) {
+        if (i === this.length - 1)
+            result += this[i];
+        else
+            result +=this[i] + separator;
+	} 
+    return result;
+}
 
-      var string = '';
-      if (separator == '' || separator == undefined) {
-        separator = ',';
-      };
-        for (var i = 0; i < this.length; i++) {
-          if (i === this.length - 1) {
-            string += this[i];
-          } else {
-            string += this[i] + separator;
-          }
-          return string;
-          
-        }
-      }
 
 /**
- * Executed a reducer function on each element of the array, resulting a single output value.
- * @param {array} array The array to reduce.
- */
-
+* Executed a reducer function on each element of the array, resulting a single output value.
+* @param {array} array The array to reduce.
+*/
 Hooray.prototype.reduce = function (expression) {
-  debugger
-    if (this.length > 0) throw TypeError("hooray is empty");
-    // if (!(this instanceof Array)) throw TypeError("First argument must be an array.");
-    
-    var accumulator = 0;
-    
-    for (var i = 0; i < this.length; i++){
-        if (i === 0) {
-            
-            expression(0, this[i], i, this);
-        }
-        if(i === 1){
-            accumulator = expression(this[0], this[i], i, this);
-        }
-        if(i > 1) {
-            accumulator = expression(accumulator, this[i], i, this);
-        } 
-    };
-        
-    return accumulator;
+  
+  if (expression === undefined) throw TypeError('argument is undefined');
+  if (typeof (this) !== 'object') throw TypeError(this + ' is not a Hooray');
+  if (this.length === 0) throw TypeError(this + ' is empty');
+  var accumulator = 0;
+  for (var i = 0; i < this.length; i++) {
+    if (i === 0) {
+      expression(0, this[i], i, this);
+    }
+    if (i === 1) {
+      accumulator = expression(this[0], this[i], i, this);
+    }
+    if (i > 1) {
+      accumulator = expression(accumulator, this[i], i, this);
+    }
+  };
+  return accumulator;
 };
 
 /**
  * Method to reverse the array. It returns the array modified. The last input becomes the first.
  * @param {array} array The array to reverse its numbers.
+ * 
  */
 
-Hooray.prototype.reverse = function () {
-    if(!(this instanceof Array)) throw TypeError(this + ' is not an array');
-    
-    var rarray = [];
-    for (var i = 0; i < this.length; i++) {
-        
-        rarray[i] = this[this.length - 1 - i];
-        
-        for(var j = 0; j < rarray.length; j++){
-            this[i] = rarray[j];
-        }
-    }
-    return array;
+Hooray.prototype.reverse = function() { 	
+
+  var arrayAux = [];
+  var j = 0;
+  for (var i = (this.length-1); i > -1; i--) {
+      arrayAux[j] = this[i];       
+      j += 1;
   }
+  for (var x = 0; x < this.length; x++) {
+      this[x] = arrayAux[x];       
+  }
+
+  return this;
+};
 
 /**
  * Sort the elements of the array and returns the sorted array.
  * @param {*} array array to be sorted.
  */
 
-Hooray.prototype.sort = function (){
-
-    if (!(this instanceof Array)) throw TypeError(array + ' is not an array');
-
-      var temp = []; 
-      for (var i = 1; i < this.length; i++) {
-        for (var j = 0; j < this.length - i; j++){
-          if(array[i] > array[j]){
-            temp = array[i];
-            array[i] = array [j];
-            array[j] = temp;
-          }
-         }
-        }
-      return array;
-      }
+Hooray.prototype.sort = function() { 	
+    var aux;
+    for (var i = 1; i < this.length; i++) {
+        for (var j = 0; j < this.length - i; j++) {
+            if (this[j].toString() > this[j+1].toString()) {
+                aux = this[j];
+                this[j] = this[j+1];
+                this[j+1] = aux;
+            }         
+        }               
+    }
+    return this;
+}
 
 /**
  * Method removes the first element from an array and it returns the removed element.
@@ -395,19 +385,15 @@ Hooray.prototype.sort = function (){
 
 Hooray.prototype.shift = function () {
 
-  if (!(this instanceof Array)) throw TypeError(this + ' is not an array');
+    var deleted = this[0]
+    for (var i = 1; i < this.length; i++) {
+      this[i-1] = this[i]; 
+    }
+    delete this[this.length-1]  
+      this.length = this.length - 1;
+      return deleted;
 
-    var first = this[0];
-
-    for(var i = 1; i < this.length; i++) {
-        this[i-1] = this[i];
-      }
-
-    this.length = this.length - 1;
-    
-    return first;
 }
-
 
 /**
  * Copies a part of the hooray within a new array starting from beginning
@@ -420,19 +406,28 @@ Hooray.prototype.shift = function () {
  * @returns {Hooray} New hooray with the extracted values 
  */
 
-Hooray.prototype.slice = function(begin, end) {
+  Hooray.prototype.slice = function slice(begin, end) {
     
-    var result = new Hooray(); 
+    var hoorayAux = new Hooray();
+
+    if (begin > this.length) return hoorayAux;
+
     begin = begin || 0;
-    begin = begin < 0? this.length + begin : begin;
+    if (begin < 0){
+        begin = this.length + begin;
+        if (begin < 0) begin = 0;
+    };
     end = end || this.length;
     end = end < 0? this.length + end : end;
-    for (var i = begin; i < end; i++)
-        result[i - begin] = this[i];
-    
-    return result;
 
-}
+    for (var i = begin; i < end; i++)
+	   	hoorayAux[i - begin] = this[i];
+
+	hoorayAux.length = end < begin? 0 : end - begin;
+    
+    return hoorayAux;
+};
+
 
 /**
  * Method test whether at least one element in the array pass the test. It returns a boolean expression.
@@ -440,20 +435,15 @@ Hooray.prototype.slice = function(begin, end) {
  * @param {expression} expression The function test provided.
  */
  
-Hooray.prototype.some = function (expression){
-
-    if(!(this instanceof Array)) throw TypeError(`${this} is not an array`);
-    if(!(expression instanceof Function)) throw TypeError (`${expression} is not a function`);
-
-    var pass = false;
-    for (var i=0; i<this.length; i++){
-        
-        if (expression(this[i])){
-            pass = true;
-        }
-    }
-    return pass;
-}
+Hooray.prototype.some = function(expression) { 	
+  if (typeof expression !== 'function') throw TypeError(expression + ' is not a function')
+  var boleana;;
+for (var i = 0; i < this.length; i++) {    
+      boleana = expression(this[i])
+      if (boleana) return true;        
+  }
+  return false;
+};
 
 /**
  * The unshift() method adds one or more elements to the beginning of an array and returns the new length of the array.
@@ -462,19 +452,101 @@ Hooray.prototype.some = function (expression){
  * @param {Array} array Array to modify, followed by any new element to place at arr begining.
  */
 
-Hooray.prototype.unshifty = function () {
+Hooray.prototype.unshift = function() { 	
     
-    if (!(this instanceof Array)) throw TypeError("${this} this is not an array");
+  var newArray = [];
 
-    var item = arguments.length - 1;
-    var length = this.length;
-    for (var i = length - 1; i >= 0; i--){
-        this[i + item] = this[i]
-    }
-    for (var j = item; j < arguments.length; j++)
-        this[j - item] = arguments[j];
-    
-    return this.length;
+  for (var i = 0; i < arguments.length; i++) {
+      newArray[i] = arguments[i];
+  }
 
-  
+  for (var j = 0; j < this.length; j++) {
+      newArray[j+i] = this[j];
+  }
+
+  for (var x = 0; x < newArray.length; x++) {
+      this[x] = newArray[x];
+  }
+
+  this.length = x;
+  return this.length;
+};
+
+/**
+ * The splice() method changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
+ * 
+ * @param {Index} Start The index at which to start changing the array.
+ * @param {Integer} delCount An integer indicating the number of elements in the array to remove from start.
+ */
+
+Hooray.prototype.splice = function(start, delCount) { 
+ 
+var result = new Hooray; 
+var newHooray = []; 
+var x = 0; 
+var arrPos = 0; 
+var itemsLen; 
+var items = []; 
+
+if(delCount === 'undefined'){ 
+  itemsLen = arguments.length-1;
+  var index = 1;
+}else if(arguments.length === 2 && start !== 'undefined' && start >= 0 && delCount !== 'undefined'){ 
+  var index = 0;
+  itemsLen = 0;
+}else if(arguments.length === 1){ 
+  delCount = this.length-start;
+  itemsLen = this.length-start;
+} else if(start < 0){ 
+  itemsLen = arguments.lenght - delCount + start;
+  start = this.length+start;
+}else{ 
+  itemsLen = arguments.length-2
+  var index = 2;
 }
+
+if(itemsLen !== 0){
+  var finalLength = this.length-delCount;
+  for(var y = 0; y<itemsLen; y++){
+    items[y] = arguments[index];
+    index++;
+  }
+}else {
+  var finalLength = this.length-delCount+itemsLen;
+}
+
+for (var i = 0; i < delCount; i++) {
+  result[i] = this[i+start];
+  result.length++;
+}
+
+var lol = false;
+while (x < finalLength) {
+  if(x === start && lol === false){
+    for(var y =0; y<delCount; y++){
+      arrPos++
+    }
+    if(itemsLen !== 0){
+      for(var y = 0; y<itemsLen; y++){
+        newHooray[x] = items[y]
+        x++
+      }
+    }
+    lol = true
+  }else{
+    newHooray[x] = this[arrPos] 
+    x++
+    arrPos++
+  }
+}
+
+for(var i = 0; i<this.length;i++){
+  this[i] = newHooray[i]
+}
+
+for(var x = delCount; x>0; x--){
+  delete this[this.length-1];
+  this.length--
+}
+  return result;
+};
