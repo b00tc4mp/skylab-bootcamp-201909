@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style/index.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/80c46885ed.js"></script>
     <link rel="shortcut icon" href="./images/duckicon.png" type="image/x-icon">
@@ -22,25 +22,16 @@
                         alt="duck img"
                         class="duckimg"></a>
                 </div>
-                <form class="nav__search">
+                <form class="nav__search" id="form">
                     <input type="search" name="search" placeholder="search" class="searchspace">
                     <button class="searchicon" id="form_button"><i class="fas fa-search"></i></button>
                 </form>
             </nav>
         </header>
-
-    <main class="main__initial">     
+    <main class="main" id="main_selection"> 
+        <section class="main__initial" id="main__inital"></section>
+        <section class="main__details" id='main__details'></section> 
     </main>
-
-    <section class="main__details details hidden">    
-        <h2 class="details__title"></h2>
-        <p class="details__price">
-            <span class="pricetag"></span> 
-        </p>
-        <img src="" alt="" class="details__img">
-        <p class="details__description"></p>
-    </section> 
-
     <footer class="footer">  
             <div class="footer__copyright">
                     <span>adricampo ©</span>2019
@@ -49,10 +40,6 @@
                 <button class="button">HOME</button>
             </div>
     </footer>
-    <script src="scripts/business/search-ducks/index.js"> </script>
-    <script src="scripts/business/retrieve-duck/index.js"> </script>
-    <script src="scripts/helpers.js"> </script>
-    <script src="scripts/utils/fetch.js"> </script>
-    <script src="scripts/index.js"> </script>
+    <script src="js/main.js"> </script>
     </body>
 </html>
