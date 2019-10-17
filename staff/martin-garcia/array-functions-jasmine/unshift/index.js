@@ -6,13 +6,15 @@
  * @param {*[]} addArr  Array to concat at the begining of initial array
  */
 function unshift(initial, addArr) {
+
+    if (!(initial instanceof Array)) throw TypeError(initial + ' is not an Array');
+
     var index = initial.length - 1;
     initial.length += addArr.length;
     var validacion = true;
     for (var i = initial.length - 1; i >= 0; i--) {
         if (validacion) {
             initial[i] = initial[index];
-            console.log("i " + i + " index: " + index + "  initial[index]" + initial[index]);
             index--;
             if (index === -1) {
                 validacion = false;
@@ -23,4 +25,5 @@ function unshift(initial, addArr) {
             index--;
         }
     }
+    return initial.length;
 }

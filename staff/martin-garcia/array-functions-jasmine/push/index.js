@@ -6,11 +6,13 @@
  * 
  * @returns {number} The new lenth of the array.
  */
-function push(array) {
-    //console.log(arguments) 
+function push(array, item) {
+    if (!(array instanceof Array)) throw TypeError(array + ' is not an Array');
 
-    for (var i = 1; i < arguments.length; i++)
-        array[array.length] = arguments[i]
+    if (typeof item === "undefined")
+        return array.length;
+    else
+        array[array.length] = item
 
     return array.length
 }
