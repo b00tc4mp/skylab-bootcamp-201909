@@ -8,6 +8,8 @@
 function unshift(initial, addArr) {
 
     if (!(initial instanceof Array)) throw TypeError(initial + ' is not an Array');
+    if (!(addArr instanceof Array)) throw TypeError(addArr + ' is not an Array');
+
 
     var index = initial.length - 1;
     initial.length += addArr.length;

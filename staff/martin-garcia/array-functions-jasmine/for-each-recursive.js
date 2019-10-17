@@ -47,12 +47,3 @@ var result = 0;
 forEach(numbers, function(number) { result += number; });
 
 console.log(result);
-
-
-/* (function recursive(array, n, expresion) {
-    if (n >= 0 && n < array.length) {
-        recursive(array, n - 1, expresion);
-        expresion(array[n]);
-    }
-})
- */
