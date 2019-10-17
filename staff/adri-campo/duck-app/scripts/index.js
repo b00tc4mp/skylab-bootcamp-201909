@@ -64,17 +64,40 @@ function detailDuck (duck) {
 
 duckList();
 
-form.addEventListener("submit", function(event){
+
+function Search(container) {
+    this.__container__ = container;
+}
+
+Search.prototype.onSubmit = function(expression) {
+    this.__container__.addEventListener('submit', function (event) {
+        event.preventDefault();
+    
+        var query = this.query.value;
+    
+        expression(query);
+    });
+};
+
+var search = new Search(document.getElementsByClassName('searchspace')[0]);
+search.onSubmit(duckList);
+
+
+
+
+// form.addEventListener("submit", function(event){
         
-    event.preventDefault();
-    var query = this.search.value;
+//     event.preventDefault();
+//     var query = this.search.value;
 
-    main.innerHTML= "";
+//     main.innerHTML= "";
 
-    duckList(query);
-    this.search.value = "";
+//     duckList(query);
+//     this.search.value = "";
 
-});
+// });
+
+
 
 function duckList (query) {
    searchDucks(query, printDucks);   
@@ -92,11 +115,3 @@ function duckRefresh () {
     document.getElementsByClassName("main__initial")[0].classList.toggle('hidden'); 
     duckList()
 };
-
-// THE FINAL EXECUTION !! 
-// 1) FIRST BLOCK THAT GENERATES THE COMPLETE DUCK LIST
-
-// 2) EXECUTED FUNCTION WHEN AN INPUT IS WRITTEN INSIDE THE SEARCH BAR
-
-// 3) SINGLE ITEM PAGE, WE ARRIVE BY CLICKING IN ONE IMAGE ITEM(ID) FROM THE LIST
-// 4) FUNCTION THAT LETS US REFRESH THE PAGE AND SEE AGAIN THE INITIAL FULL LIST OF DUCKS
