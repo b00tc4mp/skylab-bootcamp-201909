@@ -1,4 +1,4 @@
-(function () {
+(function () { debugger
     searchDucks('', function (ducks) {
         ducks = ducks.shuffle().splice(0, 3);
 
@@ -27,7 +27,7 @@ results.onItemRender = function () {
                 var views = document.getElementsByClassName('view');
 
                 views[0].classList.remove('hide');
-                views[1].classList.add('hide');
+                views[1].classList.add('hide'); 
             };
 
             detail.render(duck);

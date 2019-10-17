@@ -1,3 +1,5 @@
+debugger
+
 function Detail(container) {
     Component.call(this, container);
 }

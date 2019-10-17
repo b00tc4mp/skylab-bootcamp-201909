@@ -1,3 +1,5 @@
+debugger
+
 function Search(container) {
     Component.call(this, container);
 }

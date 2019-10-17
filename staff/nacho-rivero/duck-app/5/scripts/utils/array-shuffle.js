@@ -1,3 +1,5 @@
+debugger
+
 if (typeof Array.prototype.shuffle === 'undefined')
     Array.prototype.shuffle = function () {
         var result = [];

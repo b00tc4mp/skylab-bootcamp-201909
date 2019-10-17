@@ -1,3 +1,5 @@
+debugger
+
 function fetch(method, url, callback) {
     var xhr = new XMLHttpRequest;
 

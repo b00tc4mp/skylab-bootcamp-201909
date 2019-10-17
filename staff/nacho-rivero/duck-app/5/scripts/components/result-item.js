@@ -1,3 +1,5 @@
+debugger
+
 function ResultItem(container) {
     Component.call(this, container);
     

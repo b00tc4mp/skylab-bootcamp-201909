@@ -1,3 +1,5 @@
+debugger
+
 function Component(container) {
     this.__container__ = container;
 }
