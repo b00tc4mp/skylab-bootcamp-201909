@@ -7,6 +7,7 @@ searchFrom.addEventListener('submit', function (e) {
 
     e.preventDefault();
     main.innerHTML = ''; 
+
     var xhr = new XMLHttpRequest;
     var url = 'https://duckling-api.herokuapp.com/api/search?q=' + searchInfo.value
 
@@ -75,7 +76,7 @@ function detalle(id) {
             description.innerText = duck.description;
             price.innerText = duck.price;
             boton.innerText= "Turn back";
-            boton.addEventListener('click' , function (e){
+            boton.addEventListener('click' , function (){
                 backPage();
             })
 
@@ -88,6 +89,7 @@ function detalle(id) {
 
             article.append(title, img ,description, price, boton);
             main.append(article);
+            
         }
     }
     xhr.send();

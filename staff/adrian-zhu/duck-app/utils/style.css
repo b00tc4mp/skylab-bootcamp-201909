@@ -15,11 +15,16 @@ li {
   border: dotted 1px;
 }
 
+.hide {
+  display: none;
+}
+
 .header {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
+
 
 .nav__form {
   display: flex;
