@@ -45,4 +45,9 @@ body {
   justify-content: center;
 }
 
+.base {
+  display: flex;
+  justify-content: center;
+}
+
 /*# sourceMappingURL=style.css.map */
