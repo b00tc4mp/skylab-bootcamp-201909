@@ -122,6 +122,23 @@ body {
   font-size: 18px;
 }
 
+.main__loginForm {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  margin-left: 2%;
+}
+
+.loginButton {
+  margin-top: 2%;
+  margin-bottom: 3%;
+  border: solid grey 3px;
+  border-radius: 2rem;
+  height: 2rem;
+  width: 5rem;
+  font-weight: bold;
+}
+
 .button {
   display: flex;
   justify-content: center;

@@ -22,14 +22,15 @@
                         alt="duck img"
                         class="duckimg"></a>
                 </div>
-                <form class="nav__search">
+                <form class="nav__search hidden">
                     <input type="search" name="search" placeholder="search" class="searchspace">
                     <button class="searchicon" id="form_button"><i class="fas fa-search"></i></button>
                 </form>
             </nav>
         </header>
 
-    <main class="main__initial">     
+    <main class="main__initial hidden">    
+        <ul class="list"></ul> 
     </main>
 
     <section class="main__details details hidden">    
@@ -41,6 +42,16 @@
         <p class="details__description"></p>
     </section> 
 
+    <form id="loginForm" class="main__loginForm">
+            <h3>ENTER TO THE DUCKS's WORLD <span style="font-size: 2rem" class="search__icon">🦆</span></h3>
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" autofocus/>
+            <br/>
+            <label for="user-password">Password:</label>
+            <input type="password" id="user-password" name="user-password"/>
+            <button class="loginButton" type="submit">LOGIN</button>          
+    </form>
+
     <footer class="footer">  
             <div class="footer__copyright">
                     <span>adricampo ©</span>2019
@@ -49,11 +60,16 @@
                 <button class="button">HOME</button>
             </div>
     </footer>
-    <script src="scripts/components/search.js"> </script>
-    <script src="scripts/business/search-ducks/index.js"> </script>
-    <script src="scripts/business/retrieve-duck/index.js"> </script>
+    <script src="scripts/components/login.js"> </script>
     <script src="scripts/helpers.js"> </script>
     <script src="scripts/utils/fetch.js"> </script>
+    <script src="scripts/business/retrieve-duck/index.js"> </script>
+    <script src="scripts/business/search-ducks/index.js"> </script>
+    <script src="scripts/components/search.js"> </script>
+    <script src="scripts/components/results.js"> </script>
+    <script src="scripts/components/result-item.js"> </script>
+    <script src="scripts/components/detail.js"> </script>
     <script src="scripts/index.js"> </script>
+    
     </body>
 </html>
