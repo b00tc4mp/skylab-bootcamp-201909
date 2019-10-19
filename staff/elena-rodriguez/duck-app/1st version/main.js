@@ -2,9 +2,9 @@ if (typeof Array.prototype.shuffle === 'undefined')
     Array.prototype.shuffle = function () {
         var result = [];
 
-        for (var i = 0; i < this.length; i++) result[i] = this[i];
+        for (let i = 0; i < this.length; i++) result[i] = this[i];
 
-        for (var i = 0; i < result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             var random = Math.floor(Math.random() * result.length);
 
             var value = result[i];
@@ -25,6 +25,8 @@ var form = document.getElementsByClassName('header__form');
 
 form[0].addEventListener('submit', function (event) {
     event.preventDefault();
+
+   // var query = document.getElementsByClassName('header__form-search')[0].value;
 
     var query = this.query.value;
 
@@ -101,12 +103,10 @@ function paintDetail(duck) {
     var h2 = document.createElement('h2');
     var text = document.createTextNode(duck.title);
     h2.classList.add('duck-list__title');
-    //h2.classList.add('duck-list__title--modif');
     h2.appendChild(text);
 
     var img = document.createElement('img');
     img.classList.add('duck-list__image');
-    //img.classList.add('duck-list__image--modif');
     img.src = duck.imageUrl;
 
     var desc = document.createElement('p');
@@ -117,11 +117,11 @@ function paintDetail(duck) {
     var store = document.createElement('a');
     store.classList.add('duck-list__store');
     store.innerText = 'Store';
+    store.href = duck.link;
 
     var p = document.createElement('p');
     var price = document.createTextNode(duck.price);
     p.classList.add('duck-list__price');
-    //p.classList.add('duck-list__price--modif');
     p.appendChild(price);
 
     var button = document.createElement('button');
