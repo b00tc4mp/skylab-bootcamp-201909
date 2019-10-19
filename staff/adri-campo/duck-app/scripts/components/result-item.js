@@ -1,7 +1,10 @@
 function ResultItem(container) {
-    this.__container__ = container;
+    Component.call(this, container);
     container.classList.add('duckinfo');
 };
+
+ResultItem.extend(Component);
+
 
 ResultItem.prototype.onClick = function (duck) { console.log('clicked', duck) };
 

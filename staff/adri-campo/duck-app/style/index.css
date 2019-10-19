@@ -1,4 +1,4 @@
-.footer, .details__img, .duckinfo__img, .duckinfo__price, .duckinfo__title, .list, .main, .nav__imagelogo {
+.details__img, .duckinfo__img, .duckinfo__price, .duckinfo__title, .list, .main, .nav__imagelogo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,20 +115,81 @@ body {
   font-weight: normal;
 }
 
-.main__loginForm {
+.login {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   flex-direction: column;
   margin-left: 2%;
 }
-
-.loginButton {
+.login__loginForm {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.login__registerButton {
   margin-top: 2%;
   margin-bottom: 10%;
   border: solid grey 3px;
   border-radius: 2rem;
   height: 2rem;
-  width: 5rem;
+  width: 7rem;
+  font-weight: bold;
+}
+
+.loginButton {
+  margin-top: 8%;
+  margin-bottom: 4%;
+  border: solid grey 3px;
+  border-radius: 2rem;
+  height: 2rem;
+  width: 7rem;
+  font-weight: bold;
+}
+
+.username {
+  border: solid grey 2px;
+}
+
+.usersurname {
+  border: solid grey 2px;
+}
+
+.userpassword {
+  border: solid grey 2px;
+}
+
+.useremail {
+  border: solid grey 2px;
+}
+
+.registration {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: 2%;
+}
+.registration__register {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.registration__goBackButton {
+  margin-top: 2%;
+  margin-bottom: 10%;
+  border: solid grey 3px;
+  border-radius: 2rem;
+  height: 2rem;
+  width: 7rem;
+  font-weight: bold;
+}
+
+.confirmationButton {
+  margin-top: 8%;
+  margin-bottom: 4%;
+  border: solid grey 3px;
+  border-radius: 2rem;
+  height: 2rem;
+  width: 7rem;
   font-weight: bold;
 }
 
@@ -142,6 +203,8 @@ body {
 }
 
 .footer {
+  display: flex;
+  justify-content: flex-start;
   background-color: #f7f57f;
   padding: 0.5rem;
   border-top: 2px solid black;
@@ -154,7 +217,7 @@ body {
   justify-content: center;
   border: solid grey 3px;
   border-radius: 2rem;
-  height: 2rem;
+  height: 1.5rem;
   width: 5rem;
   align-items: center;
   font-weight: bold;

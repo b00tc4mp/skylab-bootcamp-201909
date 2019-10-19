@@ -5,8 +5,11 @@ var form = document.getElementsByClassName("nav__search")[0];
 
 // ESTO ES LA MAIN PAGE ->
 
-var login = new Login(document.getElementsByClassName('main__loginForm')[0]);
+var login = new Login(document.getElementsByClassName('login')[0]);
 login.onSubmit();
+
+// var register = new Register(document.getElementsByClassName('main__register')[0]);
+// register.onSubmit();
 
 duckList();
 
@@ -35,6 +38,27 @@ function duckRefresh () {
     document.getElementsByClassName("main__details")[0].classList.add('hidden'); 
     document.getElementsByClassName("main__initial")[0].classList.remove('hidden'); 
     document.getElementsByClassName("nav__search")[0].classList.remove('hidden'); 
-    document.getElementsByClassName("main__loginForm")[0].classList.add('hidden'); 
+    document.getElementsByClassName("login")[0].classList.add('hidden'); 
 
 };
+
+
+ var registerButton = document.getElementsByClassName("login__registerButton")
+ registerButton[0].addEventListener("click", function() {
+    document.getElementsByClassName("main__details")[0].classList.add('hidden'); 
+    document.getElementsByClassName("main__initial")[0].classList.add('hidden'); 
+    document.getElementsByClassName("nav__search")[0].classList.add('hidden'); 
+    document.getElementsByClassName("login")[0].classList.add('hidden');
+    document.getElementsByClassName("registration")[0].classList.remove('hidden');
+
+ });
+
+ var confirmationButton = document.getElementsByClassName("registration__goBackButton")
+ confirmationButton[0].addEventListener("click", function() {
+    document.getElementsByClassName("main__details")[0].classList.add('hidden'); 
+    document.getElementsByClassName("main__initial")[0].classList.add('hidden'); 
+    document.getElementsByClassName("nav__search")[0].classList.add('hidden'); 
+    document.getElementsByClassName("login")[0].classList.remove('hidden');
+    document.getElementsByClassName("registration")[0].classList.add('hidden');
+
+ });

@@ -42,28 +42,54 @@
         <p class="details__description"></p>
     </section> 
 
-    <form id="loginForm" class="main__loginForm">
-            <h3>ENTER TO THE DUCKS's WORLD <span style="font-size: 2rem" class="search__icon">🦆</span></h3>
+    <section class="login">
+        <form id="loginForm" class="login__loginForm">
+                <h3>ENTER TO THE DUCKS's WORLD <span style="font-size: 2rem" class="search__icon">🦆</span></h3>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" class="username" autofocus/>
+                <br/>
+                <label for="user-password">Password:</label>
+                <input type="password" id="user-password" name="user-password" class="userpassword"/>
+                <button class="loginButton" type="submit">LOGIN</button>
+        </form>
+        <button class="login__registerButton" type="submit">REGISTER</button>
+    </section>
+
+    <section class="registration hidden">
+        <form id="register" class="registration__register">
+            <h3>YOU'RE SO CLOSE.. <span style="font-size: 1.5rem" class="search__icon">👏👏👏</span></h3>
             <label for="username">Username:</label>
-            <input type="text" name="username" id="username" autofocus/>
+            <input type="text" name="username" id="username" class="username" autofocus/>
+            <br/>
+            <label for="user-surname">Password:</label>
+            <input type="surname" id="user-surname" name="user-surname" class="usersurname"/>
+            <br/>
+            <label for="user-email">Email:</label>
+            <input type="email" id="user-email" name="user-email" class="useremail"/>
             <br/>
             <label for="user-password">Password:</label>
-            <input type="password" id="user-password" name="user-password"/>
-            <button class="loginButton" type="submit">LOGIN</button>          
-    </form>
-
+            <input type="password" id="user-password" name="user-password" class="userpassword"/>
+            <button class="confirmationButton" type="submit">CONFIRM</button>
+        </form>
+        <button class="registration__goBackButton" type="submit">GO BACK</button>
+    </section>
+  
     <footer class="footer">  
             <div class="footer__copyright">
                     <span>adricampo ©</span>2019
             </div>        
-            <div class="footer__button">
+            <div class="footer__button hidden">
                 <button class="button">HOME</button>
             </div>
     </footer>
-    <script src="scripts/helpers.js"> </script>
+    <script src="scripts/helpers/helpers.js"> </script>
+    <script src="scripts/utils/function-extend.js"> </script>
     <script src="scripts/utils/fetch.js"> </script>
     <script src="scripts/business/retrieve-duck/index.js"> </script>
     <script src="scripts/business/search-ducks/index.js"> </script>
+    <script src="scripts/components/component.js"> </script>
+    <script src="scripts/components/feedback.js"> </script>
+    <script src="scripts/components/register.js"> </script>
     <script src="scripts/components/login.js"> </script>
     <script src="scripts/components/search.js"> </script>
     <script src="scripts/components/results.js"> </script>

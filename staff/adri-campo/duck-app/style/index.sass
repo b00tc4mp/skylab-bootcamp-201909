@@ -102,7 +102,6 @@ body
     padding: .5rem
     background-color:  rgb(241, 241, 191)
             
-
 .duckinfo__img
     grid-area: img
     @extend %flex-center    
@@ -118,23 +117,80 @@ body
     font-size: 13px
     font-weight: normal
     
-    
 
-.main__loginForm
+
+    
+.login
     display: flex
-    align-items: flex-start
+    align-items: center
     flex-direction: column
     margin-left: 2%
-    
 
+    &__loginForm
+        display: flex
+        align-items: center
+        flex-direction: column
+       
+    &__registerButton
+        margin-top: 2%
+        margin-bottom: 10%
+        border: solid grey 3px
+        border-radius: 2rem
+        height: 2rem
+        width: 7rem
+        font-weight: bold   
+   
 .loginButton
-    margin-top: 2%
-    margin-bottom: 10%
+    margin-top: 8%
+    margin-bottom: 4%
     border: solid grey 3px
     border-radius: 2rem
     height: 2rem
-    width: 5rem
+    width: 7rem
     font-weight: bold
+
+.username
+    border: solid grey 2px 
+
+.usersurname
+    border: solid grey 2px 
+
+.userpassword
+    border: solid grey 2px
+
+.useremail
+    border: solid grey 2px
+
+
+.registration
+    display: flex
+    align-items: center
+    flex-direction: column
+    margin-left: 2%
+
+    &__register
+        display: flex
+        align-items: center
+        flex-direction: column
+    
+    &__goBackButton
+        margin-top: 2%
+        margin-bottom: 10%
+        border: solid grey 3px
+        border-radius: 2rem
+        height: 2rem
+        width: 7rem
+        font-weight: bold 
+
+.confirmationButton
+    margin-top: 8%
+    margin-bottom: 4%
+    border: solid grey 3px
+    border-radius: 2rem
+    height: 2rem
+    width: 7rem
+    font-weight: bold
+
 
 .details__img
     @extend %flex-center    
@@ -147,7 +203,8 @@ body
 
 
 .footer
-    @extend %flex-center 
+    display: flex
+    justify-content: flex-start 
     background-color:  rgb(247, 245, 127)
     padding: .5rem
     border-top: 2px solid black
@@ -162,7 +219,7 @@ body
     justify-content: center
     border: solid grey 3px
     border-radius: 2rem
-    height: 2rem
+    height: 1.5rem
     width: 5rem
     align-items: center
     font-weight: bold

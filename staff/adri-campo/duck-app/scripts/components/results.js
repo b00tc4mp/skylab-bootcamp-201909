@@ -1,7 +1,9 @@
 function Results(container) {
-    this.__container__ = container;
+    Component.call(this, container);
     container.innerHTML = '';
 }
+
+Results.extend(Component);
 
 Results.prototype.onItemClick = function(duck) { console.log('clicked on duck', duck); };
 

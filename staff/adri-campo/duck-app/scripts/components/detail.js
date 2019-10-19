@@ -1,7 +1,8 @@
 function Detail(container) {
-    this.__container__ = container;
-   
+    Component.call(this, container);
 }
+
+Detail.extend(Component);
 
 Detail.prototype.render = function (duck) {
     var detail = document.getElementsByClassName("details")[0];
