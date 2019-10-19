@@ -1,10 +1,10 @@
-listInitialRandomDucks(); // 1. IIFE
+listInitialRandomDucks(); 
 
 function listInitialRandomDucks() {
     searchDucks('', function (ducks) {
         ducks = ducks.shuffle().splice(0, 3);
 
-        paintResults(ducks); // 2.2 quitar painResults y solo results.render(ducks)
+        paintResults(ducks); 
     });
 }
 
@@ -15,7 +15,7 @@ search.onSubmit(listSearchResults);
 //
 
 function listSearchResults(query) {
-    searchDucks(query, paintResults); // 3. quitar listSearcchResults y poner solo searchDucks con una función anonima que escoge parametro de query
+    searchDucks(query, paintResults); 
 }
 
 
@@ -23,7 +23,7 @@ var results = new Results(document.getElementsByClassName('results')[0]);
 
 
 function paintResults(ducks) {
-    results.render(ducks); // 2.1 quitar painResults y solo results.render(ducks)
+    results.render(ducks);
 }
 
 results.onItemClick = function(duck) {

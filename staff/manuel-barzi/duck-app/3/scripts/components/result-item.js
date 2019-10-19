@@ -11,7 +11,6 @@ ResultItem.prototype.render = function (duck) {
 
     item.addEventListener('click', function (event) {
         var id = duck.id;
-
         retrieveDuck(id, this.onClick);
     }.bind(this));
 
