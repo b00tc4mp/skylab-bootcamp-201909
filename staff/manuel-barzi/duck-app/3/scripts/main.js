@@ -18,7 +18,13 @@ function listSearchResults(query) {
     searchDucks(query, paintResults); // 3. quitar listSearcchResults y poner solo searchDucks con una función anonima que escoge parametro de query
 }
 
+
 var results = new Results(document.getElementsByClassName('results')[0]);
+
+
+function paintResults(ducks) {
+    results.render(ducks); // 2.1 quitar painResults y solo results.render(ducks)
+}
 
 results.onItemClick = function(duck) {
     var detail = new Detail(document.getElementsByClassName('detail')[0]);
@@ -29,7 +35,3 @@ results.onItemClick = function(duck) {
     views[0].classList.add('hide');
     views[1].classList.remove('hide');
 };
-
-function paintResults(ducks) {
-    results.render(ducks); // 2.1 quitar painResults y solo results.render(ducks)
-}

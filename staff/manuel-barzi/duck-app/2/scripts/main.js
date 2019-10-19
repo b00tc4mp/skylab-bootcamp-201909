@@ -3,7 +3,7 @@
 listInitialRandomDucks();
 
 function Search(container) {
-    this.__container__ = container;
+    this.__container__ = container; // form
 }
 
 Search.prototype.onSubmit = function (expression) {
@@ -12,15 +12,14 @@ Search.prototype.onSubmit = function (expression) {
 
         var query = this.query.value;
 
-        expression(query);
+        expression(query); 
     });
 };
 
-var search = new Search(document.getElementsByClassName('search')[0]);
-search.onSubmit(listSearchResults);
+var search = new Search(document.getElementsByClassName('search')[0]); // upload[0]
+search.onSubmit(listSearchResults);  // listDucks.
 
-
-function listInitialRandomDucks() {
+function listInitialRandomDucks() { 
     searchDucks('', function (ducks) {
         ducks = ducks.shuffle().splice(0, 3);
 
@@ -35,6 +34,12 @@ function listSearchResults(query) {
 function Results(container) {
     this.__container__ = container;
     container.innerHTML = '';
+    
+}
+
+function ResultItem(container) {
+    this.__container__ = container;
+    container.classList.add('results__item');
 }
 
 Results.prototype.render = function (ducks) {
@@ -47,11 +52,6 @@ Results.prototype.render = function (ducks) {
         this.__container__.append(result.__container__);
     }.bind(this));
 };
-
-function ResultItem(container) {
-    this.__container__ = container;
-    container.classList.add('results__item');
-}
 
 ResultItem.prototype.render = function (duck) {
     var item = document.createElement('a');
