@@ -32,7 +32,7 @@ form[0].addEventListener('submit', function (event) {
 });
 
 function listInitialRandomDucks() {
-    searchDucks('', function (ducks) {
+    searchDucks('', function (ducks)  {
         ducks = ducks.shuffle().splice(0, 3);
 
         paintResults(ducks);
@@ -50,7 +50,6 @@ function paintResults(ducks) {
 
     var ul = document.createElement('ul');
     ul.classList.add('duck-list');
-
     item[0].append(ul);
 
     ducks.forEach(function (duck) {
@@ -60,7 +59,7 @@ function paintResults(ducks) {
         var link = document.createElement('a');
         link.classList.add('duck-list__link');
         link.addEventListener('click', function (event) {
-            item[0].style.display = "none";
+            //item[0].style.display = "none";
             var id = duck.id;
 
             retrieveDuck(id, paintDetail);
@@ -85,26 +84,29 @@ function paintResults(ducks) {
         link.append(h2, img, p);
                 
         ul.append(li);
+        var views = document.getElementsByClassName('main')[0];
+        views.children[0].classList.remove('hide');
+        views.children[1].classList.add('hide');
     });
 }
 
 function paintDetail(duck) {
-    var result = document.getElementsByClassName('result');
-
+    var result = document.getElementsByClassName('result')[0];
+    result.innerHTML = '';
     var div = document.createElement('div');
-    div.classList.add('duck-list--modif');
-    result[0].append(div);    
+    div.classList.add('view');
+    result.append(div);    
 
     
     var h2 = document.createElement('h2');
     var text = document.createTextNode(duck.title);
     h2.classList.add('duck-list__title');
-    h2.classList.add('duck-list__title--modif');
+    //h2.classList.add('duck-list__title--modif');
     h2.appendChild(text);
 
     var img = document.createElement('img');
     img.classList.add('duck-list__image');
-    img.classList.add('duck-list__image--modif');
+    //img.classList.add('duck-list__image--modif');
     img.src = duck.imageUrl;
 
     var desc = document.createElement('p');
@@ -119,21 +121,20 @@ function paintDetail(duck) {
     var p = document.createElement('p');
     var price = document.createTextNode(duck.price);
     p.classList.add('duck-list__price');
-    p.classList.add('duck-list__price--modif');
+    //p.classList.add('duck-list__price--modif');
     p.appendChild(price);
 
     var button = document.createElement('button');
     button.classList.add('duck-list__button');
     button.innerText = 'Back';
     button.addEventListener('click', function (event) {
-        var views = document.getElementsByClassName('view');
-        var item = document.getElementsByClassName('ducks');
+        var views = document.getElementsByClassName('main')[0];
 
-        result[0].innerHTML='';
-        item[0].style.display = "flex";
+        result.innerHTML='';
 
-        views[0].classList.remove('hide');
-        views[1].classList.add('hide');
+
+       views.children[1].classList.add('hide');
+       views.children[0].classList.remove('hide');
     });
 
     div.append(h2);
@@ -143,10 +144,10 @@ function paintDetail(duck) {
     div.append(p);
     div.append(button);
 
-    var views = document.getElementsByClassName('view');
+    var views = document.getElementsByClassName('main')[0];
 
-    views[0].classList.add('hide');
-    views[1].classList.remove('hide');
+    views.children[0].classList.add('hide');
+    views.children[1].classList.remove('hide');
 }
 
 // business
