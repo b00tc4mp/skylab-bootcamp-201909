@@ -17,8 +17,6 @@
     var results = document.getElementsByClassName('results')[0];
     var duckQuery = document.getElementsByClassName('uploaded__input')[0];
     
-    
-    
     submit.addEventListener('submit', function(e){
     
         e.preventDefault();
@@ -29,53 +27,41 @@
     
     })
     
-    // listDucks(queryDucks)
-    
+    function call(method, url, callback) {
+    var xhr = new XMLHttpRequest;
+
+    xhr.open(method, url);
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 201) {
+            var results = JSON.parse(xhr.responseText);
+
+            callback(results);
+        }
+    };
+
+    xhr.send();
+    };
+
     function listDucks(query) {
         
         searchDucks(query, function(ducks){
             painDucks(ducks);
             
         });
-    }
-    
-    
-    // search patitos (proceso de patitos)
-    
-    function searchDucks (query, callback){
-    
-        var xhr = new XMLHttpRequest;
-    
-        xhr.open('GET', query ? 'https://duckling-api.herokuapp.com/api/search?q=' + query : 'https://duckling-api.herokuapp.com/api/search');
-    
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 201) {
-                var ducks = JSON.parse(xhr.responseText);
-    
-                callback(ducks);
-            }
     };
     
-    xhr.send();
+    function searchDucks (query, callback){
+
+        call('GET', query ? 'https://duckling-api.herokuapp.com/api/search?q=' + query : 'https://duckling-api.herokuapp.com/api/search', callback);
+    
     };
     
     function searchDetailDuck(id, callback){
     
-        var xhr = new XMLHttpRequest;
-    
-        xhr.open('GET','https://duckling-api.herokuapp.com/api/ducks/' + id);
-        xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 201) {
-                var duck = JSON.parse(xhr.responseText);
-    
-                callback(duck);
-            }
-        };
-        xhr.send();
+        call('GET','https://duckling-api.herokuapp.com/api/ducks/' + id, callback);
     };
     
-    
-    // pain patitos
     function painDucks(ducks) {
     
         var results = document.getElementsByClassName('results')[0];
@@ -112,8 +98,7 @@
                 li.append(div);
                 results.append(li);
             });
-    }
-    
+    };
     
     function detailDuck(duck) {
     
@@ -146,4 +131,4 @@
     
             views[0].classList.add('hide');
             views[1].classList.remove('hide');
-};
+    };

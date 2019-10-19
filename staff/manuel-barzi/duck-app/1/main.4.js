@@ -18,9 +18,7 @@ if (typeof Array.prototype.shuffle === 'undefined')
     };
 
 listInitialRandomDucks();
-
 var search = document.getElementsByClassName('search')[0];
-
 search.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -28,7 +26,6 @@ search.addEventListener('submit', function (event) {
 
     listSearchResults(query);
 });
-
 
 function listInitialRandomDucks() {
     searchDucks('', function (ducks) {
@@ -38,24 +35,36 @@ function listInitialRandomDucks() {
     });
 }
 
-function listSearchResults(query) {
-    searchDucks(query, paintResults);
-}
-
-function searchDucks(query, callback) {
+function call(method, url, callback) {
     var xhr = new XMLHttpRequest;
 
-    xhr.open('GET', query ? 'https://duckling-api.herokuapp.com/api/search?q=' + query : 'https://duckling-api.herokuapp.com/api/search');
+    xhr.open(method, url);
 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 201) {
-            var ducks = JSON.parse(xhr.responseText);
+            var results = JSON.parse(xhr.responseText);
 
-            callback(ducks);
+            callback(results);
         }
     };
 
     xhr.send();
+}
+
+function listSearchResults(query) {
+    searchDucks(query, paintResults);
+}
+
+function searchDucks(query, callback) { // ducks
+
+
+    call('GET', query ? 'https://duckling-api.herokuapp.com/api/search?q=' + query : 'https://duckling-api.herokuapp.com/api/search', callback)
+}
+
+function retrieveDuck(id, callback) { // duck
+    
+
+    call('GET', 'https://duckling-api.herokuapp.com/api/ducks/' + id, callback);
 }
 
 function paintResults(ducks) {
@@ -91,22 +100,6 @@ function paintResults(ducks) {
 
         results.append(result);
     });
-}
-
-function retrieveDuck(id, callback) {
-    var xhr = new XMLHttpRequest;
-
-    xhr.open('GET', 'https://duckling-api.herokuapp.com/api/ducks/' + id);
-
-    xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 201) {
-            var duck = JSON.parse(xhr.responseText);
-
-            callback(duck);
-        }
-    };
-
-    xhr.send();
 }
 
 function paintDetail(duck) {

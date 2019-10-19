@@ -19,16 +19,6 @@ if (typeof Array.prototype.shuffle === 'undefined')
 
 listInitialRandomDucks();
 
-var search = document.getElementsByClassName('search')[0];
-
-search.addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    var query = this.query.value;
-
-    listSearchResults(query);
-});
-
 
 function listInitialRandomDucks() {
     var xhr = new XMLHttpRequest;
@@ -118,6 +108,17 @@ function listInitialRandomDucks() {
 
     xhr.send();
 }
+
+var search = document.getElementsByClassName('search')[0];
+
+search.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    var query = this.query.value;
+
+    listSearchResults(query);
+});
+
 
 function listSearchResults(query) {
     var xhr = new XMLHttpRequest;
