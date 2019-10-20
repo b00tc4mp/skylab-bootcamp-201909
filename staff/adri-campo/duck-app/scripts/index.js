@@ -8,10 +8,10 @@ var form = document.getElementsByClassName("nav__search")[0];
 var login = new Login(document.getElementsByClassName('login')[0]);
 login.onSubmit();
 
-// var register = new Register(document.getElementsByClassName('main__register')[0]);
-// register.onSubmit();
+var register = new Register(document.getElementsByClassName('registration')[0]);
+register.onSubmit();
 
-duckList();
+duckList(); 
 
 var search = new Search(document.getElementsByClassName('nav__search')[0]);
 search.onSubmit(duckList);
@@ -53,8 +53,8 @@ function duckRefresh () {
 
  });
 
- var confirmationButton = document.getElementsByClassName("registration__goBackButton")
- confirmationButton[0].addEventListener("click", function() {
+ var goBackButton = document.getElementsByClassName("registration__goBackButton")
+ goBackButton[0].addEventListener("click", function() {
     document.getElementsByClassName("main__details")[0].classList.add('hidden'); 
     document.getElementsByClassName("main__initial")[0].classList.add('hidden'); 
     document.getElementsByClassName("nav__search")[0].classList.add('hidden'); 
