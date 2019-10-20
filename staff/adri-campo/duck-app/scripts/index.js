@@ -5,11 +5,43 @@ var form = document.getElementsByClassName("nav__search")[0];
 
 // ESTO ES LA MAIN PAGE ->
 
-var login = new Login(document.getElementsByClassName('login')[0]);
-login.onSubmit();
+var login = new Login(document.getElementsByClassName('login__loginForm')[0]);
+login.onSubmit( function (username, password) { 
+    try{
+        authenticateUser(username, password, (result)=> {
+            retrieveUser(result.id, result.token, (result)=>{
+                console.log(result)
+                document.getElementsByClassName("login")[0].classList.add('hidden')
+                document.getElementsByClassName("main__initial")[0].classList.remove('hidden')
+                document.getElementsByClassName("nav__search")[0].classList.remove('hidden'); 
+            })
 
-var register = new Register(document.getElementsByClassName('registration')[0]);
-register.onSubmit();
+        });
+
+    } catch (error) {
+        feedback.render(error.message);
+        document.getElementsByClassName('feedback__message')[0].classList.remove('hidden')
+        document.getElementsByClassName('main__initial')[0].classList.add('hidden')
+    }
+
+});
+
+
+var feedback = new Feedback(document.getElementsByClassName('feedback__message')[0]);
+
+var register = new Register(document.getElementsByClassName('registration__register')[0]);
+register.onSubmit(function (name, surname, email, password) { 
+    try {
+        registerUser(name, surname, email, password, function(){
+            document.getElementsByClassName("login")[0].classList.remove('hidden'); 
+            document.getElementsByClassName("registration")[0].classList.add('hidden');
+        });
+    } catch (error) {
+        feedback.render(error.message);
+        document.getElementsByClassName('feedback__message')[0].classList.remove('hidden')
+        document.getElementsByClassName('main__initial')[0].classList.add('hidden')
+    }
+});
 
 duckList(); 
 

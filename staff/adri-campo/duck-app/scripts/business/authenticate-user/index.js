@@ -9,7 +9,7 @@ function authenticateUser(email, password, callback) {
         else {
             const { data: { id, token } } = result
 
-            callback(undefined, { id, token })
+            callback({ id, token })
         }
     })
 }

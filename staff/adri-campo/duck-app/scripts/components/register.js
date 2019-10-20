@@ -7,9 +7,15 @@ Register.extend(Component);
 Register.prototype.onSubmit = function (expression) {
     this.container.addEventListener('submit', function (event) {
         event.preventDefault();
+        const name = this.name.value
+        const surname = this.surname.value
+        const email = this.email.value
+        const password = this.password.value
+        expression(name, surname, email, password)
 
-        document.getElementsByClassName("login")[0].classList.remove('hidden'); 
-        document.getElementsByClassName("registration")[0].classList.add('hidden');
-        
     });
 };  
+
+
+
+
