@@ -1,6 +1,6 @@
-debugger
+
 //está definida más adelante
-listInitialRandomDucks();
+// listInitialRandomDucks();
 
 
 /*Función constructora, con el parametro container. 
@@ -35,7 +35,7 @@ resultados que cumplen lo que la query marca.*/
 search.onSubmit(listSearchResults); //la definiremos después
  
  //definimos la función para sacar los patos random al principio.
- function listInitialRandomDucks() {
+(function listInitialRandomDucks() {
     /*lo que hace es lanzar searchDucks con query vacía, 
     y le aplica a todo ducks una shuffle(vease archivo shuffle)*/
     searchDucks('', function (ducks) {
@@ -43,7 +43,7 @@ search.onSubmit(listSearchResults); //la definiremos después
     //luego nos ejecuta paintResults--> vease más adelante
         paintResults(ducks);
     });
-}
+})();
 
 /* función que te hace la lista de los resultados y te los imprime.
 Le pasamos como argumento el valor introducido en el form, y nos ejecuta
@@ -87,7 +87,13 @@ Results.prototype.render = function (ducks) {
     }.bind(this));
 };
 
+var ul = document.createElement('ul');
+ul.classList.add('duck-list');
 
+var ducks = document.getElementsByClassName("ducks")[0];
+
+ducks.append(ul);
+var results = new Results(ul);
 
 
 /*función constructora de resultItem. 
@@ -129,19 +135,8 @@ this.__container__.append(item);
 };
 
 
-
-
-
 //paintResults nos lleva directamente a results.render. 
 function paintResults(ducks) {
-    var ul = document.createElement('ul');
-    ul.classList.add('duck-list');
-
-    var ducks = document.getElementsByClassName("ducks")[0];
-
-    ducks.append(ul);
-    var results = new Results(ul);
-//si no funciona, probar de poner new Results(document.getElementByClassName("duck-list")[0])
     results.render(ducks);
 }
 
@@ -150,64 +145,47 @@ function Detail(container) {
 }
 
 Detail.prototype.render = function (duck) {
-    var result = document.getElementsByClassName('result')[0];
-    result.innerHTML = '';
-    var div = document.createElement('div');
-    div.classList.add('view');
-    result.append(div);
-
-
-    var title = document.createElement('h2');
-    title.classList.add('duck-list__title');
+    const title = document.getElementsByClassName("detail__title")[0];
     title.innerText = duck.title;
 
-    var image = document.createElement('img');
-    image.classList.add('duck-list__image');
+    const image = document.getElementsByClassName("detail__image")[0];
     image.src = duck.imageUrl;
 
-    var text = document.createElement('p');
-    var description = document.createTextNode(duck.description);
-    text.classList.add('duck-list__description');
-    description.appendChild(text);
+    // var back = document.createElement('button');
+    // back.classList.add('duck-list__button');
+    // back.innerText = 'Back';
+    // back.addEventListener('click' , function (event) {
+    //     var views = document.getElementsByClassName('main')[0];
+    
+    const description = document.getElementsByClassName("detail__description")[0];
+    description.innerText = duck.description;
 
-    var store = document.createElement('a');
-    store.classList.add('duck-list__store');
-    store.innerText = 'Go to store';
-    store.href = duck.link;
-
-    var price = document.createElement('span');
-    price.classList.add('duck-list__price');
+    const price = document.getElementsByClassName("detail__price")[0];
     price.innerText = duck.price;
 
-    var back = document.createElement('button');
-    back.classList.add('duck-list__button');
-    back.innerText = 'Back';
+    const back = document.getElementsByClassName("detail__button")[0];
     back.addEventListener('click' , function (event) {
         var views = document.getElementsByClassName('main')[0];
-
-        //result.innerHTML='';
-        div.append(title);
-        div.append(image);
-        div.append(text);
-        div.append(store);
-        div.append(price);
-        div.append(back);
-
         views.children[0].classList.remove('hide');
         views.children[1].classList.add('hide');
+    });     
+
+    const store = document.getElementsByClassName("detail__store")[0];
+    store.href = duck.link;
        
-    });
 };
 
+
 function paintDetail(duck) {
-    var detail = new Detail(document.getElementsByClassName('result')[0]);
+
+    var detail = new Detail(document.getElementsByClassName('detail')[0]);
     detail.render(duck);
 
     var views = document.getElementsByClassName('main')[0];
 
     views.children[0].classList.add('hide');
     views.children[1].classList.remove('hide');
-}
+};
 
     
 
