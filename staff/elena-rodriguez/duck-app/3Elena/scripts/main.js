@@ -11,8 +11,10 @@ function listInitialRandomDucks() {
     });
 };
 
-
 function listSearchResults(query) {
+    var views = document.getElementsByClassName('main')[0];
+    views.children[0].classList.remove('hide');
+    views.children[1].classList.add('hide');
     searchDucks(query, paintResults);
 }
 
@@ -23,7 +25,7 @@ ducks.append(ul);
 var results = new Results(ul);
 
 results.onItemClick = function(duck) {
-    debugger
+
     var detail = new Detail(document.getElementsByClassName('detail')[0]);
     detail.render(duck);
 
