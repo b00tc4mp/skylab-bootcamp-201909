@@ -1,0 +1,159 @@
+li {
+  list-style: none;
+}
+
+input {
+  border: 0.1rem solid white;
+  background-color: #cdcdfaee;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #bbee;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 20%;
+}
+
+.hide {
+  display: none;
+}
+
+.view {
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  body {
+    box-sizing: border-box;
+    background-color: #bbee;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 7%;
+  }
+}
+@media (min-width: 1200px) {
+  body {
+    box-sizing: border-box;
+    background-color: #bbee;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 7%;
+  }
+}
+.header__title {
+  color: white;
+  margin-bottom: 0;
+}
+.header__slogan {
+  color: white;
+  font-size: 1em;
+  margin-top: 0;
+}
+.header__form {
+  margin-top: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+}
+.header__form-button {
+  background-color: white;
+  align-content: center;
+  color: rgba(149, 149, 238, 0.933);
+  font-size: 16px;
+  height: 2.8em;
+  margin: 0px 5px;
+  border: 1px solid white;
+}
+.header__form-search {
+  width: 15em;
+  height: 2.8em;
+  font-size: 16px;
+  color: black;
+  margin: 0px;
+  font-weight: bold;
+}
+
+.duck-list {
+  display: grid;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+.duck-list__duck {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+.duck-list__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+}
+.duck-list__image {
+  width: 70vw;
+  border-radius: 20%;
+  align-self: center;
+}
+.duck-list__description {
+  font-size: 1em;
+  width: 80vw;
+  margin: 3px auto;
+}
+.duck-list__price {
+  font-size: 20px;
+}
+.duck-list__button {
+  background-color: white;
+  color: #9595eeee;
+  font-size: 0.9em;
+  width: 20vw;
+  height: 3em;
+  margin: 0px;
+  align-self: center;
+}
+
+@media (min-width: 768px) {
+  .duck-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0;
+  }
+  .duck-list__duck {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 50%;
+  }
+  .duck-list__image {
+    max-width: 340px;
+    border-radius: 20%;
+  }
+}
+@media (min-width: 1200px) {
+  .duck-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 0;
+  }
+  .duck-list__duck {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 30%;
+  }
+  .duck-list__image {
+    max-width: 340px;
+    border-radius: 20%;
+  }
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  background-color: #bbbbee;
+  width: 100vw;
+  text-align: center;
+}
+
+/*# sourceMappingURL=style.css.map */

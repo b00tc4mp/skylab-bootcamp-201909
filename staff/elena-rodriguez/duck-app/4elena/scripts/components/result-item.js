@@ -16,15 +16,15 @@ ResultItem.prototype.render = function (result) {
     }.bind(this));
 
     var title = document.createElement('h2');
-    title.classList.add('item__title');
+    title.classList.add('duck-list__title');
     title.innerText = result.title;
 
     var image = document.createElement('img');
-    image.classList.add('item__image');
+    image.classList.add('duck-list__image');
     image.src = result.imageUrl;
 
     var price = document.createElement('span');
-    price.classList.add('item__price');
+    price.classList.add('duck-list__price');
     price.innerText = result.price;
 
     item.append(title, image, price);

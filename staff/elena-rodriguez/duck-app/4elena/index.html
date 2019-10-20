@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Duck-App</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="header__title"> DUCK-APP </h1>
+        <h2 class="header__slogan"> To quack or not to quack </h2>
+        <form class="header__form">
+            <input type="search" class="header__form-search" name="query">
+            <button class="header__form-button">🔍</button>
+        </form>
+    </header>
+    <main class="main">
+        <section class="ducks">
+
+        </section>
+        <section class="detail hide">
+            <h1 class="detail__title"></h1>
+            <img src="" alt="" class="detail__image">
+            <p class="detail__description"></p>
+            <p><span class="detail__price"></span></p>
+            <a class="detail__store">Go to store</a>
+            <button class="detail__button">Back</button>
+        </section>
+    </main>
+    <footer class="footer">
+        <p class="footer__copyright">®Elena Rodríguez-2019</p>
+    </footer>
+    
+    <script src="scripts/array-shuffle.js"></script>
+    <script src="scripts/helpers.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/logic/retrieve-duck/index.js"></script>
+    <script src="scripts/logic/search-ducks/index.js"></script>
+    <script src="scripts/components/search.js"></script>
+    <script src="scripts/components/results.js"></script>
+    <script src="scripts/components/result-item.js"></script>
+    <script src="scripts/components/detail.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>

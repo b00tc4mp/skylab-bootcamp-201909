@@ -4,6 +4,7 @@ function Search(container) {
 
 Search.prototype.onSubmit = function (expression) {
     this.__container__.addEventListener('submit', function (event) {
+        
         event.preventDefault(); //hace que no se repita 
 
         var query = this.query.value; //asigna la variable query a lo que escribimos en el formulario. 

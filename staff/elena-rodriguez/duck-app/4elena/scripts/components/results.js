@@ -2,6 +2,7 @@ function Results(container) {
     this.__container__ = container;
     container.innerHTML = '';
 
+    //revisar esta parte
     this.render = this.render.bind(this); // EYE!
 }
 
