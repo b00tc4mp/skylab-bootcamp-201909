@@ -10,6 +10,7 @@ Login.prototype.onSubmit = function (expression) {
 
         const username = this.username.value
         const password = this.password.value
+        
         expression(username, password)
 
         // document.getElementsByClassName("login")[0].classList.add('hidden'); 

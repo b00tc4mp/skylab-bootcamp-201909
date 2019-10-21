@@ -5,17 +5,20 @@ var form = document.getElementsByClassName("nav__search")[0];
 
 // ESTO ES LA MAIN PAGE ->
 
+var feedback = new Feedback(document.getElementsByClassName('feedback__message')[0]);
+
 var login = new Login(document.getElementsByClassName('login__loginForm')[0]);
 login.onSubmit( function (username, password) { 
     try{
-        authenticateUser(username, password, (result)=> {
-            retrieveUser(result.id, result.token, (result)=>{
+        authenticateUser(username, password, (result)=> { 
+            retrieveUser(result.id, result.token, (result)=>{ 
                 console.log(result)
                 document.getElementsByClassName("login")[0].classList.add('hidden')
                 document.getElementsByClassName("main__initial")[0].classList.remove('hidden')
                 document.getElementsByClassName("nav__search")[0].classList.remove('hidden'); 
+                document.getElementsByClassName("footer__button")[0].classList.remove('hidden');
+                alert(`Welcome ${result.data.name}!!`) 
             })
-
         });
 
     } catch (error) {
@@ -25,9 +28,6 @@ login.onSubmit( function (username, password) {
     }
 
 });
-
-
-var feedback = new Feedback(document.getElementsByClassName('feedback__message')[0]);
 
 var register = new Register(document.getElementsByClassName('registration__register')[0]);
 register.onSubmit(function (name, surname, email, password) { 
@@ -94,3 +94,7 @@ function duckRefresh () {
     document.getElementsByClassName("registration")[0].classList.add('hidden');
 
  });
+
+ 
+
+

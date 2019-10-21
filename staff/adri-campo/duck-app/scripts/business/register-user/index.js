@@ -6,6 +6,6 @@ function registerUser(name, surname, email, password, callback) {
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function')
 
     call('POST', 'https://skylabcoders.herokuapp.com/api/user', { name, surname, email, password }, result => {
-        result.error ? callback(new Error(result.error)) : callback();
+        result.error ? callback(new Error(result.error)) : callback({username: email, password});
     })
 }
