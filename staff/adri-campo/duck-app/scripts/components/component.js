@@ -1,23 +1,23 @@
 function Component(container) {
-    this.__container__ = container;
+    this.__container__ = container
 }
 
 Object.defineProperty(Component.prototype, 'container', {
     get: function() {
-        return this.__container__;
+        return this.__container__
     }
-});
+})
 
 Component.prototype.add = function(child) {
-    if (!(child instanceof Component)) throw TypeError(child + ' is not a Component');
+    if (!(child instanceof Component)) throw TypeError(child + ' is not a Component')
 
-    this.container.append(child.container);
-};
+    this.container.append(child.container)
+}
 
 Component.prototype.show = function() {
-    this.container.classList.remove('hide');
-};
+    this.container.classList.remove('hide')
+}
 
 Component.prototype.hide = function() {
-    this.container.classList.add('hide');
-};
+    this.container.classList.add('hide')
+}
