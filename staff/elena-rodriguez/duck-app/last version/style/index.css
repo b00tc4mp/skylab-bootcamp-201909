@@ -1,0 +1,228 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #bbee;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 20%;
+}
+
+.hide {
+  display: none;
+}
+
+.view {
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  body {
+    box-sizing: border-box;
+    background-color: #bbee;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 7%;
+  }
+}
+@media (min-width: 1200px) {
+  body {
+    box-sizing: border-box;
+    background-color: #bbee;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 7%;
+  }
+
+  /* @import ./search */
+}
+.results {
+  border: 0.3rem solid orange;
+  border-radius: 1rem;
+  border-style: dotted;
+  padding: 1rem;
+  margin: 0.5rem;
+  list-style: none;
+  columns: 3;
+}
+.results__item {
+  display: inline-block;
+  border: 0.3rem solid orange;
+  border-radius: 1rem;
+  border-style: dotted;
+  margin: 1rem;
+}
+
+.item {
+  display: inline-block;
+  background-color: pink;
+  border: 0.3rem solid fuchsia;
+  border-radius: 1rem;
+  border-style: dotted;
+  text-decoration: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.item__title {
+  color: fuchsia;
+}
+.item__image {
+  display: block;
+  border-radius: 0.5rem;
+  margin: 0.5rem auto 0.5rem auto;
+  max-width: 20vw;
+}
+.item__price {
+  display: inline-block;
+  border: 0.3rem solid white;
+  border-radius: 1rem;
+  border-style: dotted;
+  color: white;
+  background-color: red;
+  padding: 0.5rem;
+  font-size: 2rem;
+}
+
+.detail {
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+.detail__title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+}
+.detail__image {
+  width: 70vw;
+  border-radius: 20%;
+  align-self: center;
+}
+.detail__description {
+  font-size: 1em;
+  width: 80vw;
+  margin: 3px auto;
+}
+.detail__price {
+  font-size: 20px;
+}
+
+.feedback {
+  border: 0.3rem solid orange;
+  border-radius: 1rem;
+  border-style: dotted;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: olive;
+}
+.feedback__icon {
+  font-size: 1.5rem;
+}
+.feedback__message {
+  display: inline;
+  color: white;
+  font-size: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.register {
+  background-color: #bbee;
+  border-radius: 1rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  font-family: "Montserrat", sans-serif;
+}
+.register__title {
+  color: white;
+  font-size: 2rem;
+  margin: 0.5rem auto 0.5rem auto;
+}
+.register__field {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.register__field:hover {
+  border: 0.25rem solid #6666f2ee;
+  color: black;
+}
+.register__submit {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.register__submit:hover {
+  border: 0.25rem solid #6666f2ee;
+  color: black;
+}
+.register__back {
+  text-decoration: none;
+  font-weight: bold;
+  padding-left: 0.5rem;
+}
+.register__image {
+  margin-top: 20vh;
+  padding: 0.5rem;
+  width: 15rem;
+}
+
+.login {
+  background-color: #bbee;
+  border: 0.3rem solid white;
+  border-radius: 1rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  font-family: "Montserrat", sans-serif;
+}
+.login__title {
+  color: white;
+  font-size: 2rem;
+  margin: 0.5rem auto 0.5rem auto;
+}
+.login__field {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+.login__field:hover {
+  border: 0.25rem solid #6666f2ee;
+  color: black;
+}
+.login__submit {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
+.login__submit:hover {
+  border: 0.25rem solid #6666f2ee;
+  color: black;
+}
+
+.landing {
+  height: 100vh;
+  background-color: #bbee;
+  border-radius: 1rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  font-family: "Montserrat", sans-serif;
+}
+.landing__title {
+  color: white;
+  font-size: 2rem;
+  margin: 0.5rem auto 0.5rem auto;
+}
+.landing__options {
+  color: white;
+  font-size: 1.2rem;
+  margin: 0.5rem auto 0.5rem auto;
+}
+.landing__image {
+  margin-top: 20vh;
+  padding: 0.5rem;
+  width: 15rem;
+}
+
+/*# sourceMappingURL=index.css.map */
