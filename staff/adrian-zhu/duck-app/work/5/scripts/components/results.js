@@ -1,20 +1,23 @@
 function Results(container) {
-    this.__container__ = container;
+    Component.call(this, container);
+
     container.innerHTML = '';
 
     this.render = this.render.bind(this); // EYE!
 }
 
+Results.extend(Component);
+
 Results.prototype.onItemRender = undefined; // create method 
 
 Results.prototype.render = function (results) {
-    this.__container__.innerHTML = '';
+    this.container.innerHTML = '';
 
     results.forEach(function (result) {
         var item = this.onItemRender(); // pasar onItem aquí
 
         item.render(result);
 
-        this.__container__.append(item.__container__); // ul append li
+        this.add(item); // ul append li
     }.bind(this));
 };

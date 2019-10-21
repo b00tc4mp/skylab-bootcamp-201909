@@ -1,7 +1,9 @@
 function ResultItem(container) {
-    this.__container__ = container;
+    Component.call(this, container);
     //container.classList.add('results__item');
 }
+
+ResultItem.extend(Component);
 
 ResultItem.prototype.onClick = undefined;
 

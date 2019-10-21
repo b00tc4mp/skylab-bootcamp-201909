@@ -1,5 +1,8 @@
 Script 
 
-Descomponización en componentes Search Results Results-items y details;
+main.js
 
-Swap función painDucks a metodo Onclick + OnItemClick 
+searchDucks(query, results.render) => no searchDucks(query, results.render(ducks))
+
+
+

@@ -1,6 +1,8 @@
 function Detail(container) {
-    this.__container__ = container;
+    Component.call(this, container);
 }
+
+Detail.extend(Component);
 
 Detail.prototype.onBack = undefined;
 

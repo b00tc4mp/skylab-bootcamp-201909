@@ -12,23 +12,18 @@ search.onSubmit( function(query){
 }); 
 
 var results = new Results(document.getElementsByClassName('results')[0]);
-
-results.onItemRender = function(duck) {
-
+results.onItemRender = function() {
     var item = new ResultItem(document.createElement('li'));
     
     item.onClick = function(id){
         searchDetailDuck(id, function(duck){
-
             var detail = new Detail(document.getElementsByClassName('details')[0]);
 
             detail.onBack = function(){
-
                 var views = document.getElementsByClassName('view');
 
                 views[0].classList.remove('hide');
                 views[1].classList.add('hide');
-
             }
 
             detail.render(duck);
@@ -41,5 +36,4 @@ results.onItemRender = function(duck) {
         })
     }
     return item;
-
 }
