@@ -51,9 +51,11 @@ login.onSubmit(function (username, password) {
                 feedback.render(error.message);
                 document.getElementsByClassName('feedback')[0].classList.remove('hide')
             } else {
-                retrieveUser(result.id, result.token, ()=>{
+                retrieveUser(result.id, result.token, (result)=>{
                     document.getElementsByClassName('login')[0].classList.add('hide')
-                    document.getElementsByClassName('main')[0].classList.remove('hide')
+                    document.getElementsByClassName('view')[0].classList.remove('hide')
+              
+              
                 })
                 }
             });
@@ -84,7 +86,7 @@ results.onItemRender = function() {
     var item = new ResultItem(document.createElement('li'));
     
     item.onClick = function(id){
-        retrieveDuck(id, function(duck, error){ ;
+        retrieveDuck(id, function(duck, error){  debugger;
             if (error) {
                 feedback.render(error.message);
 
