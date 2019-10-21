@@ -8,4 +8,6 @@ function retrieveUser(id, token, callback) {
     call('GET', url, {'token' : token}, function (result) {
         result.error ? callback(new Error(result.error)) : callback(result);
     });
+
+
 }

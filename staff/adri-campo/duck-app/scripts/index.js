@@ -16,7 +16,8 @@ login.onSubmit( function (username, password) {
                 document.getElementsByClassName("login")[0].classList.add('hidden')
                 document.getElementsByClassName("main__initial")[0].classList.remove('hidden')
                 document.getElementsByClassName("nav__search")[0].classList.remove('hidden'); 
-                document.getElementsByClassName("footer__button")[0].classList.remove('hidden');
+                document.getElementsByClassName("footer__button")[0].classList.remove('hidden');  
+                         
                 alert(`Welcome ${result.data.name}!!`) 
             })
         });

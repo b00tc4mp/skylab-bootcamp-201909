@@ -11,6 +11,7 @@
     <title>Duck App</title>
 </head>
     <body>
+
         <header class="header">
             <nav class="header__nav nav">
                 <div class="nav__title">
@@ -29,82 +30,93 @@
             </nav>
         </header>
 
-    <section class="feedback hidden">
-        <span class="feedback__icon">🤡</span>
-        <p class="feedback__message">Come with me...</p>
-        <span class="feedback__icon">🎈</span>
-    </section>
+            <section class="login">
+                <form id="loginForm" class="login__loginForm">
+                    <h3>ENTER TO THE DUCKS's WORLD <span style="font-size: 2rem" class="search__icon">🦆</span></h3>
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" class="username" autofocus/>
+                    <br/>
+                        <label for="user-password">Password:</label>
+                        <input type="password" id="user-password" name="password" class="userpassword"/>
+                        <button class="loginButton" type="submit">LOGIN</button>
+                </form>
+                <button class="login__registerButton" type="submit">REGISTER</button>
+            </section>
 
-    <main class="main__initial hidden">    
-        <ul class="list"></ul> 
-    </main>
+            <!-- <section class="welcome hidden">
+                    <div class="nav__imagelogo">
+                        <a href=""><img
+                            src="./images/duck pop-up.png"
+                            alt="welcome img"
+                            class="welcomeimg"></a>
+                            <div class="hello">Hello adri</div>
+                    </div>
+            </section>
+         -->
+            <section class="registration hidden">
+                <form id="register" class="registration__register">
+                    <h3>YOU'RE SO CLOSE.. <span style="font-size: 1.5rem" class="search__icon">👏👏👏</span></h3>
+                    <label for="username">Username:</label>
+                    <input type="text" name="name" id="username" class="username" required autofocus/>
+                    <br/>
+                    <label for="user-surname">Surname:</label>
+                    <input type="text" id="user-surname" name="surname" class="usersurname" required />
+                    <br/>
+                    <label for="user-email">Email:</label>
+                    <input type="email" id="user-email" name="email" class="useremail" required />
+                    <br/>
+                    <label for="user-password">Password:</label>
+                    <input type="password" id="user-password" name="password" class="userpassword" required />
+                    <button class="confirmationButton" type="submit">CONFIRM</button>
+                </form>
+                <button class="registration__goBackButton" type="submit">GO BACK</button>
+            </section>
 
-    <section class="main__details details hidden">    
-        <h2 class="details__title"></h2>
-        <p class="details__price">
-            <span class="pricetag"></span> 
-        </p>
-        <img src="" alt="" class="details__img">
-        <p class="details__description"></p>
-    </section> 
+        <main class="main__initial hidden">    
+            <ul class="list"></ul> 
 
-    <section class="login">
-        <form id="loginForm" class="login__loginForm">
-                <h3>ENTER TO THE DUCKS's WORLD <span style="font-size: 2rem" class="search__icon">🦆</span></h3>
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" class="username" autofocus/>
-                <br/>
-                <label for="user-password">Password:</label>
-                <input type="password" id="user-password" name="password" class="userpassword"/>
-                <button class="loginButton" type="submit">LOGIN</button>
-        </form>
-        <button class="login__registerButton" type="submit">REGISTER</button>
-    </section>
+            <section class="feedback hidden">
+                <span class="feedback__icon">🤡</span>
+                <p class="feedback__message">Come with me...</p>
+                <span class="feedback__icon">🎈</span>
+            </section>
+        </main>
 
-    <section class="registration hidden">
-        <form id="register" class="registration__register">
-            <h3>YOU'RE SO CLOSE.. <span style="font-size: 1.5rem" class="search__icon">👏👏👏</span></h3>
-            <label for="username">Username:</label>
-            <input type="text" name="name" id="username" class="username" required autofocus/>
-            <br/>
-            <label for="user-surname">Surname:</label>
-            <input type="text" id="user-surname" name="surname" class="usersurname" required />
-            <br/>
-            <label for="user-email">Email:</label>
-            <input type="email" id="user-email" name="email" class="useremail" required />
-            <br/>
-            <label for="user-password">Password:</label>
-            <input type="password" id="user-password" name="password" class="userpassword" required />
-            <button class="confirmationButton" type="submit">CONFIRM</button>
-        </form>
-        <button class="registration__goBackButton" type="submit">GO BACK</button>
-    </section>
-  
-    <footer class="footer">  
+        <section class="main__details details hidden">    
+            <h2 class="details__title"></h2>
+            <p class="details__price">
+                <span class="pricetag"></span> 
+            </p>
+                <img src="" alt="" class="details__img">
+            <p class="details__description"></p>
+        </section> 
+
+
+        <footer class="footer">  
             <div class="footer__copyright">
                     <span>adricampo ©</span>2019
             </div>        
             <div class="footer__button hidden">
                 <button class="button">HOME</button>
             </div>
-    </footer>
-    <script src="scripts/helpers/helpers.js"> </script>
-    <script src="scripts/utils/function-extend.js"> </script>
-    <script src="scripts/utils/fetch.js"> </script>
-    <script src="scripts/business/register-user/index.js"> </script>
-    <script src="scripts/business/retrieve-user/index.js"> </script>
-    <script src="scripts/business/authenticate-user/index.js"> </script>
-    <script src="scripts/business/retrieve-duck/index.js"> </script>
-    <script src="scripts/business/search-ducks/index.js"> </script>
-    <script src="scripts/components/component.js"> </script>
-    <script src="scripts/components/feedback.js"> </script>
-    <script src="scripts/components/register.js"> </script>
-    <script src="scripts/components/login.js"> </script>
-    <script src="scripts/components/search.js"> </script>
-    <script src="scripts/components/results.js"> </script>
-    <script src="scripts/components/result-item.js"> </script>
-    <script src="scripts/components/detail.js"> </script>
-    <script src="scripts/index.js"> </script>
-    
+        </footer>
+        
+        <script src="scripts/helpers/helpers.js"> </script>
+        <script src="scripts/utils/fetch.js"> </script>
+        <script src="scripts/utils/function-extend.js"> </script>
+        <script src="scripts/business/register-user/index.js"> </script>
+        <script src="scripts/business/retrieve-user/index.js"> </script>
+        <script src="scripts/business/authenticate-user/index.js"> </script>
+        <script src="scripts/business/retrieve-duck/index.js"> </script>
+        <script src="scripts/business/search-ducks/index.js"> </script>
+        <script src="scripts/components/component.js"> </script>
+        <script src="scripts/components/feedback.js"> </script>
+        <script src="scripts/components/register.js"> </script>
+        <script src="scripts/components/login.js"> </script>
+        <script src="scripts/components/search.js"> </script>
+        <script src="scripts/components/results.js"> </script>
+        <script src="scripts/components/result-item.js"> </script>
+        <script src="scripts/components/detail.js"> </script>
+        <script src="scripts/index.js"> </script>
     </body>
 </html>
