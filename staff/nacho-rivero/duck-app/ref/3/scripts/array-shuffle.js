@@ -14,5 +14,5 @@ if (typeof Array.prototype.shuffle === 'undefined')
             result[random] = value;
         }
 
-        return result;  //Porque no me funciona
+        return result;
     };

@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Duck App</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/index.css">
     <link rel="shortcut icon" href="icon.png" type="image/x-icon">
 </head>
 <body>
-    <section class="view">
+    <section class="view loginform">
+        <form onSubmit="validateForm()" class="view">
+            <label class="loginform__label">Username</label>
+            <input type="text" name="usr" placeholder="username" class="loginform__input"> 
+            <label class="loginform__label">Password</label>
+            <input type="password" name="pword" placeholder="password" class="loginform__input">
+            <input type="submit" value="Login" class="loginform__input"/>
+        </form>
+    </section>
+    <section class="view search hide">
         <form class="search">
             <span class="search__icon">🐣</span>
             <input class="search__criteria" type="text" name="query" placeholder="criteria">
@@ -28,15 +37,14 @@
         <a class="detail__back" href="#">Go back</a>
     </section>
 
-    <script src="scripts/utils/array-shuffle.js"></script>
-    <script src="scripts/utils/fetch.js"></script>
-    <script src="scripts/utils/function-extend.js"></script>
-    <script src="scripts/logic/retrieve-duck/index.js"></script>
-    <script src="scripts/logic/search-ducks/index.js"></script>
-    <script src="scripts/helpers/call.js"></script>
-    <script src="scripts/components/component.js"></script>
+    <script src="scripts/array-shuffle.js"></script>
+    <script src="scripts/helpers.js"></script>
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/business/retrieve-duck/index.js"></script>
+    <script src="scripts/business/search-ducks/index.js"></script>
     <script src="scripts/components/search.js"></script>
     <script src="scripts/components/results.js"></script>
+    <script src="scripts/components/login.js"></script>
     <script src="scripts/components/result-item.js"></script>
     <script src="scripts/components/detail.js"></script>
     <script src="scripts/main.js"></script>
