@@ -1,4 +1,4 @@
-.details__img, .duckinfo__img, .duckinfo__price, .duckinfo__title, .list, .main, .nav__imagelogo {
+.details__img, .duckinfo__img, .duckinfo__price, .duckinfo__title, .list, .main, .feedback, .nav__imagelogo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,6 +64,11 @@ body {
   cursor: pointer;
   background-color: #f1f1bf;
   height: 4vw;
+}
+
+.feedback {
+  flex-direction: column;
+  margin-bottom: 3%;
 }
 
 .main {

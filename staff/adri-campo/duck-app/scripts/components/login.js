@@ -5,7 +5,7 @@ function Login(container) {
 Login.extend(Component);
 
 Login.prototype.onSubmit = function (expression) {
-    this.__container__.addEventListener('submit', function (event) {
+    this.container.addEventListener('submit', function (event) {
         event.preventDefault();
 
         const username = this.username.value
