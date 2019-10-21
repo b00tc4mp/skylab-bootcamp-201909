@@ -1,0 +1,25 @@
+.menu {
+height: 50px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 10px;
+border-bottom: 1px solid black;
+padding: 0 1rem;
+}
+
+.menu-nav {
+display: flex;
+justify-content: flex-start;
+}
+
+.menu__item {
+    margin-right: 10px;
+    font-size: 12px;
+    list-style: none;
+    color: black;
+}
+
+body {
+    background-color: green; 
+}
