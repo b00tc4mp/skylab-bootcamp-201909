@@ -92,24 +92,19 @@ register.onSubmit(function (name, surname, email, password) {
 
 //
 
+
+
 var results = new Results(document.getElementsByClassName('results')[0]);
 results.onItemRender = function() {
     var item = new ResultItem(document.createElement('li'));
     
     item.onClick = function(id){
-        searchDetailDuck(id, function(error, duck){ debugger;
-            if (error) {
-                feedback.render(error.message);
-
-                results.hide();
-                feedback.show();
-            } else {
+        searchDetailDuck(id, function(error, duck){ 
                 
                 detail.render(duck);
-
                 searchView.hide();
                 detailView.show();
-            }
+            
         });
     };
 

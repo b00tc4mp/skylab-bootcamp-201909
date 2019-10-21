@@ -27,7 +27,7 @@ ResultItem.prototype.render = function (results) {
     // results.classList.add = 
     // div.classList.add = 
     // link.classList.add = 
-    // title.classList.add = z
+    // title.classList.add = 
     // img.classList.add = 
     // price.classList.add = 
 

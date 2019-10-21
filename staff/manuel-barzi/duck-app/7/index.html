@@ -11,20 +11,63 @@
 </head>
 
 <body>
-    <section class="view">
-        <form class="search">
+    <section class="view landing">
+        <h1 class="landing__title">Welcome to Duck App 🐥</h1>
+        <p class="landing__options">Please, proceed to <a href="">Register</a> or <a href="">Login</a>.</p>
+    </section>
+
+    <section class="view register hide">
+        <form>
+            <h1 class="register__title">Register</h1>
+            <input class="register__field" type="text" name="name" placeholder="name">
+            <input class="register__field" type="text" name="surname" placeholder="surname">
+            <input class="register__field" type="email" name="email" placeholder="e-mail">
+            <input class="register__field" type="password" name="password" placeholder="password">
+            <button class="register__submit">📨</button>
+            <a class="register__back" href="">Go back</a>
+        </form>
+
+        <section class="feedback hide">
+            <span class="feedback__icon">🤡</span>
+            <p class="feedback__message">Come with me...</p>
+            <span class="feedback__icon">🎈</span>
+        </section>
+    </section>
+
+    <section class="view login hide">
+        <form>
+            <h1 class="login__title">Login</h1>
+            <input class="login__field" type="email" name="email" placeholder="e-mail">
+            <input class="login__field" type="password" name="password" placeholder="password">
+            <button class="login__submit">🗝</button>
+            <a class="login__back" href="">Go back</a>
+        </form>
+
+        <section class="feedback hide">
+            <span class="feedback__icon">🤡</span>
+            <p class="feedback__message">Come with me...</p>
+            <span class="feedback__icon">🎈</span>
+        </section>
+    </section>
+
+    <section class="view search hide">
+        <h1 class="search__title">Search</h1>
+
+        <form>
             <span class="search__icon">🐣</span>
             <input class="search__criteria" type="text" name="query" placeholder="criteria">
             <button class="search__submit">🔍</button>
         </form>
+
+        <section class="feedback hide">
+            <span class="feedback__icon">🤡</span>
+            <p class="feedback__message">Come with me...</p>
+            <span class="feedback__icon">🎈</span>
+        </section>
+
         <ul class="results">
         </ul>
-    </section>
 
-    <section class="feedback hide">
-        <span class="feedback__icon">🤡</span>
-        <p class="feedback__message">Come with me...</p>
-        <span class="feedback__icon">🎈</span>
     </section>
 
     <section class="view detail hide">
@@ -33,16 +76,25 @@
         <p class="detail__description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate neque omnis
             sunt dolor repellat incidunt voluptates odio eos consequatur corrupti. Accusantium porro minima molestias
             voluptatem dolor nobis! Perspiciatis, vero maiores!</p>
-        <a class="detail__store" href="#">Go to store</a>
+        <a class="detail__store" href="">Go to store</a>
         <span class="detail__price">10€</span>
-        <a class="detail__back" href="#">Go back</a>
+        <a class="detail__back" href="">Go back</a>
+    </section>
+
+    <section class="global-feedback feedback hide">
+        <span class="feedback__icon">🤡</span>
+        <p class="feedback__message">Come with me...</p>
+        <span class="feedback__icon">🎈</span>
     </section>
 
     <script src="scripts/utils/array-shuffle.js"></script>
     <script src="scripts/utils/fetch.js"></script>
     <script src="scripts/utils/function-extend.js"></script>
+    <script src="scripts/utils/errors.js"></script>
     <script src="scripts/logic/retrieve-duck/index.js"></script>
     <script src="scripts/logic/search-ducks/index.js"></script>
+    <script src="scripts/logic/register-user/index.js"></script>
+    <script src="scripts/logic/authenticate-user/index.js"></script>
     <script src="scripts/helpers/call.js"></script>
     <script src="scripts/components/component.js"></script>
     <script src="scripts/components/search.js"></script>
@@ -50,7 +102,9 @@
     <script src="scripts/components/result-item.js"></script>
     <script src="scripts/components/detail.js"></script>
     <script src="scripts/components/feedback.js"></script>
-    <script src="scripts/components/view.js"></script>
+    <script src="scripts/components/landing.js"></script>
+    <script src="scripts/components/register.js"></script>
+    <script src="scripts/components/login.js"></script>
     <script src="scripts/main.js"></script>
 </body>
 

@@ -46,14 +46,18 @@ search.onSubmit( function(query){
 var login = new Login(document.getElementsByClassName('login__form')[0]);
 login.onSubmit(function (username, password) { 
     try {
-        authenticateUser(username, password, (undefined,result)=> {
-            retrieveUser(result.id, result.token, (result)=>{
-                console.log(result)
-                document.getElementsByClassName('login')[0].classList.add('hide')
-                document.getElementsByClassName('view')[0].classList.remove('hide')
-            })
+        authenticateUser(username, password, (error,result)=> {
+            if (error) {
+                feedback.render(error.message);
+                document.getElementsByClassName('feedback')[0].classList.remove('hide')
+            } else {
+                retrieveUser(result.id, result.token, ()=>{
+                    document.getElementsByClassName('login')[0].classList.add('hide')
+                    document.getElementsByClassName('main')[0].classList.remove('hide')
+                })
+                }
+            });
 
-        });
     } catch (error) {
         feedback.render(error.message);
         document.getElementsByClassName('feedback')[0].classList.remove('hide')
@@ -62,7 +66,7 @@ login.onSubmit(function (username, password) {
 });
 
 var register = new Register(document.getElementsByClassName('register__form')[0]);
-register.onSubmit(function (name, surname, email, password) {
+register.onSubmit(function (name, surname, email, password) { 
     try {
         registerUser(name, surname, email, password, function(){
             document.getElementsByClassName('register')[0].classList.add('hide')
@@ -76,11 +80,11 @@ register.onSubmit(function (name, surname, email, password) {
 });
 
 var results = new Results(document.getElementsByClassName('results')[0]);
-results.onItemRender = function() {
+results.onItemRender = function() { 
     var item = new ResultItem(document.createElement('li'));
     
     item.onClick = function(id){
-        retrieveDuck(id, function(error, duck){ debugger;
+        retrieveDuck(id, function(duck, error){ ;
             if (error) {
                 feedback.render(error.message);
 
