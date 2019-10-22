@@ -17,9 +17,9 @@ function Register({ onRegister }) {
         </form>
 
         <section className="feedback hide">
-            <span className="feedback__icon">🤡</span>
-            <p className="feedback__message">Come with me...</p>
-            <span className="feedback__icon">🎈</span>
+            <span className="feedback__icon">⚠️⚠️</span>
+            <p className="feedback__message">Something went wrong...</p>
+            <span className="feedback__icon">⚠️⚠️</span>
         </section>
     </section>
 }
