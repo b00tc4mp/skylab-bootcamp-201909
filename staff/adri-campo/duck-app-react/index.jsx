@@ -4,7 +4,7 @@ class App extends Component {
     constructor () { 
         super()
         
-        this.state = { view: 'landing', error: undefined, ducks: [] }
+        this.state = { view: 'landing', error: undefined, ducks: []}
 
         this.handleGoToRegister = this.handleGoToRegister.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
@@ -13,8 +13,7 @@ class App extends Component {
         this.handleBackFromLogin = this.handleBackFromLogin.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
         this.handleGoToLogin = this.handleGoToLogin.bind(this)
-        // this.handleResults = this.handleResults.bind(this)
-
+        this.handleResultItem = this.handleResultItem.bind(this)
     }
 
     handleGoToRegister() {
@@ -57,7 +56,7 @@ class App extends Component {
         this.setState({ view: "landing", error: undefined })
     }
 
-    handleSearch (query) { debugger
+    handleSearch (query) { 
         if(query) {
             try {
                 searchDucks(query, (error, ducks) => {
@@ -84,21 +83,24 @@ class App extends Component {
 
         }
     }
+
+    handleResultItem () { debugger
+        try {
+            retrieveDuck(id, (error,duck) => {
+                if (error) this.setState({ error: error.message })
+                else this.setState({ duck }) 
+
+            })
+            
+        } catch (error) { 
+            this.setState({ error: error.message })
+        
+        }
+  
+    }
     
-    // handleResults (ducks) { 
 
-    //     try {
-    //         retrieveDuck(ducks, error => {
-    //             if (error) this.setState({ error: error.message })
-    //             else this.setState({ view: "results" })
-    //         })
 
-    //     } catch (error) {
-    //         this.setState({ error: error.message })
-    //     }
-    // }
-
-    
     render() {
         const { state: { view, ducks, error }, handleGoToRegister, handleGoToLogin, handleRegister, handleBackFromRegister, handleLogin, handleBackFromLogin, handleSearch } = this
 
@@ -113,6 +115,8 @@ class App extends Component {
                     {ducks.map(duck => <Results onResult={duck} /> )}
                 </ul>
                 </section>}
+            {view === "result-item" && <ResultItem onResultItem={handleResultItem} />}   
+            {/* {view === "result-item" && <Results onResult={duck} />} */}
         </>
     }
 } 
