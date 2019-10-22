@@ -1,15 +1,18 @@
-function Search(container) {
-    Component.call(this, container);
-}
+class Search extends Component {
+    constructor(container) {
+        super(container)
 
-Search.extend(Component);
+    }
 
-Search.prototype.onSubmit = function (expression) {
-    this.__container__.addEventListener('submit', function (event) {
-        event.preventDefault()
+    set onSubmit(expression) {
+
+
+        this.container.addEventListener('submit', function (event) {
+            event.preventDefault()
         
-        var duckQuery = document.getElementsByClassName('uploaded__input')[0];
-        var url = duckQuery.value;
-        expression(url);
-    });
-};
+            const duckQuery = document.getElementsByClassName('uploaded__input')[0];
+            const url = duckQuery.value;
+            expression(url);
+        })
+    }
+}

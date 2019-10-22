@@ -1,18 +1,30 @@
-function Login(container){
-    Component.call(this, container);
-}
-Login.extend(Component);
-
-// lo mismo que search pero escoger email y password 
-
-Login.prototype.onSubmit = function (expression) {
-    this.container.addEventListener('submit', function (event) {
-        event.preventDefault()
-        const email = this.email.value
-        const password = this.password.value
-        expression(email, password) 
-        // document.getElementsByClassName('login')[0].classList.add('hidden')
-        // document.getElementsByClassName('main')[0].classList.remove('hidden')
+class Login extends Component {
+    constructor(container) { 
+        super(container)
         
-    });
-};
+    }
+
+    set onSubmit(expression) {
+        
+        this.container.addEventListener('submit', function (event) {
+            event.preventDefault()
+
+            const { email: { value: email }, password: { value: password } } = this
+
+            expression(email, password)
+        })
+    }
+
+    hide() {
+        
+        const { email, password } = this.container;
+
+        email.value = ''
+        password.value = ''
+
+        this.feedback.hide()
+
+        super.hide()
+    }
+
+}

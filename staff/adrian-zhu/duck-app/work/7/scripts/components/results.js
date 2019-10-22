@@ -1,23 +1,19 @@
-function Results(container) {
-    Component.call(this, container);
+class Results extends Component {
+    constructor(container) {
+        super(container)
 
-    container.innerHTML = '';
+        container.innerHTML = ''
+    }
 
-    this.render = this.render.bind(this); // EYE!
+    onItemRender() { }
+
+    render(results) {
+        this.container.innerHTML = '';
+
+        results.forEach(function (result) {
+            const item = this.onItemRender()
+            item.render(result)
+            this.add(item)
+        }.bind(this));
+    }
 }
-
-Results.extend(Component);
-
-Results.prototype.onItemRender = undefined; // create method 
-
-Results.prototype.render = function (results) {
-    this.container.innerHTML = '';
-
-    results.forEach(function (result) {
-        var item = this.onItemRender(); // pasar onItem aquí
-
-        item.render(result);
-
-        this.add(item); // ul append li
-    }.bind(this));
-};

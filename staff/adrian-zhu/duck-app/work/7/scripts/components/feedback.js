@@ -1,10 +1,12 @@
-function Feedback(container) {
-    Component.call(this, container);
+class Feedback extends Component {
+    constructor(container) {
+        super(container)
+    }
+
+    render(text){
+
+        const message = this.container.getElementsByClassName('feedback__message')[0]
+        message.innerText = text;
+
+    }
 }
-
-Feedback.extend(Component);
-
-Feedback.prototype.render = function (text) {
-    var message = this.container.getElementsByClassName('feedback__message')[0];
-    message.innerText = text;
-};

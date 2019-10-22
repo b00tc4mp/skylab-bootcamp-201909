@@ -1,5 +1,5 @@
-function View(container) {
-    Component.call(this, container);
+class View extends Component{
+    constructor(container){
+        super(container)
+    }
 }
-
-View.extend(Component);

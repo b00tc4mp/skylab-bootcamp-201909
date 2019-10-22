@@ -1,18 +1,28 @@
-function Register(container){
-    Component.call(this, container);
-};
+class Register extends Component {
+    constructor(container) {
+        super(container)
+    }
 
-Register.extend(Component); 
+    set onSubmit(expression) {
+        this.container.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const { name: { value: name }, surname: { value: surname }, email: { value: email }, password: { value: password } } = this
+            expression(name, surname, email, password)        
+        });
+    }
 
-// COMO BUSCAR PATOS
+    hide() {
+        
+        const { name, surname, email, password } = this
 
-Register.prototype.onSubmit = function (expression) {
-    this.container.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const name = this.name.value
-        const surname = this.surname.value
-        const email = this.email.value
-        const password = this.password.value
-        expression(name, surname, email, password)        
-    });
-};
+        name.value = ''
+        surname.value = ''
+        email.value = ''
+        password.value = ''
+
+        this.feedback.hide()
+
+        super.hide()
+    }
+    
+}
