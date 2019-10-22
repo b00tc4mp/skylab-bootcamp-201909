@@ -172,11 +172,15 @@ body {
 
 .login {
   background-color: #bbee;
-  border: 0.3rem solid white;
   border-radius: 1rem;
   text-decoration: none;
   padding: 0.5rem;
   font-family: "Montserrat", sans-serif;
+}
+.login__image {
+  margin-top: 20vh;
+  padding: 0.5rem;
+  width: 15rem;
 }
 .login__title {
   color: white;
@@ -199,6 +203,11 @@ body {
 .login__submit:hover {
   border: 0.25rem solid #6666f2ee;
   color: black;
+}
+.login__image {
+  margin-top: 20vh;
+  padding: 0.5rem;
+  width: 15rem;
 }
 
 .landing {
