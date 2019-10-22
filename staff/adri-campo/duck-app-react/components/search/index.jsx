@@ -1,4 +1,4 @@
-function Search( { onSearch } ) {
+function Search( { onSearch } ) { 
     return <section className="view search _hide">
         <h1 className="search__title">Search 🐣</h1>
         <form>
@@ -7,7 +7,7 @@ function Search( { onSearch } ) {
             <button className="search__submit" onClick= { event => {
             event.preventDefault()
 
-            onSearch()
+            onSearch(query)
         }}>🔍</button>
         </form>
         

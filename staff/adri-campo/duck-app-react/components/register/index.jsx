@@ -1,4 +1,4 @@
-function Register({ onRegister }) {
+function Register({ onRegister, onBack, error }) { 
     return <section className="view register _hide">
         <form onSubmit={function (event) {
             event.preventDefault()
@@ -13,13 +13,13 @@ function Register({ onRegister }) {
             <input className="register__field" type="email" name="email" placeholder="e-mail" />
             <input className="register__field" type="password" name="password" placeholder="password" />
             <button className="register__submit">📨</button>
-            <a className="register__back" href="">Go back</a>
+            <a className="register__back" href="" onClick={event => {
+                event.preventDefault()
+
+                onBack()
+            }}>Go back</a>
         </form>
 
-        <section className="feedback hide">
-            <span className="feedback__icon">⚠️⚠️</span>
-            <p className="feedback__message">Something went wrong...</p>
-            <span className="feedback__icon">⚠️⚠️</span>
-        </section>
+        {error && <Feedback message={error} />}
     </section>
 }
