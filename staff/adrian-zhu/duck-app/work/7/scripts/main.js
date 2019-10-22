@@ -8,9 +8,10 @@ const feedback = new Feedback(document.getElementsByClassName('feedback')[0]);
 const newAccount = document.getElementsByClassName('btn__new-account')[0]; 
 const btnLogin = document.getElementsByClassName('btn__login')[0]; 
 
-// 
+//
 
 const results = new Results(document.getElementsByClassName('results')[0]);
+
 results.onItemRender = () => { 
     const item = new ResultItem(document.createElement('li'));
     

@@ -5,7 +5,7 @@ class ResultItem extends Component {
 
     onClick(){};
 
-    rend(results) {
+    render(results) {
         const item = document.createElement('a');
         item.classList.add('item');
     
@@ -25,7 +25,7 @@ class ResultItem extends Component {
         // results.classList.add = 
         // div.classList.add = 
         // link.classList.add = 
-        // title.classList.add = z
+        // title.classList.add = 
         // img.classList.add = 
         // price.classList.add = 
     

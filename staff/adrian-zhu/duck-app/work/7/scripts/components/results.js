@@ -11,7 +11,7 @@ class Results extends Component {
         this.container.innerHTML = '';
 
         results.forEach(function (result) {
-            const item = this.onItemRender()
+            let item = this.onItemRender()
             item.render(result)
             this.add(item)
         }.bind(this));
