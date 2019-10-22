@@ -1,16 +1,16 @@
-var views = document.getElementsByClassName('view');
-var searchView = new View(views[0]);
-var detailView = new View(views[1]);
-var feedback = new Feedback(document.getElementsByClassName('feedback')[0]);
+const views = document.getElementsByClassName('view');
+const searchView = new View(views[0]);
+const detailView = new View(views[1]);
+const feedback = new Feedback(document.getElementsByClassName('feedback')[0]);
 
 // 
 
-var newAccount = document.getElementsByClassName('btn__new-account')[0]; // cambio de página de login y resgistro 
-var btnLogin = document.getElementsByClassName('btn__login')[0]; // cambiar la vista tambén 
+const newAccount = document.getElementsByClassName('btn__new-account')[0]; // cambio de página de login y resgistro 
+const btnLogin = document.getElementsByClassName('btn__login')[0]; // cambiar la vista tambén 
 
 //
 
-(function() {
+(() => {
     searchDucks('', function(error, ducks){
         if (error) {
             feedback.render(error.message)
@@ -26,9 +26,9 @@ var btnLogin = document.getElementsByClassName('btn__login')[0]; // cambiar la v
     })
 })();
 
-var search = new Search(document.getElementsByClassName('uploaded')[0]); 
-search.onSubmit( function(query){
-    searchDucks(query,function(error, ducks){
+const search = new Search(document.getElementsByClassName('uploaded')[0]); 
+search.onSubmit( (query) => {
+    searchDucks(query,(error, ducks) => {
         if (error) {
             feedback.render(error.message);
 
@@ -40,11 +40,11 @@ search.onSubmit( function(query){
             feedback.hide();
             results.show();
         }
-    }) // no results.render(ducks)
+    }) 
 }); 
 
-var login = new Login(document.getElementsByClassName('login__form')[0]);
-login.onSubmit(function (username, password) { 
+const login = new Login(document.getElementsByClassName('login__form')[0]);
+login.onSubmit((username, password) => { 
     try {
         authenticateUser(username, password, (error,result)=> {
             if (error) {
@@ -67,10 +67,10 @@ login.onSubmit(function (username, password) {
     }
 });
 
-var register = new Register(document.getElementsByClassName('register__form')[0]);
-register.onSubmit(function (name, surname, email, password) { 
+const register = new Register(document.getElementsByClassName('register__form')[0]);
+register.onSubmit((name, surname, email, password) => { 
     try {
-        registerUser(name, surname, email, password, function(){
+        registerUser(name, surname, email, password, () => {
             document.getElementsByClassName('register')[0].classList.add('hide')
             document.getElementsByClassName('view')[0].classList.remove('hide')
         });
@@ -81,12 +81,12 @@ register.onSubmit(function (name, surname, email, password) {
     }
 });
 
-var results = new Results(document.getElementsByClassName('results')[0]);
-results.onItemRender = function() { 
-    var item = new ResultItem(document.createElement('li'));
+const results = new Results(document.getElementsByClassName('results')[0]);
+results.onItemRender = () => { 
+    const item = new ResultItem(document.createElement('li'));
     
-    item.onClick = function(id){
-        retrieveDuck(id, function(duck, error){  debugger;
+    item.onClick = (id) => {
+        retrieveDuck(id,(duck, error) => { 
             if (error) {
                 feedback.render(error.message);
 
@@ -106,9 +106,9 @@ results.onItemRender = function() {
 }
 
 
-var detail = new Detail(document.getElementsByClassName('detail')[0]);
+const detail = new Detail(document.getElementsByClassName('detail')[0]);
 
-detail.onBack = function () {
+detail.onBack =  () => {
     
     detailView.hide();
     searchView.show();
@@ -116,11 +116,12 @@ detail.onBack = function () {
 
 // 
 
-newAccount.addEventListener("click", function(){
+newAccount.addEventListener("click", () => {
     document.getElementsByClassName("login")[0].classList.add("hide")
     document.getElementsByClassName("register")[0].classList.remove("hide")
 })
-btnLogin.addEventListener("click", function(){
+
+btnLogin.addEventListener("click", () => {
     document.getElementsByClassName("login")[0].classList.remove("hide")
     document.getElementsByClassName("register")[0].classList.add("hide")
 })

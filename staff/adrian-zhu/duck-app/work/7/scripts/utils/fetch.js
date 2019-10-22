@@ -8,8 +8,8 @@ function fetch(method, url, headers, body, callback) {
     };
 
     if (headers) 
-        for (let key in headers) // por cada header q me haga una declaración
-            xhr.setRequestHeader(key, headers[key]) // MDN verificación
+        for (let key in headers)
+            xhr.setRequestHeader(key, headers[key])
 
-    body? xhr.send(JSON.stringify(body)) : xhr.send(); //  si body contiene algo envia eso, sino hace simplemente la petición 
+    body? xhr.send(JSON.stringify(body)) : xhr.send();
 }

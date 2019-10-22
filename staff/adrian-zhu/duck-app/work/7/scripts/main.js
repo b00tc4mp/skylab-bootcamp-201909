@@ -1,26 +1,16 @@
-var views = document.getElementsByClassName('view');
-var searchView = new View(views[0]);
-var detailView = new View(views[1]);
-var feedback = new Feedback(document.getElementsByClassName('feedback')[0]);
+const views = document.getElementsByClassName('view');
+const searchView = new View(views[0]);
+const detailView = new View(views[1]);
+const feedback = new Feedback(document.getElementsByClassName('feedback')[0]);
+
+// 
+
+const newAccount = document.getElementsByClassName('btn__new-account')[0]; // cambio de página de login y resgistro 
+const btnLogin = document.getElementsByClassName('btn__login')[0]; // cambiar la vista tambén 
 
 //
 
-var newAccount = document.getElementsByClassName('btn__new-account')[0]; // cambio de página de login y resgistro 
-var btnLogin = document.getElementsByClassName('btn__login')[0]; // cambiar la vista tambén 
-
-newAccount.addEventListener("click", function(){
-    document.getElementsByClassName("login")[0].classList.add("hidden")
-    document.getElementsByClassName("register")[0].classList.remove("hidden")
-})
-btnLogin.addEventListener("click", function(){
-    document.getElementsByClassName("login")[0].classList.remove("hidden")
-    document.getElementsByClassName("register")[0].classList.add("hidden")
-})
-
-//
-
-
-(function() {
+(() => {
     searchDucks('', function(error, ducks){
         if (error) {
             feedback.render(error.message)
@@ -36,9 +26,9 @@ btnLogin.addEventListener("click", function(){
     })
 })();
 
-var search = new Search(document.getElementsByClassName('uploaded')[0]); 
-search.onSubmit( function(query){
-    searchDucks(query,function(error, ducks){
+const search = new Search(document.getElementsByClassName('uploaded')[0]); 
+search.onSubmit( (query) => {
+    searchDucks(query,(error, ducks) => {
         if (error) {
             feedback.render(error.message);
 
@@ -50,61 +40,65 @@ search.onSubmit( function(query){
             feedback.hide();
             results.show();
         }
-    }) // no results.render(ducks)
+    }) 
 }); 
 
-
-// 
-
-var login = new Login(document.getElementsByClassName('login__form')[0]); // TEMA 7, selecciona form container;
-login.onSubmit(function (username, password) { // TEMA 7 LE PASAMOS USERNAME PASSWORD A PARTIR DE HTML
+const login = new Login(document.getElementsByClassName('login__form')[0]);
+login.onSubmit((username, password) => { 
     try {
-        authenticateUser(username, password, (x,result)=> {
-            retrieveUser(result.id, result.token, (result)=>{
-                // console.log(result) 
-                document.getElementsByClassName('login')[0].classList.add('hidden')
-                document.getElementsByClassName('main')[0].classList.remove('hidden')
-            })
+        authenticateUser(username, password, (error,result)=> {
+            if (error) {
+                feedback.render(error.message);
+                document.getElementsByClassName('feedback')[0].classList.remove('hide')
+            } else {
+                retrieveUser(result.id, result.token, (result)=>{
+                    document.getElementsByClassName('login')[0].classList.add('hide')
+                    document.getElementsByClassName('view')[0].classList.remove('hide')
+              
+              
+                })
+                }
+            });
 
-        });
     } catch (error) {
         feedback.render(error.message);
-        document.getElementsByClassName('feedback')[0].classList.remove('hidden')
-        document.getElementsByClassName('main')[0].classList.add('hidden')
+        document.getElementsByClassName('feedback')[0].classList.remove('hide')
+        document.getElementsByClassName('view')[0].classList.add('hide')
     }
 });
 
-
-var register = new Register(
-    document.getElementsByClassName('register__form')[0]);
-register.onSubmit(function (name, surname, email, password) {
+const register = new Register(document.getElementsByClassName('register__form')[0]);
+register.onSubmit((name, surname, email, password) => { 
     try {
-        registerUser(name, surname, email, password, function(){
-            document.getElementsByClassName('register')[0].classList.add('hidden')
-            document.getElementsByClassName('main')[0].classList.remove('hidden')
+        registerUser(name, surname, email, password, () => {
+            document.getElementsByClassName('register')[0].classList.add('hide')
+            document.getElementsByClassName('view')[0].classList.remove('hide')
         });
     } catch (error) {
         feedback.render(error.message);
-        document.getElementsByClassName('feedback')[0].classList.remove('hidden')
-        document.getElementsByClassName('main')[0].classList.add('hidden')
+        document.getElementsByClassName('feedback')[0].classList.remove('hide')
+        document.getElementsByClassName('view')[0].classList.add('hide')
     }
 });
 
-//
-
-
-
-var results = new Results(document.getElementsByClassName('results')[0]);
-results.onItemRender = function() {
-    var item = new ResultItem(document.createElement('li'));
+const results = new Results(document.getElementsByClassName('results')[0]);
+results.onItemRender = () => { 
+    const item = new ResultItem(document.createElement('li'));
     
-    item.onClick = function(id){
-        searchDetailDuck(id, function(error, duck){ 
+    item.onClick = (id) => {
+        retrieveDuck(id,(duck, error) => { 
+            if (error) {
+                feedback.render(error.message);
+
+                results.hide();
+                feedback.show();
+            } else {
                 
                 detail.render(duck);
+
                 searchView.hide();
                 detailView.show();
-            
+            }
         });
     };
 
@@ -112,10 +106,24 @@ results.onItemRender = function() {
 }
 
 
-var detail = new Detail(document.getElementsByClassName('detail')[0]);
+const detail = new Detail(document.getElementsByClassName('detail')[0]);
 
-detail.onBack = function () {
+detail.onBack =  () => {
     
     detailView.hide();
     searchView.show();
 };
+
+// 
+
+newAccount.addEventListener("click", () => {
+    document.getElementsByClassName("login")[0].classList.add("hide")
+    document.getElementsByClassName("register")[0].classList.remove("hide")
+})
+
+btnLogin.addEventListener("click", () => {
+    document.getElementsByClassName("login")[0].classList.remove("hide")
+    document.getElementsByClassName("register")[0].classList.add("hide")
+})
+
+//

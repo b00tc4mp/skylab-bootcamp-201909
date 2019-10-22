@@ -33,5 +33,5 @@ describe('logic - authenticate user', () => {
         })
     })
 
-    // TODO other cases
+    
 })

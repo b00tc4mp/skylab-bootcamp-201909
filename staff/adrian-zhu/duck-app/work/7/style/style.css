@@ -27,6 +27,8 @@ body {
 .details {
   text-decoration: none;
   background-color: white;
+  display: flex;
+  justify-content: center;
 }
 .details__title {
   display: flex;
@@ -44,6 +46,12 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.base {
+  display: flex;
+  justify-content: center;
+}
+
 
 .base {
   display: flex;
