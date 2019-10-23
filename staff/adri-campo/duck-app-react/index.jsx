@@ -84,11 +84,12 @@ class App extends Component {
         }
     }
 
-    handleResultItem () { debugger
+    handleResultItem (id) {  debugger          
         try {
             retrieveDuck(id, (error,duck) => {
                 if (error) this.setState({ error: error.message })
-                else this.setState({ duck }) 
+                else { this.setState( {view : "result-item"} ) 
+                 this.setState({ duck }) }
 
             })
             
@@ -97,12 +98,14 @@ class App extends Component {
         
         }
   
-    }
-    
-
+    } 
 
     render() {
-        const { state: { view, ducks, error }, handleGoToRegister, handleGoToLogin, handleRegister, handleBackFromRegister, handleLogin, handleBackFromLogin, handleSearch } = this
+        const { state: { view, ducks, error },
+                handleGoToRegister, handleGoToLogin, 
+                handleRegister, handleBackFromRegister, 
+                handleLogin, handleBackFromLogin, 
+                handleSearch, handleResultItem } = this
 
         return <>
             {view === "landing" && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
@@ -116,9 +119,11 @@ class App extends Component {
                 </ul>
                 </section>}
             {view === "result-item" && <ResultItem onResultItem={handleResultItem} />}   
-            {/* {view === "result-item" && <Results onResult={duck} />} */}
         </>
     }
 } 
 
 ReactDOM.render(<App />, document.getElementById('root'))
+
+//{ducks.length > 0 && <Results/>}
+//{error && <Feedback error/>}

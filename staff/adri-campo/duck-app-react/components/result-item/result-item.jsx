@@ -3,7 +3,7 @@ function ResultItem ({ onResultItem }) { debugger
         <form onClick={function (event) {
             event.preventDefault()
             
-            onResultItem()
+            onResultItem(id)
         }}>
         
         <li kew={Math.random()} className="results__item">
