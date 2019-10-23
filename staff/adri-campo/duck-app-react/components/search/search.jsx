@@ -1,5 +1,4 @@
 function Search( { onSearch } ) { 
-    const { onSearch } = props
     return <section className="view search _hide">
         <h1 className="search__title">Search 🐣</h1>
         <form onSubmit= { event => {
@@ -20,6 +19,7 @@ function Search( { onSearch } ) {
 
         <ul className="results">
         </ul>
+
 
     </section>
 }

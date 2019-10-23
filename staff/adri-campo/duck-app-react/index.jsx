@@ -14,6 +14,7 @@ class App extends Component {
         this.handleSearch = this.handleSearch.bind(this)
         this.handleGoToLogin = this.handleGoToLogin.bind(this)
         this.handleResultItem = this.handleResultItem.bind(this)
+    
     }
 
     handleGoToRegister() {
@@ -41,10 +42,11 @@ class App extends Component {
 
     handleLogin (email, password) {
         try {
-            authenticateUser(email,password, error => {
+            authenticateUser(email,password, (error, data) => {
                 if (error) this.setState({ error: error.message })
-                else this.setState({ view: "search" })
+                else this.setState({ view: "search" , data })
                 this.handleSearch()
+
             })
 
         } catch (error) {
@@ -61,7 +63,8 @@ class App extends Component {
             try {
                 searchDucks(query, (error, ducks) => {
                     if (error) this.setState({ error: error.message })
-                    else this.setState({ ducks })
+                    else {this.setState({ view: "results"})
+                     this.setState({ ducks })}
                 })
             } catch (error) {
                 this.setState({ error: error.message })
@@ -84,11 +87,12 @@ class App extends Component {
         }
     }
 
-    handleResultItem (id) {  debugger          
+    
+    handleResultItem (id) {            
         try {
             retrieveDuck(id, (error,duck) => {
                 if (error) this.setState({ error: error.message })
-                else { this.setState( {view : "result-item"} ) 
+                else { this.setState( {view : "view ducks"} ) 
                  this.setState({ duck }) }
 
             })
@@ -112,13 +116,18 @@ class App extends Component {
             {view === "register" && <Register onRegister={handleRegister} onBack={handleBackFromRegister} error={error} />}
             {view === "login" && <Login onLogin={handleLogin} onBack={handleBackFromLogin} error={error} />}
             {view === "search" && <Search onSearch={handleSearch} />}
-            {view === "search" && 
-                <section className="view ducks">
+            {view === "search" && <Results onResult={duck} />
+            /* {view === "search" && <Results onResult={duck} />} */}
+                {/* <section className="view ducks">
                 <ul className="results" key={Math.random()} >
                     {ducks.map(duck => <Results onResult={duck} /> )}
                 </ul>
-                </section>}
-            {view === "result-item" && <ResultItem onResultItem={handleResultItem} />}   
+                </section>} */}
+
+            {view === "view results" && <Results onResult={duck} />}  
+            {view === "view result-items" && <ResultItem onResultItem={handleResultItem} />}  
+            {view === "view detail" && <Detail />}  
+
         </>
     }
 } 
