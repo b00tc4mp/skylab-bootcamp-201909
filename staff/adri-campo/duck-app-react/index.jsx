@@ -4,7 +4,7 @@ class App extends Component {
     constructor () { 
         super()
         
-        this.state = { view: 'landing', error: undefined, ducks: []}
+        this.state = { view: 'landing', error: undefined }
 
         this.handleGoToRegister = this.handleGoToRegister.bind(this)
         this.handleRegister = this.handleRegister.bind(this)
@@ -13,8 +13,9 @@ class App extends Component {
         this.handleBackFromLogin = this.handleBackFromLogin.bind(this)
         this.handleSearch = this.handleSearch.bind(this)
         this.handleGoToLogin = this.handleGoToLogin.bind(this)
-        this.handleResultItem = this.handleResultItem.bind(this)
-    
+        this.handleResultItem = this.handleDetail.bind(this)
+
+
     }
 
     handleGoToRegister() {
@@ -45,10 +46,8 @@ class App extends Component {
             authenticateUser(email,password, (error, data) => {
                 if (error) this.setState({ error: error.message })
                 else this.setState({ view: "search" , data })
-                this.handleSearch()
 
             })
-
         } catch (error) {
             this.setState({ error: error.message })
         }
@@ -63,10 +62,9 @@ class App extends Component {
             try {
                 searchDucks(query, (error, ducks) => {
                     if (error) this.setState({ error: error.message })
-                    else {this.setState({ view: "results"})
-                     this.setState({ ducks })}
+                    else this.setState({ error: undefined, ducks })
                 })
-            } catch (error) {
+            } catch (error) {   
                 this.setState({ error: error.message })
             }
 
@@ -86,7 +84,6 @@ class App extends Component {
 
         }
     }
-
     
     handleResultItem (id) {            
         try {
@@ -115,7 +112,7 @@ class App extends Component {
             {view === "landing" && <Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister} />}
             {view === "register" && <Register onRegister={handleRegister} onBack={handleBackFromRegister} error={error} />}
             {view === "login" && <Login onLogin={handleLogin} onBack={handleBackFromLogin} error={error} />}
-            {view === "search" && <Search onSearch={handleSearch} />}
+            {view === "search" && <Search onSearch={handleSearch} results={ducks} error={error} />}
             {view === "search" && <Results onResult={duck} />
             /* {view === "search" && <Results onResult={duck} />} */}
                 {/* <section className="view ducks">
