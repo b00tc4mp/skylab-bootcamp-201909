@@ -14,8 +14,6 @@ class App extends Component {
         this.handleSearch = this.handleSearch.bind(this)
         this.handleGoToLogin = this.handleGoToLogin.bind(this)
         this.handleResultItem = this.handleDetail.bind(this)
-
-
     }
 
     handleGoToRegister() {
