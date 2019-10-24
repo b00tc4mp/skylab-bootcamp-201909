@@ -8,7 +8,8 @@ if (!Object.getOwnPropertyDescriptor(Location.prototype, 'query'))
     //         },
 
     //         get() {
-    //             return this.search && this.search.includes('q=') ? this.search.split('q=')[1] : undefined
+    //             const { search } = this
+    //             return search && search.includes('q=') ? search.split('q=')[1] : undefined
     //         }
     //     }
     // })
@@ -20,6 +21,7 @@ if (!Object.getOwnPropertyDescriptor(Location.prototype, 'query'))
         },
 
         get() {
-            return this.search && this.search.includes('q=') ? this.search.split('q=')[1] : undefined
+            const { search } = this
+            return search && search.includes('q=') ? search.split('q=')[1] : undefined
         }
     })
