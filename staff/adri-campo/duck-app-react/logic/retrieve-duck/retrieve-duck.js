@@ -3,6 +3,14 @@ function retrieveDuck(id, callback) {
     if (typeof callback !== 'function') throw new TypeError(callback +  ' is not a function');
 
     call('GET', undefined, 'https://duckling-api.herokuapp.com/api/ducks/' + id, undefined, function (result) {
-        result.error ? callback(new Error(result.error)) : callback(undefined, result);
+        if (result.error)
+            callback(new Error(result.error))
+        else {
+            result.image = result.imageUrl
+
+            delete result.imageUrl
+
+            callback(undefined, result)
+        }
     });
 }

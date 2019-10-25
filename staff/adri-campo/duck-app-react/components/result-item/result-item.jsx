@@ -1,19 +1,24 @@
-function ResultItem ({ onResultItem }) { 
-    return  <section className="view result-item _hide">
-        <form onClick={ event => {
+function ResultItem({ item: { id, title, image, price }, onClick, onFav, isFav}) {
+    return <li className="results__item">
+        <a href="#" className="item" onClick={event => {
             event.preventDefault()
-            
-            onResultItem(id)
-        }}>
-        
-        <li key={Math.random()} className="results__item">
-            <a href="" className="item">
-            <h2 className="item__title">{duck.title} </h2>
-            <img src={duck.imageUrl} className="item__image" />
-            <p className="item__price">{duck.price} </p>
 
-            </a>    
-        </li>
-        </form>
-    </section>
+            onClick(id)
+        }}>
+            <h2 className="item__title">{title}</h2>
+            <img className="item__image" src={image} />
+            <span className="item__price">{price}</span>
+            <div className="item__fav">
+                <i className={`${isFav}`} onClick={event => {
+                event.preventDefault()
+                event.stopPropagation()
+
+                onFav(id)
+            }}></i></div>
+
+        </a>
+    </li>
 }
+ 
+
+
