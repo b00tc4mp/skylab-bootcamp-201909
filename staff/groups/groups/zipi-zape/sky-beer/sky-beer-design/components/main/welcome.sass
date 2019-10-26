@@ -4,8 +4,11 @@
 
 .welcome
     display: flex
-    flex-direction: row
     width: 100vw
+    @media only screen and (max-width:1023px)
+        flex-direction: column
+    @media only screen and (min-width:1024px)
+        flex-direction: row
 
     &__beers
         @extend %panel

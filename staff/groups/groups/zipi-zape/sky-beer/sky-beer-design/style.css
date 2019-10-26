@@ -11,20 +11,35 @@
   .header__back {
     height: 15vh; }
   .header__logo {
-    width: 10%; }
-  .header__title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    width: 20%;
-    font-family: "Staatliches";
-    letter-spacing: 0.4rem; }
-  .header__nav {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 60%; }
+    height: 90%; }
+  @media only screen and (max-width: 1023px) {
+    .header__title {
+      display: none; }
+    .header__burguer {
+      width: 20%;
+      height: 100%;
+      font-size: 7vh;
+      display: flex;
+      justify-content: center;
+      align-items: center; }
+    .header__nav {
+      display: none; } }
+  @media only screen and (min-width: 1024px) {
+    .header__title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      width: 20%;
+      font-family: "Staatliches";
+      letter-spacing: 0.4rem; }
+    .header__burguer {
+      display: none; }
+    .header__nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 60%; } }
   .header__login {
     display: flex;
     justify-content: center;
@@ -39,8 +54,6 @@
   align-items: center;
   list-style: none;
   padding: 0; }
-  .menu__burguer {
-    display: none; }
   .menu__beers, .menu__community, .menu__invest, .menu__search {
     color: white;
     font-size: 1.2rem;
@@ -65,11 +78,15 @@
     background: tomato;
     color: white; }
 
-
 .welcome {
   display: flex;
-  flex-direction: row;
   width: 100vw; }
+  @media only screen and (max-width: 1023px) {
+    .welcome {
+      flex-direction: column; } }
+  @media only screen and (min-width: 1024px) {
+    .welcome {
+      flex-direction: row; } }
   .welcome__beers {
     background-image: url("img/beers.jpg");
     background-size: cover; }
@@ -151,13 +168,20 @@
     color: white; }
 
 .beers, .brewdog, .ranking, .welcome__beers, .welcome__ranking, .welcome__brewdog {
-  width: 33%;
-  min-height: 28rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   opacity: 0.8; }
+  @media only screen and (max-width: 1023px) {
+    .beers, .brewdog, .ranking, .welcome__beers, .welcome__ranking, .welcome__brewdog {
+      width: 100%;
+      min-height: 23rem; } }
+  @media only screen and (min-width: 1024px) {
+    .beers, .brewdog, .ranking, .welcome__beers, .welcome__ranking, .welcome__brewdog {
+      width: 33%;
+      min-height: 28rem; } }
 
 .beers__title, .brewdog__title, .ranking__title {
   display: flex;
@@ -205,6 +229,9 @@
   .icon__text {
     font-size: 0.8rem; }
 
+.burguer {
+  font-size: 80%; }
+  
 .ranking--top1 {
   font-size: 3rem; }
 .ranking--top2 {

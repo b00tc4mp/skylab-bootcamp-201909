@@ -13,20 +13,41 @@
         height: 15vh
 
     &__logo
-        width: 10%
-    &__title
-        display: flex
-        align-items: center
-        justify-content: center
-        font-size: 1.5rem
-        width: 20%
-        font-family: "Staatliches"
-        letter-spacing: .4rem
-    &__nav
-        display: flex
-        justify-content: center
-        flex-wrap: wrap
-        width: 60%
+        height: 90%
+
+    @media only screen and (max-width:1023px)
+        &__title
+            display: none
+        
+        &__burguer
+            width: 20%
+            height: 100%
+            font-size: 7vh
+            display: flex
+            justify-content: center
+            align-items: center
+
+        &__nav
+            display: none
+
+ 
+    @media only screen and (min-width:1024px)
+        &__title
+            display: flex
+            align-items: center
+            justify-content: center
+            font-size: 1.5rem
+            width: 20%
+            font-family: "Staatliches"
+            letter-spacing: .4rem
+        &__burguer
+            display: none
+    
+        &__nav
+            display: flex
+            justify-content: center
+            flex-wrap: wrap
+            width: 60%
 
     &__login
         display: flex

@@ -1,11 +1,18 @@
+
+    
 %panel
-    width: 33%
-    min-height: 28rem
     display: flex
     flex-direction: column
     align-items: center
     justify-content: center
+    flex-wrap: wrap
     opacity: .8
+    @media only screen and (max-width:1023px)
+        width: 100%
+        min-height: 23rem 
+    @media only screen and (min-width:1024px)
+        width: 33%
+        min-height: 28rem
 %title
     display: flex
     justify-content: center
