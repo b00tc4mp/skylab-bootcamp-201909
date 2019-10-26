@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SkyBeer Codeursssh..</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text|Staatliches&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/80c46885ed.js"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="header__logo"></div>
+        <h1 class="header__title">SkyBeer APP</h1>
+        <nav class="header__nav">
+            <div class="menu__burguer"><i class="fas fa-bars"></i></div>
+            <ul class="menu">
+                <li class="menu__beers">BEERS</div>
+                <li class="menu__community">COMMUNITY</div>
+
+                <li><form class="menu__search">
+                    <input type="search" name="query" placeholder="search" class="query">
+                    <div class="button"><i class="fas fa-search"></i></div>
+                </form>
+            </li>
+            <li class="menu__invest">INVEST</div>
+            </ul>
+        </nav>
+        <div class="header__login">
+            <div class="icon"><i class="far fa-user"></i><span class="icon__text">LOG IN</span></div><!-- should appear LOG OUT && USER PAGE when logged-->
+        </div>
+    </header>
+    <div class="header__back"></div><!--Empty div to manage header fixed position-->
+   
+    <main class="main">
+        <section class="main__welcome welcome">
+            <article class="welcome__beers beers">
+                <div class="beers__description">GO TO BEERS PAGE</div>
+                <div class="beers__title">BEERS WORLD</div>
+                <div class="beers__button">GET DRUNK</div>
+            </article>
+            <article class="welcome__ranking ranking">
+                <div class="ranking__description">TOP RANK</div>
+                <div class="ranking__title ranking--top1">BEER 1</div>
+                <div class="ranking__title ranking--top2">BEER 2</div>
+                <div class="ranking__title ranking--top3">BEER 3</div>
+            </article>
+            <article class="welcome__brewdog brewdog">
+                <div class="brewdog__description">VISIT BREWDOG'S</div>
+                <div class="brewdog__title">BREWDOG PUNK</div>
+                <div class="brewdog__button">GO TO STORE</div>
+            </article>
+        </section>
+        <section class="main__speech speech">
+            <div class="speech__title">TITULO DEL SPEECH</div>
+            <div class="speech__description">TOL ROLLO</div>
+        </section>
+        <section class="main__video video">
+            <video class="video__background" autoplay muted loop>
+                <source src="./vid/video.mp4" type="video/mp4">
+            </video>
+            <div class="video__title">ENJOY THE BEER</div>
+            <div class="video__description">To beer or not to beer, easy question..</div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div>About Us</div>
+        <div>Privacy Policy</div>
+        <div>Contact us</div>
+        <div>Conditions</div>
+        <div class="footer__copyright"> zipizape productions ©2019 </div>
+        <div> -- social media icons -- </div>        
+    </footer>
+</body>
+</html>

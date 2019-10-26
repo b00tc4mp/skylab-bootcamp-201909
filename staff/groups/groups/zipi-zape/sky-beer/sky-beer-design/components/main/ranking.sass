@@ -1,0 +1,19 @@
+.ranking
+    @extend %panel
+        
+    &__title
+        @extend %title
+        cursor: pointer
+        &:hover
+            background: tomato
+            color: white
+
+    &__description
+        @extend %description
+
+    &--top1
+        font-size: 3rem
+    &--top2
+        font-size: 2rem
+    &--top3
+        font-size: 1rem

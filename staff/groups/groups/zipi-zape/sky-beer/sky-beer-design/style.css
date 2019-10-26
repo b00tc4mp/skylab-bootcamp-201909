@@ -1,0 +1,215 @@
+.header {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  height: 15vh;
+  width: 100vw;
+  padding: 0.5%;
+  background-color: #2c2c2c;
+  color: white; }
+  .header__back {
+    height: 15vh; }
+  .header__logo {
+    width: 10%; }
+  .header__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    width: 20%;
+    font-family: "Staatliches";
+    letter-spacing: 0.4rem; }
+  .header__nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 60%; }
+  .header__login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    color: white; }
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 0; }
+  .menu__burguer {
+    display: none; }
+  .menu__beers, .menu__community, .menu__invest, .menu__search {
+    color: white;
+    font-size: 1.2rem;
+    padding: 0.1rem;
+    margin-left: 1em;
+    margin-right: 1em;
+    cursor: pointer; }
+    .menu__beers:hover, .menu__community:hover, .menu__invest:hover, .menu__search:hover {
+      color: tomato; }
+  .menu__search {
+    width: 50%;
+    display: flex;
+    margin-right: 10em; }
+  .menu__beers, .menu__community, .menu__invest {
+    width: 30%; }
+  .menu__invest {
+    color: red; }
+
+.ranking__title {
+  cursor: pointer; }
+  .ranking__title:hover {
+    background: tomato;
+    color: white; }
+
+
+.welcome {
+  display: flex;
+  flex-direction: row;
+  width: 100vw; }
+  .welcome__beers {
+    background-image: url("img/beers.jpg");
+    background-size: cover; }
+  .welcome__ranking {
+    background-image: url("img/ranking.jpg");
+    background-size: cover; }
+  .welcome__brewdog {
+    background-image: url("img/brewdog.jpg");
+    background-size: cover; }
+
+.speech__title {
+  font-size: 4rem; }
+.speech__description {
+  font-size: 2rem; }
+
+.video__title {
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  color: black;
+  padding: 0.2rem 3rem;
+  margin: 1rem; }
+.video__description {
+  width: 100vw;
+  background: whitesmoke;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center; }
+.video__background {
+  position: absolute;
+  left: 0;
+  min-width: 100%;
+  z-index: -1;
+  opacity: 0.7; }
+
+.main {
+  display: flex;
+  flex-direction: column; }
+  .main__speech {
+    width: 100vw;
+    height: 20rem;
+    background-color: #e2e2e2;
+    color: #2c2c2c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+  .main__video {
+    width: 100vw;
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+
+.footer {
+  width: 100vw;
+  height: 20rem;
+  background: #2c2c2c;
+  color: whitesmoke;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
+.menu__invest, .beers__button, .brewdog__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10rem;
+  height: 1.9rem;
+  background: #ffd000;
+  color: #3d3d3d;
+  cursor: pointer;
+  padding: 0.2rem 2rem 0.2rem 2rem; }
+  .menu__invest:hover, .beers__button:hover, .brewdog__button:hover {
+    background: tomato;
+    color: white; }
+
+.beers, .brewdog, .ranking, .welcome__beers, .welcome__ranking, .welcome__brewdog {
+  width: 33%;
+  min-height: 28rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.8; }
+
+.beers__title, .brewdog__title, .ranking__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  color: black;
+  padding: 0.2rem 3rem;
+  font-size: 2rem;
+  margin: 1rem;
+  font-family: "Staatliches";
+  letter-spacing: 0.4rem; }
+
+.beers__description, .brewdog__description, .ranking__description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  color: white;
+  padding: 1%;
+  font-size: 1.2rem;
+  margin: 1rem; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "Big Shoulders Text";
+  letter-spacing: 0.2rem; }
+
+.query {
+  width: 10rem;
+  background: unset;
+  border: unset;
+  border-bottom: 1px solid whitesmoke; }
+
+.button {
+  color: whitesmoke;
+  padding: 0.1rem;
+  margin-left: 0.2rem; }
+  .button:hover {
+    color: tomato; }
+
+.icon {
+  font-size: 1rem; }
+  .icon__text {
+    font-size: 0.8rem; }
+
+.ranking--top1 {
+  font-size: 3rem; }
+.ranking--top2 {
+  font-size: 2rem; }
+.ranking--top3 {
+  font-size: 1rem; }
+
+/*# sourceMappingURL=style.css.map */
