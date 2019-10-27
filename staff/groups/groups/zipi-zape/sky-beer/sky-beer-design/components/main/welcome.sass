@@ -1,5 +1,4 @@
 @import beers
-@import brewdog
 @import ranking
 
 .welcome
@@ -11,16 +10,34 @@
         flex-direction: row
 
     &__beers
-        @extend %panel
         background-image: url("img/beers.jpg")
         background-size: cover
+        display: flex
+        flex-direction: row
+        align-items: center
+        justify-content: center
+        flex-wrap: wrap
+        opacity: .8
+        @media only screen and (max-width:1023px)
+            width: 100%
+            height: 23rem 
+        @media only screen and (min-width:1024px)
+            width: 67%
+            height: 30rem
 
     &__ranking
-        @extend %panel
         background-image: url("img/ranking.jpg")
         background-size: cover
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        flex-wrap: wrap
+        opacity: .8
+        @media only screen and (max-width:1023px)
+            width: 100%
+            min-height: 23rem 
+        @media only screen and (min-width:1024px)
+            width: 33%
+            min-height: 30rem
 
-    &__brewdog
-        @extend %panel
-        background-image: url("img/brewdog.jpg")
-        background-size: cover

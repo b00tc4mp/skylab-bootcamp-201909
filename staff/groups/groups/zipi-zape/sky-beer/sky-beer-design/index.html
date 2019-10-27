@@ -32,30 +32,76 @@
         </div>
     </header>
     <div class="header__back"></div><!--Empty div to manage header fixed position-->
-   
+    <section class="login">
+        <div class="login__container">
+            <section class="sign-in">
+                <form class="sign-in__form">
+                    <label for="username">Username: <input type="email" class="sign-in__name" name="username" placeholder="Enter your email"></label>
+                    <label for="password">Password: <input type="password" class="sign-in__name" name="password"></label>
+                    <button class="sign-in__button">Sign In</button> <a href="#" class="link">Forgot your password?</a>
+                </form>
+            </section>
+            <section class="sign-up">
+                <form class="sign-up__form">
+                    <label for="name">Name: <input type="text" class="sign-up__name" name="name">
+                    <label for="surname">Surname: <input type="text" class="sign-up__name" name="surname">Surname: 
+                    <label for="username">Username: <input type="email" class="sign-up__name" name="username" placeholder="Enter your email">
+                    <label for="password">Password: <input type="password" class="sign-up__name" name="password">
+                    <button class="sign-up__button">Sign Up</button>
+                </form>
+            </section>
+
+        </div>
+    </section>
     <main class="main">
         <section class="main__welcome welcome">
-            <article class="welcome__beers beers">
-                <div class="beers__description">GO TO BEERS PAGE</div>
-                <div class="beers__title">BEERS WORLD</div>
-                <div class="beers__button">GET DRUNK</div>
-            </article>
+            <section class="welcome__beers beers">
+                <article class="beers__random-beer random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 1</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+                <article class="beers__random-beer random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 2</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+                <article class="beers__random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 3</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+                <article class="beers__random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 4</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+            </section>
             <article class="welcome__ranking ranking">
                 <div class="ranking__description">TOP RANK</div>
                 <div class="ranking__title ranking--top1">BEER 1</div>
                 <div class="ranking__title ranking--top2">BEER 2</div>
                 <div class="ranking__title ranking--top3">BEER 3</div>
             </article>
-            <article class="welcome__brewdog brewdog">
-                <div class="brewdog__description">VISIT BREWDOG'S</div>
-                <div class="brewdog__title">BREWDOG PUNK</div>
-                <div class="brewdog__button">GO TO STORE</div>
-            </article>
         </section>
         <section class="main__speech speech">
+            <div class="speech__bg"></div>
             <div class="speech__title">TITULO DEL SPEECH</div>
             <div class="speech__description">TOL ROLLO</div>
         </section>
+        <article class="main_brewdog brewdog">
+            <div class="brewdog__description">VISIT BREWDOG'S</div>
+            <div class="brewdog__title">BREWDOG PUNK</div>
+            <div class="brewdog__button">GO TO STORE</div>
+        </article>
         <section class="main__video video">
             <video class="video__background" autoplay muted loop>
                 <source src="./vid/video.mp4" type="video/mp4">
