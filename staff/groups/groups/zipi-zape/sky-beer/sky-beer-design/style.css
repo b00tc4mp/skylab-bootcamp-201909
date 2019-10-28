@@ -109,12 +109,7 @@
   .ranking__title:hover {
     background: tomato;
     color: white; }
-.ranking--top1 {
-  font-size: 250%; }
-.ranking--top2 {
-  font-size: 175%; }
-.ranking--top3 {
-  font-size: 100%; }
+
 
 .welcome {
   display: flex;
@@ -230,6 +225,69 @@
   justify-content: space-around;
   align-items: center; }
 
+.login {
+  position: absolute;
+  z-index: 10;
+  top: 15vh;
+  left: 0;
+  width: 100vw;
+  min-height: 50vh;
+  background-color: #2c2c2c;
+  transition: 1s height ease;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center; }
+  .login__title {
+    font-size: 120%;
+    font-family: "Staatliches";
+    color: whitesmoke; }
+
+.sign-in {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2%;
+  align-items: center; }
+  @media only screen and (max-width: 1023px) {
+    .sign-in {
+      width: 100vw;
+      height: 40%; } }
+  @media only screen and (min-width: 1024px) {
+    .sign-in {
+      width: 30%;
+      height: 70%; } }
+  .sign-in__form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: right;
+    color: whitesmoke; }
+
+.sign-up {
+  border: 1px solid white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2%;
+  align-items: center; }
+  @media only screen and (max-width: 1023px) {
+    .sign-up {
+      width: 100vw;
+      height: 60%; } }
+  @media only screen and (min-width: 1024px) {
+    .sign-up {
+      width: 50%;
+      height: 70%; } }
+  .sign-up__form {
+    display: flex;
+    flex-direction: column;
+    color: whitesmoke;
+    align-items: flex-end;
+    justify-content: right; }
+
 .menu__invest, .brewdog__button {
   display: flex;
   justify-content: center;
@@ -293,14 +351,11 @@
 .burguer {
   font-size: 80%; }
 
-.login {
-  position: absolute;
-  z-index: 10;
-  top: 15vh;
-  left: 0;
-  width: 100vw;
-  height: 50vh;
-  background-color: #2c2c2c;
-  transition: 1s height ease; }
-
+  .ranking--top1 {
+    font-size: 250%; }
+  .ranking--top2 {
+    font-size: 175%; }
+  .ranking--top3 {
+    font-size: 100%; }
+    
 /*# sourceMappingURL=style.css.map */

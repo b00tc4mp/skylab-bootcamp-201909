@@ -1,0 +1,58 @@
+.login
+    position: absolute
+    z-index: 10
+    top: 15vh
+    left: 0
+    width: 100vw
+    min-height: 50vh
+    background-color: #2c2c2c
+    transition: 1s height ease
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-around
+    align-items: center
+    &__title
+        font-size: 120%
+        font-family: 'Staatliches'
+        color: whitesmoke
+
+.sign-in
+    border: 1px solid white
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    padding: 2%
+    align-items: center
+    @media only screen and (max-width:1023px)
+        width: 100vw
+        height: 40%
+    @media only screen and (min-width:1024px)
+        width: 30%
+        height: 70%
+    &__form
+        display: flex
+        flex-direction: column
+        align-items: flex-end   
+        justify-content: right
+        color: whitesmoke
+
+.sign-up
+    border: 1px solid white
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    padding: 2%
+    align-items: center
+    @media only screen and (max-width:1023px)
+        width: 100vw
+        height: 60%
+    @media only screen and (min-width:1024px)
+        width: 50%
+        height: 70%
+    &__form
+        display: flex
+        flex-direction: column
+        color: whitesmoke
+        align-items: flex-end   
+        justify-content: right
