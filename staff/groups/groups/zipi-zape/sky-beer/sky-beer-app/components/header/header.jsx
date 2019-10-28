@@ -1,5 +1,6 @@
 function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin}) {
-    return <header className="header">
+    return <>
+    <header className="header">
         <img className="header__logo" src="./img/logo.png"/>
         <h1 className="header__title">SkyBeer APP</h1>
         <div className="header__burguer" onClick={event => {
@@ -32,4 +33,6 @@ function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin}) {
             onLogin()}}><i className="far fa-user"></i><span className="icon__text">LOG IN</span></div>
         </div>
     </header>
+    <div className="header__back"></div>
+    </>
 }

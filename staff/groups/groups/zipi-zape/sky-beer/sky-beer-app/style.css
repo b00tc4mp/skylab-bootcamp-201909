@@ -354,6 +354,9 @@
   border-bottom: 1px solid whitesmoke; }
 
 .button {
+  cursor: pointer;
+  border: 0;
+  background: unset;
   color: whitesmoke;
   padding: 0.1rem;
   margin-left: 0.2rem; }
