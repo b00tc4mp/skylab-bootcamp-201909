@@ -11,7 +11,7 @@
     color: white
     font-family: Arial
     overflow: auto
-    
+
 .header
     display: flex
     margin-bottom: 7rem
@@ -36,7 +36,7 @@
         background-color: black
         border: none
 
-.user__name 
+.user__name
     width: 30%
     display: flex
     justify-content: space-around
@@ -91,7 +91,6 @@
         border: none
         background: none
 
-
 .login
     width: 35vw
     padding: 0.5rem
@@ -143,7 +142,7 @@
         margin: 0 auto
         background: none
         border: none
-    
+
     .fa-search
         font-size: 1.5rem
         color: whitesmoke
@@ -156,3 +155,37 @@
     &__message
         width: 20rem
         height: 4rem
+.background
+    background-image: url(https://images4.alphacoders.com/275/thumb-1920-275146.jpg)
+    width: 100vw
+    height: 100vh
+    opacity: 0.2
+    position: absolute
+    z-index: -2
+.champion
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-wrap: wrap
+    width: 70%
+    margin: 0.5rem auto
+    position: relative
+    &__ancore
+        text-decoration: none
+        color: snow
+    &__ancore:hover
+        text-decoration: none
+        text-decoration-color: snow
+    &__content
+        margin-right: 5rem
+        list-style: none
+    &__info
+        position: absolute
+        z-index: -1
+        text-align: center
+    &__image
+        opacity: 1
+        transition: opacity 800ms
+    &__image:hover
+        opacity: 0.2
+        transition: opacity 800ms
