@@ -4,8 +4,9 @@ function SignIn ({onSubmit}){
                 <h2 className="login__title">Sign In</h2>
                 <form className="sign-in__form" onSubmit={event => {
                     event.preventDefault()
+                    const { username, password}
 
-                    onSubmit()             
+                    onSubmit( username, password)             
                     }}>
                     <label for="username">Username: <input type="email" className="sign-in__name" name="username" placeholder="Enter your email"/></label>
                     <label for="password">Password: <input type="password" className="sign-in__name" name="password"/></label>
