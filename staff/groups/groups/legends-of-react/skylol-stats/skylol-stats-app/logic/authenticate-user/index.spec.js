@@ -41,8 +41,8 @@ describe('logic - authenticate user', () => {
         expect(() => authenticateUser(undefined)).toThrowError(TypeError, 'undefined is not a string')
         expect(() => authenticateUser(null)).toThrowError(TypeError, 'null is not a string')
 
-        expect(() => authenticateUser('')).toThrowError(ContentError, 'e-mail is empty or blank')
-        expect(() => authenticateUser(' \t\r')).toThrowError(ContentError, 'e-mail is empty or blank')
+        expect(() => authenticateUser('')).toThrowError(ContentError, 'email is empty or blank')
+        expect(() => authenticateUser(' \t\r')).toThrowError(ContentError, 'email is empty or blank')
 
         expect(() => authenticateUser(email, 1)).toThrowError(TypeError, '1 is not a string')
         expect(() => authenticateUser(email, true)).toThrowError(TypeError, 'true is not a string')
@@ -61,6 +61,4 @@ describe('logic - authenticate user', () => {
         expect(() => authenticateUser(email, password, undefined)).toThrowError(TypeError, 'undefined is not a function')
         expect(() => authenticateUser(email, password, null)).toThrowError(TypeError, 'null is not a function')
     })
-
-    // TODO other cases
 })

@@ -3,7 +3,7 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
-    state = {view : 'landing', error: undefined, summoner: undefined}
+    state = {view : 'landing', error: undefined, user: undefined}
     
 
     handleRegister = (name, surname, summoner, email, password) => {
@@ -68,17 +68,17 @@ class App extends Component {
     }
 
     handleonSignOut = () => {
-        this.setState({ view: 'landing', error: undefined, summoner: undefined })
+        this.setState({ view: 'landing', error: undefined, user: undefined })
         sessionStorage.clear()
     }
 
 
 
     render() {
-        const { state: { view, error, summoner }, handleHome, handleGoToLogin, handleGoToRegister, handleContact, handleonSignOut, handleRegister, handleBackToLanding, handleLogin } = this
+        const { state: { view, error, user }, handleHome, handleGoToLogin, handleGoToRegister, handleContact, handleonSignOut, handleRegister, handleBackToLanding, handleLogin } = this
 
         return <>
-            <Header summoner={summoner} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onContact={handleContact} onSignOut={handleonSignOut} />
+            <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onContact={handleContact} onSignOut={handleonSignOut} />
             { view === 'landing' && <Landing />} 
             { view === 'register' && <Register onRegister={handleRegister} error={error}/> }
             { view === 'login' && <Login onLogin={handleLogin} error={error}/> }

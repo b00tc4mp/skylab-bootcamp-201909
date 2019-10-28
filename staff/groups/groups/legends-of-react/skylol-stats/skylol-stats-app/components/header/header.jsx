@@ -1,19 +1,20 @@
-function Header( { summoner, onHome, onLogin, onRegister, onContact, onSignOut } ) {
+function Header( { user, onHome, onLogin, onRegister, onContact, onSignOut } ) {
     
     return <header className="header">
     <img src="https://media.giphy.com/media/YbFasFa6Fh5HW/giphy.gif" alt="" className="header__logo"/>
     <div className="header__div">
-        <h1 className="header__title">SkyLoL Stats</h1>
-        <div className="header__div2">  
-    {summoner && <p className="header__user">{`hello ${summoner}`}</p>}
-    {summoner && <button className="header__singout" onClick={
-         event => {
-             event.preventDefault()
+            <div className="header__div2">
+                <h1 className="header__title">SkyLoL Stats</h1>
+                <div className="user__name">
+                    {user && <p className="header__user">{`Hello ${user}`}</p>}
+                    {user && <button className="header__signout" onClick={
+                    event => {
+                    event.preventDefault()
 
-             onSignOut()
-         }
-    }>Sign Out</button> }
-      </div>  
+                    onSignOut()
+                    }}>Sign out</button>}
+                </div>
+            </div>
         <nav>
             <ul className="navigation">
                 <li className="navigation__item" onClick={
