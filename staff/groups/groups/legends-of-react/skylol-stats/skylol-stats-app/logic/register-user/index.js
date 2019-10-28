@@ -11,9 +11,6 @@ function registerUser(name, surname, email, summoner, password, callback) {
     validate.string.notVoid('password', password)
     validate.function(callback)
 
-
-    // const { data: { summoner = summoner } } = result
-
     call('POST', undefined, 'https://skylabcoders.herokuapp.com/api/user', { name, surname, summoner, username: email, password }, result => {
         result.error ? callback(new Error(result.error)) : callback();
     })

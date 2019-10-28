@@ -5,7 +5,7 @@ function Register({ onRegister, onBack, error }) {
 
             const { name: { value: name }, surname: { value: surname }, summoner: {value : summoner}, email: { value: email }, password: { value: password } } = event.target
 
-            onRegister(name, surname, email, password)
+            onRegister(name, surname, summoner, email, password)
         }}>
             <h1 className="register__title">Register</h1>
             <input className="register__field" type="text" name="name" placeholder="name" />
