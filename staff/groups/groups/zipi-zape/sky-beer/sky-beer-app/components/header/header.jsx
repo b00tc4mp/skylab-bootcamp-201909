@@ -1,4 +1,4 @@
-function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin}) {
+function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin, name}) {
     return <>
     <header className="header">
         <img className="header__logo" src="./img/logo.png"/>
@@ -30,7 +30,7 @@ function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin}) {
         <div className="header__login">
             <div className="icon" onClick={event => {
             event.preventDefault()
-            onLogin()}}><i className="far fa-user"></i><span className="icon__text">LOG IN</span></div>
+            onLogin()}}><i className="far fa-user"></i><span className="icon__text">{name || 'LOG IN'}</span></div>
         </div>
     </header>
     <div className="header__back"></div>
