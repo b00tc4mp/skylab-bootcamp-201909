@@ -6,6 +6,25 @@ class App extends Component {
         this.state = {login : false}
     }
 
+    componentWillMount () {
+        const credentials = JSON.parse(sessionStorage.getItem('credentials'))
+        if (credentials) {
+            const { id , token } = credentials
+            this.setState ({id : id , token : token})
+            try {
+                retrieveUser(id, token, (error, user) => {
+                    if (error) this.setState({ error: error.message })
+                    else {
+                        const { name } = user
+                        this.setState({ name: name })
+                    }
+                })
+            } catch (error) {
+                this.setState({ error: error.message })
+            }
+        }
+    }
+
     handleBurguer = () => {
     
     }
