@@ -1,4 +1,4 @@
-function registerUser(name, surname, email, summoner, password, callback) {
+function registerUser(name, surname, summoner, email, password, callback) {
     validate.string(name)
     validate.string.notVoid('name', name)
     validate.string(surname)

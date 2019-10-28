@@ -10,7 +10,7 @@ class App extends Component {
         try {
             registerUser(name, surname, summoner, email, password, error => {
                 if (error) this.setState({ error: error.message })
-                else this.setState({ view: 'landing' })
+                else this.setState({ view: 'login' })
             })
 
         } catch (error) {
@@ -23,7 +23,8 @@ class App extends Component {
     }
 
     handleLogin = (email, password) => {
-        try {             
+        try { debugger
+
             authenticateUser(email, password, (error, data) => {
                 if (error)
                     this.setState({ error: error.message })
@@ -36,9 +37,9 @@ class App extends Component {
 
                         retrieveUser(id, token, (error, user) => {
                             if (error) this.setState({ error: error.message })
-                            else {
-                                const { name } = user
-                                this.setState({ view: 'landing', user: name, error: undefined })
+                            else { debugger
+                                const { summoner } = user
+                                this.setState({ view: 'landing', user: summoner, error: undefined })
                             }
                         })
                     } catch (error) {
@@ -79,8 +80,8 @@ class App extends Component {
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onContact={handleContact} onSignOut={handleonSignOut} />
             { view === 'landing' && <Landing />} 
-            { view === 'register' && <Register onRegister={handleRegister} onBack={handleBackToLanding}/> }
-            { view === 'login' && <Login onLogin={handleLogin} onBack={handleBackToLanding}/> }
+            { view === 'register' && <Register onRegister={handleRegister} error={error}/> }
+            { view === 'login' && <Login onLogin={handleLogin} error={error}/> }
         </>
     }
 }
