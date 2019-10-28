@@ -1,0 +1,166 @@
+@import url("https://fonts.googleapis.com/css?family=Exo+2&display=swap");
+.tresh {
+  background: linear-gradient(to bottom, black, black, black, #57d5a0);
+  color: white;
+  font-family: Arial;
+  overflow: auto;
+}
+
+.fire {
+  background: linear-gradient(to bottom, #5a0200, #fcf68a);
+  color: white;
+  font-family: Arial;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 7rem;
+}
+.header__logo {
+  height: 15rem;
+  position: absolute;
+}
+.header__title {
+  text-shadow: 0.2rem 0.1rem 0.5em #57d5a0, 0.2rem 0.1rem 0.5em #337b5d, 0.2rem 0.1rem 0.5em #57d5a0;
+}
+.header__div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-left: 11rem;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  width: 80vw;
+  border: solid 0.2rem #57d5a0;
+  border-bottom-right-radius: 1rem;
+  background-color: black;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  padding: 0.5rem;
+}
+.navigation__item {
+  list-style: none;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.landing__video {
+  padding: 0.5rem;
+  background-color: #808080a8;
+  border: solid 0.2rem #57d5a0;
+  box-shadow: 0 0 10px 4px #57d5a0;
+}
+
+.register {
+  width: 35vw;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  display: none;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+}
+.register__title {
+  text-align: center;
+}
+.register__field {
+  margin-bottom: 0.5rem;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  font-size: 1rem;
+  border: solid 0.2rem #57d5a0;
+  border-bottom-right-radius: 1rem;
+  background-color: black;
+}
+.register__submit {
+  width: 3rem;
+  margin: 0 auto;
+  background: none;
+  border: none;
+}
+
+.login {
+  width: 35vw;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  display: none;
+}
+.login__form {
+  display: flex;
+  justify-content: baseline;
+}
+.login__title {
+  text-align: center;
+}
+.login__field {
+  margin: 0.2rem;
+  background: #1f3a01;
+  color: white;
+  font-size: 1rem;
+  border: 0.1rem solid whitesmoke;
+  border-radius: 0.3rem;
+}
+.login__submit {
+  width: 3rem;
+  margin: 0 auto;
+  background: none;
+  border: none;
+}
+
+.search {
+  width: 35vw;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  display: none;
+}
+.search__title {
+  text-align: center;
+}
+.search__form {
+  display: flex;
+  justify-content: baseline;
+}
+.search__field {
+  margin: 0.2rem;
+  background: #1f3a01;
+  color: white;
+  font-size: 1.5rem;
+  border: 0.1rem solid whitesmoke;
+  border-radius: 0.3rem;
+}
+.search__submit {
+  width: 3rem;
+  margin: 0 auto;
+  background: none;
+  border: none;
+}
+.search .fa-search {
+  font-size: 1.5rem;
+  color: whitesmoke;
+}
+
+.feedback {
+  margin: 0.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.feedback__message {
+  border: solid 0.1rem whitesmoke;
+  width: 20rem;
+  height: 4rem;
+}
+
+/*# sourceMappingURL=index.css.map */
