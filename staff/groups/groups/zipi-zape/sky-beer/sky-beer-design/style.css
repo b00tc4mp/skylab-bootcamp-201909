@@ -22,55 +22,54 @@
       display: flex;
       justify-content: center;
       align-items: center; }
-    .header__nav {
+    .header__menu {
       display: none; } }
   @media only screen and (min-width: 1024px) {
     .header__title {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      width: 20%;
+      font-size: 150%;
+      width: 15%;
       font-family: "Staatliches";
-      letter-spacing: 0.4rem; }
+      letter-spacing: 3%; }
     .header__burguer {
       display: none; }
-    .header__nav {
+    .header__menu {
+      width: 60%;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 60%; } }
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      padding: 0; } }
   .header__login {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 10%;
-    color: white; }
-
-.menu {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  padding: 0; }
-  .menu__beers, .menu__community, .menu__invest, .menu__search {
     color: white;
-    font-size: 1.2rem;
-    padding: 0.1rem;
-    margin-left: 1em;
-    margin-right: 1em;
     cursor: pointer; }
-    .menu__beers:hover, .menu__community:hover, .menu__invest:hover, .menu__search:hover {
+    .header__login:hover {
       color: tomato; }
-  .menu__search {
-    width: 50%;
-    display: flex;
-    margin-right: 10em; }
-  .menu__beers, .menu__community, .menu__invest {
-    width: 30%; }
-  .menu__invest {
-    color: red; }
+
+.menu__beers, .menu__community, .menu__invest, .menu__search {
+  color: white;
+  font-size: 120%;
+  padding: 1%;
+  margin-left: 1%;
+  margin-right: 1%;
+  cursor: pointer; }
+  .menu__beers:hover, .menu__community:hover, .menu__invest:hover, .menu__search:hover {
+    color: tomato; }
+.menu__search {
+  width: 50%;
+  display: flex;
+  margin-right: 20%; }
+  .menu__search form {
+    display: flex; }
+.menu__invest {
+  color: red; }
 
 .random-beer__inside {
   background-color: rgba(255, 255, 255, 0.4);
@@ -156,9 +155,10 @@
         min-height: 30rem; } }
 
 .speech__title {
-  font-size: 300%; }
-.speech__description {
+  font-family: "Staatliches";
   font-size: 150%; }
+.speech__description {
+  font-size: 80%; }
 
 .brewdog {
   display: flex;
@@ -175,17 +175,18 @@
 
 .video__title {
   font-size: 150%;
+  font-family: "Staatliches";
   display: flex;
   justify-content: center;
   align-items: center;
   background: white;
   color: black;
-  padding: 0.2rem 3rem;
-  margin: 1rem; }
+  padding: 0.5% 4%;
+  margin: 1%; }
 .video__description {
   width: 100vw;
   background: whitesmoke;
-  font-size: 110%;
+  font-size: 80%;
   display: flex;
   justify-content: center; }
 .video__background {
@@ -240,12 +241,15 @@
   justify-content: space-around;
   align-items: center; }
   .login__title {
+    display: flex;
+    justify-content: center;
+    width: 100%;
     font-size: 120%;
+    padding-bottom: 2%;
     font-family: "Staatliches";
     color: whitesmoke; }
 
 .sign-in {
-  border: 1px solid white;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -262,15 +266,22 @@
   .sign-in__form {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
-    justify-content: right;
-    color: whitesmoke; }
+    color: whitesmoke;
+    width: 90%; }
+    @media only screen and (max-width: 1023px) {
+      .sign-in__form {
+        align-items: center; } }
+    @media only screen and (min-width: 1024px) {
+      .sign-in__form {
+        align-items: flex-end; } }
+    .sign-in__form label, .sign-in__form button {
+      margin: 1%; }
 
 .sign-up {
-  border: 1px solid white;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   padding: 2%;
   align-items: center; }
   @media only screen and (max-width: 1023px) {
@@ -280,24 +291,30 @@
   @media only screen and (min-width: 1024px) {
     .sign-up {
       width: 50%;
-      height: 70%; } }
+      height: 70%;
+      border-left: 1px solid white; } }
+  .sign-up__text {
+    color: whitesmoke;
+    width: 45%;
+    text-align: left; }
   .sign-up__form {
     display: flex;
     flex-direction: column;
     color: whitesmoke;
-    align-items: flex-end;
-    justify-content: right; }
+    width: 45%;
+    align-items: flex-end; }
+    .sign-up__form label, .sign-up__form button {
+      margin: 1%; }
 
 .menu__invest, .brewdog__button {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 10rem;
-  height: 1.9rem;
+  min-width: 15%;
   background: #ffd000;
   color: #3d3d3d;
   cursor: pointer;
-  padding: 0.2rem 2rem 0.2rem 2rem; }
+  padding: 1% 5% 1% 5%; }
   .menu__invest:hover, .brewdog__button:hover {
     background: tomato;
     color: white; }
@@ -308,9 +325,9 @@
   align-items: center;
   background: white;
   color: black;
-  padding: 0.2rem 3rem;
-  font-size: 200%;
-  margin: 1rem;
+  padding: 0.2% 3%;
+  font-size: 150%;
+  margin: 1%;
   font-family: "Staatliches";
   letter-spacing: 0.4rem; }
 
@@ -357,5 +374,4 @@
     font-size: 175%; }
   .ranking--top3 {
     font-size: 100%; }
-    
 /*# sourceMappingURL=style.css.map */
