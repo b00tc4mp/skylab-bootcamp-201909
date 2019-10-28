@@ -71,6 +71,7 @@ class App extends Component {
         this.setState({ view: 'champions', error: undefined })
     }
 
+
     handleonSignOut = () => {
         this.setState({ view: 'landing', error: undefined, user: undefined })
         sessionStorage.clear()
@@ -79,14 +80,17 @@ class App extends Component {
 
 
     render() {
-        const { state: { view, error, user }, handleHome, handleGoToLogin, handleGoToRegister, handleSummoners, handleChampions, handleonSignOut, handleRegister, handleLogin } = this
+        const { state: { view, error, user }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions } = this
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
             { view === 'landing' && <Landing />} 
             { view === 'register' && <Register onRegister={handleRegister} error={error}/> }
             { view === 'login' && <Login onLogin={handleLogin} error={error}/> }
-            { view === 'champions' && <Search/> }
+            { view === 'champions' && <Search error={error}/> }
+            { view === 'champions' && <Champions error={error}/> }
+            { view === 'summoners' && <Search error={error}/> }
         </>
     }
 }
+

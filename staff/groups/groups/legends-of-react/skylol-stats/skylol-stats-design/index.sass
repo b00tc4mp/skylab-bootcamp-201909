@@ -4,12 +4,14 @@
     color: white
     font-family: Arial
     overflow: auto
+    height: 100vh
+    margin: 0
 .fire
     background: linear-gradient(to bottom, #5a0200, #fcf68a)
     color: white
     font-family: Arial
     overflow: auto
-    
+
 .header
     display: flex
     margin-bottom: 7rem
@@ -33,8 +35,8 @@
         font-size: 1rem
         background-color: black
         border: none
-        
-.user__name 
+
+.user__name
     width: 30%
     display: flex
     justify-content: space-around
@@ -66,48 +68,55 @@
     width: 35vw
     padding: 0.5rem
     margin: 0.5rem auto
-    display: none
     &__form
         display: flex
         flex-direction: column
     &__title
         text-align: center
     &__field
-        margin-bottom: 0.5rem
+        margin-bottom: 1.5rem
         box-shadow: 0 0 10px 4px #57d5a0
         color: white
-        font-size: 1rem
+        font-size: 1.5rem
         border: solid 0.2rem #57d5a0
         border-bottom-right-radius: 1rem
         background-color: black
     &__submit
-        width: 3rem
+        width: 7rem
+        box-shadow: 0 0 10px 4px #57d5a0
+        color: white
+        border-bottom-right-radius: 1rem
         margin: 0 auto
-        background: none
+        font-size: 1.5rem
         border: none
+        background: none
 
 .login
     width: 35vw
     padding: 0.5rem
     margin: 0.5rem auto
-    display: none
     &__form
         display: flex
         justify-content: baseline
     &__title
         text-align: center
     &__field
-        margin: 0.2rem
-        background: #1f3a01
+        margin-bottom: 1.5rem
+        box-shadow: 0 0 10px 4px #57d5a0
         color: white
-        font-size: 1rem
-        border: 0.1rem solid whitesmoke
-        border-radius: 0.3rem
+        font-size: 1.5rem
+        border: solid 0.2rem #57d5a0
+        border-bottom-right-radius: 1rem
+        background-color: black
     &__submit
-        width: 3rem
+        width: 7rem
+        box-shadow: 0 0 10px 4px #57d5a0
+        color: white
+        border-bottom-right-radius: 1rem
         margin: 0 auto
-        background: none
+        font-size: 1.5rem
         border: none
+        background: none
 
 .search
     width: 35vw
@@ -116,7 +125,6 @@
     display: flex
     align-items: center
     flex-direction: column
-    display: none
     &__title
         text-align: center
     &__form
@@ -134,7 +142,7 @@
         margin: 0 auto
         background: none
         border: none
-    
+
     .fa-search
         font-size: 1.5rem
         color: whitesmoke
@@ -144,8 +152,40 @@
     display: flex
     align-items: center
     justify-content: center
-    display: none
     &__message
-        border: solid 0.1rem whitesmoke
         width: 20rem
         height: 4rem
+.background
+    background-image: url(https://images4.alphacoders.com/275/thumb-1920-275146.jpg)
+    width: 100vw
+    height: 100vh
+    opacity: 0.2
+    position: absolute
+    z-index: -2
+.champion
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-wrap: wrap
+    width: 70%
+    margin: 0.5rem auto
+    position: relative
+    &__ancore
+        text-decoration: none
+        color: snow
+    &__ancore:hover
+        text-decoration: none
+        text-decoration-color: snow
+    &__content
+        margin-right: 5rem
+        list-style: none
+    &__info
+        position: absolute
+        z-index: -1
+        text-align: center
+    &__image
+        opacity: 1
+        transition: opacity 800ms
+    &__image:hover
+        opacity: 0.2
+        transition: opacity 800ms
