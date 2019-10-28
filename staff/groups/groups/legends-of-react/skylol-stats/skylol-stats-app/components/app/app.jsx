@@ -90,6 +90,7 @@ class App extends Component {
             { view === 'champions' && <Search error={error}/> }
             { view === 'champions' && <Champions error={error}/> }
             { view === 'summoners' && <Search error={error}/> }
+
         </>
     }
 }
