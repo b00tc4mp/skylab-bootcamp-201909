@@ -1,6 +1,6 @@
 function Login({ onLogin, onBack, error }) {
     return <section className="login">
-        <form onSubmit={function (event) {
+        <form className="login__form" onSubmit={function (event) {
             event.preventDefault()
 
             const { email: { value: email }, password: { value: password } } = event.target

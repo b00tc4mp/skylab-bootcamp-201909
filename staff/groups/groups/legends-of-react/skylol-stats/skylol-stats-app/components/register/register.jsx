@@ -1,6 +1,6 @@
 function Register({ onRegister, onBack, error }) {
     return <section className="register">
-        <form onSubmit={function (event) {
+        <form className="register__form" onSubmit={function (event) {
             event.preventDefault()
 
             const { name: { value: name }, surname: { value: surname }, summoner: {value : summoner}, email: { value: email }, password: { value: password } } = event.target
