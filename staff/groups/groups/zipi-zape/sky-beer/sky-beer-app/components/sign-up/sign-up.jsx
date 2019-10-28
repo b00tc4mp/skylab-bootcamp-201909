@@ -2,10 +2,13 @@ function SignUp({onSubmit}){
     return <section className="sign-up">
                     <h2 className="login__title">Create a new account</h2>
                     <p className="sign-up__text">Register and create an account to manage your favourite beers and keep in contact with your beer-friends!</p>
-                    <form className="sign-up__form"onSubmit={event => {
+                    <form className="sign-up__form" onSubmit={event => {
                             event.preventDefault()
-                            const {name, surname, username, password} = event.target
-                            onSubmit(name, surname, username, password)
+                            const { name: { value: name }, 
+                                    surname: { value: surname }, 
+                                    username: { value: email }, 
+                                    password: { value: password } } = event.target
+                            onSubmit(name, surname, email, password)
                         }}>
                         <label>Name: <input type="text" className="sign-up__name" name="name"/></label>
                         <label>Surname: <input type="text" className="sign-up__name" name="surname"/></label>
@@ -13,5 +16,8 @@ function SignUp({onSubmit}){
                         <label>Password: <input type="password" className="sign-up__name" name="password"/></label>
                         <button className="sign-up__button" >Sign Up</button>
                     </form>
+
+                    {/* {error && <Feedback message={error} />} */}
+                    
             </section>
 }
