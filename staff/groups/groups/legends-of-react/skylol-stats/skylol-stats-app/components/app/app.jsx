@@ -3,7 +3,7 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
-    state = {view : '', error: undefined, user: undefined}
+    state = {view : 'landing', error: undefined, user: undefined}
     
 
     handleRegister = (name, surname, summoner, email, password) => {
@@ -78,6 +78,7 @@ class App extends Component {
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onContact={handleContact} onSignOut={handleonSignOut} />
+            { view === 'landing' && <Landing />} 
             { view === 'register' && <Register onRegister={handleRegister} onBack={handleBackToLanding}/> }
             { view === 'login' && <Login onLogin={handleLogin} onBack={handleBackToLanding}/> }
         </>
