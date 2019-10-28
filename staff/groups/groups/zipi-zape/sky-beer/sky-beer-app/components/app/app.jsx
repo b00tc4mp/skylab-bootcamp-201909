@@ -67,11 +67,20 @@ class App extends Component {
                 }
             })  
         } catch (error) {
-            this.setState ({ error : error.message})
+            this.setState ({ error : error.message })
         }
     }
 
-    handleRegister = (name, surname, username, password) => {
+    handleRegister = (name, surname, email, password) => {
+        try{
+            registerUser(name, surname, email, password, error => {
+                if (error) this.setState ({ error:  error.message })    
+                else this.setState ({ login : false })
+            }) 
+            
+        } catch (error) {
+            this.setState ({ error: error.message })
+        }
 
     }
 
@@ -80,7 +89,7 @@ class App extends Component {
 
         return <>
             <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSubmit} onInvest={handleInvest} onLogin={handleShowLogin} name={name}/>
-            {login && <Login onLogin={handleLogin} onRegister={handleRegister}/>}
+            {login && <Login onLogin={handleLogin} onRegister={handleRegister} /*error={error}*/ />}
             <main className="main">
                 <Welcome />
                 <Speech title="THE BEER EXPERIENCE" text="Join to the best Brewdog's Punk Community. We don't like beer, we are beer."/>

@@ -1,9 +1,9 @@
-function Login ({onLogin, onRegister}) {
+function Login ({onLogin, onRegister, /*error*/}) {
 
     return <>
         <section className="login">
-                <SignIn onSubmit={onLogin} />
-                <SignUp onSubmit={onRegister}/>
+                <SignIn onSubmit={onLogin} /*error={error}*/ />
+                <SignUp onSubmit={onRegister} /*error={error}*/ />
         </section>
     </>
 }

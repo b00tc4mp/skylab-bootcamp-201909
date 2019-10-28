@@ -1,4 +1,4 @@
-function SignIn ({onSubmit}){ 
+function SignIn ({onSubmit, /*error*/}){ 
 
     return <section className="sign-in">
                 <h2 className="login__title">Sign In</h2>
@@ -15,6 +15,8 @@ function SignIn ({onSubmit}){
                     <a href="#" className="link">Forgot your password?</a>
                     <button className="sign-in__button">Sign In</button>
                 </form>
+
+                 {/* {error && <Feedback message={error} />} */}
         </section>
 
 }
