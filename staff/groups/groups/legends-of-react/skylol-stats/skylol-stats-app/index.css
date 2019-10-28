@@ -1,10 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Exo+2&display=swap");
-.tresh {
+body {
+  height: 100vh;
   background: linear-gradient(to bottom, black, black, black, #57d5a0);
+}
+
+.tresh {
   color: white;
   font-family: Arial;
   overflow: auto;
-  height: 100vh;
+  margin: 0;
 }
 
 .fire {
@@ -183,9 +187,52 @@
   justify-content: center;
 }
 .feedback__message {
-  border: solid 0.1rem whitesmoke;
   width: 20rem;
   height: 4rem;
+}
+
+.background {
+  background-image: url(https://images4.alphacoders.com/275/thumb-1920-275146.jpg);
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.2;
+  position: absolute;
+  z-index: -2;
+}
+
+.champion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  margin: 0.5rem auto;
+  position: relative;
+}
+.champion__ancore {
+  text-decoration: none;
+  color: snow;
+}
+.champion__ancore:hover {
+  text-decoration: none;
+  text-decoration-color: snow;
+}
+.champion__content {
+  margin-right: 5rem;
+  list-style: none;
+}
+.champion__info {
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+}
+.champion__image {
+  opacity: 1;
+  transition: opacity 800ms;
+}
+.champion__image:hover {
+  opacity: 0.2;
+  transition: opacity 800ms;
 }
 
 /*# sourceMappingURL=index.css.map */

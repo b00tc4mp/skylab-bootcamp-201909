@@ -63,9 +63,14 @@ class App extends Component {
         this.setState({ view: 'register', error: undefined })
     }
 
-    handleContact = () => {
-        this.setState({ view: 'contact', error: undefined })
+    handleSummoners = () => {
+        this.setState({ view: 'summoners', error: undefined })
     }
+
+    handleChampions = () => {
+        this.setState({ view: 'champions', error: undefined })
+    }
+
 
     handleonSignOut = () => {
         this.setState({ view: 'landing', error: undefined, user: undefined })
@@ -75,13 +80,17 @@ class App extends Component {
 
 
     render() {
-        const { state: { view, error, user }, handleHome, handleGoToLogin, handleGoToRegister, handleContact, handleonSignOut, handleRegister, handleBackToLanding, handleLogin } = this
+        const { state: { view, error, user }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions } = this
 
         return <>
-            <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onContact={handleContact} onSignOut={handleonSignOut} />
+            <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
             { view === 'landing' && <Landing />} 
             { view === 'register' && <Register onRegister={handleRegister} error={error}/> }
             { view === 'login' && <Login onLogin={handleLogin} error={error}/> }
+            { view === 'champions' && <Search error={error}/> }
+            { view === 'champions' && <Champions error={error}/> }
+            { view === 'summoners' && <Search error={error}/> }
+
         </>
     }
 }
