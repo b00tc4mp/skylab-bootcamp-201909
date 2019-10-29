@@ -18,7 +18,8 @@ function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin, name}
             <li className="menu__search">
                 <form onSubmit={event => {
                     event.preventDefault()
-                    onSubmit()}}>
+                    const { query : {value : query} } = event.target
+                    onSubmit(query)}}>
                         <input type="search" name="query" placeholder="search" className="query"/>
                         <button className="button"><i className="fas fa-search"></i></button>
                 </form>

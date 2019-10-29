@@ -382,10 +382,151 @@
 .burguer {
   font-size: 80%; }
 
-  .ranking--top1 {
-    font-size: 250%; }
-  .ranking--top2 {
-    font-size: 175%; }
-  .ranking--top3 {
-    font-size: 100%; }
+
+    .container__description {
+      display: flex;
+      justify-content: center;
+    }
+
+    .container__list {
+      list-style: none;
+    }
+    .container__list div {
+      margin-bottom: 2vh;
+      font-size: 3vh;
+    }
+    .container__price {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      border: 1px solid;
+      width: 35%;
+      padding: 5%;
+      cursor: pointer;
+    }
+    .container__price:hover {
+      color: tomato;
+    }
+    .container__others {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .moreinfo__level {
+      display: flex;
+      justify-content: center;
+      width: 33%;
+    }
+   
+  
+    .iteminfo__image {
+      display: flex;
+      height: 100%;
+      padding: 6%;
+    }
+
+    .iteminfo__imageContainer {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+    }
+    .iteminfo__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      width: 50%;
+      height: 100%;
+      padding: 4%;
+    }
+    
+    .container__description {
+      display: flex;
+      justify-content: center;
+    }
+    .container__price {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      border: 1px solid;
+      width: 35%;
+      padding: 5%;
+      cursor: pointer;
+    }
+    .container__price:hover {
+      color: tomato;
+    }
+    .container__others {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .moreinfo__abv {
+      display: flex;
+    }
+    .moreinfo__ibu {
+      display: flex;
+    }
+    .moreinfo__ebc {
+      display: flex;
+    }
+    
+    .beerdetail__title {
+      display: flex;
+      font-family: "Staatliches";
+      font-size: 5vh;
+      width: 100%;
+      justify-content: center;
+    }
+    .beerdetail__iteminfo {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      align-content: center;
+      height: 80%;
+    }
+    .beerdetail__brewers-tips {
+      display: flex;
+      flex-direction: row;
+      width: 80%;
+      justify-content: center;
+      height: 5%;
+    }
+    .beerdetail__moreinfo {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      justify-content: center;
+      height: 5%;
+    }
+    .main__beerdetail {
+      width: 100vw;
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: skyblue;
+      transition: 2s all ease
+    }
+
+    .close {
+      align-self: flex-end;
+      position: relative;
+      top: 3%;
+      right: 3%;
+    }
+
+    .ranking--top1 {
+      font-size: 250%; }
+    .ranking--top2 {
+      font-size: 175%; }
+    .ranking--top3 {
+      font-size: 100%; }
 /*# sourceMappingURL=style.css.map */
