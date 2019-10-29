@@ -5,7 +5,7 @@ function retrieveChampion(link, callback) {
         if (result.error)
             callback(new Error(result.error))
         else{
-            debugger
+            
             result = Object.values(result.data)
             
             result.map(champ => {

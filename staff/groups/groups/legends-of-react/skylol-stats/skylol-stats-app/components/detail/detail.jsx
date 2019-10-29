@@ -1,14 +1,57 @@
-function Detail({ champ, onBack}) {
-
-    return <section className="view detail _hide">
-        <h2 className="detail__title">{champ[0].title}</h2>
-        <img className="detail__image" src={champ[0].icon} />
-        <p className="detail__description">{champ[0].lore}</p>
-        <span className="detail__price">{champ[0].name}</span>
-        <a className="detail__back" href="" onClick={event => {
-            event.preventDefault()
-
-            onBack()
-        }}>Go back</a>
+function Detail({ champ }) {
+    debugger
+    return <section className="detail">
+    <div className="detail__content">
+        <img className="detail__image" src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ[0].id}_0.jpg`}
+            alt=""/>
+        <div className="detail__info">
+            <p className="detail__id">{champ[0].name}</p>
+            <p className="detail__title">{champ[0].title}</p>
+            <p className="detail__tags">{champ[0].tags}</p>
+            <p className="detail__description">{champ[0].lore}</p>
+            <ul className="detail__spells spells">
+                <div>
+                    <li><img data-tippy-content={champ[0].spells[0].name + champ[0].spells[0].description} className="spells__image"
+                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[0].image.full}`}
+                            alt=""/>
+                    </li>
+                </div>
+                <div>
+                    <li><img data-tippy-content={champ[0].spells[1].name + champ[0].spells[1].description}  className="spells__image"
+                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[1].image.full}`}
+                            alt=""/>
+                    </li>
+                </div>
+                <div>
+                <li><img data-tippy-content={champ[0].spells[2].name + champ[0].spells[2].description}  className="spells__image"
+                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[2].image.full}`}
+                            alt=""/>
+                    </li>
+                </div>
+                <div>
+                <li><img data-tippy-content={champ[0].spells[3].name + champ[0].spells[3].description}  className="spells__image"
+                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[3].image.full}`}
+                            alt=""/>
+                    </li>
+                </div>
+                <div>
+                <li><img data-tippy-content={champ[0].passive.name + champ[0].passive.description}  className="spells__image"
+                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/passive/${champ[0].passive.image.full}`}
+                            alt=""/>
+                    </li>
+                </div>
+                
+            </ul>
+        </div>
+    </div>
+    <div>
+        <p className="detail__stats"></p>
+    </div>
+    
     </section>
+    
 }
+
+
+
+

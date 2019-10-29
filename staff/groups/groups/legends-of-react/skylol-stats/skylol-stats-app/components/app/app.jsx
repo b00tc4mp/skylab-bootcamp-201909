@@ -24,7 +24,6 @@ class App extends Component {
 
     handleLogin = (email, password) => {
         try {
-            debugger
 
             authenticateUser(email, password, (error, data) => {
                 if (error)
@@ -90,7 +89,7 @@ class App extends Component {
     }
 
     handleDetail = link => {
-        try{ debugger
+        try{ 
             retrieveChampion(link, (error, champ)=> {
                 if(error) return this.setState({ error: error.message })
                 else{
