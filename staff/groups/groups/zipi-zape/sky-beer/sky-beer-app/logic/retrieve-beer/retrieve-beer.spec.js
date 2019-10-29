@@ -11,10 +11,10 @@ describe ("logic - retrieve beer", () => {
     })
 
 
-
     it('should succed on get a single beer', done => {
         retrieveBeer( id, (error, beer) => {
 
+            
             expect(beer).toBeDefined()
             expect(error).toBeUndefined()
 
@@ -26,8 +26,8 @@ describe ("logic - retrieve beer", () => {
             expect(typeof beer.id).toBe('number')
             expect(beer).toBeInstanceOf(Object)
             
+            done()
         })
-        done()
     })
 
     it ('should throw TypeError when bad parameter', done => {
