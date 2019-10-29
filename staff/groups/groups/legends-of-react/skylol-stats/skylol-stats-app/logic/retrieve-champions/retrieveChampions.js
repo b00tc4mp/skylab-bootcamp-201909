@@ -13,7 +13,7 @@ function retrieveChampions(callback) {
             
 
             callback(undefined, result)
-            debugger
+            
         }
     });
 }

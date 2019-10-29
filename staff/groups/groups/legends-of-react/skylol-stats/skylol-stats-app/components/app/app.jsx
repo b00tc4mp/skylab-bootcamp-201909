@@ -3,7 +3,7 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
-    state = { view: 'landing', error: undefined, user: undefined, champions: [] }
+    state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {} }
 
 
     handleRegister = (name, surname, summoner, email, password) => {
@@ -24,7 +24,6 @@ class App extends Component {
 
     handleLogin = (email, password) => {
         try {
-            debugger
 
             authenticateUser(email, password, (error, data) => {
                 if (error)
@@ -89,10 +88,23 @@ class App extends Component {
         sessionStorage.clear()
     }
 
+    handleDetail = link => {
+        try{ 
+            retrieveChampion(link, (error, champ)=> {
+                if(error) return this.setState({ error: error.message })
+                else{
+                    this.setState({view: 'detail', champ})
+                }
+            })
+
+        } catch (error){
+            this.setState({ error: error.message })
+        }
+    }
 
 
     render() {
-        const { state: { view, error, user, champions }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions } = this
+        const { state: { view, error, user, champions, champ }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail } = this
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
@@ -100,8 +112,9 @@ class App extends Component {
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
             {view === 'champions' && <Search error={error} />}
-            {view === 'champions' && <Champions champions={champions} error={error} />}
+            {view === 'champions' && <Champions champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search error={error} />}
+            {view === 'detail' && <Detail champ={champ} error={error} />}
 
         </>
     }

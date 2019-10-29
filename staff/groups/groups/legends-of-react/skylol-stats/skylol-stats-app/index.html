@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="index.css">
     <link rel="shortcut icon" href="https://media.giphy.com/media/YbFasFa6Fh5HW/giphy.gif" type="image/x-icon">
     <script src="https://kit.fontawesome.com/80c46885ed.js"></script>
+    <script src="https://unpkg.com/popper.js@1"></script>
+    <script src="https://unpkg.com/tippy.js@5"></script>
+    <script>tippy(".spells__image")</script>
     <title>skyLoL Stats</title>
 </head>
 <body>
@@ -23,6 +26,7 @@
     <script src="logic/retrieve-user/index.js"></script>
     <script src="logic/authenticate-user/index.js"></script>
     <script src="logic/retrieve-champions/retrieveChampions.js"></script>
+    <script src="logic/retrieve-champion/retrieve-champion.js"></script>
    
     <script src="helpers/call.js"></script>
     
@@ -39,9 +43,11 @@
     <script src="components/search/search.jsx" type="text/babel"></script>
     <script src="components/champions/champions.jsx" type="text/babel"></script>
     <script src="components/champion-item/champion-item.jsx" type="text/babel"></script>
+    <script src="components/detail/detail.jsx" type="text/babel"></script>
     
 
     <script src="index.jsx" type="text/babel"></script>
 
+    
 </body>
 </html>
