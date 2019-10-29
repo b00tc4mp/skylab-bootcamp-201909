@@ -1,8 +1,8 @@
-function Welcome () {
+function Welcome (randomBeers) {
 
     return <>
         <section className="main__welcome welcome">
-            <RandomBeers />
+            <RandomBeers randomBeers={randomBeers}/>
             <Ranking />
         </section>
     </>

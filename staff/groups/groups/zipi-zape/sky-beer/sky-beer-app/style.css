@@ -86,12 +86,23 @@
     width: 100%;
     height: 100%; }
 .random-beer__title {
-  font-size: 120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 100%;
+  height: 30%;
+  overflow: hidden;
   color: tomato; }
 .random-beer__img {
-  height: 50%; }
+  height: 40%; }
 .random-beer__text {
-  font-size: 75%; }
+  font-size: 75%;
+  height: 30%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  text-align: justify;
+ }
 
 .beers__random-beer {
   display: flex;

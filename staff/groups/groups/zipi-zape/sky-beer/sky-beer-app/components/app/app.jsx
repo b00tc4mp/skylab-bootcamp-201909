@@ -3,7 +3,7 @@ const { Component } = React
 class App extends Component {
     constructor () {
         super()
-        this.state = {login : false}
+        this.state = {login : false, randomBeers : []}
     }
 
     componentWillMount () {
@@ -21,6 +21,19 @@ class App extends Component {
                 })
             } catch (error) {
                 this.setState({ error: error.message })
+            }
+        }
+        
+        let random = []
+        for (let i=0; i<4; i++) {
+            try {
+                retrieveRandomBeer((error, beer) => {
+                    if(error) this.setState({error : error.message})
+                    else random.push(beer)
+                    this.setState({randomBeers : random})
+                })
+            } catch (error) {
+                this.setState( {error: error.message})
             }
         }
     }
@@ -85,13 +98,13 @@ class App extends Component {
     }
 
     render () {
-        const { state: {login, name}, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSubmit, handleInvest, handleLogin } = this
+        const { state: {login, name, randomBeers}, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSubmit, handleInvest, handleLogin } = this
 
         return <>
             <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSubmit} onInvest={handleInvest} onLogin={handleShowLogin} name={name}/>
             {login && <Login onLogin={handleLogin} onRegister={handleRegister} /*error={error}*/ />}
             <main className="main">
-                <Welcome />
+                {(randomBeers.length === 4) && <Welcome randomBeers={randomBeers}/>}
                 <Speech title="THE BEER EXPERIENCE" text="Join to the best Brewdog's Punk Community. We don't like beer, we are beer."/>
                 <Brewdog />
                 <Video />
