@@ -1,4 +1,4 @@
-var misCabeceras = new Headers();
+
 var miInit = { method: 'GET',
              headers: {},
              cache: 'default' };
