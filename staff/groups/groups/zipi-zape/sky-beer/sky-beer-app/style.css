@@ -529,4 +529,11 @@
       font-size: 175%; }
     .ranking--top3 {
       font-size: 100%; }
+
+      .search-results {
+        width: 100vw;
+        background: whitesmoke;
+        height: 85vh;
+        padding: 5%;
+    }
 /*# sourceMappingURL=style.css.map */

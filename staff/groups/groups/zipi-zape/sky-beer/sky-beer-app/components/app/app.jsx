@@ -50,9 +50,9 @@ class App extends Component {
 
     }
 
-    handleSubmit = (query) => {
+    handleSearch = (query) => {
         try {
-            searchBeers(query, (error, results)=> {
+            searchBeers(`beer_name=${query}`, (error, results)=> {
                 if (error) this.setState ({error : error.message})
                 else this.setState ({searchResults : results})
             })
@@ -112,10 +112,10 @@ class App extends Component {
     }
 
     render () {
-        const { state: {login, name, randomBeers, searchResults, beerId}, handleOnClose, handleClickItem, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSubmit, handleInvest, handleLogin } = this
+        const { state: {login, name, randomBeers, searchResults, beerId}, handleOnClose, handleClickItem, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
 
         return <>
-            <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSubmit} onInvest={handleInvest} onLogin={handleShowLogin} name={name}/>
+            <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSearch} onInvest={handleInvest} onLogin={handleShowLogin} name={name}/>
             {login && <Login onLogin={handleLogin} onRegister={handleRegister} /*error={error}*/ />}
             {}
             <main className="main">
