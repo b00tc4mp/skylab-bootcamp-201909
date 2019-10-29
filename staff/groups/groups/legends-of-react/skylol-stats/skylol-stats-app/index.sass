@@ -126,7 +126,6 @@ body
     display: flex
     align-items: center
     flex-direction: column
-    display: none
     &__title
         text-align: center
     &__form
@@ -186,6 +185,13 @@ body
         position: absolute
         z-index: -1
         text-align: center
+    &__tags
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        list-style: none
+        
     &__image
         opacity: 1
         transition: opacity 800ms

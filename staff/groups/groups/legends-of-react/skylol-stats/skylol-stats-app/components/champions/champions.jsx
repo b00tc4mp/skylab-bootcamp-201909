@@ -1,9 +1,14 @@
-function Champions({  /*items, onItemRender*/ }) {
-    return <> <div className="background"> </div>
-    <ul className="champion">      
+function Champions({  champions }) {
+    
+    const list = champions.map((champ, i) => 
+        < ChampionItem key={i.toString()} item={champ} />)
+    return <> 
+    <div className="background"> </div>
+    <ul className="champion">{list}
+           
     </ul>
     </>
 }
 
 
- /* {items.map(item => onItemRender(item))}*/
+ 
