@@ -8,7 +8,6 @@ body {
   color: white;
   font-family: Arial;
   overflow: auto;
-  margin: 0;
 }
 
 .fire {
@@ -152,7 +151,6 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  display: none;
 }
 .search__title {
   text-align: center;
@@ -225,6 +223,13 @@ body {
   position: absolute;
   z-index: -1;
   text-align: center;
+}
+.champion__tags {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 .champion__image {
   opacity: 1;

@@ -3,8 +3,8 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
-    state = {view : 'landing', error: undefined, user: undefined}
-    
+    state = { view: 'landing', error: undefined, user: undefined, champions: [] }
+
 
     handleRegister = (name, surname, summoner, email, password) => {
         try {
@@ -23,21 +23,22 @@ class App extends Component {
     }
 
     handleLogin = (email, password) => {
-        try { debugger
+        try {
+            debugger
 
             authenticateUser(email, password, (error, data) => {
                 if (error)
                     this.setState({ error: error.message })
                 else
                     try {
-                        
+
                         const { id, token } = data
                         sessionStorage.id = id
                         sessionStorage.token = token
 
                         retrieveUser(id, token, (error, user) => {
                             if (error) this.setState({ error: error.message })
-                            else { debugger
+                            else {
                                 const { summoner } = user
                                 this.setState({ view: 'landing', user: summoner, error: undefined })
                             }
@@ -68,7 +69,18 @@ class App extends Component {
     }
 
     handleChampions = () => {
-        this.setState({ view: 'champions', error: undefined })
+        try {
+            retrieveChampions((error, result) => {
+                
+                if (error) this.setState({ error: error.message })
+                else {
+                    
+                    this.setState({ view: 'champions', error: undefined, champions: result })
+                }
+            })
+        } catch (error) {
+            this.setState({ error: error.message })
+        }
     }
 
 
@@ -80,16 +92,16 @@ class App extends Component {
 
 
     render() {
-        const { state: { view, error, user }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions } = this
+        const { state: { view, error, user, champions }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions } = this
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
-            { view === 'landing' && <Landing />} 
-            { view === 'register' && <Register onRegister={handleRegister} error={error}/> }
-            { view === 'login' && <Login onLogin={handleLogin} error={error}/> }
-            { view === 'champions' && <Search error={error}/> }
-            { view === 'champions' && <Champions error={error}/> }
-            { view === 'summoners' && <Search error={error}/> }
+            {view === 'landing' && <Landing />}
+            {view === 'register' && <Register onRegister={handleRegister} error={error} />}
+            {view === 'login' && <Login onLogin={handleLogin} error={error} />}
+            {view === 'champions' && <Search error={error} />}
+            {view === 'champions' && <Champions champions={champions} error={error} />}
+            {view === 'summoners' && <Search error={error} />}
 
         </>
     }
