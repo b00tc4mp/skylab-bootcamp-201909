@@ -108,7 +108,12 @@ class App extends Component {
     }
 
     handleClickItem = (beerId) => {
-        retrieveBeer (beerId)
+        retrieveBeer (beerId, (error, beer)=> {
+            if (error) this.setState ({error: error.message})
+            else {
+                this.setState ({beerId : beer})
+            }
+        })
     }
 
     render () {
