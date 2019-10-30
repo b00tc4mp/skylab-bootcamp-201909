@@ -145,7 +145,7 @@ class App extends Component {
    
 
     render() {
-        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleMasteries } = this
+        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleMasteries } = this
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
@@ -153,7 +153,7 @@ class App extends Component {
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
             {view === 'champions' && <Search error={error} />}
-            {view === 'champions' && <Champions champions={champions} error={error} GoOnDetail={handleDetail} />}
+            {view === 'champions' && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner} handl error={error} />}
             {view === 'detail' && <Detail champ={champ} error={error} />}
             {view === 'summoners' && query && <Summoner  summonerIds={summonerIds} masteries={masteries} error={error} />}
