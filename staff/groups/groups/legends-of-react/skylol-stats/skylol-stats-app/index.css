@@ -262,6 +262,9 @@ body {
   opacity: 0.2;
   transition: opacity 800ms;
 }
+.champion__tags {
+  list-style: none;
+}
 
 .detail {
   margin: 0.5rem auto;

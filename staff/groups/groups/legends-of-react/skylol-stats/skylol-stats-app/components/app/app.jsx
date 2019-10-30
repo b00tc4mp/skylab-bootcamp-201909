@@ -152,7 +152,7 @@ class App extends Component {
             {view === 'landing' && <Landing />}
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
-            {view === 'champions' && <Search error={error} />}
+            {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
             {view === 'champions' && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner} handl error={error} />}
             {view === 'detail' && <Detail champ={champ} error={error} />}
