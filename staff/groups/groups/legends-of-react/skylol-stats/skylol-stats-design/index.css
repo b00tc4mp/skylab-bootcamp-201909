@@ -2,6 +2,7 @@
 body {
   background: linear-gradient(to bottom, black, black, black, #57d5a0);
   height: 100%;
+  background-repeat: no-repeat;
 }
 
 .tresh {
@@ -156,7 +157,6 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  display: none;
 }
 .search__title {
   text-align: center;
@@ -247,6 +247,7 @@ body {
   margin: 0.5rem auto;
   width: 60vw;
   height: 90vh;
+  display: none;
 }
 .detail__content {
   display: flex;
@@ -281,6 +282,138 @@ body {
   margin: 0.3rem;
   border: 0.15rem solid goldenrod;
   border-radius: 0.3rem;
+}
+
+.summoner-detail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-image: url(https://img.freepik.com/foto-gratis/escenario-hexagonal-luz-neon-purpura_33739-266.jpg?size=626&ext=jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 1em;
+  width: 100%;
+  height: 110vh;
+}
+.summoner-detail__info {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.summoner-detail__icon {
+  border-radius: 100px;
+  height: 60%;
+  align-self: center;
+  border: 2px solid gold;
+  margin-right: 2rem;
+}
+.summoner-detail__profile {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.summoner-detail__nickname {
+  color: snow;
+  margin: 0;
+  font-size: 2.5em;
+  text-shadow: 0.2rem 0.1rem 0.5em gold, 0.2rem 0.1rem 0.5em gold, 0.2rem 0.1rem 0.5em gold;
+}
+.summoner-detail__level {
+  color: snow;
+  margin: 0;
+  font-size: 1.5rem;
+}
+.summoner-detail__elo {
+  color: gold;
+  margin: 0;
+  font-size: 1.5rem;
+}
+.summoner-detail__champions {
+  width: 50%;
+  display: flex;
+  padding-bottom: 3rem;
+}
+.summoner-detail__list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  width: 100%;
+}
+.summoner-detail__champion {
+  display: flex;
+}
+.summoner-detail__container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 3rem;
+}
+.summoner-detail__name {
+  color: white;
+  font-size: 1.5em;
+  margin: 0;
+}
+.summoner-detail__image {
+  border-radius: 120px;
+  width: 10em;
+  height: 10em;
+}
+.summoner-detail__points {
+  color: gold;
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.mastery-seven {
+  background-image: url(https://i.pinimg.com/originals/af/76/b5/af76b5b63cbfd7d66a6ceb7392f3803e.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.mastery-six {
+  background-image: url(https://i.pinimg.com/originals/1a/33/ab/1a33ab0abdb651b19bdde7264ca23f1b.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.mastery-five {
+  background-image: url(https://i.pinimg.com/originals/d1/1b/c3/d11bc3670e427a00182b71e6f1726ac7.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.mastery-none {
+  background-image: url(https://i.pinimg.com/originals/42/bb/bf/42bbbf0d43f06c2f3912d50f5b957503.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.footer {
+  display: flex;
+  background-color: black;
+  height: 100%;
+  justify-content: center;
+}
+.footer__container {
+  height: 100%;
+}
+.footer__title {
+  color: snow;
+  font-size: 1rem;
 }
 
 /*# sourceMappingURL=index.css.map */
