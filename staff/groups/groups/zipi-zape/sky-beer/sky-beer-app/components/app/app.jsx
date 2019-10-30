@@ -103,7 +103,7 @@ class App extends Component {
         }
     }
 
-    handleOnClose = () => {
+    handleOnCloseItem = () => {
         this.setState ({beerId : undefined})
     }
 
@@ -116,16 +116,20 @@ class App extends Component {
         })
     }
 
+    handleOnCloseSearch = () => {
+        this.setState ({searchResults : undefined})
+    }
+
     render () {
-        const { state: {login, name, randomBeers, searchResults, beerId}, handleOnClose, handleClickItem, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
+        const { state: {login, name, randomBeers, searchResults, beerId}, handleOnCloseSearch,handleOnCloseItem, handleClickItem, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
 
         return <>
             <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSearch} onInvest={handleInvest} onLogin={handleShowLogin} name={name}/>
             {login && <Login onLogin={handleLogin} onRegister={handleRegister} /*error={error}*/ />}
             {}
             <main className="main">
-                {(searchResults) && <SearchResults searchResults={searchResults} onClickItem={handleClickItem}/>}
-                {(beerId) && <BeerDetail beer={beerId} onClose={handleOnClose}/>}
+                {(searchResults) && <SearchResults searchResults={searchResults} onClickItem={handleClickItem} onClose={handleOnCloseSearch}/>}
+                {(beerId) && <BeerDetail beer={beerId} onClose={handleOnCloseItem}/>}
                 {(randomBeers.length === 4) && <Welcome randomBeers={randomBeers}/>}
                 <Speech title="THE BEER EXPERIENCE" text="Join to the best Brewdog's Punk Community. We don't like beer, we are beer."/>
                 <Brewdog />
