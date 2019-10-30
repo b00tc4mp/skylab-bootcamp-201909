@@ -202,6 +202,32 @@ body {
   z-index: -2;
 }
 
+.tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  margin: 0.5rem auto;
+  position: relative;
+}
+.tag__selector {
+  list-style: none;
+  width: 6rem;
+  text-align: center;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  border-bottom-right-radius: 1rem;
+  margin: 0 auto;
+  font-size: 0.9rem;
+  border: none;
+  background: none;
+}
+.tag__selector:hover {
+  filter: brightness(1.5);
+  cursor: pointer;
+}
+
 .champion {
   display: flex;
   align-items: center;
@@ -367,46 +393,28 @@ body {
   margin: 0;
 }
 
-.mastery-7 {
+.mastery-seven {
   background-image: url(https://i.pinimg.com/originals/af/76/b5/af76b5b63cbfd7d66a6ceb7392f3803e.gif);
   background-position: center;
   background-size: cover;
   padding: 1rem;
 }
 
-.mastery-6 {
+.mastery-six {
   background-image: url(https://i.pinimg.com/originals/1a/33/ab/1a33ab0abdb651b19bdde7264ca23f1b.gif);
   background-position: center;
   background-size: cover;
   padding: 1rem;
 }
 
-.mastery-5 {
+.mastery-five {
   background-image: url(https://i.pinimg.com/originals/d1/1b/c3/d11bc3670e427a00182b71e6f1726ac7.gif);
   background-position: center;
   background-size: cover;
   padding: 1rem;
 }
 
-.mastery-4 {
-  background-image: url(https://i.pinimg.com/originals/42/bb/bf/42bbbf0d43f06c2f3912d50f5b957503.gif);
-  background-position: center;
-  background-size: cover;
-  padding: 1rem;
-}
-.mastery-3 {
-  background-image: url(https://i.pinimg.com/originals/42/bb/bf/42bbbf0d43f06c2f3912d50f5b957503.gif);
-  background-position: center;
-  background-size: cover;
-  padding: 1rem;
-}
-.mastery-2 {
-  background-image: url(https://i.pinimg.com/originals/42/bb/bf/42bbbf0d43f06c2f3912d50f5b957503.gif);
-  background-position: center;
-  background-size: cover;
-  padding: 1rem;
-}
-.mastery-1 {
+.mastery-none {
   background-image: url(https://i.pinimg.com/originals/42/bb/bf/42bbbf0d43f06c2f3912d50f5b957503.gif);
   background-position: center;
   background-size: cover;
