@@ -130,7 +130,7 @@ class App extends Component {
             <main className="main">
                 {(searchResults) && <SearchResults searchResults={searchResults} onClickItem={handleClickItem} onClose={handleOnCloseSearch}/>}
                 {(beerId) && <BeerDetail beer={beerId} onClose={handleOnCloseItem}/>}
-                {(randomBeers.length === 4) && <Welcome randomBeers={randomBeers}/>}
+                {(randomBeers.length === 4) && <Welcome randomBeers={randomBeers} onClickItem={handleClickItem}/>}
                 <Speech title="THE BEER EXPERIENCE" text="Join to the best Brewdog's Punk Community. We don't like beer, we are beer."/>
                 <Brewdog />
                 <Video />
