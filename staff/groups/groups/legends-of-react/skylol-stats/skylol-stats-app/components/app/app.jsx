@@ -67,9 +67,9 @@ class App extends Component {
         this.setState({ view: 'summoners', error: undefined })
     }
 
-    handleChampions = () => {
+    handleChampions = query => {
         try {
-            retrieveChampions((error, result) => {
+            retrieveChampions(query, (error, result) => {
                 
                 if (error) this.setState({ error: error.message })
                 else {

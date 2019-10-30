@@ -1,4 +1,4 @@
-function Search( {error, query, onSubmit ,apikey} ){
+function Search( {error, query, onSubmit} ){
     return    <section className="search">
     <h2 className="search__title">Search</h2>
     <form className="search__form" onSubmit={event => {
@@ -6,10 +6,10 @@ function Search( {error, query, onSubmit ,apikey} ){
 
             const query = event.target.query.value
 
-            onSubmit(query,apikey)
+            onSubmit(query)
         }}>
 
-        <input type="text" className="search__field" name="query" placeholder="Summoner"/>
+        <input type="text" className="search__field" name="query" placeholder="search" defaultValue="query"/>
         <button className="search__submit"><i className="fas fa-search"></i></button>
     </form>
     {error && <Feedback message={error} />}
