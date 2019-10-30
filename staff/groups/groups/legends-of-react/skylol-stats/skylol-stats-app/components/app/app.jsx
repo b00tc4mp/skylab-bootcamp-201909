@@ -102,6 +102,21 @@ class App extends Component {
         }
     }
 
+    handleTag = tag => {
+        try{
+            retrieveTag(tag, (error, result) => {
+                if (error) this.setState({ error: error.message })
+                else {
+                    
+                    this.setState({ view: 'champions', error: undefined, champions: result })
+                }
+            })
+        }
+        catch (error) {
+            this.setState({ error: error.message })
+        }
+    }
+
     handleRetrieveSummoner = query => {
         try{
             retrieveSummoner(query, (error, summonerIds)=> {
