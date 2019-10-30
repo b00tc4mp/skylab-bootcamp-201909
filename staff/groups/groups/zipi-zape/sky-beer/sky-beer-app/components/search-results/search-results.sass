@@ -1,0 +1,36 @@
+.search-results
+    width: 100vw
+    background: whitesmoke
+    height: 85vh
+    padding: 5%
+    overflow: scroll
+    display: flex
+    flex-wrap: wrap
+    list-style: none
+    &__list-item
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+        max-width: 20rem
+        min-width: 20rem
+        min-height: 40rem
+        max-height: 40rem
+        width: 30%
+        height: 50%
+        margin: 1%
+        border: 1px solid black
+    &__inside 
+        background-color: rgba(44, 44, 44, 0.4)
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: space-around
+        width: 90%
+        height: 90%
+        cursor: pointer
+        transition: 1s all ease 
+    &__inside:hover 
+        background-color: rgba(44, 44, 44, 0.6)
+        width: 100%
+        height: 100% 

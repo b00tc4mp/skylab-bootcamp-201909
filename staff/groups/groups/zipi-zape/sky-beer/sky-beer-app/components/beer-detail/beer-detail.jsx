@@ -1,19 +1,19 @@
 function BeerDetail  ({beer, onClose}) {
 
-    return <section className="main__beerdetail beerdetail">
+    return <section className="main__beer-detail beer-detail">
                                     <i className="close fas fa-times" onClick={e=>{
                                     e.preventDefault()
                                     onClose()
                                 } }></i>
-                <h2 className="beerdetail__title">{beer.name}</h2>
+                <h2 className="beer-detail__title">{beer.name}</h2>
                     <h4>{beer.tagline}</h4>
-                <div className="beerdetail__iteminfo iteminfo">
+                <div className="beer-detail__iteminfo iteminfo">
                     <div className="iteminfo__imageContainer">
                         <img className="iteminfo__image" src={beer.image_url}/>
                     </div>
                     <div className="iteminfo__container container"> 
                         <p className="container__description">{beer.description}</p>
-                        <div className="beerdetail__moreinfo moreinfo">
+                        <div className="beer-detail__moreinfo moreinfo">
                             <span className="moreinfo__level">BEER ABV - {beer.abv}% -</span>
                             <span className="moreinfo__level">BEER IBU - {beer.ibu} -</span>
                             <span className="moreinfo__level">BEER EBC - {beer.ebc} -</span>
@@ -25,7 +25,7 @@ function BeerDetail  ({beer, onClose}) {
                         </ul>
                     </div>  
                 </div>
-                <span className="beerdetail__brewers-tips">{beer.brewers_tips}</span>
+                <span className="beer-detail__brewers-tips">{beer.brewers_tips}</span>
         </section>
 
 
