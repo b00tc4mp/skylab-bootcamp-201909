@@ -1,4 +1,4 @@
-function Summoner({ summonerIds, masteries}) {
+function Summoner({ summonerIds, rank, masteries}) {
     debugger
     return <section className="summoner-detail">
     <div className="summoner-detail__info">
@@ -11,7 +11,7 @@ function Summoner({ summonerIds, masteries}) {
             {summonerIds.summonerLevel}
             </p>
             <p className="summoner-detail__elo">
-                Gold I</p>
+                {`${rank[0].tier} ${rank[0].rank}`}</p>
         </div>
     </div>
 
@@ -29,67 +29,67 @@ function Summoner({ summonerIds, masteries}) {
                         {masteries[0].championPoints}</p>
                 </article>
             </li>
-            <li className="summoner-detail__champion">
-                <article className="summoner-detail__container">
-                    <p className="summoner-detail__name">
-                        Jinx
-                    </p>
-                    <img
-                        className="summoner-detail__image mastery-seven"
-                        src="https://ddragon.leagueoflegends.com/cdn/9.13.1/img/champion/Jinx.png"/>
-                    <p className="summoner-detail__points">
-                        378.234</p>
-                </article>
-
-            </li>
             <li className="summoner-detail__champion ">
                 <article className="summoner-detail__container">
                     <p className="summoner-detail__name">
-                        Miss Fortune
+                    {masteries[1].name}
                     </p>
                     <img
-                        className="summoner-detail__image mastery-seven"
-                        src="https://ddragon.leagueoflegends.com/cdn/9.13.1/img/champion/MissFortune.png"/>
+                        className={`summoner-detail__image mastery-${masteries[1].championLevel}`}
+                        src={masteries[1].image}/>
                     <p className="summoner-detail__points">
-                        305.234</p>
+                    {masteries[1].championPoints}</p>
                 </article>
             </li>
             <li className="summoner-detail__champion">
                 <article className="summoner-detail__container">
                     <p className="summoner-detail__name">
-                        Janna
+                    {masteries[2].name}
                     </p>
                     <img
-                        className="summoner-detail__image mastery-six"
-                        src="https://ddragon.leagueoflegends.com/cdn/9.13.1/img/champion/Janna.png"/>
+                        className={`summoner-detail__image mastery-${masteries[2].championLevel}`}
+                        src={masteries[2].image}/>
                     <p className="summoner-detail__points">
-                        299.234</p>
+                    {masteries[2].championPoints}</p>
                 </article>
             </li>
             <li className="summoner-detail__champion">
                 <article className="summoner-detail__container">
                     <p className="summoner-detail__name">
-                        Morgana
+                    {masteries[3].name}
                     </p>
                     <img
-                        className="summoner-detail__image mastery-five"
-                        src="https://ddragon.leagueoflegends.com/cdn/9.21.1/img/champion/Morgana.png"/>
+                        className={`summoner-detail__image mastery-${masteries[3].championLevel}`}
+                        src={masteries[3].image}/>
                     <p className="summoner-detail__points">
-                        250.234</p>
+                    {masteries[3].championPoints}</p>
                 </article>
             </li>
             <li className="summoner-detail__champion">
                 <article className="summoner-detail__container">
                     <p className="summoner-detail__name">
-                        Zyra
+                    {masteries[4].name}
                     </p>
                     <img
-                        className="summoner-detail__image mastery-none"
-                        src="https://ddragon.leagueoflegends.com/cdn/9.21.1/img/champion/Zyra.png"/>
+                        className={`summoner-detail__image mastery-${masteries[4].championLevel}`}
+                        src={masteries[4].image}/>
                     <p className="summoner-detail__points">
-                        200.234</p>
+                    {masteries[4].championPoints}</p>
                 </article>
             </li>
+            <li className="summoner-detail__champion">
+                <article className="summoner-detail__container">
+                    <p className="summoner-detail__name">
+                    {masteries[5].name}
+                    </p>
+                    <img
+                        className={`summoner-detail__image mastery-${masteries[5].championLevel}`}
+                        src={masteries[5].image}/>
+                    <p className="summoner-detail__points">
+                    {masteries[5].championPoints}</p>
+                </article>
+            </li>
+          
         </ul>
     </div>
 </section>
