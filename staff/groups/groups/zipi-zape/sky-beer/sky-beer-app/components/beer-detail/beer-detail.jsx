@@ -14,11 +14,12 @@ function BeerDetail  ({beer, onClose}) {
                     <div className="iteminfo__container container"> 
                         <p className="container__description">{beer.description}</p>
                         <div className="beer-detail__moreinfo moreinfo">
-                            <span className="moreinfo__level">BEER ABV - {beer.abv}% -</span>
-                            <span className="moreinfo__level">BEER IBU - {beer.ibu} -</span>
-                            <span className="moreinfo__level">BEER EBC - {beer.ebc} -</span>
+                            <div className="moreinfo__level"><div>BEER ABV</div><div>- {beer.abv}% -</div></div>
+                            <div className="moreinfo__level"><div>BEER IBU</div><div>- {beer.ibu} -</div></div>
+                            <div className="moreinfo__level"><div>BEER EBC</div><div>- {beer.ebc} -</div></div>
                         </div>
-                        <ul className="container__list"><div>Maridage suggestions:</div>
+                        <div>Maridage suggestions:</div>
+                        <ul className="container__list">
                             <li>{beer.food_pairing[0]}</li>
                             <li>{beer.food_pairing[1]}</li>
                             <li>{beer.food_pairing[2]}</li>

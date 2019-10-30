@@ -12,15 +12,18 @@
     &__iteminfo
         display: flex
         flex-direction: row
-        width: 100%
+        width: 100vw
         align-content: center
         height: 80%
+        @media only screen and (max-width: 1023px)
+            flex-direction: column
+        @media only screen and (min-width: 1024px)
+            flex-direction: row
     &__brewers-tips
         display: flex
         flex-direction: row
         width: 100%
         justify-content: center
-        height: 5%
     &__moreinfo
         display: flex
         flex-direction: row
