@@ -3,7 +3,7 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
-    state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {} }
+    state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {}}
 
 
     handleRegister = (name, surname, summoner, email, password) => {
@@ -102,9 +102,35 @@ class App extends Component {
         }
     }
 
+    handleRetrieveSummoner = query => {
+        try{
+            retrieveSummoner(query, (error, summonerIds)=> {
+                if(error) return this.setState({ error: error.message })
+                else{
+                    this.setState( {summonerIds:summonerIds, query: query})
+                    try{
+                        debugger
+                        retrieveMasteries(summonerIds.id,(error, masteries) =>{
+                            if(error) return this.setState({ error: error.message })
+                            else{
+                                this.setState({view:'summoners', masteries: masteries})
+                            }
+
+                        })}
+                        catch (error){
+                            this.setState({ error: error.message })
+
+                    }
+            }})
+        
+        } catch (error){
+            this.setState({ error: error.message })
+        }
+    }
+   
 
     render() {
-        const { state: { view, error, user, champions, champ }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail } = this
+        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleMasteries } = this
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
@@ -113,10 +139,12 @@ class App extends Component {
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
             {view === 'champions' && <Search error={error} />}
             {view === 'champions' && <Champions champions={champions} error={error} GoOnDetail={handleDetail} />}
-            {view === 'summoners' && <Search error={error} />}
+            {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner} handl error={error} />}
             {view === 'detail' && <Detail champ={champ} error={error} />}
+            {view === 'summoners' && query && <Summoner  summonerIds={summonerIds} masteries={masteries} error={error} />}
 
-        </>
-    }
+            </>
+        }
+    
 }
 
