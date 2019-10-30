@@ -3,6 +3,7 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
+    apikey = 'RGAPI-e37053db-c5d7-4914-b52a-2c9ad00bd9a4'
     state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {} }
 
 
@@ -102,9 +103,27 @@ class App extends Component {
         }
     }
 
+    handleRetrieveSummoner = (query,apikey) => {
+        try{
+            retrieveSummoner(query, apikey,(error, summonerIds)=> {
+                if(error) return this.setState({ error: error.message })
+                else{
+                    this.setState({view: 'masteries', summonerId:summonerIds})
+                    retrieveMasteries(summonerIds.id,apikey,(error, masteries) =>{
+                        if(error) return this.setState({ error: error.message })
+                        else{
+                            this.setState({view:'masteries',summonerMasteries: masteries})
+                        }
+                    })
+                }
+            })
+        } catch (error){
+            this.setState({ error: error.message })
+        }
+    }
 
     render() {
-        const { state: { view, error, user, champions, champ }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail } = this
+        const { state: { view, error, user, champions, champ, summonerIds, summonerMasteries }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner } = this
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
@@ -113,10 +132,12 @@ class App extends Component {
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
             {view === 'champions' && <Search error={error} />}
             {view === 'champions' && <Champions champions={champions} error={error} GoOnDetail={handleDetail} />}
-            {view === 'summoners' && <Search error={error} />}
+            {view === 'summoners' && <Search onSubmit={handleRetrieveSummoner} error={error} />}
             {view === 'detail' && <Detail champ={champ} error={error} />}
+            {view === 'masteries' && <Masteries masteries={summonerMasteries} error={error} />}
 
         </>
     }
+    
 }
 
