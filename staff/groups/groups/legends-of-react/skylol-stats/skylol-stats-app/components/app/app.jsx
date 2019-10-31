@@ -64,7 +64,7 @@ class App extends Component {
     }
 
     handleSummoners = () => {
-        this.setState({ view: 'summoners', error: undefined })
+        this.setState({ view: 'summoners', error: undefined, query: undefined })
     }
 
     handleChampions = () => {
@@ -106,28 +106,36 @@ class App extends Component {
         let getSummonerIds
         let getMasteries
         try{
+            debugger
             retrieveSummoner(query, (error, summonerIds)=> {
-                error ? this.setState({ error: error.message }) : getSummonerIds = summonerIds
-                try{
-                    retrieveMasteries(summonerIds.id,(error, masteries) =>{
-                        error ? this.setState({ error: error.message }): 
-                        getMasteries = masteries
-                    
-                    })
+                if (error) {
+                    return this.setState({ error: error.message }) }
+                else {
+                    getSummonerIds = summonerIds
                     try{
-                        retrieveRank(summonerIds.id,(error, rank) =>{
-                            error ? this.setState({ error: error.message }): this.setState({view:'summoners', masteries: getMasteries, summonerIds: getSummonerIds, query: query, rank:rank}) 
-                        })
-                    } catch (error){
+                        retrieveMasteries(summonerIds.id,(error, masteries) =>{
+                        if (error) return this.setState({ error: error.message }) 
+                        else {
+                            getMasteries = masteries                       
+                            try{
+                                retrieveRank(summonerIds.id,(error, rank) =>{
+                                    if (error) return this.setState({ error: error.message })
+                                    else { 
+                                        this.setState({view:'summoners', error: undefined, masteries: getMasteries, summonerIds: getSummonerIds, query: query, rank:rank})
+                                    }  
+                            })
+                            } catch (error){
                             this.setState({ error: error.message })
+                            }
                     }
-                } catch (error){
+                })} catch (error){
                         this.setState({ error: error.message })
                 }
-            })
+           }})
         } catch (error){
             this.setState({ error: error.message })
         }
+        
     }
 
     
@@ -145,8 +153,8 @@ class App extends Component {
             {view === 'champions' && <Champions champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
             {view === 'detail' && <Detail champ={champ} error={error} />}
-            {view === 'summoners' && query && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
-
+            {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+            <Footer />
             </>
         }
     

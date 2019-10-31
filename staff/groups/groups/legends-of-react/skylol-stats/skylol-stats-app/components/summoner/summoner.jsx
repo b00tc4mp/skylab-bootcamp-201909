@@ -1,4 +1,4 @@
-function Summoner({ summonerIds, rank, masteries}) {
+function Summoner({ summonerIds, rank, masteries, error}) {
     debugger
     return <section className="summoner-detail">
     <div className="summoner-detail__info">
@@ -92,5 +92,7 @@ function Summoner({ summonerIds, rank, masteries}) {
           
         </ul>
     </div>
+    {error && <Feedback message={error} />}
 </section>
+
 }

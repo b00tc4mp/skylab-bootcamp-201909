@@ -1,5 +1,5 @@
 function retrieveChampions(callback) {
-    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
+    validate.function(callback)
 
     call('GET', undefined,'http://ddragon.leagueoflegends.com/cdn/9.21.1/data/en_US/champion.json', undefined, function (result) {
         if (result.error)

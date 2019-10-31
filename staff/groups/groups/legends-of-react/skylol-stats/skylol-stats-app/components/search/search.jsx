@@ -4,9 +4,10 @@ function Search( {error, query, onSubmit ,apikey} ){
     <form className="search__form" onSubmit={event => {
             event.preventDefault()
 
-            const query = event.target.query.value
+            let query = event.target.query.value
 
             onSubmit(query,apikey)
+            event.target.query.value = ''
         }}>
 
         <input type="text" className="search__field" name="query" placeholder="Summoner"/>
