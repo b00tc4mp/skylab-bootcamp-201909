@@ -1,5 +1,7 @@
 function retrieveChampion(link, callback) {
-    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
+    validate.string(link)
+    validate.string.notVoid('link', link)
+    validate.function(callback)
 
     call('GET', undefined, link , undefined, function (result) {
         if (result.error)
