@@ -5,14 +5,17 @@ function toggleFavChamp(userId, token, champId, callback) {
     if (!token.trim().length) throw new ContentError('token is empty or blank')
     if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
     
-    retrieveUser(userId, token, (error ,user) => {
-        
-        const {favs} = user
-        favs.includes(champId) ?  favs.splice(favs.indexOf(champId), 1) : favs.push(champId)
+    call('GET', token, `https://skylabcoders.herokuapp.com/api/user/${userId}`, undefined, users => {
+        if (users.error) return callback(new Error(users.error))
+
+        const { data: { favs = [] } } = users
+
+        favs.includes(champId) ? favs.splice(favs.indexOf(champId), 1) : favs.push(champId)
+
         const body = { favs }
-        call('PUT', token, `https://skylabcoders.herokuapp.com/api/user/${id}`, body, result => {
-            result.error ? callback(new Error(result.error)) : callback(undefined, result)
-            
+
+        call('PUT', token, `https://skylabcoders.herokuapp.com/api/user/${userId}`, body, result => {
+            result.error ? callback(new Error(result.error)) : callback()
         })
     })
 }

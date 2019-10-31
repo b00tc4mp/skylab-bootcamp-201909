@@ -112,6 +112,7 @@ const App = (() => {
     handleChampions = query => {
         location.slash = pathname
         location.hash = `/champions`
+        this.setState({view: 'champions'})
         try {
             const { id, token } = sessionStorage
             retrieveChampions(id, token, query, (error, result) => {
@@ -199,6 +200,7 @@ const App = (() => {
                             this.setState({ error: error.message })
 
                             }
+                        }
                         })
                     } catch (error) {
                         this.setState({ error: error.message })
@@ -260,8 +262,8 @@ const App = (() => {
             {view === 'landing' && <Landing />}
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
-            {view === 'champions' && user && <Search onSubmit={handleChampions} error={error} />}
-            {view === 'champions' && !user && <Nouser />}
+            {view ==='champions' && !user && <Nouser/>}
+            {view === 'champions' && user && <Search onSubmit={handleChampions} error={error} />}            
             {view === 'champions' && user && <Champions onClick ={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
             {view === 'detail' && <Detail onFav={handleDetailFav} champ={champ} error={error} />}
