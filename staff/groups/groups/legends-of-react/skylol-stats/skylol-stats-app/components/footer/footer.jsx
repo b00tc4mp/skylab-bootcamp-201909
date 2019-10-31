@@ -1,7 +1,7 @@
 function Footer() {
-    return <footer class="footer">
-    <section class="footer__container">
-        <p class="footer__title">
+    return <footer className="footer">
+    <section className="footer__container">
+        <p className="footer__title">
             Legends of React ®</p>
     </section>
 </footer>

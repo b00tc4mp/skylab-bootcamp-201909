@@ -6,7 +6,7 @@ function Search( {onSubmit, error, query} ){
 
             let query = event.target.query.value
             
-            onSubmit(query,apikey)
+            onSubmit(query)
             event.target.query.value = ''
         }}>
         <input type="text" className="search__field" name="query" placeholder="search" defaultValue={query}/>
