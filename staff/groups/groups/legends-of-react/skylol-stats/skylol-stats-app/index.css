@@ -118,11 +118,11 @@ body {
   width: 35vw;
   padding: 0.5rem;
   margin: 0.5rem auto;
-  flex-direction: column;
 }
 .login__form {
   display: flex;
   justify-content: baseline;
+  flex-direction: column;
 }
 .login__title {
   text-align: center;
