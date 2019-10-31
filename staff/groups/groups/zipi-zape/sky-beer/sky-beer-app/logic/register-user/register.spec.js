@@ -2,16 +2,16 @@ describe('logic - register user', () => {
     let name, surname, email, password
 
     beforeEach(() => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@mail.com`
-        password = `password-${Math.random()}`
+        name = `nameasdfg-${Math.random()}`
+        surname = `surnamfge-${Math.random()}`
+        email = `emaifgl-${Math.random()}@mail.com`
+        password = `passwgfdford-${Math.random()}`
     })
 
     it('should succeed on correct credentials', done => {
         registerUser(name, surname, email, password, (error, response) => {
             expect(error).toBeUndefined()
-            expect(response).toBeUndefined()
+            expect(response).toBeDefined()
 
             done()
         })
@@ -21,7 +21,7 @@ describe('logic - register user', () => {
         beforeEach(done => {
             registerUser(name, surname, email, password, (error, response) => {
                 expect(error).toBeUndefined()
-                expect(response).toBeUndefined()
+                expect(response).toBeDefined()
 
                 done()
             })
@@ -43,5 +43,4 @@ describe('logic - register user', () => {
         })
     })
 
-    // TODO other cases
 })
