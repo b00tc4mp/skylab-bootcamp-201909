@@ -222,17 +222,19 @@ class App extends Component {
 
 
         return <>
-            <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
+            <Header view ={view} user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
             {view === 'landing' && <Landing />}
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
 
             {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
+
             {view === 'champions' && <Champions onClick={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search onSubmit={handleRetrieveSummoner} error={error} />}
-
             {view === 'detail' && <Detail onFav={handleDetailFav} champ={champ} error={error} />}
-            {view === 'summoners' && query && !error && <Summoner summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+            {view === 'summoners' && !query && <Background/>}
+            {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+
             <Footer />
         </>
     }
