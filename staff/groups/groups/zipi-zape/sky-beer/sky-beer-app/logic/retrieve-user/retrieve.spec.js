@@ -1,12 +1,12 @@
 describe('logic - retrieve user', () => {
     let name, surname, email, password
-    let credentials
+    let id, token
 
     beforeEach(done => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@mail.com`
-        password = `password-${Math.random()}`
+        name = `nasdame-${Math.random()}`
+        surname = `surnasdame-${Math.random()}`
+        email = `emaiasdl-${Math.random()}@mail.com`
+        password = `pasasdsword-${Math.random()}`
 
         call('POST', 'https://skylabcoders.herokuapp.com/api/user', { name, surname, username: email, password }, undefined, result => {
             if (result.error)
@@ -16,6 +16,8 @@ describe('logic - retrieve user', () => {
                 if (result.error)
                     done(new Error(result.error))
                     else {
+                        id = result.data.id
+                        token = result.data.token
                         done(undefined, result.data)
                     }
                 })
