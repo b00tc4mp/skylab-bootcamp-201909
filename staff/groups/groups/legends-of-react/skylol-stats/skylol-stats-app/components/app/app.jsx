@@ -83,7 +83,7 @@ class App extends Component {
     }
 
     handleSummoners = () => {
-        this.setState({ view: 'summoners', error: undefined })
+        this.setState({ view: 'summoners', error: undefined, query: undefined })
     }
 
     handleChampions = query => {
@@ -138,46 +138,62 @@ class App extends Component {
     }
 
     handleRetrieveSummoner = query => {
+        let getSummonerIds
+        let getMasteries
         try{
+            debugger
             retrieveSummoner(query, (error, summonerIds)=> {
-                if(error) return this.setState({ error: error.message })
-                else{
-                    this.setState( {summonerIds:summonerIds, query: query})
+                if (error) {
+                    return this.setState({ error: error.message }) }
+                else {
+                    getSummonerIds = summonerIds
                     try{
-                        debugger
                         retrieveMasteries(summonerIds.id,(error, masteries) =>{
-                            if(error) return this.setState({ error: error.message })
-                            else{
-                                this.setState({view:'summoners', masteries: masteries})
-                            }
-
-                        })}
-                        catch (error){
+                        if (error) return this.setState({ error: error.message }) 
+                        else {
+                            getMasteries = masteries                       
+                            try{
+                                retrieveRank(summonerIds.id,(error, rank) =>{
+                                    if (error) return this.setState({ error: error.message })
+                                    else { 
+                                        this.setState({view:'summoners', error: undefined, masteries: getMasteries, summonerIds: getSummonerIds, query: query, rank:rank})
+                                    }  
+                            })
+                            } catch (error){
                             this.setState({ error: error.message })
-
+                            }
                     }
-            }})
-        
+                })} catch (error){
+                        this.setState({ error: error.message })
+                }
+           }})
         } catch (error){
             this.setState({ error: error.message })
         }
+        
     }
+
+    
    
 
     render() {
-        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleMasteries } = this
+
+        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions, rank }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag } = this
+
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
             {view === 'landing' && <Landing />}
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
+
             {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
             {view === 'champions' && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
-            {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner} handl error={error} />}
-            {view === 'detail' && <Detail champ={champ} error={error} />}
-            {view === 'summoners' && query && <Summoner  summonerIds={summonerIds} masteries={masteries} error={error} />}
+            {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
 
+            {view === 'detail' && <Detail champ={champ} error={error} />}
+            {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+            <Footer />
             </>
         }
     
