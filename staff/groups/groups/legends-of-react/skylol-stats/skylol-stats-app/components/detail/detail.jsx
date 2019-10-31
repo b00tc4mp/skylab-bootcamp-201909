@@ -1,4 +1,4 @@
-function Detail({ champ }) {
+function Detail({ champ, onFav }) {
     debugger
     const tagList = champ[0].tags.map((tag,i) => {return <li key={i.toString()}>{tag}</li>})
     return <section className="detail">
@@ -6,6 +6,11 @@ function Detail({ champ }) {
         <img className="detail__image" src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ[0].id}_0.jpg`}
             alt=""/>
         <div className="detail__info">
+        <img className="item-list__fav" src={champ[0].isFav ? "https://image.flaticon.com/icons/svg/1469/1469575.svg" : "https://image.flaticon.com/icons/svg/660/660465.svg"} onClick={event => {
+               event.preventDefault()
+               event.stopPropagation()
+               onFav(champ[0].link, champ[0].id)
+           }}/>
             <p className="detail__id">{champ[0].name}</p>
             <p className="detail__title">{champ[0].title}</p>
             <ul className="detail__tags">{tagList}</ul>

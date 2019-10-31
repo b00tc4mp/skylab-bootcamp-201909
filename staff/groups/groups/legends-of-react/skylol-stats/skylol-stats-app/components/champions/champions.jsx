@@ -1,7 +1,7 @@
-function Champions({ champions, GoOnDetail, onClick }) {
+function Champions({ champions, GoOnDetail, onFav, onClick }) {
 
     const list = champions.map((champ, i) =>
-        < ChampionItem key={i.toString()} item={champ} onDetail={GoOnDetail} />)
+        < ChampionItem key={i.toString()} item={champ} onFav={onFav} onDetail={GoOnDetail}  />)
     return <>
         <div className="background"> </div>
         <ul className="tag">
