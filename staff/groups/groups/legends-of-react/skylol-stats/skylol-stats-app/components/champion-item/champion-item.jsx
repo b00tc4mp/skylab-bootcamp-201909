@@ -9,7 +9,7 @@ function ChampionItem({item, onDetail, onFav}){
              }>
     <li className="champion__content">
         <p className="champion__name">{item.name} <span>
-        <img className="item-list__fav" src={item.isFav ? "https://image.flaticon.com/icons/svg/1469/1469575.svg" : "https://image.flaticon.com/icons/svg/1469/1469600.svg"} onClick={event => {
+        <img className="item-list__fav" src={item.isFav ? "https://image.flaticon.com/icons/svg/1469/1469575.svg" : "https://image.flaticon.com/icons/svg/660/660465.svg"} onClick={event => {
                event.preventDefault()
                event.stopPropagation()
                onFav(item.id)

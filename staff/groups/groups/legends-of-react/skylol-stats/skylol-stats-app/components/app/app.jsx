@@ -3,7 +3,7 @@ const { Component } = React
 const { id, token } = sessionStorage
 
 class App extends Component {
-    state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {}}
+    state = { view: 'landing', error: undefined, user: undefined, champions: [], champ: {} }
 
     componentWillMount() {
         if (id && token)
@@ -88,12 +88,12 @@ class App extends Component {
 
     handleChampions = query => {
         try {
-            const {id, token} = sessionStorage
+            const { id, token } = sessionStorage
             retrieveChampions(id, token, query, (error, result) => {
-                
+
                 if (error) this.setState({ error: error.message })
                 else {
-                    
+
                     this.setState({ view: 'champions', error: undefined, champions: result })
                 }
             })
@@ -109,25 +109,25 @@ class App extends Component {
     }
 
     handleDetail = link => {
-        try{ 
-            retrieveChampion(link, (error, champ)=> {
-                if(error) return this.setState({ error: error.message })
-                else{
-                    this.setState({view: 'detail', champ})
+        try {
+            retrieveChampion(link, (error, champ) => {
+                if (error) return this.setState({ error: error.message })
+                else {
+                    this.setState({ view: 'detail', champ })
                 }
             })
 
-        } catch (error){
+        } catch (error) {
             this.setState({ error: error.message })
         }
     }
 
     handleTag = tag => {
-        try{
+        try {
             retrieveTag(tag, (error, result) => {
                 if (error) this.setState({ error: error.message })
                 else {
-                    
+
                     this.setState({ view: 'champions', error: undefined, champions: result })
                 }
             })
@@ -140,45 +140,67 @@ class App extends Component {
     handleRetrieveSummoner = query => {
         let getSummonerIds
         let getMasteries
-        try{
+        try {
             debugger
-            retrieveSummoner(query, (error, summonerIds)=> {
+            retrieveSummoner(query, (error, summonerIds) => {
                 if (error) {
-                    return this.setState({ error: error.message }) }
+                    return this.setState({ error: error.message })
+                }
                 else {
                     getSummonerIds = summonerIds
-                    try{
-                        retrieveMasteries(summonerIds.id,(error, masteries) =>{
-                        if (error) return this.setState({ error: error.message }) 
-                        else {
-                            getMasteries = masteries                       
-                            try{
-                                retrieveRank(summonerIds.id,(error, rank) =>{
-                                    if (error) return this.setState({ error: error.message })
-                                    else { 
-                                        this.setState({view:'summoners', error: undefined, masteries: getMasteries, summonerIds: getSummonerIds, query: query, rank:rank})
-                                    }  
-                            })
-                            } catch (error){
-                            this.setState({ error: error.message })
+                    try {
+                        retrieveMasteries(summonerIds.id, (error, masteries) => {
+                            if (error) return this.setState({ error: error.message })
+                            else {
+                                getMasteries = masteries
+                                try {
+                                    retrieveRank(summonerIds.id, (error, rank) => {
+                                        if (error) return this.setState({ error: error.message })
+                                        else {
+                                            this.setState({ view: 'summoners', error: undefined, masteries: getMasteries, summonerIds: getSummonerIds, query: query, rank: rank })
+                                        }
+                                    })
+                                } catch (error) {
+                                    this.setState({ error: error.message })
+                                }
                             }
-                    }
-                })} catch (error){
+                        })
+                    } catch (error) {
                         this.setState({ error: error.message })
+                    }
                 }
-           }})
-        } catch (error){
+            })
+        } catch (error) {
             this.setState({ error: error.message })
         }
-        
+
     }
 
-    
-   
+    handleFav = champId => {
+        const { query } = this.state
+        toggleFavDuck(id, token, champId, (error, data) => {
+            if (error) return this.setState({ error: error.message })
+            const { state: { query } } = this
+
+            retrieveChampions(id, token, query, (error, result) => {
+
+                if (error) this.setState({ error: error.message })
+                else {
+
+                    this.setState({ view: 'champions', error: undefined, champions: result })
+                }
+            })
+
+        })
+
+    }
+
+
+
 
     render() {
 
-        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions, rank }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag } = this
+        const { state: { view, error, user, champ, summonerIds, masteries, query, champions, rank }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleFav } = this
 
 
         return <>
@@ -188,14 +210,14 @@ class App extends Component {
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
 
             {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
-            {view === 'champions' && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
-            {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
+            {view === 'champions' && <Champions onClick={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
+            {view === 'summoners' && <Search onSubmit={handleRetrieveSummoner} error={error} />}
 
             {view === 'detail' && <Detail champ={champ} error={error} />}
-            {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+            {view === 'summoners' && query && !error && <Summoner summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
             <Footer />
-            </>
-        }
-    
+        </>
+    }
+
 }
 

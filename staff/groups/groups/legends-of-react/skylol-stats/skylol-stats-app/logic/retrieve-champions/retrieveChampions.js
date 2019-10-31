@@ -14,14 +14,13 @@ function retrieveChampions(id, token, query, callback) {
             })
             call('GET', token, `https://skylabcoders.herokuapp.com/api/user/${id}`, undefined, users => {
                 if (users.error) return callback(new Error(users.error))
-                debugger
                 const { data: { favs = [] } } = users
                 result.map(champion => {
 
                     champion.isFav = favs.includes(champion.id)
                 })
                 if (query) {
-                    debugger
+
                     query = query.charAt(0).toUpperCase() + query.slice(1)
                     const result2 = []
                     for (let i = 0; i < result.length; i++) {
