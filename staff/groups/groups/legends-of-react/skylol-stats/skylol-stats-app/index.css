@@ -216,6 +216,32 @@ body {
   cursor: pointer;
 }
 
+.nouser {
+  height: 76vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.nouser__message {
+  font-size: 2rem;
+}
+
+.nouser::after {
+  content: "";
+  background: url(https://i.pinimg.com/originals/2e/b9/51/2eb951f36a69ac97d1d6db705bc0fe57.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+}
+
 .detail {
   margin: 0.5rem auto;
   width: 60vw;

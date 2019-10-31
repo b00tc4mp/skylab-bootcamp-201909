@@ -1,4 +1,4 @@
-if (!Object.getOwnPropertyDescriptor(Location.prototype, 'query'))
+if (!Object.getOwnPropertyDescriptor(Location.prototype, 'hash'))
     // Object.defineProperties(Location.prototype, {
     //     query: {
     //         set(query) {
@@ -13,10 +13,10 @@ if (!Object.getOwnPropertyDescriptor(Location.prototype, 'query'))
     //         }
     //     }
     // })
-    Object.defineProperty(Location.prototype, 'query', {
-        set(query) {
+    Object.defineProperty(Location.prototype, 'hash', {
+        set(hash) {
             const { protocol, host, pathname } = this
-            const url = `${protocol}//${host}${pathname}?q=${query}`
+            const url = `${protocol}//${host}${pathname}?q=${hash}`
             history.pushState({ path: url }, '', url)
         },
 
