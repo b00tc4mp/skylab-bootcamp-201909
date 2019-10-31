@@ -6,8 +6,10 @@ function Search( {onSubmit, error, query} ){
 
             let query = event.target.query.value
             
+            
             onSubmit(query)
             event.target.query.value = ''
+
         }}>
         <input type="text" className="search__field" name="query" placeholder="search" defaultValue={query}/>
         <button className="search__submit"><i className="fas fa-search"></i></button>

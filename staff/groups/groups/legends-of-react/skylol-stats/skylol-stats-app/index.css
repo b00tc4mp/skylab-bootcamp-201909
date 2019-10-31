@@ -127,6 +127,11 @@ body {
   border-radius: 4px;
 }
 
+.item-list__fav {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .champion {
   display: flex;
   align-items: center;
@@ -279,6 +284,11 @@ body {
   margin: 0.3rem;
   border: 0.15rem solid goldenrod;
   border-radius: 0.3rem;
+}
+
+.item-list__fav {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .feedback {
