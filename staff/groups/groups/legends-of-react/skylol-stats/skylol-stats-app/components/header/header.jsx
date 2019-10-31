@@ -1,4 +1,4 @@
-function Header( {view, user, onHome, onLogin, onRegister, onSummoners, onChampions, onSignOut } ) {
+function Header( {view, user, onHome, onLogin, onRegister, onSummoners, onChampions, onSignOut, onMyFavs } ) {
     
     return <header className="header">
    { view !== 'landing' && <img src="https://media.giphy.com/media/YbFasFa6Fh5HW/giphy.gif" alt="" className="header__logo"/>}
@@ -13,6 +13,12 @@ function Header( {view, user, onHome, onLogin, onRegister, onSummoners, onChampi
 
                     onSignOut()
                     }}>Sign out</button>}
+                     {user && <button className="header__signout" onClick={
+                    event => {
+                    event.preventDefault()
+
+                    onMyFavs()
+                    }}>MyFavs 🥰</button>}
                 </div>
             </div>
         <nav>
