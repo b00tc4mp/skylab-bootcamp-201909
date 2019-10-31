@@ -1,4 +1,11 @@
-function championKey (masteries, champions){ /* champions es array de objecto de campeones*/
+/**
+ * Returns the first array of objects, with a couple of properties per object added, obtained by another array of objects, through a matching key.
+ * 
+ * @param {masteries} array Array full of Objects with properties to be added.
+ * @param {champions} array Array with Objects with properties to be obtained from.
+ * */
+
+function championKey (masteries, champions){ 
     debugger
     for (let i =0; i<masteries.length;i++){
         for (let j=0; j<champions.length;j++){
