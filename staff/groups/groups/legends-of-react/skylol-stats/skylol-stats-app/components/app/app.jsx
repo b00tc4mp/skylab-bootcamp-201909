@@ -1,11 +1,44 @@
 const { Component } = React
 
-const { id, token } = sessionStorage
+const App = (() => {
 
-class App extends Component {
+    const { id, token } = sessionStorage
+
+    const { pathname, hash } = location
+
+    return class extends Component { 
     state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {}}
 
+    componentDidMount() {
+        const { id, token } = sessionStorage
 
+        if (id && token) {
+            try {
+                retrieveUser(id, token, (error, user) => {
+                    if (error) return this.setState({ error: error.message })
+
+                    const { summoner } = user
+
+                    this.setState({ user: summoner })
+                })
+            } catch (error) {
+                this.setState({ error: error.message })
+            }
+
+            const { hash } = location
+
+            if (hash) {
+                const [, link] = hash.split('/champion/')
+
+                this.handleDetail(link)
+            } else {
+                const { state: { query } } = this
+
+                query && this.handleSearch(query)
+            }
+        }
+    }
+    
     handleRegister = (name, surname, summoner, email, password) => {
         try {
             registerUser(name, surname, summoner, email, password, error => {
@@ -52,22 +85,32 @@ class App extends Component {
     }
 
     handleHome = () => {
+        location.slash = pathname
+        location.hash = `/landing`
         this.setState({ view: 'landing', error: undefined })
     }
 
     handleGoToLogin = () => {
+        location.slash = pathname
+        location.hash = `/login`
         this.setState({ view: 'login', error: undefined })
     }
 
     handleGoToRegister = () => {
+        location.slash = pathname
+        location.hash = `/register`
         this.setState({ view: 'register', error: undefined })
     }
 
     handleSummoners = () => {
+        location.slash = pathname
+        location.hash = `/summoners`
         this.setState({ view: 'summoners', error: undefined, query: undefined })
     }
 
     handleChampions = query => {
+        location.slash = pathname
+        location.hash = `/champions`
         try {
             retrieveChampions(query, (error, result) => {
                 
@@ -89,11 +132,14 @@ class App extends Component {
     }
 
     handleDetail = link => {
-        try{ 
+        try{
+            
             retrieveChampion(link, (error, champ)=> {
                 if(error) return this.setState({ error: error.message })
-                else{
-                    this.setState({view: 'detail', champ})
+                else{ 
+                    this.setState({view: 'detail', champ: champ})
+                    location.slash = pathname
+                    location.hash = `/champion/${champ[0].id}`
                 }
             })
 
@@ -120,6 +166,7 @@ class App extends Component {
     handleRetrieveSummoner = query => {
         let getSummonerIds
         let getMasteries
+        location.hash = ''
         try{
             debugger
             retrieveSummoner(query, (error, summonerIds)=> {
@@ -137,6 +184,8 @@ class App extends Component {
                                     if (error) return this.setState({ error: error.message })
                                     else { 
                                         this.setState({view:'summoners', error: undefined, masteries: getMasteries, summonerIds: getSummonerIds, query: query, rank:rank})
+                                        location.slash = pathname
+                                        location.hash = `/summoners/${summonerIds.name}`
                                     }  
                             })
                             } catch (error){
@@ -167,8 +216,9 @@ class App extends Component {
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
 
-            {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
-            {view === 'champions' && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
+            {view === 'champions' && user && <Search onSubmit={handleChampions} error={error} />}
+            {view === 'champions' && !user && <Nouser />}
+            {view === 'champions' && user && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
             {view === 'summoners' && !query && <Background/>}
             {view === 'detail' && <Detail champ={champ} error={error} />}
@@ -176,6 +226,6 @@ class App extends Component {
             <Footer />
             </>
         }
-    
-}
+    }
+})()
 
