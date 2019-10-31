@@ -98,7 +98,7 @@ class App extends Component {
                 }
             })
         } catch (error) {
-            this.setState({ error: error.message })
+            this.setState({error: error.message})
         }
     }
 
@@ -229,7 +229,7 @@ class App extends Component {
 
             {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
 
-            {view === 'champions' && <Champions onClick={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
+            {view === 'champions' && user && <Champions onClick={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search onSubmit={handleRetrieveSummoner} error={error} />}
             {view === 'detail' && <Detail onFav={handleDetailFav} champ={champ} error={error} />}
             {view === 'summoners' && !query && <Background/>}
