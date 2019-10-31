@@ -1,4 +1,4 @@
-function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin, name}) {
+function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin, name, showSearch}) {
     return <>
     <header className="header">
         <img className="header__logo" src="./img/logo.png"/>
@@ -19,7 +19,7 @@ function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin, name}
                 <form onSubmit={event => {
                     event.preventDefault()
                     const { query : {value : query} } = event.target
-                    onSubmit(query)}}>
+                    onSubmit(`beer_name=${query}`)}}>
                         <input type="search" name="query" placeholder="search" className="query"/>
                         <button className="button"><i className="fas fa-search"></i></button>
                 </form>
@@ -35,5 +35,12 @@ function Header ({onBurguer,onBeers,onCommunity,onSubmit,onInvest,onLogin, name}
         </div>
     </header>
     <div className="header__back"></div>
+    {showSearch && <nav className="header__burguer-search"><form onSubmit={event => {
+                    event.preventDefault()
+                    const { query : {value : query} } = event.target
+                    onSubmit(`beer_name=${query}`)}}>
+                        <input type="search" name="query" placeholder="search" className="query"/>
+                        <button className="button"><i className="fas fa-search"></i></button>
+                </form></nav>}
     </>
 }

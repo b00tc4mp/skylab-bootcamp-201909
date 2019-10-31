@@ -1,5 +1,6 @@
 @import panel
 
+@import components/feedback/feedback
 @import components/beer-detail/beer-detail
 @import components/brewdog/brewdog
 @import components/random-beers/random-beers
@@ -47,9 +48,14 @@
 
 .close
     align-self: flex-end
-    position: relative
+    position: absolute
+    font-size: 3vh
     top: 3%
     right: 3%
+    color: inherit
+    cursor: pointer
+    &:hover
+        color: tomato
 
 a
     color: inherit

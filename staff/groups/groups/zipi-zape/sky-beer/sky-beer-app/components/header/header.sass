@@ -10,6 +10,18 @@
     background-color: #2c2c2c
     color: white
 
+    &__burguer-search
+        position: fixed
+        width: 100vw
+        display: flex
+        justify-content: center
+        align-items: center
+        padding: 2%
+        background-color: #2c2c2c
+        z-index: 1000000
+        & form
+            display: flex
+
     &__back
         height: 15vh
 
@@ -18,7 +30,6 @@
     @media only screen and (max-width: 1023px)
         &__title
             display: none
-
         &__burguer
             width: 20%
             height: 100%
@@ -26,6 +37,7 @@
             display: flex
             justify-content: center
             align-items: center
+            cursor: pointer
         &__menu
             display: none
     @media only screen and (min-width: 1024px)
