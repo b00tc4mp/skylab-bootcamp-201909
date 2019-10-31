@@ -67,9 +67,9 @@ class App extends Component {
         this.setState({ view: 'summoners', error: undefined, query: undefined })
     }
 
-    handleChampions = () => {
+    handleChampions = query => {
         try {
-            retrieveChampions((error, result) => {
+            retrieveChampions(query, (error, result) => {
                 
                 if (error) this.setState({ error: error.message })
                 else {
@@ -98,6 +98,21 @@ class App extends Component {
             })
 
         } catch (error){
+            this.setState({ error: error.message })
+        }
+    }
+
+    handleTag = tag => {
+        try{
+            retrieveTag(tag, (error, result) => {
+                if (error) this.setState({ error: error.message })
+                else {
+                    
+                    this.setState({ view: 'champions', error: undefined, champions: result })
+                }
+            })
+        }
+        catch (error) {
             this.setState({ error: error.message })
         }
     }
@@ -142,16 +157,20 @@ class App extends Component {
    
 
     render() {
-        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions, rank }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner} = this
+
+        const { state: { view, error, user,  champ, summonerIds, masteries, query, champions, rank }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag } = this
+
 
         return <>
             <Header user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
             {view === 'landing' && <Landing />}
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
-            {view === 'champions' && <Search error={error} />}
-            {view === 'champions' && <Champions champions={champions} error={error} GoOnDetail={handleDetail} />}
+
+            {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
+            {view === 'champions' && <Champions onClick ={handleTag} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
+
             {view === 'detail' && <Detail champ={champ} error={error} />}
             {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
             <Footer />
