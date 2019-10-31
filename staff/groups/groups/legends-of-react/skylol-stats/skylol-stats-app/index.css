@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Exo+2&display=swap");
 body {
-  background: linear-gradient(to bottom, black, black, black, #57d5a0);
+  background: linear-gradient(to bottom, #020710, #020710, #020710, #57d5a0);
   height: 100%;
   background-repeat: no-repeat;
+  margin: 0;
 }
 
 .tresh {
@@ -24,7 +25,7 @@ body {
   margin-bottom: 1rem;
 }
 .header__logo {
-  height: 15rem;
+  height: 10rem;
   position: absolute;
 }
 .header__title {
@@ -74,22 +75,44 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 78vh;
 }
 .landing__video {
   padding: 0.5rem;
   background-color: #808080a8;
   border: solid 0.2rem #57d5a0;
   box-shadow: 0 0 10px 4px #57d5a0;
+  border-radius: 20px;
+}
+
+.landing::after {
+  content: "";
+  background: url(http://s1.picswalls.com/wallpapers/2015/11/21/hd-league-of-legends-wallpapers_111238778_289.jpg);
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 
 .register {
-  width: 35vw;
+  background-image: url(https://66.media.tumblr.com/a53cd3ee92b0a495a6ce4de403a9aaa2/tumblr_oijto4z0Tx1u5ps5fo4_500.gif);
+  background-repeat: no-repeat;
+  width: 100%;
   padding: 0.5rem;
-  margin: 0.5rem auto;
+  height: 76vh;
+  background-size: cover;
+  background-position: center;
 }
 .register__form {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 .register__title {
   text-align: center;
@@ -102,6 +125,7 @@ body {
   border: solid 0.2rem #57d5a0;
   border-bottom-right-radius: 1rem;
   background-color: black;
+  width: 35vh;
 }
 .register__submit {
   width: 7rem;
@@ -115,14 +139,20 @@ body {
 }
 
 .login {
-  width: 35vw;
+  background-image: url(https://66.media.tumblr.com/a53cd3ee92b0a495a6ce4de403a9aaa2/tumblr_oijto4z0Tx1u5ps5fo4_500.gif);
+  background-repeat: no-repeat;
+  width: 100%;
   padding: 0.5rem;
-  margin: 0.5rem auto;
+  height: 76vh;
+  background-size: cover;
+  background-position: center;
 }
 .login__form {
   display: flex;
-  justify-content: baseline;
   flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
 }
 .login__title {
   text-align: center;
@@ -135,6 +165,7 @@ body {
   border: solid 0.2rem #57d5a0;
   border-bottom-right-radius: 1rem;
   background-color: black;
+  width: 35vh;
 }
 .login__submit {
   width: 7rem;
@@ -154,6 +185,7 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
+  height: 100%;
 }
 .search__title {
   text-align: center;
@@ -176,6 +208,16 @@ body {
   margin: 0 auto;
   background: none;
   border: none;
+}
+.search__background-container {
+  display: flex;
+  justify-content: center;
+}
+.search__background {
+  opacity: 0.2;
+  align-self: center;
+  height: 63vh;
+  width: 100%;
 }
 .search .fa-search {
   font-size: 1.5rem;

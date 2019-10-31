@@ -11,36 +11,42 @@ function Detail({ champ }) {
             <p className="detail__description">{champ[0].lore}</p>
             <ul className="detail__spells spells">
                 <div>
-                    <li><img data-tippy-content={champ[0].spells[0].name + champ[0].spells[0].description} className="spells__image"
-                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[0].image.full}`}
-                            alt=""/>
-                    </li>
+                    <a rel="shadowbox;width=405;height=340;" title={champ[0].spells[0].name + "\n"  + champ[0].spells[0].description}  href= {`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${videoUrl(champ[0].key)}/ability_${videoUrl(champ[0].key)}_Q1.webm`} target="_blank">
+                        <li>
+                            <img className="spells__image" src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[0].image.full}`} alt=""/>                            
+                        </li>
+                    </a>
                 </div>
                 <div>
-                    <li><img data-tippy-content={champ[0].spells[1].name + champ[0].spells[1].description}  className="spells__image"
-                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[1].image.full}`}
-                            alt=""/>
-                    </li>
+                    <a rel="shadowbox;width=405;height=340;" title={champ[0].spells[1].name + "\n"  + champ[0].spells[1].description}  href= {`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${videoUrl(champ[0].key)}/ability_${videoUrl(champ[0].key)}_W1.webm`} target="_blank">
+                        <li>
+                            <img className="spells__image" src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[1].image.full}`} alt=""/>                            
+                        </li>
+                    </a>
                 </div>
                 <div>
-                <li><img data-tippy-content={champ[0].spells[2].name + champ[0].spells[2].description}  className="spells__image"
-                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[2].image.full}`}
-                            alt=""/>
-                    </li>
+                    <a rel="shadowbox;width=405;height=340;" title={champ[0].spells[2].name + "\n"  + champ[0].spells[2].description}  href= {`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${videoUrl(champ[0].key)}/ability_${videoUrl(champ[0].key)}_E1.webm`} target="_blank">
+                        <li>
+                            <img className="spells__image" src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[2].image.full}`} alt=""/>                            
+                        </li>
+                    </a>
                 </div>
                 <div>
-                <li><img data-tippy-content={champ[0].spells[3].name + champ[0].spells[3].description}  className="spells__image"
-                            src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[3].image.full}`}
-                            alt=""/>
-                    </li>
+                    <a rel="shadowbox;width=405;height=340;" title={champ[0].spells[3].name + "\n"  + champ[0].spells[3].description}  href= {`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${videoUrl(champ[0].key)}/ability_${videoUrl(champ[0].key)}_R1.webm`} target="_blank">
+                        <li>
+                            <img className="spells__image" src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/spell/${champ[0].spells[3].image.full}`} alt=""/>                            
+                        </li>
+                    </a>
                 </div>
                 <div>
-                <li><img data-tippy-content={champ[0].passive.name + champ[0].passive.description}  className="spells__image"
+                    <a rel="shadowbox;width=405;height=340;" title={champ[0].passive.name + "\n"  + champ[0].passive.description}  href= {`https://d28xe8vt774jo5.cloudfront.net/champion-abilities/${videoUrl(champ[0].key)}/ability_${videoUrl(champ[0].key)}_P1.webm`} target="_blank">
+                        <li>
+                        <img className="spells__image"
                             src={`http://ddragon.leagueoflegends.com/cdn/9.18.1/img/passive/${champ[0].passive.image.full}`}
-                            alt=""/>
-                    </li>
-                </div>
-                
+                            alt=""/>                            
+                        </li>
+                    </a>
+                </div>               
             </ul>
         </div>
     </div>

@@ -1,7 +1,7 @@
-function Header( { user, onHome, onLogin, onRegister, onSummoners, onChampions, onSignOut } ) {
+function Header( {view, user, onHome, onLogin, onRegister, onSummoners, onChampions, onSignOut } ) {
     
     return <header className="header">
-    <img src="https://media.giphy.com/media/YbFasFa6Fh5HW/giphy.gif" alt="" className="header__logo"/>
+   { view !== 'landing' && <img src="https://media.giphy.com/media/YbFasFa6Fh5HW/giphy.gif" alt="" className="header__logo"/>}
     <div className="header__div">
             <div className="header__div2">
                 <h1 className="header__title">SkyLoL Stats</h1>
