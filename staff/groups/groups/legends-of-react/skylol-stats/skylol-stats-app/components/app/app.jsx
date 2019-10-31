@@ -1,8 +1,12 @@
 const { Component } = React
 
-const { id, token } = sessionStorage
+const { id, token} = sessionStorage
+
+
 
 class App extends Component {
+
+
     state = { view: 'landing', error: undefined, user: undefined, champions: [], champ: {} }
 
     componentWillMount() {
@@ -25,6 +29,9 @@ class App extends Component {
         query && this.handleSearch(query)
     }
 
+
+    
+     componentWillMount
     handleRegister = (name, surname, summoner, email, password) => {
         try {
             registerUser(name, surname, summoner, email, password, error => {
@@ -137,8 +144,9 @@ class App extends Component {
             this.setState({ error: error.message })
         }
     }
+    
 
-    handleRetrieveSummoner = query => {
+    handleRetrieveSummoner = (query) => {
         let getSummonerIds
         let getMasteries
         try {
@@ -229,11 +237,13 @@ class App extends Component {
 
             {view === 'champions' && <Search onSubmit={handleChampions} error={error} />}
 
-            {view === 'champions' && user && <Champions onClick={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
+
+            {view === 'champions' && <Champions onClick={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search onSubmit={handleRetrieveSummoner} error={error} />}
             {view === 'detail' && <Detail onFav={handleDetailFav} champ={champ} error={error} />}
             {view === 'summoners' && !query && <Background/>}
             {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+
 
             <Footer />
         </>
