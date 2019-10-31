@@ -12,7 +12,7 @@ describe ("logic - retrieve beer", () => {
 
 
     it('should succed on get a single beer', done => {
-        retrieveBeer( id, (error, beer) => {
+        retrieveBeer( id, undefined, (error, beer) => {
 
             
             expect(beer).toBeDefined()
@@ -38,12 +38,12 @@ describe ("logic - retrieve beer", () => {
         expect(function() { retrieveBeer(undefined); }).toThrowError(TypeError, 'undefined is not a number');
         expect(function() { retrieveBeer(null); }).toThrowError(TypeError, 'null is not a number');
 
-        expect(function() { retrieveBeer(id, 1); }).toThrowError(TypeError, '1 is not a function');
-        expect(function() { retrieveBeer(id, true); }).toThrowError(TypeError, 'true is not a function');
-        expect(function() { retrieveBeer(id, []); }).toThrowError(TypeError, ' is not a function');
-        expect(function() { retrieveBeer(id, {}); }).toThrowError(TypeError, '[object Object] is not a function');
-        expect(function() { retrieveBeer(id, undefined); }).toThrowError(TypeError, 'undefined is not a function');
-        expect(function() { retrieveBeer(id, null); }).toThrowError(TypeError, 'null is not a function');
+        expect(function() { retrieveBeer(id, undefined, 1); }).toThrowError(TypeError, '1 is not a function');
+        expect(function() { retrieveBeer(id, undefined, true); }).toThrowError(TypeError, 'true is not a function');
+        expect(function() { retrieveBeer(id, undefined, []); }).toThrowError(TypeError, ' is not a function');
+        expect(function() { retrieveBeer(id, undefined, {}); }).toThrowError(TypeError, '[object Object] is not a function');
+        expect(function() { retrieveBeer(id, undefined, undefined); }).toThrowError(TypeError, 'undefined is not a function');
+        expect(function() { retrieveBeer(id, undefined, null); }).toThrowError(TypeError, 'null is not a function');
         
         done()
     })

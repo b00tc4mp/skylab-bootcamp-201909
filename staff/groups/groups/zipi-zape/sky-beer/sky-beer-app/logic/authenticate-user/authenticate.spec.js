@@ -2,12 +2,12 @@ describe('logic - authenticate user', () => {
     let name, surname, email, password
 
     beforeEach(done => {
-        name = `name-${Math.random()}`
-        surname = `surname-${Math.random()}`
-        email = `email-${Math.random()}@mail.com`
-        password = `password-${Math.random()}`
+        name = `naasdme-${Math.random()}`
+        surname = `surnaasdme-${Math.random()}`
+        email = `emaiasdl-${Math.random()}@mail.com`
+        password = `passasdword-${Math.random()}`
 
-        call('POST', 'https://skylabcoders.herokuapp.com/api/user', { name, surname, username: email, password }, result => {
+        call('POST', 'https://skylabcoders.herokuapp.com/api/user', { name, surname, username: email, password },undefined, result => {
             if (result.error) done(new Error(result.error))
             else done()
         })
