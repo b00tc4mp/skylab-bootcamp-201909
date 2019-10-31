@@ -1,5 +1,5 @@
-describe('logic - retrieve rank', () => {
-    let encriptedId = '_WiUZj3QaaFGq-Ioj073fHaiAUNRZibJHqZXxDGk78_s2kc'
+describe('logic - retrieve summoner', () => {
+    // let summonerName = 'Martita Dinamita'
 
     // beforeEach(done => {
     //     name = `name-${Math.random()}`
@@ -26,9 +26,9 @@ describe('logic - retrieve rank', () => {
     // })
 
     it('should succeed on correct criteria (id)', done => {
-        let encriptedId = '_WiUZj3QaaFGq-Ioj073fHaiAUNRZibJHqZXxDGk78_s2kc'
+        let summonerName = 'Martita Dinamita'
 
-        retrieveRank(encriptedId,(error, rank) => {
+        retrieveSummoner(summonerName,(error, rank) => {
             expect(error).toBeUndefined()
             
 
@@ -41,9 +41,9 @@ describe('logic - retrieve rank', () => {
             done()
         })
         it('should succeed on correct criteria (encriptedid)', done => {
-            let encriptedId = 'g5xF38YVZ5xMPD5NCRkkRo8QNMqlofULtcbyOjbEkVXJw6c'
+            let summonerName = 'Bonnie Mcmurray'
     
-            retrieveRank(encriptedId,(error, rank) => {
+            retrieveSummoner(summonerName,(error, rank) => {
                 expect(error).toBeUndefined()
                 
     
@@ -57,15 +57,15 @@ describe('logic - retrieve rank', () => {
             })
     
             it('should fail on incorrect encriptedId', () => {
-                expect(() => retrieveRank(1)).toThrowError(TypeError, '1 is not a string')
-                expect(() => retrieveRank(true)).toThrowError(TypeError, 'true is not a string')
-                expect(() => retrieveRank([])).toThrowError(TypeError, ' is not a string')
-                expect(() => retrieveRank({})).toThrowError(TypeError, '[object Object] is not a string')
-                expect(() => retrieveRank(undefined)).toThrowError(TypeError, 'undefined is not a string')
-                expect(() => retrieveRank(null)).toThrowError(TypeError, 'null is not a string')
+                expect(() => retrieveSummoner(1)).toThrowError(TypeError, '1 is not a string')
+                expect(() => retrieveSummoner(true)).toThrowError(TypeError, 'true is not a string')
+                expect(() => retrieveSummoner([])).toThrowError(TypeError, ' is not a string')
+                expect(() => retrieveSummoner({})).toThrowError(TypeError, '[object Object] is not a string')
+                expect(() => retrieveSummoner(undefined)).toThrowError(TypeError, 'undefined is not a string')
+                expect(() => retrieveSummoner(null)).toThrowError(TypeError, 'null is not a string')
         
-                expect(() => retrieveRank('')).toThrowError(ContentError, 'encriptedId is empty or blank')
-                expect(() => retrieveRank(' \t\r')).toThrowError(ContentError, 'encriptedId is empty or blank')
+                expect(() => retrieveSummoner('')).toThrowError(ContentError, 'summonerName is empty or blank')
+                expect(() => retrieveSummoner(' \t\r')).toThrowError(ContentError, 'summonerName is empty or blank')
         
                
             })
