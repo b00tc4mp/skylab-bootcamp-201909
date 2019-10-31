@@ -4,7 +4,7 @@ function retrieveSummoner(query, callback) {
     validate.function(callback)
 
     query=query.split(' ').join('%20')
-    call('GET', undefined,'https://skylabcoders.herokuapp.com/proxy?url=https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + query+'?api_key='+'RGAPI-6c9d74d1-ad37-40ab-a40c-a23d60297ac7', undefined, function (result) {
+    call('GET', undefined,'https://skylabcoders.herokuapp.com/proxy?url=https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + query+'?api_key='+'RGAPI-bdd9804b-3c57-4771-a115-29636cc6d157 ', undefined, function (result) {
         if (result.status){
             callback(new Error(result.status.message))
         }else{
