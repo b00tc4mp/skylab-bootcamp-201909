@@ -1,5 +1,6 @@
 function Detail({ champ }) {
     debugger
+    const tagList = champ[0].tags.map((tag,i) => {return <li key={i.toString()}>{tag}</li>})
     return <section className="detail">
     <div className="detail__content">
         <img className="detail__image" src={`http://ddragon.leagueoflegends.com/cdn/img/champion/loading/${champ[0].id}_0.jpg`}
@@ -7,7 +8,7 @@ function Detail({ champ }) {
         <div className="detail__info">
             <p className="detail__id">{champ[0].name}</p>
             <p className="detail__title">{champ[0].title}</p>
-            <p className="detail__tags">{champ[0].tags}</p>
+            <ul className="detail__tags">{tagList}</ul>
             <p className="detail__description">{champ[0].lore}</p>
             <ul className="detail__spells spells">
                 <div>
