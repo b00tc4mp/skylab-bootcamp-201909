@@ -1,7 +1,7 @@
 describe ("logic - search beers", () => {
     let name='coffee'
     it ('should return an array of results searching by name', done => {
-        searchBeers (`beer_name=${name}`, (error, results)=> {
+        searchBeers (`beer_name=${name}`, undefined, (error, results)=> {
             
             expect (error).toBeUndefined()
             expect (results).toBeDefined()
@@ -26,12 +26,12 @@ describe ("logic - search beers", () => {
         expect(function() { searchBeers(undefined); }).toThrowError(TypeError, 'undefined is not a string');
         expect(function() { searchBeers(null); }).toThrowError(TypeError, 'null is not a string');
 
-        expect(function() { searchBeers(`beer_name=${name}`, 1); }).toThrowError(TypeError, '1 is not a function');
-        expect(function() { searchBeers(`beer_name=${name}`, true); }).toThrowError(TypeError, 'true is not a function');
-        expect(function() { searchBeers(`beer_name=${name}`, []); }).toThrowError(TypeError, ' is not a function');
-        expect(function() { searchBeers(`beer_name=${name}`, {}); }).toThrowError(TypeError, '[object Object] is not a function');
-        expect(function() { searchBeers(`beer_name=${name}`, undefined); }).toThrowError(TypeError, 'undefined is not a function');
-        expect(function() { searchBeers(`beer_name=${name}`, null); }).toThrowError(TypeError, 'null is not a function');
+        expect(function() { searchBeers(`beer_name=${name}`,undefined,  1); }).toThrowError(TypeError, '1 is not a function');
+        expect(function() { searchBeers(`beer_name=${name}`,undefined,  true); }).toThrowError(TypeError, 'true is not a function');
+        expect(function() { searchBeers(`beer_name=${name}`,undefined,  []); }).toThrowError(TypeError, ' is not a function');
+        expect(function() { searchBeers(`beer_name=${name}`,undefined,  {}); }).toThrowError(TypeError, '[object Object] is not a function');
+        expect(function() { searchBeers(`beer_name=${name}`,undefined,  undefined); }).toThrowError(TypeError, 'undefined is not a function');
+        expect(function() { searchBeers(`beer_name=${name}`,undefined,  null); }).toThrowError(TypeError, 'null is not a function');
             done()
     })
 })
