@@ -111,12 +111,14 @@ class App extends Component {
     }
 
     handleClickItem = (beerId) => {
-        retrieveBeer (beerId, (error, beer)=> {
-            if (error) this.setState ({error: error.message})
-            else {
-                this.setState ({beerId : beer, error: undefined})
-            }
-        })
+        try {
+            retrieveBeer (beerId, (error, beer)=> {
+                if (error) this.setState ({error: error.message})
+                else {
+                    this.setState ({beerId : beer, error: undefined})
+                }
+            })
+        } catch (error) {this.setState({error: error.message})}
     }
 
     handleOnCloseSearch = () => {
@@ -129,16 +131,46 @@ class App extends Component {
         sessionStorage.clear()
     }
 
+    handleFavs = (beerId) =>{
+        const { searchResults, id, token } = this.state
+        
+        const index = searchResults.findIndex(duck=>{
+            return duck.id === beerId
+        })
+        searchResults[index].fav = !searchResults[index].fav
+        this.setState({ searchResults})
+
+        try {
+            toogleFav(id,token,beerId,(error, results) => {
+                if (error) this.setState({error: error.message})
+            })
+        } catch (error) {this.setState({error: error.message})}
+    }
+
+    handleRates = (beerId, rating) => {
+        const { id,token, beerId: beer } = this.state
+        
+        beer.rate = rating
+        this.setState({ beer })
+
+        try {
+            rateBeer(id,token,beerId,rating, (error, results) => {
+                if (error) this.setState({error: error.message})
+            })
+        } catch (error) {this.setState({error: error.message})}
+    }
+
+
     render () {
-        const { state: {logged, login, name, randomBeers, searchResults, beerId, query, showMobileSearch, error}, handleLogout, handleOnCloseSearch,handleOnCloseItem, handleClickItem, handleShowLogin, handleRegister, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
+        const { state: {logged, login, name, randomBeers, searchResults, beerId, query, showMobileSearch, error}, handleLogout, handleOnCloseSearch,handleOnCloseItem, handleClickItem, handleShowLogin, handleRegister, handleRates, handleFavs, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
 
         return <>
             <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSearch} onInvest={handleInvest} onLogin={handleShowLogin} name={name} showSearch={showMobileSearch} />
             {login && <Login logged={logged} name={name} onLogin={handleLogin} onRegister={handleRegister} onLogout={handleLogout} error={error} />}
             {}
             <main className="main">
-                {(searchResults) && <SearchResults searchResults={searchResults} onClickItem={handleClickItem} onClose={handleOnCloseSearch} query={query} onSubmit={handleSearch}/>}
-                {(beerId) && <BeerDetail beer={beerId} onClose={handleOnCloseItem}/>}
+                {(searchResults) && <SearchResults searchResults={searchResults} onClickItem={handleClickItem} onClose={handleOnCloseSearch} query={query} onSubmit={handleSearch} logged={logged} onFav={handleFavs} onRate={handleRates}/>}
+                {(beerId) && <BeerDetail beer={beerId} onClose={handleOnCloseItem} logged={logged} onFav={handleFavs} onRate={handleRates}/>}
                 {(randomBeers.length === 4) && <Welcome randomBeers={randomBeers} onClickItem={handleClickItem}/>}
                 <Speech title="THE BEER EXPERIENCE" text="Join to the best Brewdog's Punk Community. We don't like beer, we are beer."/>
                 <Brewdog />
