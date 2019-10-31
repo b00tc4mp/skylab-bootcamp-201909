@@ -5,6 +5,25 @@ const { id, token } = sessionStorage
 class App extends Component {
     state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {}}
 
+    componentWillMount() {
+        if (id && token)
+            try {
+                retrieveUser(id, token, (error, user) => {
+                    if (error) this.setState({ error: error.message })
+                    else {
+                        const { name } = user
+
+                        this.setState({ user: name })
+                    }
+                })
+            } catch (error) {
+                this.setState({ error: error.message })
+            }
+
+        const { state: { query } } = this
+
+        query && this.handleSearch(query)
+    }
 
     handleRegister = (name, surname, summoner, email, password) => {
         try {
@@ -69,7 +88,8 @@ class App extends Component {
 
     handleChampions = query => {
         try {
-            retrieveChampions(query, (error, result) => {
+            const {id, token} = sessionStorage
+            retrieveChampions(id, token, query, (error, result) => {
                 
                 if (error) this.setState({ error: error.message })
                 else {

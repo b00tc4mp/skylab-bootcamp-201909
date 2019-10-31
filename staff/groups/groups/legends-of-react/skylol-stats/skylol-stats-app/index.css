@@ -237,6 +237,10 @@ body {
   margin: 0.5rem auto;
   position: relative;
 }
+.champion__name {
+  display: flex;
+  justify-content: space-around;
+}
 .champion__ancore {
   text-decoration: none;
   color: snow;
@@ -264,6 +268,11 @@ body {
 }
 .champion__tags {
   list-style: none;
+}
+
+.item-list__fav {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .detail {
