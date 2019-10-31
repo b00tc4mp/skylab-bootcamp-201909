@@ -16,8 +16,9 @@ function searchBeers (query, credentials, callback) {
                         if(beer.image_url === null) beer.image_url = './img/noimage.png'
                                         
                         favs.includes(beer.id) ? beer.fav = true : beer.fav = false
-                
-                        let rated = rates.find ( elem => beer.id===elem.id )
+                        let rated
+                        if (rates)  rated = rates.find ( elem => beer.id===elem.id )
+                        else rated = undefined
     
                         if (rated !== undefined) beer.rating = rated.rating
                         else beer.rating = 0

@@ -23,7 +23,7 @@ function SearchResults ({searchResults, onClickItem, onClose, query, onSubmit}) 
                         }}>
                     <div className="search-menu__form--ABV">
                     <div className="search-menu__title"><input type="checkbox" name="abv" value="abv"></input> Alcohol %</div>
-                        <ul class="search-menu__list">
+                        <ul className="search-menu__list">
                             <li><input type="radio" name="abvValue" value="&abv_lt=5"></input> &lt; 5% Alcohol</li>
                             <li><input type="radio" name="abvValue" value="&abv_lt=10" checked></input> &lt; 10% Alcohol</li>
                             <li><input type="radio" name="abvValue" value="&abv_gt=10"></input> &gt; 10% Alcohol</li>

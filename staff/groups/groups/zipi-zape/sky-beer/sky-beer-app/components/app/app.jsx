@@ -55,7 +55,8 @@ class App extends Component {
 
     handleSearch = (query) => {
         try {
-            searchBeers(query, (error, results)=> {
+            let { id, token } = this.state
+            searchBeers(query, {'id': id,'token': token}, (error, results)=> {
                 if (error) this.setState ({error : error.message})
                 else this.setState ({searchResults : results, query : query, error: undefined});
             })
@@ -112,7 +113,8 @@ class App extends Component {
 
     handleClickItem = (beerId) => {
         try {
-            retrieveBeer (beerId, (error, beer)=> {
+            let {id, token} = this.state
+            retrieveBeer (beerId, {'id': id,'token': token}, (error, beer)=> {
                 if (error) this.setState ({error: error.message})
                 else {
                     this.setState ({beerId : beer, error: undefined})
