@@ -10,8 +10,8 @@ function Summoner({ summonerIds, rank, masteries, error}) {
             <p className="summoner-detail__level">
             {summonerIds.summonerLevel}
             </p>
-            <p className="summoner-detail__elo">
-                {`${rank[0].tier} ${rank[0].rank}`}</p>
+            {rank.lenght> 0 && <p className="summoner-detail__elo">
+                {`${rank[0].tier} ${rank[0].rank}`}</p>}
         </div>
     </div>
 
