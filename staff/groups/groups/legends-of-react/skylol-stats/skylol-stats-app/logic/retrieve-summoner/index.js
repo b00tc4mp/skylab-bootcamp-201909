@@ -7,7 +7,10 @@ function retrieveSummoner(query, callback){
     validate.function(callback)
 
     query=query.split(' ').join('%20')
+
     call('GET', undefined,'https://skylabcoders.herokuapp.com/proxy?url=https://euw1.api.riotgames.com/lol/summoner/v4/summoners/by-name/' + query+'?api_key='+ APIKEY, undefined, function (result) {
+
+
         if (result.status){
             callback(new Error(result.status.message))
         }else{
