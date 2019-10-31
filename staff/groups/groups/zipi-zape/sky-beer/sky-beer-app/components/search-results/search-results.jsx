@@ -1,4 +1,4 @@
-function SearchResults ({searchResults, onClickItem, onClose, query, onSubmit}) {
+function SearchResults ({searchResults, onClickItem, onClose, logged, onSubmit, onFav, onRate}) {
     return <>
     <i className="close fas fa-times" onClick={e=>{
         e.preventDefault()
@@ -51,7 +51,7 @@ function SearchResults ({searchResults, onClickItem, onClose, query, onSubmit}) 
         </div>
         <ul className="search-results__list"> 
             { searchResults.map ((item) => 
-                <ListItem onClick={onClickItem} key={item.id} item={item}/>)
+                <ListItem onClick={onClickItem} key={item.id} item={item} onFav={onFav} onRate={onRate} logged={logged}/>)
             }
         </ul>
     </div>

@@ -1,11 +1,18 @@
-function BeerDetail  ({beer, onClose}) {
+function BeerDetail  ({beer, onClose, logged, onFav, onRate}) {
 
     return <section className="main__beer-detail beer-detail">
                                     <i className="close fas fa-times" onClick={e=>{
                                     e.preventDefault()
                                     onClose()
                                 } }></i>
-                <h2 className="beer-detail__title">{beer.name}</h2>
+                <h2 className="beer-detail__title">{beer.name} {logged &&  (function () {
+                                return <div className="fav fav--detail" onClick={ event => {
+                                    event.stopPropagation()
+                                    event.preventDefault()
+                                    onFav(beer)
+                                    }}>{beer.fav ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}</div>
+                                })()
+                            }</h2>
                     <h4>{beer.tagline}</h4>
                 <div className="beer-detail__iteminfo iteminfo">
                     <div className="iteminfo__imageContainer">

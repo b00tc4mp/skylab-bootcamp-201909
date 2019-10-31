@@ -129,7 +129,7 @@ class App extends Component {
 
 
     handleLogout = () => {
-        this.setState ({logged: false, name: undefined, id: undefined, token: undefined })
+        this.setState ({logged: false, name: undefined, id: undefined, token: undefined , beerId: undefined, searchResults: undefined})
         sessionStorage.clear()
     }
 
@@ -143,36 +143,62 @@ class App extends Component {
         this.setState({ searchResults})
 
         try {
-            toogleFav(id,token,beerId,(error, results) => {
+            toggleFavs(id,token,beerId,(error, results) => {
                 if (error) this.setState({error: error.message})
+            })
+        } catch (error) {this.setState({error: error.message})}
+    }
+
+    handleFavsDetail = (beer) =>{
+        const { id, token } = this.state
+        
+        beer.fav = !beer.fav
+        
+        try {
+            toggleFavs(id,token,beer.id,(error, results) => {
+                if (error) this.setState({error: error.message})
+                else this.setState({ beerId : beer})
             })
         } catch (error) {this.setState({error: error.message})}
     }
 
     handleRates = (beerId, rating) => {
-        const { id,token, beerId: beer } = this.state
+        const { id,token, searchResults } = this.state
         
-        beer.rate = rating
-        this.setState({ beer })
+        let index=searchResults.findIndex(elem=> {
+            return elem.id===beerId})
+            
+        searchResults[index].rate = rating
+        this.setState({ searchResults })
 
         try {
             rateBeer(id,token,beerId,rating, (error, results) => {
                 if (error) this.setState({error: error.message})
+                else {
+                    const { query } = this.state
+                    this.handleSearch (query)
+                }
             })
         } catch (error) {this.setState({error: error.message})}
     }
 
+    handleShowFavorites (){
+        const { id , token } = this.state
+        retrieveFavBeers( id , token, ((error, results) => {
+            if (error) this.setState ({ error : error.message })
+            else this.setState({searchResults : results})
+        }))
+    }
 
     render () {
-        const { state: {logged, login, name, randomBeers, searchResults, beerId, query, showMobileSearch, error}, handleLogout, handleOnCloseSearch,handleOnCloseItem, handleClickItem, handleShowLogin, handleRegister, handleRates, handleFavs, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
+        const { state: {logged, login, name, randomBeers, searchResults, beerId, query, showMobileSearch, error}, handleFavsDetail, handleShowFavorites,handleRatesDetail, handleLogout, handleOnCloseSearch,handleOnCloseItem, handleClickItem, handleShowLogin, handleRegister, handleRates, handleFavs, handleBurguer, handleBeers, handleCommunity, handleSearch, handleInvest, handleLogin } = this
 
         return <>
-            <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSearch} onInvest={handleInvest} onLogin={handleShowLogin} name={name} showSearch={showMobileSearch} />
-            {login && <Login logged={logged} name={name} onLogin={handleLogin} onRegister={handleRegister} onLogout={handleLogout} error={error} />}
-            {}
+            <Header onBurguer={handleBurguer} onBeers={handleBeers} onCommunity={handleCommunity} onSubmit={handleSearch} onInvest={handleInvest} onLogin={handleShowLogin} name={name} showSearch={showMobileSearch}/>
+            {login && <Login logged={logged} name={name} onLogin={handleLogin} onRegister={handleRegister} onLogout={handleLogout} error={error} onFavs={handleShowFavorites}/>}
             <main className="main">
                 {(searchResults) && <SearchResults searchResults={searchResults} onClickItem={handleClickItem} onClose={handleOnCloseSearch} query={query} onSubmit={handleSearch} logged={logged} onFav={handleFavs} onRate={handleRates}/>}
-                {(beerId) && <BeerDetail beer={beerId} onClose={handleOnCloseItem} logged={logged} onFav={handleFavs} onRate={handleRates}/>}
+                {(beerId) && <BeerDetail beer={beerId} onClose={handleOnCloseItem} logged={logged} onFav={handleFavsDetail} onRate={handleRatesDetail}/>}
                 {(randomBeers.length === 4) && <Welcome randomBeers={randomBeers} onClickItem={handleClickItem}/>}
                 <Speech title="THE BEER EXPERIENCE" text="Join to the best Brewdog's Punk Community. We don't like beer, we are beer."/>
                 <Brewdog />
