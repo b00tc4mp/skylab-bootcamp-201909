@@ -73,18 +73,18 @@ describe('logic - retrieve masteries', () => {
             done()
         })
 
-        it('should fail on incorrect encriptedId', () => {
-            expect(() => retrieveMasteries(1)).toThrowError(TypeError, '1 is not a string')
-            expect(() => retrieveMasteries(true)).toThrowError(TypeError, 'true is not a string')
-            expect(() => retrieveMasteries([])).toThrowError(TypeError, ' is not a string')
-            expect(() => retrieveMasteries({})).toThrowError(TypeError, '[object Object] is not a string')
-            expect(() => retrieveMasteries(undefined)).toThrowError(TypeError, 'undefined is not a string')
-            expect(() => retrieveMasteries(null)).toThrowError(TypeError, 'null is not a string')
-    
-            expect(() => retrieveMasteries('')).toThrowError(ContentError, 'encriptedId is empty or blank')
-            expect(() => retrieveMasteries(' \t\r')).toThrowError(ContentError, 'encriptedId is empty or blank')
-    
-           
+    it('should fail on incorrect encriptedId', () => {
+        expect(() => retrieveMasteries(1)).toThrowError(TypeError, '1 is not a string')
+        expect(() => retrieveMasteries(true)).toThrowError(TypeError, 'true is not a string')
+        expect(() => retrieveMasteries([])).toThrowError(TypeError, ' is not a string')
+        expect(() => retrieveMasteries({})).toThrowError(TypeError, '[object Object] is not a string')
+        expect(() => retrieveMasteries(undefined)).toThrowError(TypeError, 'undefined is not a string')
+        expect(() => retrieveMasteries(null)).toThrowError(TypeError, 'null is not a string')
+
+        // expect(() => retrieveMasteries('')).toThrowError(ContentError, 'encriptedId is empty or blank')
+        // expect(() => retrieveMasteries(' \t\r')).toThrowError(ContentError, 'encriptedId is empty or blank')
+
+        
         })
 
     })

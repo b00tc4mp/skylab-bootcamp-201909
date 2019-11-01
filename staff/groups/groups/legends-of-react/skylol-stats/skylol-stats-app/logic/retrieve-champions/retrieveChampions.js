@@ -1,4 +1,3 @@
-
 function retrieveChampions(id, token, query, callback) {
 
     validate.function(callback)
