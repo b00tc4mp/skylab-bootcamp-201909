@@ -14,8 +14,6 @@ function retrieveChampions(id, token, query, callback) {
     validate.string.notVoid('id', id)
     validate.string(token)
     validate.string.notVoid('token', token)
-    validate.string(query)
-    validate.string.notVoid('query', query)
     validate.function(callback)
 
     call('GET', undefined, `http://ddragon.leagueoflegends.com/cdn/9.21.1/data/en_US/champion.json`, undefined, function (result) {

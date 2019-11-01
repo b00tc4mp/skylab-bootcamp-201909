@@ -5,9 +5,11 @@ function Myfavs({ favs, onFav, GoOnDetail }) {
     return <section>
         <div className="background"> </div>
         <h2 className="title">Favourite Champions</h2>
+        {list.length < 1 && <p className="nofavs"> You have no favorites, go to champions and check your favorites</p>}
         <ul className="favs">
             {list}
         </ul>
+        
     </section>
 
 }

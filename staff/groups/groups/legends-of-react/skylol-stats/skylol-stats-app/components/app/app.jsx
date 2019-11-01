@@ -274,7 +274,8 @@ const App = (() => {
     }
 
     handleRetrieveFavs = () => {
-        debugger
+        location.slash = pathname
+        location.hash = `/myfavs`
         
     try {
         const {id, token} = sessionStorage
