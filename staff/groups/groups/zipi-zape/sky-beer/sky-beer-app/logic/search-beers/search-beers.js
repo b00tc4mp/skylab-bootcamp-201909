@@ -4,7 +4,7 @@ function searchBeers (query, credentials, callback) {
     if(typeof callback !== 'function') throw new TypeError (`${callback} is not a function`)
 
     call('GET', `https://api.punkapi.com/v2/beers?${query}`, undefined, undefined, results => {
-        if (results.error) callback (new Error (result.error))
+        if (results.error) callback (new Error (results.error))
         else {
             const {id, token} = credentials
             if (id !== undefined && token !== undefined) {
@@ -27,7 +27,10 @@ function searchBeers (query, credentials, callback) {
                         }))  
                     }
                 })
-            } else callback(undefined, results)
+            } else callback(undefined, results.map( beer => {
+                if(beer.image_url === null) beer.image_url = './img/noimage.png'
+                return beer
+            }))
         } 
     })
 }

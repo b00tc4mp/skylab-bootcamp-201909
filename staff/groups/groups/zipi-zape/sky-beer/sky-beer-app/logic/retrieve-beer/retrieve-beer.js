@@ -27,7 +27,9 @@ function retrieveBeer (beerId, credentials, callback)  {
                         
                     }
                 })
-            } else callback(undefined,result[0])
+            } else { if (result[0].image_url === null) result[0].image_url = './img/noimage.png'
+                     callback(undefined,result[0])
+            }
         }
     })
 }   
