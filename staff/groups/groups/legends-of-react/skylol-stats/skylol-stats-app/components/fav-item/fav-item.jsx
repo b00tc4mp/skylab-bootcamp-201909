@@ -1,5 +1,5 @@
 function FavItem({item, onDetail, onFav}){
-    debugger
+    
     const tagList = item.tags.map((tag,i) => {return <li key={i.toString()}>{tag}</li>})
     return  <a className="favs__ancore" href="#" onClick={
         event => {

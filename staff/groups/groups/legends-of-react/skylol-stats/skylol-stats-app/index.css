@@ -63,6 +63,9 @@ body {
 .navigation__item {
   list-style: none;
 }
+.navigation__item:hover {
+  cursor: pointer;
+}
 
 .search {
   width: 35vw;
@@ -80,7 +83,6 @@ body {
 
 .champion {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   width: 70%;
@@ -134,7 +136,6 @@ body {
 
 .champion {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   width: 70%;
@@ -630,10 +631,18 @@ body {
   font-size: 3.5rem;
 }
 
+.nofavs {
+  text-align: center;
+  text-shadow: 0.2rem 0.1rem 0.5em #d5575711, 0.2rem 0.1rem 0.5em #7b333311, 0.2rem 0.1rem 0.5em #d55757;
+  color: snow;
+  font-size: 2rem;
+  position: relative;
+}
+
 .background {
   background-image: url(https://images4.alphacoders.com/275/thumb-1920-275146.jpg);
   width: 100vw;
-  height: 75vh;
+  height: 81vh;
   opacity: 0.2;
   position: absolute;
   z-index: -2;
