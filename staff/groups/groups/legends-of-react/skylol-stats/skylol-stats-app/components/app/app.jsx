@@ -234,6 +234,27 @@ const App = (() => {
 
     }
 
+    handleFavItem = champId => {
+        const { query } = this.state
+        toggleFavChamp(id, token, champId, (error, data) => {
+            if (error) return this.setState({ error: error.message })
+            const { state: { query } } = this
+
+                retrieveChampions(id, token, query, (error, result) => {
+    
+                    if (error) this.setState({ error: error.message })
+                    else {
+                        this.handleRetrieveFavs()
+                        this.setState({ view: 'myFavs', error: undefined, champions: result})
+    
+                        
+                    }
+                })
+            
+        })
+
+    }
+
     handleDetailFav = (link, champId) => {
         const { query } = this.state
         toggleFavChamp(id, token, champId, (error, data) => {
@@ -271,7 +292,7 @@ const App = (() => {
 
     render() {
 
-        const { state: { view, error, user, champ, summonerIds, masteries, query, champions, rank, favs }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleFav, handleDetailFav, handleRetrieveFavs } = this
+        const { state: { view, error, user, champ, summonerIds, masteries, query, champions, rank, favs }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleFav, handleDetailFav, handleRetrieveFavs, handleFavItem } = this
 
 
         return <>
@@ -283,10 +304,10 @@ const App = (() => {
             {view === 'champions' && user && <Search onSubmit={handleChampions} error={error} />}            
             {view === 'champions' && user && <Champions onClick ={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
-            {view === 'detail' && <Detail onFav={handleDetailFav} champ={champ} error={error} />}
+            {view === 'detail' && <Detail onFav={handleDetailFav} onBack={handleChampions} champ={champ} error={error} />}
             {view === 'summoners' && !query && <Background/>}
             {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
-            {view === 'myFavs'  &&  <Myfavs  favs={favs} error={error} onFav={handleFav} GoOnDetail={handleDetail}/>}
+            {view === 'myFavs'  &&  <Myfavs  favs={favs} error={error} onFav={handleFavItem} GoOnDetail={handleDetail}/>}
 
             <Footer />
             </>

@@ -15,6 +15,7 @@ function retrieveFavChampions(id, token, callback) {
                     else {
                         result2 = Object.values(result2.data)
                         result2[0].icon = `https://ddragon.leagueoflegends.com/cdn/9.21.1/img/champion/${result2[0].image.full}`
+                        result2[0].link = `http://ddragon.leagueoflegends.com/cdn/9.21.1/data/en_US/champion/${result2[0].id}.json`
                         result2[0].isFav = true
 
                         favs[i] = result2
