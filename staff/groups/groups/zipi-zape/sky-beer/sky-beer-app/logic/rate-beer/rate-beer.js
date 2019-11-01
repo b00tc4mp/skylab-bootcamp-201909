@@ -1,3 +1,14 @@
+/**
+ * this function saves on user's account a pair of information on a ratings array
+ * it saves the beer's id with it's valoration.
+ * if there were a previous valoration, it rewrite the value.
+ * 
+ * @param {string} userId user's id at user's API
+ * @param {string} token user's token at user's API
+ * @param {number} beerId beer's id at punk API
+ * @param {number} rating valoration of beer to save on user's account
+ * @param {function} callback function that handles the call's response
+ */
 function rateBeer (userId, token, beerId, rating, callback) {
 
     if (typeof userId !== 'string') throw new TypeError (`${userId} is not a string`)

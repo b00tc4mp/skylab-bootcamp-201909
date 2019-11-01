@@ -1,3 +1,10 @@
+/**
+ * Function that adds or removes a beer from user's favs array
+ * @param {string} userId user's id
+ * @param {string} token user's token
+ * @param {number} beerId beer's id
+ * @param {function} callback function that handles call response
+ */
 function toggleFavs (userId, token, beerId, callback) {
 
     if (typeof userId !== 'string') throw new TypeError (`${userId} is not a string`)

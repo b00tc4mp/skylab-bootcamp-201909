@@ -1,3 +1,9 @@
+/**
+ * Function that returns the beer's info from Punk API if they are marked as fav on User's account
+ * @param {string} id user's id
+ * @param {string} token user's token
+ * @param {function} callback function that handles the response
+ */
 function retrieveFavBeers(id, token, callback) {
     if (typeof id !== 'string') throw new TypeError(id +  ' is not a string');
     if (typeof token !== 'string') throw new TypeError(token +  ' is not a string');

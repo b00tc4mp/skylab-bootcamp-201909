@@ -1,3 +1,11 @@
+/**
+ * Function that gets the info from Punk Api using the beer's id as identificator.
+ * 
+ * @param {number} beerId beer's id
+ * @param {object} credentials Optional - {id and token} the id and token of user. It's need to
+*                              let user rate and fav a beer
+ * @param {function} callback function that handle the call's repsonse.
+ */
 function retrieveBeer (beerId, credentials, callback)  {
 
     if (typeof beerId !== 'number') throw new TypeError (`${beerId} is not a number`)

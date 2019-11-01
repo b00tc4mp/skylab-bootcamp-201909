@@ -1,3 +1,11 @@
+/**
+ * Function that returns an array of results from PUNK API. It searchs using the query as filter
+ * 
+ * @param {string} query string with the params of search
+ * @param {Object} credentials Optional - {id and token} the id and token of user. It's needed to
+*                              let user rate and fav a beer
+ * @param {function} callback function that handles the call's response
+ */
 function searchBeers (query, credentials, callback) {
 
     if(typeof query !== 'string') throw new TypeError (`${query} is not a string`)

@@ -1,3 +1,13 @@
+/**
+ * 
+ * It catches all the user's information: name, surname, email, password
+ * 
+ * @param {string} name user name
+ * @param {string} surname user surname
+ * @param {email} email user email
+ * @param {password} password user password
+ * @param {function} callback function that handle the call's response 
+ */
 function registerUser(name, surname, email, password, callback) {
     if (typeof name !== 'string') throw new TypeError(name + ' is not a string')
     if (typeof surname !== 'string') throw new TypeError(surname + ' is not a string')
