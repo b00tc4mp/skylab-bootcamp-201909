@@ -660,5 +660,10 @@
 .burguer {
   font-size: 80%;
 }
-
+.search-results {
+    width: 100vw;
+    background: whitesmoke;
+    height: 85vh;
+    padding: 5%;
+}
 /*# sourceMappingURL=style.css.map */
