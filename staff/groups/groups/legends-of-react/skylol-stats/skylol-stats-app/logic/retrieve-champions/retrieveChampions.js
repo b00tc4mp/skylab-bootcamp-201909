@@ -1,6 +1,19 @@
+/**
+ * Retrieve info from the API of league of legends of each champion that can be played in the game
+ * 
+ * @param {String} id id of the user logged in
+ * @param {String} token Token of the user logged in
+ * @param {String} query the input value introduced to search the champion
+ * @param {Function} callback Expression that will return the results
+ * 
+ * @returns {Array} Array with objects of each champion in the league of legends game
+ */
 
 function retrieveChampions(id, token, query, callback) {
-
+    validate.string(id)
+    validate.string.notVoid('id', id)
+    validate.string(token)
+    validate.string.notVoid('token', token)
     validate.function(callback)
 
     call('GET', undefined, `http://ddragon.leagueoflegends.com/cdn/9.21.1/data/en_US/champion.json`, undefined, function (result) {

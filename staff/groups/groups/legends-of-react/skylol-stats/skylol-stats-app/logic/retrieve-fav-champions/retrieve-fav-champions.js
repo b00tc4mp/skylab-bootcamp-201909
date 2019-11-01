@@ -1,5 +1,20 @@
-function retrieveFavChampions(id, token, callback) {
+/**
+ * Returns the favorite champions saved by the user
+ * 
+ * @param {String} id id of the user logged in
+ * @param {String} token Token of the user logged in to retrieve user information and get fav champions
+ * @param {Function} callback Expression that will return results
+ * 
+ * @returns returns Array with objects into objects of each favourite champion saved by the user and the information of each champion to render them
+ * 
+ */
 
+function retrieveFavChampions(id, token, callback) {
+    validate.string(id)
+    validate.string.notVoid('id', id)
+    validate.string(token)
+    validate.string.notVoid('token', token)
+    validate.function(callback)
 
     call('GET', token, `https://skylabcoders.herokuapp.com/api/user/${id}`, undefined, result => {
         if (result.error) return callback(new Error(result.error))

@@ -1,5 +1,16 @@
+/**
+ * Retrieves the tags of the champions that can be played in league of legends
+ * 
+ * @param {String} tag tags that exists in the game
+ * @param {Expression} callback Expression that will return the results
+ * 
+ * @returns {Array} returns an Array of Objects that contains the different tags that exist in the game corresponding in each champion
+ */
+
 function retrieveTag(tag, callback) {
-    if (typeof callback !== 'function') throw new TypeError(callback + ' is not a function');
+    validate.string(tag)
+    validate.string.notVoid('tag', tag)
+    validate.function(callback)
 
     call('GET', undefined, `http://ddragon.leagueoflegends.com/cdn/9.21.1/data/en_US/champion.json`, undefined, function (result) {
         if (result.error)
