@@ -7,7 +7,7 @@ const App = (() => {
     const { pathname, hash } = location
 
     return class extends Component { 
-    state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {}}
+    state = { view: 'landing', error: undefined, user: undefined, champions: [],  champ: {}, favs: []}
 
 
     componentDidMount() {
@@ -234,6 +234,27 @@ const App = (() => {
 
     }
 
+    handleFavItem = champId => {
+        const { query } = this.state
+        toggleFavChamp(id, token, champId, (error, data) => {
+            if (error) return this.setState({ error: error.message })
+            const { state: { query } } = this
+
+                retrieveChampions(id, token, query, (error, result) => {
+    
+                    if (error) this.setState({ error: error.message })
+                    else {
+                        this.handleRetrieveFavs()
+                        this.setState({ view: 'myFavs', error: undefined, champions: result})
+    
+                        
+                    }
+                })
+            
+        })
+
+    }
+
     handleDetailFav = (link, champId) => {
         const { query } = this.state
         toggleFavChamp(id, token, champId, (error, data) => {
@@ -252,13 +273,30 @@ const App = (() => {
 
     }
 
+    handleRetrieveFavs = () => {
+        debugger
+        
+    try {
+        const {id, token} = sessionStorage
+        retrieveFavChampions(id, token, (error, favs) =>{
+            if (error) this.setState({error: error.message})
+            this.setState ({view: 'myFavs', favs: favs})
+
+        } )
+
+    } catch(error) {
+
+        this.setState({ error: error.message })
+    }
+    }
+
     render() {
 
-        const { state: { view, error, user, champ, summonerIds, masteries, query, champions, rank }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleFav, handleDetailFav } = this
+        const { state: { view, error, user, champ, summonerIds, masteries, query, champions, rank, favs }, handleHome, handleGoToLogin, handleGoToRegister, handleonSignOut, handleRegister, handleLogin, handleSummoners, handleChampions, handleDetail, handleRetrieveSummoner, handleTag, handleFav, handleDetailFav, handleRetrieveFavs, handleFavItem } = this
 
 
         return <>
-            <Header view ={view} user={user} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
+            <Header view ={view} user={user} onMyFavs={handleRetrieveFavs} onHome={handleHome} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onSummoners={handleSummoners} onChampions={handleChampions} onSignOut={handleonSignOut} />
             {view === 'landing' && <Landing />}
             {view === 'register' && <Register onRegister={handleRegister} error={error} />}
             {view === 'login' && <Login onLogin={handleLogin} error={error} />}
@@ -266,9 +304,11 @@ const App = (() => {
             {view === 'champions' && user && <Search onSubmit={handleChampions} error={error} />}            
             {view === 'champions' && user && <Champions onClick ={handleTag} onFav={handleFav} champions={champions} error={error} GoOnDetail={handleDetail} />}
             {view === 'summoners' && <Search  onSubmit={handleRetrieveSummoner}  error={error} />}
-            {view === 'detail' && <Detail onFav={handleDetailFav} champ={champ} error={error} />}
+            {view === 'detail' && <Detail onFav={handleDetailFav} onBack={handleChampions} champ={champ} error={error} />}
             {view === 'summoners' && !query && <Background/>}
             {view === 'summoners' && query && !error && <Summoner  summonerIds={summonerIds} rank={rank} masteries={masteries} error={error} />}
+            {view === 'myFavs'  &&  <Myfavs  favs={favs} error={error} onFav={handleFavItem} GoOnDetail={handleDetail}/>}
+
             <Footer />
             </>
         }

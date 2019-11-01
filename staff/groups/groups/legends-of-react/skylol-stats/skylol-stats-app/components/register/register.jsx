@@ -8,11 +8,11 @@ function Register({ onRegister, error }) {
             onRegister(name, surname, summoner, email, password)
         }}>
             <h1 className="register__title">Register</h1>
-            <input className="register__field" type="text" name="name" placeholder="name" />
-            <input className="register__field" type="text" name="surname" placeholder="surname" />
-            <input className="register__field" type="text" name="summoner" placeholder="summoner name" />
-            <input className="register__field" type="email" name="email" placeholder="e-mail" />
-            <input className="register__field" type="password" name="password" placeholder="password" />
+            <input className="register__field" type="text" name="name" placeholder="name" required />
+            <input className="register__field" type="text" name="surname" placeholder="surname" required />
+            <input className="register__field" type="text" name="summoner" placeholder="summoner name" required />
+            <input className="register__field" type="email" name="email" placeholder="e-mail" required/>
+            <input className="register__field" type="password" name="password" placeholder="password" required/>
             <button className="register__submit">Register</button>
             
         </form>

@@ -291,6 +291,14 @@ body {
   height: 1.5rem;
 }
 
+.item-list__close {
+  width: 2.5rem;
+  height: 2.5rem;
+  position: relative;
+  top: 3%;
+  left: 90%;
+}
+
 .feedback {
   margin: 0.5rem auto;
   display: flex;
@@ -341,7 +349,7 @@ body {
 .login__form {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  margin-top: 5rem;
   justify-content: center;
   align-items: center;
 }
@@ -381,7 +389,7 @@ body {
 .register__form {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  margin-top: 5rem;
   justify-content: center;
   align-items: center;
 }
@@ -439,6 +447,10 @@ body {
   margin: 0 auto;
   background: none;
   border: none;
+  margin-bottom: 1.5rem;
+}
+.search__submit:focus {
+  outline: 0;
 }
 
 .fa-search {
@@ -597,6 +609,85 @@ body {
 .footer__title {
   color: snow;
   font-size: 1rem;
+}
+
+.favs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  margin: 0.5rem auto;
+  position: relative;
+  height: 62vh;
+  overflow: auto;
+}
+
+.title {
+  text-align: center;
+  letter-spacing: 0.1rem;
+  text-shadow: 0.2rem 0.1rem 0.5em #57d5a0, 0.2rem 0.1rem 0.5em #337b5d, 0.2rem 0.1rem 0.5em #57d5a0;
+  color: snow;
+  font-size: 3.5rem;
+}
+
+.background {
+  background-image: url(https://images4.alphacoders.com/275/thumb-1920-275146.jpg);
+  width: 100vw;
+  height: 75vh;
+  opacity: 0.2;
+  position: absolute;
+  z-index: -2;
+}
+
+.favs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  margin: 0.5rem auto;
+  margin-top: 0;
+}
+.favs__ancore {
+  text-decoration: none;
+  color: snow;
+}
+.favs__ancore:hover {
+  text-decoration: none;
+  text-decoration-color: snow;
+}
+.favs__content {
+  margin-right: 5rem;
+  list-style: none;
+}
+.favs__info {
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+}
+.favs__image {
+  opacity: 1;
+  transition: opacity 800ms;
+}
+.favs__image:hover {
+  opacity: 0.2;
+  transition: opacity 800ms;
+}
+.favs__tags {
+  list-style: none;
+}
+
+.favs::-webkit-scrollbar {
+  background: #ea11ff11;
+}
+
+.favs::-webkit-scrollbar-thumb {
+  background: #ecaaaa11;
+  border-radius: 4px;
+}
+
+.item-list__fav {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 /*# sourceMappingURL=index.css.map */

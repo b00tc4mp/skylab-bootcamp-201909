@@ -1,26 +1,27 @@
-function ChampionItem({item, onDetail, onFav}){
+function FavItem({item, onDetail, onFav}){
     debugger
     const tagList = item.tags.map((tag,i) => {return <li key={i.toString()}>{tag}</li>})
-    return  <a className="champion__ancore" href="#" onClick={
+    return  <a className="favs__ancore" href="#" onClick={
         event => {
             event.preventDefault()
 
             onDetail(item.link)
         }
              }>
-    <li className="champion__content">
-        <p className="champion__name">{item.name} <span>
+    <li className="favs__content">
+        <p className="favs__name">{item.name} <span>
         <img className="item-list__fav" src={item.isFav ? "https://image.flaticon.com/icons/svg/1469/1469575.svg" : "https://image.flaticon.com/icons/svg/660/660465.svg"} onClick={event => {
                event.preventDefault()
                event.stopPropagation()
+
                onFav(item.id)
            }}/>
             </span></p>
-        <div className="champion__container">
-            <div className="champion__info">
-            <ul className="champion__tags">{tagList}</ul>
+        <div className="favs__container">
+            <div className="favs__info">
+            <ul className="favs__tags">{tagList}</ul>
             </div>
-            <img className="champion__image"
+            <img className="favs__image"
                 src={item.icon} alt=""/>
         </div>
     </li>

@@ -1,4 +1,4 @@
-function Detail({ champ, onFav }) {
+function Detail({ champ, onFav, onBack }) {
     debugger
     const tagList = champ[0].tags.map((tag,i) => {return <li key={i.toString()}>{tag}</li>})
     return <section className="detail">
@@ -8,8 +8,12 @@ function Detail({ champ, onFav }) {
         <div className="detail__info">
         <img className="item-list__fav" src={champ[0].isFav ? "https://image.flaticon.com/icons/svg/1469/1469575.svg" : "https://image.flaticon.com/icons/svg/660/660465.svg"} onClick={event => {
                event.preventDefault()
-               event.stopPropagation()
+               
                onFav(champ[0].link, champ[0].id)
+           }}/>
+           <img className="item-list__close" src="https://image.flaticon.com/icons/svg/391/391116.svg" onClick={event =>{
+               event.preventDefault()
+               onBack()
            }}/>
             <p className="detail__id">{champ[0].name}</p>
             <p className="detail__title">{champ[0].title}</p>
@@ -55,9 +59,6 @@ function Detail({ champ, onFav }) {
                 </div>               
             </ul>
         </div>
-    </div>
-    <div>
-        <p className="detail__stats"></p>
     </div>
     
     </section>
