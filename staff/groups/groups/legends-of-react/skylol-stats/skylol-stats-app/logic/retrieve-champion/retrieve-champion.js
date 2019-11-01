@@ -1,3 +1,14 @@
+/**
+ * retrieves a champion information like name, image, history, spells of league of legends game
+ * 
+ * @param {String} id  the id that was assigned to the user and get by authenticate user
+ * @param {String} token the token that was assigned to the user and get by authenticate user
+ * @param {String} link link given by other function that retrieves the champion information
+ * @param {Expression} callback Expression that will return the result
+ * 
+ * @returns {Array} Array with objects the champion information
+ */
+
 function retrieveChampion(id, token, link, callback) {
     validate.string(link)
     validate.string.notVoid('link', link)
