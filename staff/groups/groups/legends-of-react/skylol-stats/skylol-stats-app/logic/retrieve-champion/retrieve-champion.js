@@ -10,9 +10,9 @@
  */
 
 function retrieveChampion(id, token, link, callback) {
-    validate.string(link)
-    validate.string.notVoid('link', link)
-    validate.function(callback)
+    // validate.string(link)
+    // validate.string.notVoid('link', link)
+    // validate.function(callback)
 
     call('GET', undefined, link, undefined, function (result) {
         if (result.error)
