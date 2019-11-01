@@ -11,8 +11,7 @@ function searchBeers (query, credentials, callback) {
                 call('GET', 'https://skylabcoders.herokuapp.com/api/user/' + id, undefined, token, user => {
                     if (user.error ) callback(new Error(user.error))
                     else {
-                        const {favs, rates} = user.data  
-                        
+                        const {favs = [], rates} = user.data  
                         callback(undefined, results.map( beer => {
                             if(beer.image_url === null) beer.image_url = './img/noimage.png'
                                             

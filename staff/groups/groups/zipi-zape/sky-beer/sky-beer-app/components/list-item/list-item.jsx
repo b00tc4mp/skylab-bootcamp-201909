@@ -6,7 +6,7 @@ function ListItem ({item, onClick, onFav, onRate, logged}) {
                                     event.stopPropagation()
                                     event.preventDefault()
                                     onFav(item.id)
-                                    }}>{item.fav ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}</div>
+                                    }}>{item.fav ? <i className="fas fa-heart fav--isFav"></i> : <i className="far fa-heart"></i>}</div>
                                 })()
                             }
 
@@ -25,13 +25,13 @@ function ListItem ({item, onClick, onFav, onRate, logged}) {
                                     for (let i=0; i<=5; i++) {
                                         
                                                 if (i<item.rating) {
-                                                    stars[i]=<i className="fas fa-star" key={i} onClick={ event => {
+                                                    stars[i]=<i className="fas fa-star rate__star" key={i} onClick={ event => {
                                                         event.stopPropagation()
                                                         event.preventDefault()
                                                         onRate(item.id, i+1)
                                                     }}></i>
                                                 } else {
-                                                    stars[i]=<i className="far fa-star" key={i} onClick={ event => {
+                                                    stars[i]=<i className="far fa-star rate__star" key={i} onClick={ event => {
                                                         event.stopPropagation()
                                                         event.preventDefault()
                                                         onRate(item.id, i+1)

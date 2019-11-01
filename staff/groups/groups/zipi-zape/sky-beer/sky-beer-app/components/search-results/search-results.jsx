@@ -50,8 +50,8 @@ function SearchResults ({searchResults, onClickItem, onClose, logged, onSubmit, 
             </div>
         </div>
         <ul className="search-results__list"> 
-            { searchResults.map ((item) => 
-                <ListItem onClick={onClickItem} key={item.id} item={item} onFav={onFav} onRate={onRate} logged={logged}/>)
+            { searchResults.length !== 0 && searchResults.map ((item) => 
+                <ListItem onClick={onClickItem} key={item.id} item={item} onFav={onFav} onRate={onRate} logged={logged}/>) || <div>Ups!</div>
             }
         </ul>
     </div>

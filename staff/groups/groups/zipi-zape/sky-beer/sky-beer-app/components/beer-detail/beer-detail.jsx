@@ -1,4 +1,4 @@
-function BeerDetail  ({beer, onClose, logged, onFav, onRate}) {
+function BeerDetail  ({beer, onClose, logged, onFav, onRateDetail}) {
 
     return <section className="main__beer-detail beer-detail">
                                     <i className="close fas fa-times" onClick={e=>{
@@ -10,7 +10,7 @@ function BeerDetail  ({beer, onClose, logged, onFav, onRate}) {
                                     event.stopPropagation()
                                     event.preventDefault()
                                     onFav(beer)
-                                    }}>{beer.fav ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>}</div>
+                                    }}>{beer.fav ? <i className="fas fa-heart fav--isFav"></i> : <i className="far fa-heart"></i>}</div>
                                 })()
                             }</h2>
                     <h4>{beer.tagline}</h4>
@@ -19,6 +19,30 @@ function BeerDetail  ({beer, onClose, logged, onFav, onRate}) {
                         <img className="iteminfo__image" src={beer.image_url}/>
                     </div>
                     <div className="iteminfo__container container"> 
+                        <div className="rate">
+                            { logged && (function () {
+                                
+                                    let stars = []
+                                    for (let i=0; i<=5; i++) {
+                                        
+                                                if (i<beer.rating) {
+                                                    stars[i]=<i className="fas fa-star rate__star" key={i} onClick={ event => {
+                                                        event.stopPropagation()
+                                                        event.preventDefault()
+                                                        onRateDetail(beer, i+1)
+                                                    }}></i>
+                                                } else {
+                                                    stars[i]=<i className="far fa-star rate__star" key={i} onClick={ event => {
+                                                        event.stopPropagation()
+                                                        event.preventDefault()
+                                                        onRateDetail(beer, i+1)
+                                                    }}></i>
+                                                }
+                                        }
+                                        return stars
+                                })()
+                            }
+                        </div>
                         <p className="container__description">{beer.description}</p>
                         <div className="beer-detail__moreinfo moreinfo">
                             <div className="moreinfo__level"><div>BEER ABV</div><div>- {beer.abv}% -</div></div>
