@@ -1,0 +1,67 @@
+.entry__tittle {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 90%;
+  font-weight: bold;
+  width: 60%;
+  margin-left: 2%;
+  margin-right: 5%;
+}
+
+.entry__img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.entry__price {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1rem;
+}
+
+.search-list {
+  margin: 0;
+  margin-top: 2rem;
+  padding: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.search-list__entry {
+  margin: .5rem;
+  width: 45vw;
+  height: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  cursor: pointer;
+  border-radius: 1rem;
+  border: .1rem solid #dbd833;
+  padding-left: 1%;
+  -webkit-box-shadow: .2rem .2rem .1rem tomato;
+          box-shadow: .2rem .2rem .1rem tomato;
+  background: -webkit-gradient(linear, left top, right bottom, from(#36f73f), to(#55bd00));
+  background: linear-gradient(to bottom right, #36f73f, #55bd00);
+}
+
+.search-list__entry:hover {
+  background: -webkit-gradient(linear, left top, right bottom, from(rgba(255, 94, 0, 0.847)), to(rgba(148, 54, 0, 0.847)));
+  background: linear-gradient(to bottom right, rgba(255, 94, 0, 0.847), rgba(148, 54, 0, 0.847));
+  color: whitesmoke;
+}
+/*# sourceMappingURL=search-list.css.map */

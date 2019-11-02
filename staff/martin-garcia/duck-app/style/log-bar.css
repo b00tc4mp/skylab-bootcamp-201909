@@ -1,0 +1,42 @@
+.log-bar {
+  margin-left: 40%;
+  margin-right: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem;
+  background-color: #5eb7b7;
+  max-width: 40vw;
+}
+
+.log-bar__button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 8vw;
+  height: 3vh;
+  padding: 1vw;
+  text-decoration: none;
+  border-radius: 5px;
+  border: none;
+  background-color: #96d1c7;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.log-bar__button:hover {
+  cursor: all-scroll;
+}
+/*# sourceMappingURL=log-bar.css.map */

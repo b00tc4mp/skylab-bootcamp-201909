@@ -1,0 +1,49 @@
+.search {
+  border: .3rem solid orange;
+  border-radius: 1rem;
+  border-style: dotted;
+  text-decoration: none;
+  padding: .5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search__form {
+  margin: .5rem;
+}
+
+.search__title {
+  color: orange;
+  font-size: 2rem;
+  margin: .5rem auto .5rem auto;
+}
+
+.search__user {
+  display: inline-block;
+  color: gold;
+  font-size: 1.5rem;
+  margin: .5rem auto .5rem auto;
+}
+
+.search__logout {
+  font-size: 1rem;
+  border-radius: .5rem;
+  padding: .5rem;
+  margin-left: .5rem;
+  cursor: pointer;
+}
+
+.search__icon {
+  font-size: 1.5rem;
+}
+
+.search__criteria {
+  border-radius: .5rem;
+  padding: .5rem;
+  font-size: 1rem;
+}
+
+.search__submit {
+  border-radius: .5rem;
+  padding: .5rem;
+}
+/*# sourceMappingURL=index.css.map */

@@ -1,0 +1,11 @@
+.link {
+  text-decoration: none;
+  color: #f1f1f1;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: #fa7000;
+}
+/*# sourceMappingURL=link.css.map */

@@ -1,0 +1,28 @@
+@media only screen and (min-width: 768px) {
+  .article__specs__container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+  .article__specs__container .article__image {
+    width: 50%;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+  }
+  .article__specs__container .article__description {
+    margin-left: 2vw;
+    margin-top: 7vh;
+    width: 70%;
+  }
+}
+/*# sourceMappingURL=media-query.css.map */

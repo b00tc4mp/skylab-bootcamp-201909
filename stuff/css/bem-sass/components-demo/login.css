@@ -1,0 +1,27 @@
+.login {
+  min-width: 50vw;
+  max-width: 75vw;
+  padding: 1rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: 1rem;
+}
+
+.login__submit {
+  border: 0.3rem dotted silver;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.login {
+  border: 0.2rem solid pink;
+  border-radius: 1rem;
+  background-color: rebeccapurple;
+}
+
+.login__field {
+  border: 0.2rem solid pink;
+  border-radius: 0.5rem;
+  padding: .3rem;
+  font-size: 1.1rem;
+}
+/*# sourceMappingURL=login.css.map */

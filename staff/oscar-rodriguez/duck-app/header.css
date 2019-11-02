@@ -1,0 +1,45 @@
+.header {
+  padding: 1rem;
+  height: 35vh;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(235, 252, 0, 0.855)), to(#f56702));
+  background: linear-gradient(to right, rgba(235, 252, 0, 0.855), #f56702);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header__tittle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 90%;
+  font-size: 4rem;
+  color: whitesmoke;
+  text-shadow: 0.1rem 0.1rem 0.2rem #15c924;
+  margin-bottom: 2rem;
+}
+
+.header__search-bar {
+  height: 10%;
+}
+/*# sourceMappingURL=header.css.map */
