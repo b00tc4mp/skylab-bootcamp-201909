@@ -4,48 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="cart.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <title>Cart</title>
 </head>
 <body> 
-    <header>
-        <section class="header-top">
-        <h1 class="header-top__title">MY STORE</h1>
-        <h2 class="header-top__slogan">Best price, best quality</h2>
-        <form class="header-top__form">
-            <input type="search" class="header-top__form-search" name="query">
-            <button class="header-top__form-button">🔍</button>
-        </form>
-        </section>
-        <nav class="menu">
-            <ul class="menu-nav">
-                <li class="menu__item">
-                    <a href="#">CLOTHES</a>
-                </li>
-                <li>
-                    <a href="#">SHOES</a>
-                </li>
-                <li>
-                    <a href="#">ACCESORIES</a>
-                </li>
-                <li>
-                    <a href="#">HOME DECO</a>
-                </li>
-                <li>
-                    <a href="#">SALES</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
+        <header>
+                <section class="header-top">
+                    <h1 class="header-top__title">The cozy winter</h1>
+                    <h2 class="header-top__slogan">Enjoying the coldness</h2>
+                </section>
+                <nav class="menu">
+                    <form class="menu__form">
+                        <input type="search" class="menu__form-search" name="query">
+                        <button class="menu__form-button">🔍</button>
+                    </form>
+                    <ul class="menu-nav">
+                        <li class="menu__item">
+                            <a href="#">CLOTHES</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="#">SHOES</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="#">ACCESORIES</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="#">HOME DECO</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="#">SALES</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="#">ORDERS</a>
+                        </li>
+                        <li class="menu__item">
+                            <a href="#">CART</a>
+                        </li>
+                    </ul>
+                    
+                </nav>
+            </header>
     <main>
-        <h1 class="section-header">YOUR CART</h1>
-        <article class="item">
+        <h1 class="section-header">Your Cart</h1>
+        <article class="items__container">
             <a href="#">
                 <img class="item__image" src=>
             </a>
-                <p class="item__name">Camiseta hombre negra</p>
+            <img class="item__image" src="https://cdn.glowsly.com/wp-content/uploads/2017/11/best_knit_sweaters_for_fall_winter_Miu_Miu_knit_sweater2.jpg">
+                <section class="item__info">
+                <p class="item__name">Beige pattern sweater</p>
+                <p class="item__ref">Ref: 9387894783</p>
+                <p class="item__description">Description article: Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus id voluptatem quasi earum exercitationem illo autem minima repudiandae? Sequi soluta vel tempora animi, laboriosam quaerat magnam neque culpa veritatis illum.</p>
+            </section>
                 <p class="item__price">16€</p>
-                <button class="item__button">BUY</button>
+                <button class="item__button">PAY</button>
         </article>
     </main>
     <footer class="footer">
