@@ -45,9 +45,9 @@ Technologies used =>
 
 ![Components](components.png)
 
-### Classes
+### Data Model
 
-![Classes](classes.png)
+![datamodel](classes.png)
 
 ### TODO
 
