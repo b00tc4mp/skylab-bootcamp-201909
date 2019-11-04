@@ -1,37 +1,44 @@
 //   You must write a module file (mymodule.js) to do most of the work. The  
 //   module must export a single function that takes three arguments: the  
-//   directory name, the filename extension string and your callback function,  
-//   in that order. Don't alter the filename extension string in any way before  
+//   directory name, the element extension string and your callback function,  
+//   in that order. Don't alter the element extension string in any way before  
 //   passing it to your module.  
+
 const path = require('path')
+const fs = require('fs')
+
 
 
 module.exports = function(directory, filter, callback){
     fs.readdir(directory, (error, list) => {
-        if(error) return console.error(error) 
+        if(error) return callback(error) 
         else{ 
-            result = list.forEach(filename => {
-            if(path.extname(filename) === filter){
-                console.log(filename)
-            }
+            result = list.filter(element => {
+                return path.extname(element) === '.' + filter
         })}
-        callback(null, data) 
+        callback(null, result) 
     }) 
 }
 
 
-
-// function bar (callback) {  
-//     foo(function (err, data) {  
-//       if (err) { return callback(err) } // early return  
-    
-//       // ... no error, continue doing cool things with `data`  
-    
-//       // all went well, call callback with `null` for the error argument  
-    
-//       callback(null, data)  
-//     })  
-//   } 
+//solución oficial
 
 
-//You must accept a directory, a filter and a callback.
+// 'use strict'
+// const fs = require('fs')
+// const path = require('path')
+
+// module.exports = function (dir, filterStr, callback) {
+//   fs.readdir(dir, function (err, list) {
+//     if (err) {
+//       return callback(err)
+//     }
+
+//     list = list.filter(function (file) {
+//       return path.extname(file) === '.' + filterStr
+//     })
+
+//     callback(null, list)
+//   })
+// }
+
