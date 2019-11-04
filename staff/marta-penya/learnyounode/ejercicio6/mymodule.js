@@ -3,17 +3,19 @@
 //   directory name, the filename extension string and your callback function,  
 //   in that order. Don't alter the filename extension string in any way before  
 //   passing it to your module.  
+const path = require('path')
 
 
-
-module.exports = function(directory, filter){
+module.exports = function(directory, filter, callback){
     fs.readdir(directory, (error, list) => {
         if(error) return console.error(error) 
         else{ 
             result = list.forEach(filename => {
             if(path.extname(filename) === filter){
                 console.log(filename)
-            }})}
+            }
+        })}
+        callback(null, data) 
     }) 
 }
 
