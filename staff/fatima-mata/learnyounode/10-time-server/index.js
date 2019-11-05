@@ -10,15 +10,15 @@ const server = net.createServer((socket) => {
 })
 
 function formatDate (date) {
-  let month = zeroFill(date.getMonth() + 1)
-  let day = zeroFill(date.getDate())
-  let hours = zeroFill(date.getHours())
-  let minutes = zeroFill(date.getMinutes())
+  let month = d2(date.getMonth() + 1)
+  let day = d2(date.getDate())
+  let hours = d2(date.getHours())
+  let minutes = d2(date.getMinutes())
 
   return `${date.getFullYear()}-${month}-${day} ${hours}:${minutes}`
 }
 
-function zeroFill (number) {
+function d2 (number) {
   if (number < 10) {
     number = `0${number}`
   }
