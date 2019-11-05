@@ -1,1 +1,3 @@
-// TODO retrieve user favs, check user.favs, if duck id is not present then add it (otherwise remove it), update user favs
+describe('logic - toggle fav duck', () => {
+    
+})
