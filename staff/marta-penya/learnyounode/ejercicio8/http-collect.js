@@ -1,5 +1,4 @@
-const http = require('http')
-const bl = require('bl')
+const http = require('http'), bl = require('bl')
 
 const { argv: [, , url] } = process
 
@@ -8,12 +7,29 @@ http.get(url, response => {
   response.pipe(bl((error, data) => {
     // if(error) return console.log(error)
 
+    //console.log(`${data.lenght}\n${data}`) manustyle
     data = data.toString()
     console.log(data.length)
     console.log(data)
     }
   ))
 })
+
+
+//ejercicio sin BL
+
+http.get(url, response => {
+  response.setEncoding('utf8') //para pasarlo a string y evitar a toString()
+  response.on('error', error => {throw error})
+
+  let content = ''
+  response.on('data', chunk => content += chunk ) 
+  
+  response.on('end', () => console.log(`${content.lenght}\n${content}`))
+})
+
+
+
 
 // response.pipe(bl(function (err, data) { /* ... */ })) 
 

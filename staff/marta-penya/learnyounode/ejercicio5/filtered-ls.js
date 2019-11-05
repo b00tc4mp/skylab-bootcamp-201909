@@ -19,7 +19,7 @@ fs.readdir(process.argv[2], (error, list) => {
 // var path = require('path');
 // //Return the extension:
 // var ext = path.extname('/Users/Refsnes/demo_path.js');
-// console.log(ext);
+// console.log(ext) -> .js
 
 //resultado oficial
 
