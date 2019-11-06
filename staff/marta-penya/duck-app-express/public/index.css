@@ -57,6 +57,7 @@ li {
   height: 40vh;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .register__div {
   width: 100%;
@@ -97,12 +98,13 @@ li {
 
 .login {
   display: flex;
+  flex-direction: column;
   height: 40vh;
   justify-content: center;
   align-items: center;
 }
 .login__div {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -118,6 +120,7 @@ li {
 }
 .login__input {
   border-radius: 20px;
+  width: 90%;
 }
 .login__button {
   border-radius: 20px;
@@ -132,7 +135,6 @@ li {
   border: 2px solid black;
   font-size: 1.25em;
   font-weight: bold;
-  width: 40%;
   margin-top: 1rem;
   background-color: LightSteelBlue;
 }

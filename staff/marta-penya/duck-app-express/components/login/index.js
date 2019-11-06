@@ -1,3 +1,5 @@
+const Feedback = require('../feedback')
+
 module.exports = function() {
     return `<section class="view login">
     <div class="login__div">
@@ -8,6 +10,8 @@ module.exports = function() {
          </form>
         <button class="login__goregistrer"> Go to Register</button>
     </div>
+
+    ${Feedback()}
     </section>`
 }
 

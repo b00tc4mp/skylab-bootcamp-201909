@@ -4,7 +4,7 @@ const express = require('express')
 const View = require('./components/view')
 const Landing = require('./components/landing')
 const Register = require('./components/register')
-// const Login = require('./components/login')
+const Login = require('./components/login')
 // const Search = require('./components/search')
 
 const querystring = require('querystring')
@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
     res.send(View({ body: Landing({register: '/register', login: '/login'}) }))
 } )
 
-
 app.get('/register', (req, res) => {
     res.send(View({ body: Register() }))
 })
@@ -37,14 +36,19 @@ app.post('/register', (req, res) => {
 
         try {
             registerUser(name, surname, email, password, error => {
-                if (error) res.send('error chungo!')
-                else res.send('depotamare')
+                if (error) res.send('TODO MAAAAAAAAL')
+                else res.send('lo has hecho dpm y lo sabes ;)')
             })
         } catch(error) {
             // TODO handling
         }
     })
 }) 
+
+app.get('/login', (req, res) => {
+    res.send(View({ body: Login() }))
+})
+
 
 app.listen(port, () => console.log(`server running on port ${port}`))
 
