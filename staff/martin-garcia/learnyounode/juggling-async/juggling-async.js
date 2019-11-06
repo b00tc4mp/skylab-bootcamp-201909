@@ -2,7 +2,6 @@ const http = require('http')
 const { argv: [, , ...urls] } = process
 const auxArr = []
 let count = 0
-
 urls.forEach((url, index) => {
     http.get(url, response => {
         response.on('error', error => { throw error })
@@ -12,6 +11,5 @@ urls.forEach((url, index) => {
             auxArr[index] = text;
             ++count === urls.length && auxArr.forEach(element => console.log(element))
         })
-
     }).on('error', console.error)
 })
