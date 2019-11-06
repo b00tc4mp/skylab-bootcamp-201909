@@ -1,6 +1,3 @@
 let sum = 0
-for (let a = 2; a < process.argv.length; a++) {
-    sum += parseFloat(process.argv[a])
-}
-
-console.log(sum)
+const { argv: [, , ...arr] } = process
+console.log(arr.reduce((a, b) => parseFloat(a) + parseFloat(b)))
