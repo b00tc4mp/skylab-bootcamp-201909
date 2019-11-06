@@ -1,5 +1,5 @@
 module.exports = function() {
-    return `<section class="login">
+    return `<section class="view login">
     <div class="login__div">
         <form class="login__form">               
             <input type="text" name="email" placeholder="email" class="login__input" required/>

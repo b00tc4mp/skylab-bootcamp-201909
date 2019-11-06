@@ -4,10 +4,9 @@
 }
 
 .view {
-  border: 0.3rem solid orange;
+  border: 0.3rem solid blue;
   border-radius: 1rem;
   border-style: dotted;
-  background-color: yellow;
   width: 100vw;
   height: 100%;
   padding: 3vw;
@@ -60,7 +59,7 @@ li {
   align-items: center;
 }
 .register__div {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -73,9 +72,11 @@ li {
   width: 40%;
   height: 15vh;
   justify-content: space-between;
+  align-items: center;
 }
 .register__input {
   border-radius: 20px;
+  width: 90%;
 }
 .register__button {
   border-radius: 20px;
@@ -90,7 +91,6 @@ li {
   border: 2px solid black;
   font-size: 1.25em;
   font-weight: bold;
-  width: 40%;
   margin-top: 1rem;
   background-color: LightSteelBlue;
 }
