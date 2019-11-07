@@ -1,10 +1,10 @@
 const Feedback = require('../feedback')
 
-module.exports = function( { name } ){
+module.exports = function( { path, query, name, logout } ){
     return `<section class="view search">
-        <h2>Hello ${name} </h2>
-    <form class="search__form">               
-        <input type="search" name="query" id="search__formitem" class="search__input"/>
+        <h2>Hello ${name} </h2><form method="post" action="${logout}"><button class="search__logout">Logout</button></form>
+    <form class="search__form" method="get" action="${path}">               
+        <input type="search" name="q" id="search__formitem" class="search__input" ${query? `value=${query}` : '' }/>
         <button class="search__button">🔎 Search</button>
     </form>
     ${Feedback()}

@@ -11,6 +11,7 @@ const querystring = require('querystring')
 const registerUser = require('./logic/register-user')
 const authenticateUser = require('./logic/authenticate-user')
 const retrieveUser = require('./logic/retrieve-user')
+const searchDucks = require('.logic/search-ducks')
 
 
 
@@ -39,8 +40,9 @@ app.post('/register', (req, res) => {
 
         try {
             registerUser(name, surname, email, password, error => {
-                if (error) res.send('TODO MAAAAAAAAL')
-                else res.redirect('/login')
+                if (error) return res.send('TODO MAAAAAAAAL')
+                
+                res.redirect('/login')
             })
         } catch(error) {
             // TODO handling
@@ -52,9 +54,6 @@ app.get('/login', (req, res) => {
     res.send(View({ body: Login({ path: '/login' }) }))
 })
 
-app.get('/search', (req, res) => {
-    res.send(View({ body: Search( {name}) }))
-})
 
 app.post('/login', (req, res) => {
     let content = ''
@@ -64,24 +63,16 @@ app.post('/login', (req, res) => {
     req.on('end', () => {
         const { email, password } = querystring.parse(content)
         try{
-            authenticateUser(email, password, (error, data) => {
-                if(error) res.send('esto esta fatal')
+            authenticateUser(email, password, (error, credentials) => {
+                if(error) return res.send('esto esta fatal')
                 else {
-                    try{
-                        const { id, token } = data
-                        retrieveUser(id, token, (error, user) => {
-                            if(error) res.send('ERRRRROOOORRR')
-                            else {
-                                const { name } = user
-                                
-                                res.send(View({ body: Search( {name}) }))
-                            }
-                                
-                        } )
+                    const { id, token } = credentials 
 
-                    }catch (error){
-                        //TODO
-                    }  
+                    sessions[id] = token
+
+                    res.setHeader('set-cookie', `id=${id}`)
+
+                    res.redirect('/search')
                 }
             })
 
@@ -89,6 +80,51 @@ app.post('/login', (req, res) => {
             //TODO
         }
     })
+})
+
+app.get('/search', (req, res) => {
+    try{
+        const { headers: {cookie } } = req
+
+        if(!cookie) return res.redirect('/login')
+
+        const [, id] = cookie.split('id=')
+
+        const token = sessions[id]
+
+        if (!token) return res.redirect('/login')
+
+        retrieveUser(id, token, (error, user) => {
+            if(error) return res.send('retrieveuser to mal')
+
+            const { name } = user
+            const { query: { q: query} } = req
+
+            if(!query) res.send(View( {body: Search({path: '/search', name, logout: '/logout'} )} ))
+            else{
+                try{
+                    searchDucks(id, token, query, (error, ducks) => {
+                        if(error) return res.send('error searchducks')
+
+                        console.log(ducks)
+
+                        res.send(View( {body: `${Search( { path: '/search', query, name, logout: '/logout'} )}`} ))// TODO ${Results({items: ducks})}
+                    })
+                }catch(error){
+
+                }
+            }
+        })
+
+    }catch(error){
+
+    }
+})
+
+app.post('/logout', (req, res) => {
+    res.setHeader('set-cookie', 'id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
+
+    res.redirect('/')
 })
 
 app.listen(port, () => console.log(`server running on port ${port}`))
