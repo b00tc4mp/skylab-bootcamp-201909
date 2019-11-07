@@ -1,17 +1,9 @@
 const express = require('express')
 
-
-const View = require('./components/view')
-const Landing = require('./components/landing')
-const Register = require('./components/register')
-const Login = require('./components/login')
-const Search = require('./components/search')
-
+const { View, Landing, Register, Login, Search } = require('./components')
+const { bodyParser, cookieParser } = require('./utils/middlewares')
 const querystring = require('querystring')
-const registerUser = require('./logic/register-user')
-const authenticateUser = require('./logic/authenticate-user')
-const retrieveUser = require('./logic/retrieve-user')
-const searchDucks = require('./logic/search-ducks')
+const { registerUser, authenticateUser, retrieveUser, searchDucks } = require('./logic')
 
 
 const { argv: [, , port = 8080] } = process
@@ -31,24 +23,14 @@ app.get('/register', (req, res) => {
     res.send(View({ body: Register( { path: '/register' }) }))
 })
 
-app.post('/register', (req, res) => {
-    let content = ''
-
-    req.on('data', chunk => content += chunk)
-
-    req.on('end', () => {
-        const { name, surname, email, password } = querystring.parse(content)
-
+app.post('/register', bodyParser, (req, res) => {
+        const { body: {name, surname, email, password} } = req
         try {
-            registerUser(name, surname, email, password, error => {
-                if (error) return res.send('TODO MAAAAAAAAL')
+            registerUser(name, surname, email, password)
                 
-                res.redirect('/login')
-            })
         } catch(error) {
             // TODO handling
         }
-    })
 }) 
 
 app.get('/login', (req, res) => {
