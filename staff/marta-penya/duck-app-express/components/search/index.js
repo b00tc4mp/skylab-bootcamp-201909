@@ -1,12 +1,18 @@
-module.exports = function(){
-    return `<section class="search">
-        
+const Feedback = require('../feedback')
+
+module.exports = function( { name } ){
+    return `<section class="view search">
+        <h2>Hello ${name} </h2>
     <form class="search__form">               
         <input type="search" name="query" id="search__formitem" class="search__input"/>
         <button class="search__button">🔎 Search</button>
     </form>
+    ${Feedback()}
+</section>`
+}
 
-<section>
+
+/* <section>
 <ul class="item-list">
     <li class="item-list__item">
         <a href="#" class="item-list__link">
@@ -65,7 +71,4 @@ module.exports = function(){
         </a>
     </li>
 </ul>
-</section>   
-</section>`
-}
-
+</section>  */

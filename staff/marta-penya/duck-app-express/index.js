@@ -5,7 +5,7 @@ const View = require('./components/view')
 const Landing = require('./components/landing')
 const Register = require('./components/register')
 const Login = require('./components/login')
-// const Search = require('./components/search')
+const Search = require('./components/search')
 
 const querystring = require('querystring')
 const registerUser = require('./logic/register-user')
@@ -24,8 +24,9 @@ app.get('/', (req, res) => {
     res.send(View({ body: Landing({register: '/register', login: '/login'}) }))
 } )
 
+
 app.get('/register', (req, res) => {
-    res.send(View({ body: Register() }))
+    res.send(View({ body: Register( { path: '/register' }) }))
 })
 
 app.post('/register', (req, res) => {
@@ -39,7 +40,7 @@ app.post('/register', (req, res) => {
         try {
             registerUser(name, surname, email, password, error => {
                 if (error) res.send('TODO MAAAAAAAAL')
-                else res.send('lo has hecho dpm y lo sabes ;)')
+                else res.redirect('/login')
             })
         } catch(error) {
             // TODO handling
@@ -48,7 +49,11 @@ app.post('/register', (req, res) => {
 }) 
 
 app.get('/login', (req, res) => {
-    res.send(View({ body: Login() }))
+    res.send(View({ body: Login({ path: '/login' }) }))
+})
+
+app.get('/search', (req, res) => {
+    res.send(View({ body: Search( {name}) }))
 })
 
 app.post('/login', (req, res) => {
@@ -68,17 +73,20 @@ app.post('/login', (req, res) => {
                             if(error) res.send('ERRRRROOOORRR')
                             else {
                                 const { name } = user
-                                res.send('oki')}
+                                
+                                res.send(View({ body: Search( {name}) }))
+                            }
+                                
                         } )
 
                     }catch (error){
-
+                        //TODO
                     }  
                 }
             })
 
         }catch(error){
-
+            //TODO
         }
     })
 })
