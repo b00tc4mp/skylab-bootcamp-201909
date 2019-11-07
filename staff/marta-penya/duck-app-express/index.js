@@ -11,11 +11,12 @@ const querystring = require('querystring')
 const registerUser = require('./logic/register-user')
 const authenticateUser = require('./logic/authenticate-user')
 const retrieveUser = require('./logic/retrieve-user')
-const searchDucks = require('.logic/search-ducks')
-
+const searchDucks = require('./logic/search-ducks')
 
 
 const { argv: [, , port = 8080] } = process
+
+const sessions = {}
 
 const app = express()
 

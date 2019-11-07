@@ -228,6 +228,13 @@ li {
   font-size: 1.25em;
   font-weight: bold;
 }
+.search__logout {
+  border-radius: 20px;
+  background: MintCream;
+  border: 2px solid black;
+  font-size: 1.25em;
+  font-weight: bold;
+}
 
 .item-list {
   display: flex;
