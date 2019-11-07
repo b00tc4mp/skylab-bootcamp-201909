@@ -9,6 +9,8 @@ const Login = require('./components/login')
 
 const querystring = require('querystring')
 const registerUser = require('./logic/register-user')
+const authenticateUser = require('./logic/authenticate-user')
+const retrieveUser = require('./logic/retrieve-user')
 
 
 
@@ -49,6 +51,38 @@ app.get('/login', (req, res) => {
     res.send(View({ body: Login() }))
 })
 
+app.post('/login', (req, res) => {
+    let content = ''
+
+    req.on('data', chunk => content += chunk)
+
+    req.on('end', () => {
+        const { email, password } = querystring.parse(content)
+        try{
+            authenticateUser(email, password, (error, data) => {
+                if(error) res.send('esto esta fatal')
+                else {
+                    try{
+                        const { id, token } = data
+                        retrieveUser(id, token, (error, user) => {
+                            if(error) res.send('ERRRRROOOORRR')
+                            else {
+                                const { name } = user
+                                res.send('oki')}
+                        } )
+
+                    }catch (error){
+
+                    }  
+                }
+            })
+
+        }catch(error){
+
+        }
+    })
+})
 
 app.listen(port, () => console.log(`server running on port ${port}`))
+
 
