@@ -27,9 +27,11 @@ app.post('/register', bodyParser, (req, res) => {
         const { body: {name, surname, email, password} } = req
         try {
             registerUser(name, surname, email, password)
+                .then(() => res.redirect('/login'))
+                .catch(({message}) => res.send (View({ body: Register( { path: '/register', error: message} )})))
                 
         } catch(error) {
-            // TODO handling
+            res.send(View({ body: Register({ path: '/register', error: error.message})}))
         }
 }) 
 
@@ -38,17 +40,12 @@ app.get('/login', (req, res) => {
 })
 
 
-app.post('/login', (req, res) => {
-    let content = ''
+app.post('/login', bodyParser, (req, res) => {
 
-    req.on('data', chunk => content += chunk)
-
-    req.on('end', () => {
-        const { email, password } = querystring.parse(content)
+        const { body:{ email, password} } = req
         try{
-            authenticateUser(email, password, (error, credentials) => {
-                if(error) return res.send('esto esta fatal')
-                else {
+            authenticateUser(email, password)
+                .then((credentials) => { debugger
                     const { id, token } = credentials 
 
                     sessions[id] = token
@@ -56,22 +53,18 @@ app.post('/login', (req, res) => {
                     res.setHeader('set-cookie', `id=${id}`)
 
                     res.redirect('/search')
-                }
-            })
-
+                })
+                .catch(({message}) => res.send (View({ body: Login( { path: '/login', error: message} )})))
         }catch(error){
-            //TODO
+            res.send(View({ body: Login({ path: '/login', error: error.message})}))
         }
-    })
 })
 
-app.get('/search', (req, res) => {
+app.get('/search', cookieParser, (req, res) => {
     try{
-        const { headers: {cookie } } = req
+        const { cookies: {id}} = req
 
-        if(!cookie) return res.redirect('/login')
-
-        const [, id] = cookie.split('id=')
+        if(!id) return res.redirect('/login')
 
         const token = sessions[id]
 
@@ -104,8 +97,14 @@ app.get('/search', (req, res) => {
     }
 })
 
-app.post('/logout', (req, res) => {
+app.post('/logout', cookieParser, (req, res) => {
     res.setHeader('set-cookie', 'id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
+
+    const { cookies: {id}} = req
+
+    if(!id) return res.redirect('/')
+
+    delete sessions[id]
 
     res.redirect('/')
 })

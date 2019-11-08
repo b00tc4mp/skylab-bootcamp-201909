@@ -34,8 +34,12 @@ li {
 
 .header {
   display: flex;
+  justify-content: center;
   background-image: url(https://www.desktopbackground.org/t/2015/12/10/1055168_rubber-ducks-illustration-vector-art-graphics_1024x1325_h.jpg);
   background-size: contain;
+}
+.header__div {
+  display: flex;
   width: 100%;
   justify-items: center;
   justify-content: space-evenly;
@@ -45,7 +49,7 @@ li {
   color: white;
   align-self: center;
   font-size: 2.5em;
-  width: 50%;
+  width: 80%;
 }
 .header__image {
   width: 20%;
@@ -144,7 +148,7 @@ li {
 }
 .register__input {
   border-radius: 20px;
-  width: 90%;
+  width: 70%;
 }
 .register__button {
   border-radius: 20px;
@@ -165,17 +169,17 @@ li {
 
 .login {
   display: flex;
-  flex-direction: column;
   height: 40vh;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 .login__div {
   width: 100%;
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
 }
 .login__form {
@@ -184,10 +188,11 @@ li {
   width: 40%;
   height: 15vh;
   justify-content: space-between;
+  align-items: center;
 }
 .login__input {
   border-radius: 20px;
-  width: 90%;
+  width: 70%;
 }
 .login__button {
   border-radius: 20px;

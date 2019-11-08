@@ -1,3 +1,4 @@
+const Header = require('../header')
 
 module.exports = function ({ body }) {
     return `<!DOCTYPE html>
@@ -13,6 +14,7 @@ module.exports = function ({ body }) {
     </head>
     
     <body>
+        ${Header()}
         ${body}
     </body>
 </html>`
