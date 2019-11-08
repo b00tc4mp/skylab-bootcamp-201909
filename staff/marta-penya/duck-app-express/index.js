@@ -2,7 +2,6 @@ const express = require('express')
 
 const { View, Landing, Register, Login, Search } = require('./components')
 const { bodyParser, cookieParser } = require('./utils/middlewares')
-const querystring = require('querystring')
 const { registerUser, authenticateUser, retrieveUser, searchDucks } = require('./logic')
 
 
