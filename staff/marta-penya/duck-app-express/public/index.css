@@ -323,5 +323,129 @@ li {
     font-size: 1.8em;
   }
 }
+.item-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .items {
+    display: flex;
+    justify-content: center;
+  }
+
+  .item-list {
+    flex-flow: row wrap;
+    justify-content: space-around;
+    max-width: 90%;
+  }
+}
+@media (min-width: 1024px) {
+  .item-list {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+.item-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.item-list__item {
+  display: flex;
+  border-radius: 20px;
+}
+.item-list__link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3%;
+}
+.item-list__title {
+  color: white;
+  background-color: LightSteelBlue;
+  border: 2px dotted black;
+  border-radius: 0.9em;
+  font-size: 1.2em;
+  padding: 0 2%;
+}
+.item-list__image {
+  width: 60%;
+  border-radius: 60px;
+}
+.item-list__fav {
+  width: 10%;
+}
+.item-list__description {
+  padding: 0 2%;
+}
+.item-list__price {
+  color: black;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  align-self: center;
+  font-size: 1.2em;
+}
+.item-list__button {
+  border-radius: 20px;
+  background: MintCream;
+  border: 2px solid black;
+  font-size: 1.2em;
+  font-weight: bold;
+  align-self: center;
+}
+
+@media (min-width: 768px) {
+  .items {
+    display: flex;
+    justify-content: center;
+  }
+
+  .item-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    max-width: 90%;
+  }
+  .item-list__image {
+    max-width: 19em;
+    background-size: cover;
+  }
+}
+@media (min-width: 1024px) {
+  .item-list {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .item-list__image {
+    background-size: cover;
+  }
+  .item-list__title {
+    font-size: 0.9em;
+    text-align: center;
+  }
+  .item-list__image {
+    max-width: 30em;
+  }
+  .item-list__fav {
+    width: 5%;
+  }
+  .item-list__description {
+    font-size: 1.2em;
+  }
+  .item-list__title {
+    font-size: 1.8em;
+  }
+  .item-list__price {
+    font-size: 1.8em;
+  }
+  .item-list__button {
+    font-size: 1.8em;
+  }
+}
 
 /*# sourceMappingURL=index.css.map */
