@@ -2,8 +2,7 @@ const express = require('express')
 
 const { View, Landing, Register, Login, Search } = require('./components')
 const { bodyParser, cookieParser } = require('./utils/middlewares')
-const { registerUser, authenticateUser, retrieveUser, searchDucks } = require('./logic')
-
+const { registerUser, authenticateUser, retrieveUser, searchDucks, toggleFavDuck } = require('./logic')
 
 const { argv: [, , port = 8080] } = process
 
@@ -44,10 +43,10 @@ app.post('/login', bodyParser, (req, res) => {
         const { body:{ email, password} } = req
         try{
             authenticateUser(email, password)
-                .then((credentials) => { debugger
+                .then((credentials) => { 
                     const { id, token } = credentials 
 
-                    sessions[id] = token
+                    sessions[id] = { token }
 
                     res.setHeader('set-cookie', `id=${id}`)
 
@@ -60,52 +59,80 @@ app.post('/login', bodyParser, (req, res) => {
 })
 
 app.get('/search', cookieParser, (req, res) => {
-    try{
-        const { cookies: {id}} = req
+    try {
+        const { cookies: { id }, query: { q: query } } = req
 
-        if(!id) return res.redirect('/login')
+        if (!id) return res.redirect('/login')
 
-        const token = sessions[id]
+        const session = sessions[id]
+
+        if (!session) return res.redirect('/login')
+
+        const { token } = session
 
         if (!token) return res.redirect('/login')
 
-        retrieveUser(id, token, (error, user) => {
-            if(error) return res.send('retrieveuser to mal')
+        let name
 
-            const { name } = user
-            const { query: { q: query} } = req
+        retrieveUser(id, token)
+            .then(user => {
+                name = user.name
 
-            if(!query) res.send(View( {body: Search({path: '/search', name, logout: '/logout'} )} ))
-            else{
-                try{
-                    searchDucks(id, token, query, (error, ducks) => {
-                        if(error) return res.send('error searchducks')
+                if (!query) return res.send(View({ body: Search({ path: '/search', name, logout: '/logout' }) }))
 
-                        console.log(ducks)
+                session.query = query
 
-                        res.send(View( {body: `${Search( { path: '/search', query, name, logout: '/logout'} )}`} ))// TODO ${Results({items: ducks})}
-                    })
-                }catch(error){
-
-                }
-            }
-        })
-
-    }catch(error){
-
+                return searchDucks(id, token, query)
+                    .then(ducks => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks' }) })))
+            })
+            .catch(({ message }) => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) })))
+    } catch ({ message }) {
+        res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))
     }
 })
-
+   
 app.post('/logout', cookieParser, (req, res) => {
     res.setHeader('set-cookie', 'id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
 
-    const { cookies: {id}} = req
+    const { cookies: { id } } = req
 
-    if(!id) return res.redirect('/')
+    if (!id) return res.redirect('/')
 
     delete sessions[id]
 
     res.redirect('/')
+})
+
+app.post('/fav', cookieParser, bodyParser, (req, res) => {
+    try {
+        const { cookies: { id }, body: { id: duckId } } = req
+
+        if (!id) return res.redirect('/')
+
+        const session = sessions[id]
+
+        if (!session) return res.redirect('/')
+
+        const { token, query } = session
+
+        if (!token) return res.redirect('/')
+
+        toggleFavDuck(id, token, duckId)
+            .then(() => res.redirect(`/search?q=${query}`))
+            .catch(({ message }) => {
+                res.send('TODO error handling')
+            })
+    } catch ({ message }) {
+        res.send('TODO error handling')
+    }
+})
+
+app.get('/ducks/:id', (req, res) => {
+    const { params: { id } } = req
+
+    // TODO control session, etc
+
+    res.send('TODO detail of duck ' + id)
 })
 
 app.listen(port, () => console.log(`server running on port ${port}`))

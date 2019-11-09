@@ -11,9 +11,10 @@ module.exports = function(name, surname, email, password) {
     validate.string(password)
     validate.string.notVoid('password', password)
 
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => {
         call('POST', undefined, 'https://skylabcoders.herokuapp.com/api/user', { name, surname, username: email, password }, result => {
-        result.error ? reject(new Error(result.error)) : resolve();
+            result.error ? reject(new Error(result.error)) : resolve()
         })
     })
+
 }
