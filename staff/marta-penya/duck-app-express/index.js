@@ -144,8 +144,6 @@ app.get('/ducks/:duckId', cookieParser, bodyParser, (req, res) => {
 
         if (!token) return res.redirect('/')
 
-        //res.send('TODO detail of duck ' + duckId)
-
         retrieveDuck(id, token, duckId)
             .then(duck => res.send(View({body: Detail( { item: duck })})))
             .catch(({ error }) => res.send(error))

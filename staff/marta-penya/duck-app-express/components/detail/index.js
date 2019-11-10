@@ -1,12 +1,12 @@
 const Feedback = require('../feedback')
 
-module.exports = function( {item, favPath, error }){
+module.exports = function( {item, favPath}){
     debugger
     return   `<div class="view detail">
     <section class = "result view">
         <div class ="detail-list">
             <h2 class="detail-list__title" >${item.title}</h2>
-            <img class="detail-list__image" src=${item.image}/>
+            <img class="detail-list__image" src="${item.image}"/>
             <p class="detail-list__description">${item.description}</p>
             <a href=${item.link} class="detail-list__store">Go to Store</a>
             <p class="detail-list__price">${item.price}</p>
@@ -20,6 +20,6 @@ module.exports = function( {item, favPath, error }){
             </span>           
         </div>
     </section>
-    ${error ? Feedback({ message: error}) : ''}
+
 </div>`
 }
