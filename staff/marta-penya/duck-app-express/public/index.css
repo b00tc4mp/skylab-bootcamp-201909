@@ -486,46 +486,4 @@ li {
   border: none;
 }
 
-@media (min-width: 768px) {
-  .items {
-    display: flex;
-    justify-content: center;
-  }
-
-  .item-list {
-    flex-flow: row wrap;
-    justify-content: space-around;
-    max-width: 90%;
-  }
-  .item-list__image {
-    max-width: 19em;
-    background-size: cover;
-  }
-}
-@media (min-width: 1024px) {
-  .item-list__image {
-    max-width: 13em;
-    background-size: cover;
-  }
-  .item-list__title {
-    font-size: 0.9em;
-    text-align: center;
-  }
-  .item-list__image--modif {
-    max-width: 25em;
-  }
-  .item-list__description {
-    font-size: 1.2em;
-  }
-  .item-list__title--modif {
-    font-size: 1.8em;
-  }
-  .item-list__price--modif {
-    font-size: 1.8em;
-  }
-  .item-list__button {
-    font-size: 1.8em;
-  }
-}
-
 /*# sourceMappingURL=index.css.map */

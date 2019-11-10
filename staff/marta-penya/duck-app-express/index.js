@@ -127,9 +127,12 @@ app.post('/fav', cookieParser, bodyParser, (req, res) => {
     }
 })
 
-app.get('/ducks/:duckId', (req, res) => {
+app.get('/ducks/:duckId', cookieParser, bodyParser, (req, res) => {
     try{
-        const { cookies: {id}, params: { duckId } } = req
+
+        const { params: { duckId } } = req
+
+        const { cookies: {id} } = req
 
         if(!id) return res.redirect('/')
 
@@ -141,19 +144,15 @@ app.get('/ducks/:duckId', (req, res) => {
 
         if (!token) return res.redirect('/')
 
-        res.send('TODO detail of duck ' + duckId)
+        //res.send('TODO detail of duck ' + duckId)
 
         retrieveDuck(id, token, duckId)
-            .then(duck => res.send(View( {body: Detail({duck: duck, isFav})} )))
-            .catch(({ message}) => (View( {body: Detail({error: message})} )) )
+            .then(duck => res.send(View({body: Detail( { item: duck })})))
+            .catch(({ error }) => res.send(error))
     
-
-        // TODO control session, etc
-    
-       // 
 
     } catch(error){
-        res.send('TODO error handling')
+        res.send('TODO error handling2')
     }
 })
 
