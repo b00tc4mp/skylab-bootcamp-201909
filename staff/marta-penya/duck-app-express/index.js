@@ -1,8 +1,8 @@
 const express = require('express')
 
-const { View, Landing, Register, Login, Search } = require('./components')
+const { View, Landing, Register, Login, Search, Detail } = require('./components')
 const { bodyParser, cookieParser } = require('./utils/middlewares')
-const { registerUser, authenticateUser, retrieveUser, searchDucks, toggleFavDuck } = require('./logic')
+const { registerUser, authenticateUser, retrieveUser, searchDucks, toggleFavDuck, retrieveDuck } = require('./logic')
 
 const { argv: [, , port = 8080] } = process
 
@@ -127,12 +127,34 @@ app.post('/fav', cookieParser, bodyParser, (req, res) => {
     }
 })
 
-app.get('/ducks/:id', (req, res) => {
-    const { params: { id } } = req
+app.get('/ducks/:duckId', (req, res) => {
+    try{
+        const { cookies: {id}, params: { duckId } } = req
 
-    // TODO control session, etc
+        if(!id) return res.redirect('/')
 
-    res.send('TODO detail of duck ' + id)
+        const session = sessions[id]
+
+        if(!session) return res.redirect('/')
+
+        const { token } = session
+
+        if (!token) return res.redirect('/')
+
+        res.send('TODO detail of duck ' + duckId)
+
+        retrieveDuck(id, token, duckId)
+            .then(duck => res.send(View( {body: Detail({duck: duck, isFav})} )))
+            .catch(({ message}) => (View( {body: Detail({error: message})} )) )
+    
+
+        // TODO control session, etc
+    
+       // 
+
+    } catch(error){
+        res.send('TODO error handling')
+    }
 })
 
 app.listen(port, () => console.log(`server running on port ${port}`))
