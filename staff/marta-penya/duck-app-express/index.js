@@ -83,7 +83,10 @@ app.get('/search', cookieParser, (req, res) => {
                 session.query = query
 
                 return searchDucks(id, token, query)
-                    .then(ducks => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks' }) })))
+                .then(ducks => {
+                    res.setHeader('set-cookie', `path=/search`)
+                    res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks' }) }))
+                    })
             })
             .catch(({ message }) => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) })))
     } catch ({ message }) {
@@ -93,6 +96,7 @@ app.get('/search', cookieParser, (req, res) => {
    
 app.post('/logout', cookieParser, (req, res) => {
     res.setHeader('set-cookie', 'id=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
+    res.setHeader('set-cookie', 'path=""; expires=Thu, 01 Jan 1970 00:00:00 GMT')
 
     const { cookies: { id } } = req
 
@@ -105,8 +109,8 @@ app.post('/logout', cookieParser, (req, res) => {
 
 app.post('/fav', cookieParser, bodyParser, (req, res) => {
     try {
-        const { cookies: { id }, body: { id: duckId } } = req
-
+        const { cookies: { id, path }, body: { id: duckId } } = req
+        
         if (!id) return res.redirect('/')
 
         const session = sessions[id]
@@ -118,12 +122,12 @@ app.post('/fav', cookieParser, bodyParser, (req, res) => {
         if (!token) return res.redirect('/')
 
         toggleFavDuck(id, token, duckId)
-            .then(() => res.redirect(`/search?q=${query}`))
+            .then(() =>{path === '/search' ? res.redirect(`/search?q=${query}`) : res.redirect(`/ducks/${duckId}`)})
             .catch(({ message }) => {
-                res.send('TODO error handling')
+                res.send('TODO error handling1')
             })
     } catch ({ message }) {
-        res.send('TODO error handling')
+        res.send('TODO error handling2')
     }
 })
 
@@ -132,8 +136,10 @@ app.get('/ducks/:duckId', cookieParser, bodyParser, (req, res) => {
 
         const { params: { duckId } } = req
 
-        const { cookies: {id} } = req
-
+        const { cookies: {id, path } } = req
+               
+        if(path) res.clearCookie('path') 
+        
         if(!id) return res.redirect('/')
 
         const session = sessions[id]
@@ -145,13 +151,33 @@ app.get('/ducks/:duckId', cookieParser, bodyParser, (req, res) => {
         if (!token) return res.redirect('/')
 
         retrieveDuck(id, token, duckId)
-            .then(duck => res.send(View({ body: Detail( { item: duck })})))
+            .then(duck => { 
+                res.setHeader('set-cookie', `path=/ducks/${duckId}`)
+                res.send(View({ body: Detail( { item: duck, favPath: '/fav', back: '/back' })}))
+            })
             .catch(({ error }) => res.send(error))
     
 
     } catch(error){
         res.send('TODO error handling2')
     }
+})
+
+app.post('/back', cookieParser, (req, res) => {
+   
+    const { cookies: { id } } = req
+    
+    if (!id) return res.redirect('/')
+
+    const session = sessions[id]
+
+    if (!session) return res.redirect('/')
+
+    const { token, query } = session
+
+    if (!token) return res.redirect('/')
+
+    res.redirect(`/search?q=${query}`)
 })
 
 app.listen(port, () => console.log(`server running on port ${port}`))

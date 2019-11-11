@@ -1,6 +1,6 @@
 const Feedback = require('../feedback')
 
-module.exports = function( {item, favPath}){
+module.exports = function( {item, favPath, back}){
     debugger
     return   `<div class="view detail">
     <section class = "result view">
@@ -10,7 +10,7 @@ module.exports = function( {item, favPath}){
             <p class="detail-list__description">${item.description}</p>
             <a href=${item.link} class="detail-list__store">Go to Store</a>
             <p class="detail-list__price">${item.price}</p>
-            <button class="detail-list__button">Back</button>
+            <form method="post" action="${back}"><button class="detail-list__button">Go Back</button></form>
             <span >
             <form method="post" action="${favPath}">
                 <input type="hidden" name="id" value="${item.id}">
