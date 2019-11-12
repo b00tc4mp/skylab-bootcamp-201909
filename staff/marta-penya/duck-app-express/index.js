@@ -12,6 +12,9 @@ const { argv: [, , port = 8080] } = process
 
 const app = express()
 
+app.set('view engine', 'pug')
+app.set('views', 'components')
+
 app.use(express.static('public'))
 
 app.use(session({
@@ -24,28 +27,32 @@ app.use(session({
 const formBodyParser = bodyParser.urlencoded({ extended: false })
 
 app.get('/', (req, res) => {
-    res.send(View({ body: Landing({register: '/register', login: '/login'}) }))
+    res.render('landing', {register: '/register', login: '/login'} )
+    //res.send(View({ body: Landing({register: '/register', login: '/login'}) }))
 } )
 
 
 app.get('/register', (req, res) => {
-    res.send(View({ body: Register( { path: '/register' }) }))
+    res.render('register', {path: '/register'})
+    //res.send(View({ body: Register( { path: '/register' }) }))
 })
 
 app.post('/register', formBodyParser, (req, res) => {
         const { body: {name, surname, email, password} } = req
         try {
             registerUser(name, surname, email, password)
-                .then(() => res.redirect('/login'))
-                .catch(({message}) => res.send (View({ body: Register( { path: '/register', error: message} )})))
+                .then(() => res.render('login',  {path: '/login'}) /*res.redirect('/login')*/)
+                .catch(({message}) =>  res.render('register', {path: '/register', error: message} ) /*res.send(View({ body: Register( { path: '/register', error: message} )})) */)
                 
         } catch({message}) {
-            res.send(View({ body: Register({ path: '/register', error: message})}))
+            res.render('register', {path: '/register', error: message})
+            /*res.send(View({ body: Register({ path: '/register', error: message})}))*/
         }
 }) 
 
 app.get('/login', (req, res) => {
-    res.send(View({ body: Login({ path: '/login' }) }))
+    res.render('login', {path: '/login'})
+    //res.send(View({ body: Login({ path: '/login' }) }))
 })
 
 
@@ -63,10 +70,12 @@ app.post('/login', formBodyParser, (req, res) => {
                     session.save(() => res.redirect('/search'))
                 })
                 .catch(({message}) => {
-                    res.send(View({ body: Login({ path: '/login', error: message }) }))
+                    res.render('login', { path: '/login', error: message })
+                    //res.send(View({ body: Login({ path: '/login', error: message }) }))
                 })
         }catch({message}){
-            res.send(View({ body: Login({ path: '/login', error: error.message})}))
+            res.render('login', { path: '/login', error: message })
+            //res.send(View({ body: Login({ path: '/login', error: error.message})}))
         }
 })
 
@@ -74,11 +83,11 @@ app.get('/search', (req, res) => {
     try {
         const { session, query: { q: query } } = req
 
-        if (!session) return res.redirect('/login')
+        if (!session) return  res.render('login', { path: '/login', error: message }) /*res.redirect('/login')*/
 
         const { userId: id, token } = session
 
-        if (!token) return res.redirect('/login')
+        if (!token) return res.render('login', { path: '/login', error: message }) /*res.redirect('/login')*/
 
         let name
 
@@ -86,19 +95,20 @@ app.get('/search', (req, res) => {
             .then(user => {
                 name = user.name
 
-                if (!query) return res.send(View({ body: Search({ path: '/search', name, logout: '/logout', myfavs: '/myfavs' }) }))
+                if (!query) return res.render('search', {path: '/search', name, logout: '/logout', myfavs: '/myfavs' }) /*res.send(View({ body: Search({ path: '/search', name, logout: '/logout', myfavs: '/myfavs' }) }))*/
 
                 return searchDucks(id, token, query)
                 .then(ducks => {
                     session.query = query
                     session.view = 'search'
 
-                    session.save(() => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks', myfavs: '/myfavs' }) })))
+                    session.save(() => res.render('search', { path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks', myfavs: '/myfavs' }) /*res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks', myfavs: '/myfavs' }) }))*/)
                     })
             })
-            .catch(({ message }) => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) })))
+            .catch(({ message }) => res.render('search', { path: '/search', query, name, logout: '/logout', error: message }) /*res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))*/)
     } catch ({ message }) {
-        res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))
+        res.render('search', { path: '/search', query, name, logout: '/logout', error: message })
+        /*res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))*/
     }
 })
    
@@ -116,11 +126,11 @@ app.post('/fav', formBodyParser, (req, res) => {
     try {
         const { session, body: { id: duckId }, headers: { referer } } = req
         
-        if (!session) return res.redirect('/')
+        if (!session) return res.render('landing', {register: '/register', login: '/login'} ) /*res.redirect('/')*/
 
         const { userId: id, token } = session
 
-        if (!token) return res.redirect('/')
+        if (!token) return res.render('landing', {register: '/register', login: '/login'} ) /*res.redirect('/')*/
 
         toggleFavDuck(id, token, duckId)
             .then(() => res.redirect(referer))
@@ -137,16 +147,16 @@ app.get('/ducks/:id', (req, res) => {
 
         const { session, params: { id: duckId } } = req          
         //if(path) res.clearCookie('path') 
-        if(!session) return res.redirect('/')
+        if(!session) return res.render('landing', {register: '/register', login: '/login'} ) /*res.redirect('/')*/
 
         const { userId: id, token, view, query } = session
 
-        if (!token) return res.redirect('/')
+        if (!token) return res.render('landing', {register: '/register', login: '/login'} ) /*res.redirect('/')*/
 
         retrieveDuck(id, token, duckId)
             .then(duck => { 
-                res.setHeader('set-cookie', `path=/ducks/${duckId}`)
-                res.send(View({ body: Detail( { item: duck, favPath: '/fav', backPath: view === 'search' ? `/search?q=${query}` : '/' })}))
+                res.render('detail', { item: duck, favPath: '/fav', backPath: view === 'search' ? `/search?q=${query}` : '/myfavs' })
+                /*res.send(View({ body: Detail( { item: duck, favPath: '/fav', backPath: view === 'search' ? `/search?q=${query}` : '/myfavs' })}))*/
             })
             .catch(({ error }) => res.send(error))
     
@@ -185,11 +195,11 @@ app.get('/myfavs', (req, res) => {
     try {
         const { session, query: { q: query } } = req
 
-        if (!session) return res.redirect('/login')
+        if (!session) return res.render('landing', {register: '/register', login: '/login'} ) /*res.redirect('/')*/
         
         const { userId: id, token } = session
         
-        if (!token) return res.redirect('/login')
+        if (!token) return res.render('landing', {register: '/register', login: '/login'} ) /*res.redirect('/')*/
         
         let name
 
@@ -202,12 +212,13 @@ app.get('/myfavs', (req, res) => {
                     
                     session.view = 'myfavs'
 
-                    session.save(() => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks', myfavs: '/myfavs' }) })))
-                    })
+                    session.save(() => res.render('search', { path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks', myfavs: '/myfavs' }) /*res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', results: ducks, favPath: '/fav', detailPath: '/ducks', myfavs: '/myfavs' }) }))*/)
+                })
             })
-            .catch(({ message }) => res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) })))
+            .catch(({ message }) => res.render('search', { path: '/search', query, name, logout: '/logout', error: message }) /*res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))*/)
     } catch ({ message }) {
-        res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))
+        res.render('search', { path: '/search', query, name, logout: '/logout', error: message })
+        /*res.send(View({ body: Search({ path: '/search', query, name, logout: '/logout', error: message }) }))*/
     }
 })
 

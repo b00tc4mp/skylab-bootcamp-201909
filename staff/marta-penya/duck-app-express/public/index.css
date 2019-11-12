@@ -325,8 +325,10 @@ li {
 }
 .item-list {
   display: flex;
-  flex-direction: column;
   padding: 0;
+  width: 100%;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
 @media (min-width: 768px) {
@@ -352,6 +354,10 @@ li {
   display: flex;
   flex-direction: column;
   padding: 0;
+}
+.item-list__li {
+  list-style: none;
+  width: 40%;
 }
 .item-list__item {
   display: flex;
