@@ -1,0 +1,118 @@
+.detail-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: center;
+      align-self: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 0;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin-bottom: 3%;
+  width: 50%;
+}
+
+.detail-list__detail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 20px;
+}
+
+.detail-list__title {
+  color: white;
+  background-color: LightSteelBlue;
+  border: 2px dotted black;
+  border-radius: .9em;
+  font-size: 1.2em;
+  padding: 0 2%;
+}
+
+.detail-list__image {
+  width: 40%;
+  border-radius: 60px;
+}
+
+.detail-list__description {
+  padding: 0 2%;
+}
+
+.detail-list__price {
+  color: black;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  font-size: 1.2em;
+}
+
+.detail-list__button {
+  border-radius: 20px;
+  background: MintCream;
+  border: 2px solid black;
+  font-size: 1.2em;
+  font-weight: bold;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+@media (min-width: 768px) {
+  .items {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .item-list {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row wrap;
+            flex-flow: row wrap;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    max-width: 90%;
+  }
+  .item-list__image {
+    max-width: 19em;
+    background-size: cover;
+  }
+}
+
+@media (min-width: 1024px) {
+  .item-list__image {
+    max-width: 13em;
+    background-size: cover;
+  }
+  .item-list__title {
+    font-size: .9em;
+    text-align: center;
+  }
+  .item-list__image--modif {
+    max-width: 25em;
+  }
+  .item-list__description {
+    font-size: 1.2em;
+  }
+  .item-list__title--modif {
+    font-size: 1.8em;
+  }
+  .item-list__price--modif {
+    font-size: 1.8em;
+  }
+  .item-list__button {
+    font-size: 1.8em;
+  }
+}
+/*# sourceMappingURL=detail.css.map */

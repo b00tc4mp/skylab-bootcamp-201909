@@ -1,0 +1,19 @@
+.entry__tittle {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 90%;
+  font-weight: bold;
+  width: 60%;
+  margin-left: 2%;
+  margin-right: 5%;
+}
+
+.entry__img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.entry__price {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 1rem;
+}
+/*# sourceMappingURL=entry.css.map */

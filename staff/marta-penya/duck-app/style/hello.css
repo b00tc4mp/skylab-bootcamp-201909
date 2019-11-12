@@ -1,0 +1,24 @@
+.hello {
+  background-color: #CDDCE3;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+.hello__user {
+  color: white;
+  font-size: 2em;
+}
+
+.hello__button {
+  border-radius: 20px;
+  background: MintCream;
+  border: 2px solid black;
+  font-size: 1.25em;
+  font-weight: bold;
+  height: 2rem;
+  margin-top: 2em;
+}
+/*# sourceMappingURL=hello.css.map */
