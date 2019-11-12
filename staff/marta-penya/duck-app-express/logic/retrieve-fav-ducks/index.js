@@ -13,25 +13,26 @@ module.exports = function(id, token) {
     
             const { data: { favs = [] } } = result
     
-            let counter = 0, error
-    
-            if (favs.length)
-                for (let i = 0; i < favs.length && !error; i++) {
-                    call('GET', undefined, `https://duckling-api.herokuapp.com/api/ducks/${favs[i]}`, undefined, result2 => {
-                        if (result2.error) return reject(error = new Error(result2.error))
-    
-                        result2.image = result2.imageUrl
-                        result2.isFav = true
-                        delete result2.imageUrl
-    
-                        favs[i] = result2
-    
-                        //if (++counter === favs.length) callback(undefined, favs)
-                        ++counter === favs.length && resolve(favs)
+            const favoritosArray = favs.map(favduck => new Promise((resolve, reject) => {
+                call('GET', undefined, `https://duckling-api.herokuapp.com/api/ducks/${favduck}`, undefined, result2 => {
+                    if (result2.error) resolve()
+                    
+                    resolve(result2)
+                })
+            }))
+            Promise.all(favoritosArray)
+                .then(arrFavs => arrFavs.filter(err => !!err))
+                .then(favs=> {
+                    
+                    favs.map(duck => {
+                        duck.image = duck.imageUrl
+                        delete duck.imageUrl
+                        duck.isFav = true
+
+                        //duck.isFav = favs.includes(duck.id)
                     })
-                }
-            else resolve(favs)
+                resolve(favs)
+                })
         })
     })
-
 }
