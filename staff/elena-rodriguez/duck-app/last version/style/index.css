@@ -42,9 +42,8 @@ body {
   /* @import ./search */
 }
 .results {
-  border: 0.3rem solid orange;
-  border-radius: 1rem;
-  border-style: dotted;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 20%;
   padding: 1rem;
   margin: 0.5rem;
   list-style: none;
@@ -52,25 +51,21 @@ body {
 }
 .results__item {
   display: inline-block;
-  border: 0.3rem solid orange;
   border-radius: 1rem;
-  border-style: dotted;
   margin: 1rem;
 }
 
 .item {
   display: inline-block;
-  background-color: pink;
-  border: 0.3rem solid fuchsia;
+  background-color: white;
   border-radius: 1rem;
-  border-style: dotted;
   text-decoration: none;
   cursor: pointer;
   padding: 0.5rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .item__title {
-  color: fuchsia;
+  color: black;
 }
 .item__image {
   display: block;
