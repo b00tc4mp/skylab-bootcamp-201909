@@ -5,6 +5,7 @@ import Register from '../Register';
 import Login from '../Login';
 import Home from '../Home'
 import Item from '../Item'
+import Task from '../Task'
 
 // LOGIC
 import logic from '../../logic'
@@ -59,6 +60,7 @@ export default class App extends Component {
         const { target: { email: { value: email }, password: { value: password } } } = event
         try {
             await logic.authenticateUser(email, password)
+            debugger
             this.handleCategory()
         }
         catch ({ message }) {
@@ -75,16 +77,25 @@ export default class App extends Component {
         }
     }
 
+    handleTasksCategory = async (id) => {
+        try{
+            const tasks =  await logic.retrieveTaskByCategory(id)
+            this.setState({ tasks })
+        }catch({message}){
+            this.setState({ error: message })
+        }
+    }
+
     render() {
         const {
-            state: { view, error, categories },
-            handleRegister, handleLogin, handleGoToLogin, handleGoToRegister
+            state: { view, error, categories, tasks },
+            handleRegister, handleLogin, handleGoToLogin, handleGoToRegister, handleTasksCategory
         } = this
 
         return <div className="App">
             {view === 'register' && <Register onError={error} onGoToLogin={handleGoToLogin} onSubmit={handleRegister} />}
             {view === 'login' && <Login onError={error} onBack={handleGoToRegister} onSubmit={handleLogin} />}
-            {view === 'home' && <Home onCategory={categories} inItem={category => <Item onCategory={category} />} />}
+            {view === 'home' && <Home categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory}/>} />&&<Task tasks={tasks} />}
         </div>
     }
 }

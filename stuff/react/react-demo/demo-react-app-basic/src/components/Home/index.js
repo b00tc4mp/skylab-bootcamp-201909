@@ -1,8 +1,8 @@
 import React from 'react'
 
-export default function ({ onCategory, onItem }) {
+export default function ({ categories, onItem }) {
   
   return <ul>
-    {onCategory.map(category => onItem(category) )}
+    {categories.map(category => onItem(category) )}
   </ul>
 }
