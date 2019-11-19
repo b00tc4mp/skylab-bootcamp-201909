@@ -34,7 +34,7 @@ export default function (email, password) {
         } 
         else {
             const { token } = await response.json()
-            this.__token__ = (token)   
+            this.__token__ = token 
         }   
     })()
 }

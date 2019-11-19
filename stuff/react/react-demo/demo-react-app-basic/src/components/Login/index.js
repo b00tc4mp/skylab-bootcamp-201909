@@ -3,7 +3,7 @@ import Feedback from '../Feedback'
 import './index.sass'
 
 
-function Login({onError, onBack, onSubmit}){
+export default function ({onError, onBack, onSubmit}){
 
     return  <div className="form-wrapper form-wrapper--login">
                 <form onSubmit = {onSubmit} className="form form__register">
@@ -31,5 +31,3 @@ function Login({onError, onBack, onSubmit}){
                 
             </div>
 }
-
-export default Login;

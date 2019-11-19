@@ -1,77 +1,90 @@
 import React, { Component } from 'react';
+
+// COMPONENTS
 import Register from '../Register';
 import Login from '../Login';
+import Home from '../Home'
+import Item from '../Item'
+
+// LOGIC
 import logic from '../../logic'
 
-class App extends Component {
+export default class App extends Component {
     constructor() {
         super()
         this.state = {
             view: 'register',
-            user: undefined,
             credentials: undefined,
             error: undefined,
+            categories: undefined
         }
     }
 
-    async componentWillMount(){
-        if(sessionStorage.token){
-            try{
+    async componentWillMount() {
+        if (sessionStorage.token) {
+            try {
                 // const user = await logic.retrieveUser()
                 // this.setState({ user : user})
-                this.setState({ user : await logic.retrieveUser()})
-            }catch({ message }){
-                this.setState({view : 'regsiter' , error: message})
+                this.setState({ user: await logic.retrieveUser() })
+            } catch ({ message }) {
+                this.setState({ view: 'regsiter', error: message })
             }
         }
     }
 
     handleGoToRegister = event => {
         event.preventDefault();
-        this.setState({view: 'register' , error: undefined});
+        this.setState({ view: 'register', error: undefined });
     }
 
     handleGoToLogin = event => {
         event.preventDefault();
-        this.setState({view: 'login' , error: undefined});
+        this.setState({ view: 'login', error: undefined });
     }
 
     handleRegister = async event => {
         event.preventDefault()
-        const { target : { username : { value : username } , email : { value : email } , password : { value : password } , repassword : { value : repassword } }} = event
-        try{
-            await logic.registerUser(username , email , password , repassword)
-            this.setState({view:'login'})
+        const { target: { username: { value: username }, email: { value: email }, password: { value: password }, repassword: { value: repassword } } } = event
+        try {
+            await logic.registerUser(username, email, password, repassword)
+            this.setState({ view: 'login' })
         }
-        catch({ message }){
-            this.setState({error :message})
+        catch ({ message }) {
+            this.setState({ error: message })
         }
     }
 
     handleLogin = async event => {
         event.preventDefault()
-        const { target : { email : { value : email } , password : { value : password } }} = event
-        try{
-            const {token} = await logic.authenticateUser(email , password)
-            logic.__token__ = token;
-            this.setState({view:'login'})
+        const { target: { email: { value: email }, password: { value: password } } } = event
+        try {
+            await logic.authenticateUser(email, password)
+            this.handleCategory()
         }
-        catch({ message }){
-            this.setState({error :message})
+        catch ({ message }) {
+            this.setState({ error: message })
+        }
+    }
+
+    handleCategory = async () => {
+        try {
+            const categories = await logic.retrieveCategory()
+            this.setState({ view: 'home', categories })
+        } catch ({ message }) {
+            this.setState({ error: message })
         }
     }
 
     render() {
         const {
-            state: {view, user, error},
+            state: { view, error, categories },
             handleRegister, handleLogin, handleGoToLogin, handleGoToRegister
         } = this
-        
-        return  <div className="App">
-                    {view==='register' && <Register onError={error} onGoToLogin={handleGoToLogin} onSubmit={handleRegister}/>}
-                    {view==='login' && <Login onError={error} onBack={handleGoToRegister} onSubmit={handleLogin}/>}
-                </div>
+
+        return <div className="App">
+            {view === 'register' && <Register onError={error} onGoToLogin={handleGoToLogin} onSubmit={handleRegister} />}
+            {view === 'login' && <Login onError={error} onBack={handleGoToRegister} onSubmit={handleLogin} />}
+            {view === 'home' && <Home onCategory={categories} inItem={category => <Item onCategory={category} />} />}
+        </div>
     }
 }
-
-export default App;
