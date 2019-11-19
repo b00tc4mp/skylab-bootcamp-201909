@@ -4,7 +4,7 @@ import './index.sass'
 import "../../styles/button.sass"
 
 
-function Register({ onError , onSubmit }){
+export default function ({ onError , onGoToLogin , onSubmit }){
 
     return  <div className="form-wrapper">
                 <form onSubmit = {onSubmit} className="form form__register">
@@ -29,11 +29,14 @@ function Register({ onError , onSubmit }){
                                 <label className="input-block__label" htmlFor="repassword">confirm password </label>
                                     <input className="input-block__input" type="password" name="repassword"  />
                             </div>
-                        <button className="btn btn--submit">Register</button>
+                            <div className="btn-set-form">
+                                <button className="btn btn--submit">Register</button>
+                                <a href="" onClick={onGoToLogin}>Go to Login</a>
+                            </div>
                         </section>
                     </fieldset>
                 </form>
                 {onError && <Feedback message ={onError}/>}
             </div>}
 
-export default Register;
+// export default Register;
