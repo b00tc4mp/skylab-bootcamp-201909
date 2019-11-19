@@ -17,6 +17,7 @@ const { validate } = require('utils')
         if(!user) throw new Error('user does not exist')
 
         const currentCategories = await Category.find({ owner : userId }, {__v:0}).lean()
-        return currentCategories
+        
+        return currentCategories.map(category => ( { id: category.id, name: category.name }))
     })()
  }
