@@ -60,8 +60,7 @@ export default class App extends Component {
         const { target: { email: { value: email }, password: { value: password } } } = event
         try {
             await logic.authenticateUser(email, password)
-            debugger
-            this.handleCategory()
+            await this.handleCategory()
         }
         catch ({ message }) {
             this.setState({ error: message })
@@ -78,7 +77,7 @@ export default class App extends Component {
     }
 
     handleTasksCategory = async (id) => {
-        try{
+        try{debugger
             const tasks =  await logic.retrieveTaskByCategory(id)
             this.setState({ tasks })
         }catch({message}){

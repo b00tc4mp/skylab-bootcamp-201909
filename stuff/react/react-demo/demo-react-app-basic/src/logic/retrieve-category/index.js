@@ -8,17 +8,17 @@ const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
 export default function(){
     return( async ()=> {
-        const categories = await fetch(`${REACT_APP_API_URL}/category` , {
+        const responses = await fetch(`${REACT_APP_API_URL}/category` , {
             method: 'GET',
             headers : {'authorization' : `bearer ${this.__token__}`}
         })
-        if(categories.status !== 200){
-            const { error } = await categories.json()
+        if(responses.status !== 200){
+            const { error } = await responses.json()
             throw new Error (error)
         }
         else{
-            const { categories } = await categories.json()
-            debugger
+            const { categories } = await responses.json()
+            
             return categories
         }
     })()
