@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 // COMPONENTS
 import Register from '../Register';
 import Login from '../Login';
+import Aside from '../Aside';
+import Item from '../Item';
+import Main from '../Main';
 import Home from '../Home'
-import Item from '../Item'
-import Task from '../Task'
-
 // LOGIC
 import logic from '../../logic'
 
@@ -17,18 +17,20 @@ export default class App extends Component {
             view: 'register',
             credentials: undefined,
             error: undefined,
-            categories: undefined
+            categories: undefined,
+            user: undefined,
+            tasks: [],
+            idCategory: undefined
         }
     }
 
     async componentWillMount() {
         if (sessionStorage.token) {
             try {
-                // const user = await logic.retrieveUser()
-                // this.setState({ user : user})
-                this.setState({ user: await logic.retrieveUser() })
+                const user = await logic.retrieveUser()
+                this.setState({ user : user})
             } catch ({ message }) {
-                this.setState({ view: 'regsiter', error: message })
+                this.setState({ view: 'register', error: message })
             }
         }
     }
@@ -69,32 +71,37 @@ export default class App extends Component {
 
     handleCategory = async () => {
         try {
+            debugger
             const categories = await logic.retrieveCategory()
+            if(categories.length > 0){
+                const [{id}] = categories
+                this.handleTasksCategory(id)
+            }
             this.setState({ view: 'home', categories })
         } catch ({ message }) {
             this.setState({ error: message })
         }
     }
 
-    handleTasksCategory = async (id) => {
-        try{debugger
-            const tasks =  await logic.retrieveTaskByCategory(id)
-            this.setState({ tasks })
-        }catch({message}){
+    handleTasksCategory = async (idCategory) => {
+        try {
+            const tasks = await logic.retrieveTaskByCategory(idCategory)
+            this.setState({ tasks, idCategory })
+        } catch ({ message }) {
             this.setState({ error: message })
         }
     }
 
     render() {
         const {
-            state: { view, error, categories, tasks },
+            state: { view, error, categories, tasks, user, idCategory },
             handleRegister, handleLogin, handleGoToLogin, handleGoToRegister, handleTasksCategory
         } = this
 
         return <div className="App">
             {view === 'register' && <Register onError={error} onGoToLogin={handleGoToLogin} onSubmit={handleRegister} />}
             {view === 'login' && <Login onError={error} onBack={handleGoToRegister} onSubmit={handleLogin} />}
-            {view === 'home' && <Home categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory}/>} />&&<Task tasks={tasks} />}
+            {view === 'home' && <Home aside={<Aside currentUser={user} categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory} />} />} main={<Main tasks={tasks} id={idCategory} />} />}
         </div>
     }
 }

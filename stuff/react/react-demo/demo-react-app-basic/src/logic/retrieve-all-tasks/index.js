@@ -17,10 +17,8 @@ export default function(){
             throw new Error (error)
         }
         else{
-            const a = await list.json()
-            debugger
             const { tasks } = await list.json()
-            debugger
+            
             return tasks
         }
     })()

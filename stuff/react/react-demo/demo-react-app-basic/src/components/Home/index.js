@@ -1,8 +1,10 @@
 import React from 'react'
+import Feedback from '../Feedback'
 
-export default function ({ categories, onItem }) {
-  
-  return <ul>
-    {categories.map(category => onItem(category) )}
-  </ul>
+
+export default function ({ aside, main }) {
+    return <>
+        <aside>{aside}</aside>
+        <main>{main}</main>
+    </>
 }
