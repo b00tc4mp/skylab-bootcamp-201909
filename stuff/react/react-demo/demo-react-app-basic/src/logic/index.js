@@ -9,7 +9,8 @@ import isUserLoggedIn from './is-user-logged-in'
 import userLoggedOut from './user-logged-out'
 import retrieveCategory from './retrieve-category'
 import retrieveTaskByCategory from './retrieve-all-task-category'
-
+import registerCategory from './register-category'
+import deleteCategory from './delete-category'
 
 export default {
     set __token__(token){
@@ -23,7 +24,7 @@ export default {
     isUserLoggedIn , userLoggedOut ,
     registerTask , deleteTask , updateTask ,
     registerUser , authenticateUser , retrieveUser ,
-    retrieveAllTasks, retrieveCategory, retrieveTaskByCategory
+    retrieveAllTasks, retrieveCategory, retrieveTaskByCategory, registerCategory, deleteCategory
 }
 
       

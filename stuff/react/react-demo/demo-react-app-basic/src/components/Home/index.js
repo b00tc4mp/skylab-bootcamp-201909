@@ -1,10 +1,9 @@
 import React from 'react'
-import Feedback from '../Feedback'
-
+import './index.sass'
 
 export default function ({ aside, main }) {
-    return <>
+    return <div className='home'>
         <aside>{aside}</aside>
         <main>{main}</main>
-    </>
+    </div>
 }

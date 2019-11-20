@@ -23,12 +23,13 @@ export default class App extends Component {
             idCategory: undefined
         }
     }
-
+    
     async componentWillMount() {
+        console.log(this.state.idCategory)
         if (sessionStorage.token) {
             try {
                 const user = await logic.retrieveUser()
-                this.setState({ user : user})
+                this.setState({ user : user })
             } catch ({ message }) {
                 this.setState({ view: 'register', error: message })
             }
@@ -62,7 +63,8 @@ export default class App extends Component {
         const { target: { email: { value: email }, password: { value: password } } } = event
         try {
             await logic.authenticateUser(email, password)
-            await this.handleCategory()
+            this.setState({ user : await logic.retrieveUser()})
+            this.handleCategory()
         }
         catch ({ message }) {
             this.setState({ error: message })
@@ -71,12 +73,14 @@ export default class App extends Component {
 
     handleCategory = async () => {
         try {
-            debugger
+            
             const categories = await logic.retrieveCategory()
             if(categories.length > 0){
                 const [{id}] = categories
                 this.handleTasksCategory(id)
+                this.setState({idCategory: id})
             }
+            
             this.setState({ view: 'home', categories })
         } catch ({ message }) {
             this.setState({ error: message })
@@ -86,22 +90,50 @@ export default class App extends Component {
     handleTasksCategory = async (idCategory) => {
         try {
             const tasks = await logic.retrieveTaskByCategory(idCategory)
+            
             this.setState({ tasks, idCategory })
+            
         } catch ({ message }) {
             this.setState({ error: message })
         }
     }
 
+    handleRegisterTask = async (event, idCategory) => {
+        const { task: { value: task } } = event.target
+        
+        await logic.registerTask(idCategory, task)
+        this.handleTasksCategory(idCategory)
+    }
+
+    handleDeleteTask = async taskId =>{
+        await logic.deleteTask(this.state.idCategory, taskId)
+        this.handleTasksCategory(this.state.idCategory)
+    }
+
+    handleRegisterCategory = async event => {
+        const { category: { value: name }} = event.target
+        await logic.registerCategory(name)
+        this.handleCategory()
+
+    }
+
+    handleDeleteCategory = async idCategory =>{debugger
+        await logic.deleteCategory(idCategory)
+
+        this.handleTasksCategory(idCategory)
+    }
+
     render() {
         const {
             state: { view, error, categories, tasks, user, idCategory },
-            handleRegister, handleLogin, handleGoToLogin, handleGoToRegister, handleTasksCategory
+            handleRegister, handleLogin, handleGoToLogin, handleGoToRegister,
+            handleTasksCategory, handleRegisterTask, handleDeleteTask, handleRegisterCategory, handleDeleteCategory
         } = this
 
         return <div className="App">
             {view === 'register' && <Register onError={error} onGoToLogin={handleGoToLogin} onSubmit={handleRegister} />}
             {view === 'login' && <Login onError={error} onBack={handleGoToRegister} onSubmit={handleLogin} />}
-            {view === 'home' && <Home aside={<Aside currentUser={user} categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory} />} />} main={<Main tasks={tasks} id={idCategory} />} />}
+            {view === 'home' && <Home aside={<Aside currentUser={user} onRegisterCategory={handleRegisterCategory} categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory} onDeleteCategory={handleDeleteCategory} on />} />} main={<Main tasks={tasks} id={idCategory} onRegisterTask={handleRegisterTask} onDeleteTask = {handleDeleteTask}/>} />}
         </div>
     }
 }

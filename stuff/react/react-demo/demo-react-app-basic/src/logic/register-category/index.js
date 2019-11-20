@@ -3,15 +3,14 @@ const { validate } = utils
 
 const REACT_APP_API_URL = process.env.REACT_APP_API_URL
 
-export default function(idCategory , description){
-    validate.string(idCategory , "category")
-    validate.string(description , "description")
+export default function(name){
+    validate.string(name , "description")
 
     return(async()=>{
-        const response = await fetch(`${REACT_APP_API_URL}/tasks/${idCategory}` , {
+        const response = await fetch(`${REACT_APP_API_URL}/category` , {
             method: 'POST',
             headers: {'authorization' : `bearer ${this.__token__}` , 'content-type' : 'application/json'},
-            body: JSON.stringify({ description })
+            body: JSON.stringify({ name })
         })
         
         if(response.status !== 201){
