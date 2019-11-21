@@ -1,0 +1,75 @@
+.btn
+    border-radius: .5rem
+    text-decoration: none
+    padding: 1rem
+    font-size: 1rem
+    width: 50%
+    &--submit
+        background-color: rgba(40,44,52 , 0.5)
+    &--link
+        background-color: rgba(40,44,52 , 0.5)
+    &-set
+        width: 75%
+        display: flex
+        justify-content: space-evenly 
+        align-items: center
+    &--set
+        margin-top: 2rem
+    &--register-back
+        color: white
+        background-color: rgba(40,44,52 , 0.5)
+    &--success
+        color: white
+        background-color: rgba(40,44,52 , 0.5)
+        wdith: 50%
+    &__input-task
+        align-items: center
+        background-color: rgba(40,44,52 , 0.5)
+        display: flex
+        flex-direction: column
+        height: 1rem
+        justify-content: center
+        margin-top: 1rem
+        width: 100%
+    &__toggle--done
+            border: none
+            height: 2rem
+            width: 10%
+            background: url('./img/checked-icon-24.png') transparent no-repeat center center
+            &:active
+                outline: none
+            &:focus
+                outline: 0
+    &__toggle--pending
+            border: none
+            height: 2rem
+            width: 10%
+            background: url('./img/unchecked.png') transparent no-repeat center center
+            &:active
+                outline: none
+            &:focus
+                outline: 0
+    &--delete
+        border: 2px solid rgba(255,0,0,.35)
+        border-radius: 50%
+        width: 5%
+        background: url('./img/delete-icon-16.jpg') transparent no-repeat center center
+        &:active
+            outline: none
+        &:focus
+            outline: 0
+    &--update
+        background: url('./img/update-icon-24.png') transparent no-repeat center center
+        border: none
+        width: 10%
+    &--logout
+        border: none
+        margin: 1rem 0 0
+        width: 10%
+        background: url('./img/logout-icon-32.png') transparent no-repeat center center
+        &:hover
+            pointer: cursor
+        &:active
+            outline: none
+        &:focus
+            outline: 0

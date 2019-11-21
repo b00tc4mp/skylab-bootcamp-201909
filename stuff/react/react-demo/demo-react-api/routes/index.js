@@ -38,7 +38,7 @@ const updateTask = require('./update-task')
 const deleteTask = require('./delete-task')
 
 router.post('/tasks/:categoryId' , jsonBodyParser , registerTask)
-router.get('/category' , [tokenMiddleware , jsonBodyParser] , retrieveTasksByCategory)
+router.get('/category/:category' , [tokenMiddleware , jsonBodyParser] , retrieveTasksByCategory)
 router.delete('/category' , [tokenMiddleware , jsonBodyParser] , deleteTasksByCategory)
 router.get('/users/tasks' , tokenMiddleware , retrieveTasksByUser)
 router.patch('/tasks/:taskId' , jsonBodyParser , updateTask)

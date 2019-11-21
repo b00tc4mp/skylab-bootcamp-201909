@@ -1,0 +1,47 @@
+@import "../../styles/base-settings.sass"
+
+.form
+    width: 300px
+    margin: 0 auto
+    @include sm 
+        width: 350px
+    @include md
+        width: 450px
+    @include lg 
+        width: 500px
+    @include xl 
+        width: 550px
+.fieldset
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-radius: .5rem
+    padding: 1rem
+    &__legend
+        font-size: 1.5rem
+        padding: .5rem
+.input-block
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    border-radius: .5rem
+    &__label
+        color: rgba(40,44,52 , 0.85)
+        display: block
+        margin-bottom: .5rem
+        width: 100%
+    &__input
+        background-color: rgba(40,44,52 , 0.85)
+        border-radius: .5rem
+        color: white
+        display: block
+        font-size: 1rem
+        margin-bottom: 1rem
+        outline: none
+        padding: .5rem
+        text-align: center
+        width: 100%
+
+    
