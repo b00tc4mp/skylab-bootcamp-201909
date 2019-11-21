@@ -6,7 +6,7 @@ import Login from '../Login';
 import Aside from '../Aside';
 import Item from '../Item';
 import Main from '../Main';
-import Home from '../Home'
+import Home from '../Home';
 // LOGIC
 import logic from '../../logic'
 
@@ -120,7 +120,7 @@ export default class App extends Component {
     handleDeleteCategory = async idCategory =>{debugger
         await logic.deleteCategory(idCategory)
 
-        this.handleTasksCategory(idCategory)
+        this.handleCategory()
     }
 
     render() {

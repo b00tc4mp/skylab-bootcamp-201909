@@ -9,14 +9,14 @@ export default function ({ tasks, id, onRegisterTask, onDeleteTask }) {
             {tasks.map(task => <li>
                 <p>{task.description}</p>
                 <p>{task.date}</p>
-                <button onClick={ ()=> onDeleteTask(task.id) }>Remove</button>
-                </li>)}
+                <button onClick={() => onDeleteTask(task.id)}>Remove</button>
+            </li>)}
         </ul>}
-        <form onSubmit={(event)=>{
-        event.preventDefault()
-        onRegisterTask(event, id)
+        <form onSubmit={(event) => {
+            event.preventDefault()
+            onRegisterTask(event, id)
         }}>
-            <input type='text' name='task'/>
+            <input type='text' name='task' />
             <button>Add</button>
         </form>
     </div>
