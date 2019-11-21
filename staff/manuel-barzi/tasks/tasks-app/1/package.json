@@ -17,6 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:debug": "react-scripts inspect test --runInBand --no-cache",
+    "sass": "sass template/index.sass template/index.css",
+    "sass:watch": "sass --watch template/index.sass template/index.css",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
