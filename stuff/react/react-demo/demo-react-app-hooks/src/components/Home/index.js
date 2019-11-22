@@ -16,7 +16,7 @@ export default function ({ user, error }) {
     const [categories, setCategories] = useState(undefined)
     const [idCategory, setIdCategory] = useState(undefined)
     const [tasks, setTasks] = useState([])
-
+    
 
     const retreiveTasks = useCallback(async(idCategory) => {
         const tasks = await logic.retrieveTaskByCategory(idCategory)
