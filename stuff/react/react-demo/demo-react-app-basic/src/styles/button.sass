@@ -4,8 +4,15 @@
     padding: 1rem
     font-size: 1rem
     width: 50%
+    outline: none
+    &:hover
+        cursor: pointer
     &--submit
-        background-color: rgba(40,44,52 , 0.5)
+        background-color: rgba(40,44,52 , 0.25)
+        width: 40%
+        &:hover
+            color: white
+            background-color: rgba(92,184,92, 1)
     &--link
         background-color: rgba(40,44,52 , 0.5)
     &-set
@@ -15,9 +22,13 @@
         align-items: center
     &--set
         margin-top: 2rem
-    &--register-back
-        color: white
-        background-color: rgba(40,44,52 , 0.5)
+    &--back
+        background-color: rgba(40,44,52 , 0.25)
+        transition: background-color .2s
+        width: 40%
+        &:hover
+            color: white
+            background-color: rgba(91,192,222, 1)
     &--success
         color: white
         background-color: rgba(40,44,52 , 0.5)
@@ -64,8 +75,8 @@
         width: 10%
     &--logout
         border: none
-        margin: 1rem 0 0
-        width: 10%
+        height: 35px
+        width: 35px
         background: url('./img/logout-icon-32.png') transparent no-repeat center center
         &:hover
             pointer: cursor
@@ -73,3 +84,24 @@
             outline: none
         &:focus
             outline: 0
+    &--category
+        background-color: rgba(40,44,52 , 0.21)
+        border: none
+        width: 80%
+    &--remove
+        align-items: center
+        background-color: rgba(217,83,79, .15)
+        display: flex
+        justify-content: center
+        transition: background-color .2s
+        width: 15%
+        &:hover
+            background-color: rgba(217,83,79, .5)
+    &--add
+        background-color: white
+        width: 100%
+
+
+.btn-set-form
+    display: flex
+    justify-content: space-evenly

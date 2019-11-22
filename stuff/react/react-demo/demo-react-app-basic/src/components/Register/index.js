@@ -31,7 +31,7 @@ export default function ({ onError, onGoToLogin, onSubmit }) {
                     </div>
                     <div className="btn-set-form">
                         <button className="btn btn--submit">Register</button>
-                        <a href="" onClick={onGoToLogin}>Go to Login</a>
+                        <button className="btn btn--back" onClick={onGoToLogin}>Go to Login</button>
                     </div>
                 </section>
             </fieldset>

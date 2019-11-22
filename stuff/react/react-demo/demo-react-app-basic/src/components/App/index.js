@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 // COMPONENTS
+import Header from '../Header';
 import Register from '../Register';
 import Login from '../Login';
 import Aside from '../Aside';
@@ -10,12 +11,13 @@ import Home from '../Home';
 // LOGIC
 import logic from '../../logic'
 
+import './index.sass'
+
 export default class App extends Component {
     constructor() {
         super()
         this.state = {
             view: 'register',
-            credentials: undefined,
             error: undefined,
             categories: undefined,
             user: undefined,
@@ -87,7 +89,7 @@ export default class App extends Component {
         }
     }
 
-    handleTasksCategory = async (idCategory) => {
+    handleTasksCategory = async (idCategory) => {debugger
         try {
             const tasks = await logic.retrieveTaskByCategory(idCategory)
             
@@ -123,17 +125,29 @@ export default class App extends Component {
         this.handleCategory()
     }
 
+    handleLogout = ()=>{
+        logic.userLoggedOut()
+        this.setState({ view:'register',
+                        user: undefined,
+                        categories: undefined,
+                        tasks: [],
+                        idCategory: undefined
+                    })
+    }
+
     render() {
         const {
             state: { view, error, categories, tasks, user, idCategory },
             handleRegister, handleLogin, handleGoToLogin, handleGoToRegister,
-            handleTasksCategory, handleRegisterTask, handleDeleteTask, handleRegisterCategory, handleDeleteCategory
+            handleTasksCategory, handleRegisterTask, handleDeleteTask,
+            handleRegisterCategory, handleDeleteCategory, handleLogout
         } = this
 
         return <div className="App">
+            <Header currentUser={user} onLogout = {handleLogout} />
             {view === 'register' && <Register onError={error} onGoToLogin={handleGoToLogin} onSubmit={handleRegister} />}
             {view === 'login' && <Login onError={error} onBack={handleGoToRegister} onSubmit={handleLogin} />}
-            {view === 'home' && <Home aside={<Aside currentUser={user} onRegisterCategory={handleRegisterCategory} categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory} onDeleteCategory={handleDeleteCategory} on />} />} main={<Main tasks={tasks} id={idCategory} onRegisterTask={handleRegisterTask} onDeleteTask = {handleDeleteTask}/>} />}
+            {view === 'home' && <Home aside={<Aside onRegisterCategory={handleRegisterCategory} categories={categories} onItem={category => <Item category={category} onExtend={handleTasksCategory} onDeleteCategory={handleDeleteCategory} on />} />} main={<Main tasks={tasks} id={idCategory} onRegisterTask={handleRegisterTask} onDeleteTask = {handleDeleteTask}/>} />}
         </div>
     }
 }

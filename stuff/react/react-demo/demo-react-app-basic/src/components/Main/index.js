@@ -3,7 +3,6 @@ import './index.sass'
 import Feedback from '../Feedback'
 
 export default function ({ tasks, id, onRegisterTask, onDeleteTask }) {
-    debugger
     return <div className='main'>
         {tasks.length > 0 && <ul className='main__ul'>
             {tasks.map(task => <li>

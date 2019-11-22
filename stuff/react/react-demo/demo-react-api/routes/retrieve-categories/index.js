@@ -12,6 +12,7 @@ const logic = require('../../logic')
     const { userId } = req
 
     try{
+        debugger
         logic.retrieveCategories(userId)
         .then(categories => res.status(200).json({ message : 'categories correctly retrieved' , categories }))
         .catch(({ message }) => res.status(400).json({ error : message }))
