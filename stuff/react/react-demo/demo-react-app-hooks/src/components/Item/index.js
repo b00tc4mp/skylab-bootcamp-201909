@@ -2,6 +2,9 @@ import React, { useContext } from 'react'
 import logic from '../../logic'
 import HomeContext from '../HomeContext'
 import Context from '../CreateContext'
+import './index.sass'
+import '../../styles/button.sass'
+
 
 export default function ({ category: { id, name }, onControl, control }) {
 
@@ -26,13 +29,13 @@ export default function ({ category: { id, name }, onControl, control }) {
     onControl(!control)
   }
 
-  return <>
-    <a href=' ' onClick={(event) => {
+  return <div className="item">
+    <a className="btn btn--category" href=' ' onClick={(event) => {
       event.preventDefault()
       handleTasksCategory(id)
     }}>{name}</a>
-    <button onClick={() => {
+    <button className="btn btn--remove" onClick={() => {
       handleDeleteCategory(id)
-    }}>remove</button>
-  </>
+    }}>X</button>
+  </div>
 }

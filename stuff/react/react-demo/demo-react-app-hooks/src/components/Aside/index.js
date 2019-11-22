@@ -40,15 +40,15 @@ export default function ({ currentUser: { user: { username } }, categories }) {
 
   return <div className='aside'>
     <h1>{username}</h1>
-    <ul>
+    <ul className="category-list">
       {categories&&categories.map(category => <li key={category.id.toString()}>{<Item onControl={setControl} control={control} category={category} />}</li>)}
     </ul>
     <form onSubmit={(event) => {
       event.preventDefault()
       registerCategory(event)
     }}>
-      <input type='text' name='category' />
-      <button>Add</button>
+      <input className = "input-add" type='text' name='category' />
+      <button className="btn btn--submit btn--add">Add</button>
     </form>
   </div>
 }

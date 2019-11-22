@@ -51,7 +51,7 @@ export default function ({ error }) {
                     </div>
                     <div className="btn-set-form">
                         <button className="btn btn--submit">Register</button>
-                        <a href=" " onClick={handleGoToLogin}>Go to Login</a>
+                        <button className="btn btn--back" href=" " onClick={handleGoToLogin}>Go to Login</button>
                     </div>
                 </section>
             </fieldset>

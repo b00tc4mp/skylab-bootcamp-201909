@@ -3,6 +3,8 @@ import './index.sass'
 import Feedback from '../Feedback'
 import logic from '../../logic'
 import HomeContext from '../HomeContext'
+import './index.sass'
+
 
 export default function ({ tasks, id, error }) {
     const { retreiveTasks } = useContext(HomeContext)
