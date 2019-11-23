@@ -1,4 +1,4 @@
-# PYRENE-SKI
+# PYRENE-SKI APP
 
 ![](images/skiordie.gif
 )
@@ -12,13 +12,11 @@ The Pyrene Ski App is a web tool for a club and school of ski that manage ski cl
 
 ### Use Cases
 
-![Use Cases](images/ps-usecases.png)
+![Use Cases](images/ps-usecases_ver0.png)
 
 ### Activity Diagram
 
-![](images/activity-diagram.png
-)
-
+![](images/ps-activity-diagram.png)
 
 
 ## Technical Description:
