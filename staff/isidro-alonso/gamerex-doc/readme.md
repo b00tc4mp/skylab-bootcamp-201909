@@ -19,3 +19,11 @@
 ### Data Model
 
 ![Data Model](img/data-model.png)
+
+## Wireframes
+
+![Wireframes](wireframes/wireframes.png)
+
+### Navigation
+
+![Navigation](wireframes/navigation.png)
