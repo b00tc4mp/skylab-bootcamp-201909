@@ -1,7 +1,6 @@
 # PYRENE-SKI APP
 
-![](images/skiordie.gif
-)
+![](images/skiordie.gif)
 
 ## Introduction:
 
@@ -23,16 +22,16 @@ The Pyrene Ski App is a web tool for a club and school of ski that manage ski cl
 
 ### Blocks
 
-![Blocks](images/block-diagram.png)
+![Blocks](images/ps-block-diagram.png)
 
 ### Components
 
-![Components](images/component-diagram.png
+![Components](images/ps-components-diagram.png
 )
 
 ### Data Model
 
-![Data Model](images/model-diagram.png
+![Data Model](images/ps-data-model-diagram.png
 )
 
 ### Code Coverage
