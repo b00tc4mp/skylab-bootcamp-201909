@@ -1,0 +1,34 @@
+body {
+  background-color: #FFFFBB;
+  margin: 0px auto;
+  min-width: 318px;
+  max-width: 100%;
+  vertical-align: middle;
+  height: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+main {
+  margin: 5px;
+}
+
+header {
+  background-color: #FF99BB;
+  margin: 0px auto;
+  min-width: 318px;
+  max-width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header button {
+  border: none;
+  background: none;
+}
+header__logo {
+  min-width: 300px;
+  max-width: 600px;
+}
+
+/*# sourceMappingURL=index.css.map */

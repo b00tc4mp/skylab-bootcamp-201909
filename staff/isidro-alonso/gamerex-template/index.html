@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +9,72 @@
     <link rel="shortcut icon" href="img/favicon.png" type="image/png">
     <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <header> <!--faltan las class-->
-        <img src="img/logo.png" alt="gamerex" />
-        <img src="img/search.png" alt="search" />
-        <img src="img/user.png" alt="user" />
-        <br/>
-        <img src="img/sell.png" alt="sell" />
-        <img src="img/exchange.png" alt="exchange" />
-        <img src="img/favourite.png" alt="favourite" />
+    <header class="header">
+        <button class="header__logo"><img src="img/logo.png" alt="gamerex" /></button>
+        <span class="header__container">
+            <button class="header__search"><img src="img/search.png" alt="search" /></button>
+            <button class="header__user"><img src="img/user.png" alt="user" /></button>
+        </span>
     </header>
+
+    <main>
+        <section class="landing">
+            <h1 class="landing__title">Best collectors</h1>
+            <section class="user-item">
+                <img class="user-item__img" src="img/dummy-user.png" alt="user" />
+                <p class="user-item__username">username</p>
+            </section>
+            <section class="user-item">
+                <img class="user-item__img" src="img/dummy-user.png" alt="user" />
+                <p class="user-item__username">username</p>
+            </section>
+            <section class="user-item">
+                <img class="user-item__img" src="img/dummy-user.png" alt="user" />
+                <p class="user-item__username">username</p>
+            </section>
+            <section class="user-item">
+                <img class="user-item__img" src="img/dummy-user.png" alt="user" />
+                <p class="user-item__username">username</p>
+            </section>
+            <section class="user-item">
+                <img class="user-item__img" src="img/dummy-user.png" alt="user" />
+                <p class="user-item__username">username</p>
+            </section>
+            <section class="user-item">
+                <img class="user-item__img" src="img/dummy-user.png" alt="user" />
+                <p class="user-item__username">username</p>
+            </section>
+        </section>
+
+        <section class="login">
+            <form>
+                <h1 class="login__title">Login</h1>
+                <input class="login__field" type="text" name="username" placeholder="username">
+                <input class="login__field" type="password" name="password" placeholder="password">
+                <button class="login__submit">Login</button>
+                <p class="login__gotoregister">Are you not registered?<br />
+                    <a href="#">Sign up now!</a></p>
+            </form>
+        </section>
+
+        <section class="register">
+            <form>
+                <h1 class="register__title">Register</h1>
+                <input class="register__field" type="text" name="username" placeholder="username">
+                <input class="register__field" type="text" name="location" placeholder="location">
+                <input class="register__field" type="email" name="email" placeholder="e-mail">
+                <input class="register__field" type="password" name="password" placeholder="password">
+                <button class="register__addimg">Add profile image</button>
+                <button class="register__submit">Register</button>
+            </form>
+        </section>
+    </main>
+    <br />
+    <img src="img/sell.png" alt="sell" />
+    <img src="img/exchange.png" alt="exchange" />
+    <img src="img/favourite.png" alt="favourite" />
 </body>
+
 </html>
