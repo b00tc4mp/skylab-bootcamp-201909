@@ -1,5 +1,5 @@
 module.exports = {
     user: require('./user'),
-    collection: require('./collection'),
+    card: require('./card'),
     game: require('./game')
 }
