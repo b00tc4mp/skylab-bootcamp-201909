@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Skillpop</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="./images/sklogocirc.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <section class="search">
+        <div class="search__header">
+            <nav>
+                <div id="menuToggle">
+                    <input type="checkbox" />
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <ul class="menu">
+                        <li><a class="menu__item" href="#">Login</a></li>
+                        <li><a class="menu__item" href="#">Register</a></li>
+                        <li><a class="menu__item" href="#">Profile</a></li>
+                        <li><a class="menu__item" href="#">Favorites</a></li>
+                        <li><a class="menu__item" href="#">Messages</a></li>
+                        <li><a class="menu__item" href="#">Publi Profile</a></li>
+                        <li><a class="menu__item" href="#">New Ads</a></li>
+                    </ul>
+                </div>
+            </nav>
+            <form class="search__form">
+                <input class="search__criteria" type="text" name="query" placeholder="criteria">
+                <button class="search__submit">🔍</button>
+            </form>
+            <img class="search__logo" src="./images/sklogocirc.png" alt="">
+        </div>
+
+        <div class="title_landing">
+            <h2>Productos cerca de ti</h2>
+        </div>
+
+        <ul class="results">
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/145x155/3d93f5/000000">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form method="post" action="">
+                                <input type="hidden" name="id">
+                                <button type="submit"><i class="far fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer one</h2>
+                </a>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/145x155/3d93f5/000000">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form method="post" action="">
+                                <input type="hidden" name="id">
+                                <button type="submit">💔</button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda as </h2>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+
+
+
+
+</body>
+
+</html>

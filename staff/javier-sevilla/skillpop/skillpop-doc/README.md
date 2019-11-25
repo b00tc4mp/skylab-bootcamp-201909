@@ -80,7 +80,7 @@ SkillPOP is a web application where you can find people who offer their skills s
 
 Below are all the use cases that a user can perform.
 
-![Use Cases](./images/sk-user-cases.png)
+![Use Cases](./images/sk-user-xases.png)
 
 ## Technical description
 ### Data Model
