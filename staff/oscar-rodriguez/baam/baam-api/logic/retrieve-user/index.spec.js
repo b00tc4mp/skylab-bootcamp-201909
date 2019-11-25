@@ -9,18 +9,18 @@ const { database, models: { User } } = require('baam-data')
 describe('logic - retrieve user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, username, password
+    let id, name, surname, email, nickname, password
 
     beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        username = `username-${random()}`
+        nickname = `nickname-${random()}`
         password = `password-${random()}`
 
         await User.deleteMany()
 
-        const user = await User.create({ name, surname, email, username, password })
+        const user = await User.create({ name, surname, email, nickname, password })
 
         id = user.id
     })
@@ -38,8 +38,8 @@ describe('logic - retrieve user', () => {
         expect(user.surname).to.be.a('string')
         expect(user.email).to.equal(email)
         expect(user.email).to.be.a('string')
-        expect(user.username).to.equal(username)
-        expect(user.username).to.be.a('string')
+        expect(user.nickname).to.equal(nickname)
+        expect(user.nickname).to.be.a('string')
         expect(user.password).to.be.undefined
         expect(user.lastAccess).to.exist
         expect(user.lastAccess).to.be.an.instanceOf(Date)
