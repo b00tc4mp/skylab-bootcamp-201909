@@ -1,4 +1,4 @@
-const {Schema, ObjectId} = require ('mongoose')
+const {Schema} = require ('mongoose')
 const player = require('./player')
 const shoot = require('.shoot')
 
