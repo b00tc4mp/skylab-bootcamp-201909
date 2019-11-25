@@ -1,10 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import './index.sass'
+import { Link } from 'react-router-dom'
 
-export default  function() {
+export default function() {
     const { token } = sessionStorage;
-    const userLink = token? '/user':'/login';
+    const userLink = token? '/myuser':'/login';
 
     return <header className="header">
         <Link to='/'>

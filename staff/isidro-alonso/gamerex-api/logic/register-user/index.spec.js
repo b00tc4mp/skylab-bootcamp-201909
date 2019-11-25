@@ -3,8 +3,8 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const registerUser = require('.')
 const { random } = Math
-const { errors: { ContentError } } = require('tasks-util')
-const { database, models: { User } } = require('tasks-data')
+const { errors: { ContentError } } = require('gamerex-util')
+const { database, models: { User } } = require('gamerex-data')
 
 describe('logic - register user', () => {
     before(() => database.connect(TEST_DB_URL))
@@ -100,8 +100,6 @@ describe('logic - register user', () => {
         expect(() => registerUser(name, surname, email, username, '')).to.throw(ContentError, 'password is empty or blank')
         expect(() => registerUser(name, surname, email, username, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
     })
-
-    // TODO other cases
 
     after(() => User.deleteMany().then(database.disconnect))
 })

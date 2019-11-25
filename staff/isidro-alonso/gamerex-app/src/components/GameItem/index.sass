@@ -1,29 +1,35 @@
-.user-list
+.game-list
     display: flex
     flex-wrap: wrap
     text-align: center
     justify-content: center
 
-    &__title
-        color: #8097FF
-        font-size: 1.5em
-        text-align: center
-
-.user-item
+.game-item
     background-color: #8097FF
     border-radius: 0.3em
     max-width: 310px
     margin: 10px
     padding: 20px 10px 5px 10px
 
-    &__username
+    &__link
+        text-decoration: none
+
+    &__title
         color: #333
         font-weight: bold
+        font-size: 1em
+
+    &__platform
+        color: #333
         font-size: 1em
 
     &__img
         border-radius: 0.3em
         width: 90%
 
-.user-item:hover
+    &__add
+        color: #333
+        font-size: 4em
+
+.game-item:hover
     background: #9fb0ff

@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import {authenticateUser} from '../../logic'
+import { Link, Route, withRouter, Redirect } from 'react-router-dom'
 
-export default function({  }) {
+export default withRouter(function({ history }) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     const handleLogin =async (e)=>{
-        e.preventDefault();
+        e.preventDefault()
         try {
             const token = await authenticateUser(username, password)
             sessionStorage.token = token
+            history.push('/')
           
         } catch (error) {
             console.error(error)
         }
     }
+
     const isDisabled = !username || !password
 
     return <section className="login">
@@ -31,4 +33,4 @@ export default function({  }) {
         </p>
     </form>
 </section>
-}
+})

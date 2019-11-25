@@ -3,7 +3,7 @@ import UserList from '../UserList'
 
 export default function({  }) {
     return <>
-    <div>hello landing</div>
+    <h1 className="user-list__title">Best collectors</h1>
     <UserList />
     </>
 }

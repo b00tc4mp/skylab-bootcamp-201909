@@ -3,8 +3,8 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('.')
-const { errors: { NotFoundError } } = require('tasks-util')
-const { database, models: { User } } = require('tasks-data')
+const { errors: { NotFoundError } } = require('gamerex-util')
+const { database, models: { User } } = require('gamerex-data')
 
 describe('logic - retrieve user', () => {
     before(() => database.connect(TEST_DB_URL))
@@ -58,8 +58,6 @@ describe('logic - retrieve user', () => {
             expect(error.message).to.equal(`user with id ${id} not found`)
         }
     })
-
-    // TODO other cases
 
     after(() => User.deleteMany().then(database.disconnect))
 })

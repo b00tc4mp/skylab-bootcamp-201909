@@ -2,7 +2,6 @@ const { validate, errors: { ConflictError } } = require('gamerex-util')
 const { models: { User } } = require('gamerex-data')
 
 module.exports = function (username, location, email, password) {
-    console.log(username, location, email, password)
     validate.string(username)
     validate.string.notVoid('username', username)
     validate.string(location)
