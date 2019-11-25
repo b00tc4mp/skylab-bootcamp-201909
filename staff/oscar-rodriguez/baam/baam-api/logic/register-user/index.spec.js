@@ -9,40 +9,40 @@ const { database, models: { User } } = require('baam-data')
 describe('logic - register user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let name, surname, email, username, password
+    let name, surname, email, nickname, password
 
     beforeEach(() => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        username = `username-${random()}`
+        nickname = `nickname-${random()}`
         password = `password-${random()}`
 
         return User.deleteMany()
     })
 
     it('should succeed on correct credentials', async () => {
-        const response = await registerUser(name, surname, email, username, password)
+        const response = await registerUser(name, surname, email, nickname, password)
 
         expect(response).to.be.undefined
 
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ nickname })
 
         expect(user).to.exist
 
         expect(user.name).to.equal(name)
         expect(user.surname).to.equal(surname)
         expect(user.email).to.equal(email)
-        expect(user.username).to.equal(username)
+        expect(user.nickname).to.equal(nickname)
         expect(user.password).to.equal(password)
     })
 
     describe('when user already exists', () => {
-        beforeEach(() => User.create({ name, surname, email, username, password }))
+        beforeEach(() => User.create({ name, surname, email, nickname, password }))
 
         it('should fail on already existing user', async () => {
             try {
-                await registerUser(name, surname, email, username, password)
+                await registerUser(name, surname, email, nickname, password)
 
                 throw Error('should not reach this point')
             } catch (error) {
@@ -51,7 +51,7 @@ describe('logic - register user', () => {
                 expect(error.message).to.exist
                 expect(typeof error.message).to.equal('string')
                 expect(error.message.length).to.be.greaterThan(0)
-                expect(error.message).to.equal(`user with username ${username} already exists`)
+                expect(error.message).to.equal(`user with nickname ${nickname} already exists`)
             }
         })
     })
@@ -94,11 +94,11 @@ describe('logic - register user', () => {
         expect(() => registerUser(name, surname, email, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => registerUser(name, surname, email, null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => registerUser(name, surname, email, '')).to.throw(ContentError, 'username is empty or blank')
-        expect(() => registerUser(name, surname, email, ' \t\r')).to.throw(ContentError, 'username is empty or blank')
+        expect(() => registerUser(name, surname, email, '')).to.throw(ContentError, 'nickname is empty or blank')
+        expect(() => registerUser(name, surname, email, ' \t\r')).to.throw(ContentError, 'nickname is empty or blank')
 
-        expect(() => registerUser(name, surname, email, username, '')).to.throw(ContentError, 'password is empty or blank')
-        expect(() => registerUser(name, surname, email, username, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
+        expect(() => registerUser(name, surname, email, nickname, '')).to.throw(ContentError, 'password is empty or blank')
+        expect(() => registerUser(name, surname, email, nickname, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
     })
 
     // TODO other cases

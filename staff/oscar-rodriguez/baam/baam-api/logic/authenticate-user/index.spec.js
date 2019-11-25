@@ -9,24 +9,24 @@ const { database, models: { User } } = require('baam-data')
 describe('logic - authenticate user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, username, password
+    let id, name, surname, email, nickname, password
 
     beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        username = `username-${random()}`
+        nickname = `nickname-${random()}`
         password = `password-${random()}`
 
         await User.deleteMany()
 
-        const user = await User.create({ name, surname, email, username, password })
+        const user = await User.create({ name, surname, email, nickname, password })
 
         id = user.id
     })
 
     it('should succeed on correct credentials', async () => {
-        const userId = await authenticateUser(username, password)
+        const userId = await authenticateUser(nickname, password)
 
         expect(userId).to.exist
         expect(typeof userId).to.equal('string')
@@ -36,11 +36,11 @@ describe('logic - authenticate user', () => {
     })
 
     describe('when wrong credentials', () => {
-        it('should fail on wrong username', async () => {
-            const username = 'wrong'
+        it('should fail on wrong nickname', async () => {
+            const nickname = 'wrong'
 
             try {
-                await authenticateUser(username, password)
+                await authenticateUser(nickname, password)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -56,7 +56,7 @@ describe('logic - authenticate user', () => {
             const password = 'wrong'
 
             try {
-                await authenticateUser(username, password)
+                await authenticateUser(nickname, password)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -77,8 +77,8 @@ describe('logic - authenticate user', () => {
         expect(() => authenticateUser(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => authenticateUser(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => authenticateUser('')).to.throw(ContentError, 'username is empty or blank')
-        expect(() => authenticateUser(' \t\r')).to.throw(ContentError, 'username is empty or blank')
+        expect(() => authenticateUser('')).to.throw(ContentError, 'nickname is empty or blank')
+        expect(() => authenticateUser(' \t\r')).to.throw(ContentError, 'nickname is empty or blank')
 
         expect(() => authenticateUser(email, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => authenticateUser(email, true)).to.throw(TypeError, 'true is not a string')
