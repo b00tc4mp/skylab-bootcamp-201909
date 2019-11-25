@@ -17,7 +17,7 @@ module.exports = new Schema ({
         type: Number,
         default: 0
     },
-    collection: {
+    col: {
         type: ObjectId,
         ref: 'Collection',
         required: true
