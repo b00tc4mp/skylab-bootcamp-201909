@@ -1,6 +1,6 @@
 const {Schema} = require ('mongoose')
 const player = require('./player')
-const shoot = require('.shoot')
+const shoot = require('./shoot')
 
 module.exports = new Schema ({
     players: [player],
