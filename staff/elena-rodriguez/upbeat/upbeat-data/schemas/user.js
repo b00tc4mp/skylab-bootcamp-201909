@@ -4,33 +4,39 @@ const {Schema} = require('mongoose')
 module.exports = new Schema ({
     username: {
         type: String,
-        required: true, 
-        unique: true
+        required: true,    
     },
     email: {
         type: String,
         required: true,
-        validate: isEmail
+        validate: isEmail,
+        unique: true
     },
     password: {
         type: String,
         required: true,
 
     },
-    lastAccess: {
-        type: Date
-    },
+
     profileImage: {
         type: String,
         required: true
     },
+
     rol:{
         type: String,
         required: true,
         enum: ['solo', 'groups']
     },
-    intruments: {
-        type: Array
+    intruments: [{
+        type: String,
+        enum: ['drums', 'guitar', 'piano', 'violin', 'bass', 'cello', 'clarinet', 'double bass', 'flute', 'oboe', 'saxophone', 'trombone', 'trumpet', 'ukelele', 'viola', 'vocal-soprano', 'vocal-mezzo', 'vocal-contralto', 'vocal-tenor', 'vocal-baritone', 'vocal-bass']
+    }],
+
+    groups: {
+        type: String,
+        required: true,
+        enum: ['band', 'choir', 'modern-ensemble', 'orchestra', 'classic-chamber']
     },
    
     description: {
