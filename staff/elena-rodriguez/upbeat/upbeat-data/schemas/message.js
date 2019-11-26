@@ -1,7 +1,21 @@
-const {Schema} = require('mongoose')
-//const { validators: { isEmail } } = require('tasks-util')
+const { Schema } = require('mongoose')
 
-module.exports = new Schema ({
-    
-    
-    })
+module.exports = new Schema({
+    user: {
+        type: ObjectId,
+        required: true,
+        ref: 'User'
+    },
+
+    content: {
+        type: String,
+        required: true
+    },
+
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now
+    }
+
+})

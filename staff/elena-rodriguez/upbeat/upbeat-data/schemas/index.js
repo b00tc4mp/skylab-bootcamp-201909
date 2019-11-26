@@ -1,5 +1,6 @@
 module.exports = {
-    user: require('./chat'),
-    task: require('./message'),
-    task: require('./user')
+    user: require('./user'),
+    chat: require('./chat'),
+    message: require('./message')
+    
 }

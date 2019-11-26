@@ -1,5 +1,5 @@
 const {Schema} = require('mongoose')
-const { validators: { isEmail } } = require('tasks-util')
+//const { validators: { isEmail } } = require('upbeat-util')
 
 module.exports = new Schema ({
     username: {
@@ -43,6 +43,7 @@ module.exports = new Schema ({
     favs: {
         type: Array
     },
+
     location: {
         
     }
