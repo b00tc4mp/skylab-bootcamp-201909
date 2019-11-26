@@ -1,6 +1,5 @@
 const call = require('../../utils/call')
-const { validate, errors: { CredentialsError, NotFoundError } } = require('tasks-util')
-// const { env: { REACT_APP_API_URL: API_URL } } = process
+const { validate, errors: { CredentialsError, NotFoundError } } = require('gamerex-util')
 const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (token) {
