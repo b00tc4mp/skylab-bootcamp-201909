@@ -7,11 +7,164 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Skillpop</title>
     <link rel="stylesheet" href="index.css">
-    <link rel="shortcut icon" href="./images/sklogocirc.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./images/sklogo.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/c580fd00c6.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <section>
+        <div class="view">
+            <button class="view__goback-button"><i class="fas fa-angle-left"></i></button>
+            <img class="view__logo" src="./images/sklogo.png" alt="">
+        </div>
+    </section>
+
+    <section class='login'>
+        <h1 class="login__title">Log In</h1>
+        <form class="login__form">
+            <p class="login__petition">Please, enter your <b>email</b></p>
+            <input type="email" class="login__email" name="email" placeholder="hello@gmail.com">
+            <p class="login__petition">Please, enter your <b>password</b></p>
+            <input type="password" class="login__password" name="password" placeholder="Password">
+            <button class="login__button">Login</button>
+        </form>
+        <p class="login__register">Don't have an account? Create one <b><a href="#" class="link">here</a></b></p>
+    </section>
+
+    <section class='register'>
+        <h1 class="register__title">Register</h1>
+        <form class="register__form">
+            <input type="text" class="register__field" name="name" placeholder="Name">
+            <input type="text" class="register__field" name="surname" placeholder="Surname">
+            <input type="text" class="register__field" name="city" placeholder="city">
+            <input type="text" class="register__field" name="address" placeholder="address">
+            <input type="email" class="register__field" name="email" placeholder="hello@gmail.com">
+            <input type="password" class="register__field" name="password" placeholder="Password">
+            <button class="register__button">Update</button>
+        </form>
+    </section>
+
+    <section class='profile'>
+        <h1 class="profile__title">Profile</h1>
+        <form class="profile__form">
+            <input type="text" class="profile__field" name="name" placeholder="Name">
+            <input type="text" class="profile__field" name="surname" placeholder="Surname">
+            <input type="text" class="profile__field" name="city" placeholder="city">
+            <input type="text" class="profile__field" name="address" placeholder="address">
+            <input type="email" class="profile__field" name="email" placeholder="hello@gmail.com">
+            <input type="password" class="profile__field" name="password" placeholder="Password">
+            <button class="profile__button">Update</button>
+        </form>
+        <h2>My ADS</h2>
+        <ul class="results">
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">1000€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="far fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
+                </a>
+                <form class="item__form">
+                    <input type="hidden" name="id">
+                    <button class="item__delete">Delete</button>
+                </form>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda as </h2>
+                </a>
+                <form class="item__form">
+                    <input type="hidden" name="id">
+                    <button class="item__delete">Delete</button>
+                </form>
+            </li>
+        </ul>
+    </section>
+
+    <section class='favorites'>
+        <h1 class="favorites__title">Favorites</h1>
+        <ul class="results">
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">1000€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
+                </a>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda as </h2>
+                </a>
+            </li>
+            <li class="results__item">
+                    <a href="#" class="item">
+                        <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                        <div class="item__pf">
+                            <span class="item__price">1000€</span>
+                            <span class="item__fav">
+                                <form class="item__fav-form" method="post" action="">
+                                    <input type="hidden" name="id">
+                                    <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                                </form>
+                            </span>
+                        </div>
+                        <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
+                    </a>
+                </li>
+                <li class="results__item">
+                    <a href="#" class="item">
+                        <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                        <div class="item__pf">
+                            <span class="item__price">100€</span>
+                            <span class="item__fav">
+                                <form class="item__fav-form" method="post" action="">
+                                    <input type="hidden" name="id">
+                                    <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                                </form>
+                            </span>
+                        </div>
+                        <h2 class="item__title">This is a ad numer two aasdasda as </h2>
+                    </a>
+                </li>
+        </ul>
+    </section>
+
     <section class="search">
         <div class="search__header">
             <nav>
@@ -35,38 +188,98 @@
                 <input class="search__criteria" type="text" name="query" placeholder="criteria">
                 <button class="search__submit">🔍</button>
             </form>
-            <img class="search__logo" src="./images/sklogocirc.png" alt="">
+            <img class="search__logo" src="./images/sklogo.png" alt="">
         </div>
 
-        <div class="title_landing">
+        <div class="title__landing">
             <h2>Productos cerca de ti</h2>
         </div>
 
         <ul class="results">
             <li class="results__item">
                 <a href="#" class="item">
-                    <img class="item__image" src="https://dummyimage.com/145x155/3d93f5/000000">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
                     <div class="item__pf">
-                        <span class="item__price">100€</span>
+                        <span class="item__price">1000€</span>
                         <span class="item__fav">
-                            <form method="post" action="">
+                            <form class="item__fav-form" method="post" action="">
                                 <input type="hidden" name="id">
-                                <button type="submit"><i class="far fa-heart"></i></button>
+                                <button class="item__fav-submit" type="submit"><i class="far fa-heart"></i></button>
                             </form>
                         </span>
                     </div>
-                    <h2 class="item__title">This is a ad numer one</h2>
+                    <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
                 </a>
             </li>
             <li class="results__item">
                 <a href="#" class="item">
-                    <img class="item__image" src="https://dummyimage.com/145x155/3d93f5/000000">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
                     <div class="item__pf">
                         <span class="item__price">100€</span>
                         <span class="item__fav">
-                            <form method="post" action="">
+                            <form class="item__fav-form" method="post" action="">
                                 <input type="hidden" name="id">
-                                <button type="submit">💔</button>
+                                <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda as </h2>
+                </a>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="far fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
+                </a>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda as </h2>
+                </a>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="far fa-heart"></i></button>
+                            </form>
+                        </span>
+                    </div>
+                    <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
+                </a>
+            </li>
+            <li class="results__item">
+                <a href="#" class="item">
+                    <img class="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
+                    <div class="item__pf">
+                        <span class="item__price">100€</span>
+                        <span class="item__fav">
+                            <form class="item__fav-form" method="post" action="">
+                                <input type="hidden" name="id">
+                                <button class="item__fav-submit" type="submit"><i class="fas fa-heart"></i></button>
                             </form>
                         </span>
                     </div>
@@ -75,10 +288,6 @@
             </li>
         </ul>
     </section>
-
-
-
-
 
 </body>
 

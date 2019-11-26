@@ -3,9 +3,9 @@
     flex-direction: column
     text-decoration: none
     color: black
+    width: 144px
 
     &__image
-        width: 140px
         border-radius: .4rem
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
 
@@ -14,11 +14,40 @@
         justify-content: space-around
 
     &__price
-        width: 100px
         font-size: 40px
         margin-left: 3px
 
     &__title
-        width: 133px
+
         font-size: 17px
         margin-left: 3px
+
+    &__fav-submit
+        text-decoration: none
+        background-color: transparent
+        border-style: none
+        cursor: pointer
+        margin-top: 50%
+        margin-right: 10%
+        padding: 1%
+        border-radius: 6px
+        color: #fc0101
+
+    &__fav-submit:hover
+        color: #ffa250fa
+
+    // &__form
+    //     display: flex
+    //     justify-content: center
+    //     align-content: center
+
+    &__delete
+        font-size: 1rem
+        margin: 5%
+        border-radius: 8px
+
+.fa-heart
+    font-size: 1.5rem
+
+
+
