@@ -20,6 +20,9 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+    collection: {
+        type: Array
+    },
     lastAccess: {
         type: Date
     }

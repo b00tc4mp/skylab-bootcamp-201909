@@ -1,24 +1,64 @@
 import React, { useState, useEffect } from 'react'
-// import {registerUser} from '../../logic' //crear logica de new game
-import { authenticateUser } from '../../logic'
+import {createGame} from '../../logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
         
-        const [username, setUsername] = useState('')
-        const [password, setPassword] = useState('')
+        const [title, setTitle] = useState('')
+        const [platform, setPlatform] = useState('')
+        const [sell, setSell] = useState('')
+        const [exchange, setExchange] = useState('')
+        const [favourite, setFavourite] = useState('')
 
         const handleNewGame = async (e) => {
                 e.preventDefault()
+                // onSubmit(title, platform, sell, exchange, favourite)
+                setTitle('')
+                setPlatform('')
+                setSell('')
+                setExchange('')
+                setFavourite('')
                 try {
-                        // await registerUser(username, location, email, password) //crear logica de new game
-                        const token = await authenticateUser(username, password)
+                        const { token } = sessionStorage
+                        await createGame(token, title, platform, sell, exchange, favourite)
                         sessionStorage.token = token
+                        // await retrieveGames(token)
                         history.push('/mygame')
                 } catch (error) {
                         console.error(error)
                 }
         }
+
+//         const [title, setTitle] = useState('')
+//     const [description, setDescription] = useState('')
+
+//     return <section className="view">
+//         <h2>New task</h2>
+//         <form onSubmit={event => {
+//             event.preventDefault()
+
+//             onSubmit(title, description)
+
+//             setTitle('')
+//             setDescription('')
+//         }}>
+//             <input type="text" name="title" value={title} onChange={event => setTitle(event.target.value)} />
+//             <input type="text" name="description" value={description} onChange={event => setDescription(event.target.value)}/>
+//             <button>Add</button>
+//         </form>
+//     </section>
+
+// async function handleNewTask(title, description) {
+//         try {
+//             const { token } = sessionStorage
+
+//             await createTask(token, title, description)
+
+//             await retrieveTasks(token)
+//         } catch (error) {
+//             console.error(error)
+//         }
+//     }
 
         return <section className="game-newedit">
                 <form onSubmit={handleNewGame}>

@@ -7,7 +7,7 @@ export default function ({ username, img }) {
 
     return <Link to={userLink} className="user-item__link" ><section className="user-item">
         <img className="user-item__img" src={img} alt="user" />
-        <p className="user-item__username">username</p>
+        <p className="user-item__username">{username}username</p>
     </section>
     </Link>
 }
