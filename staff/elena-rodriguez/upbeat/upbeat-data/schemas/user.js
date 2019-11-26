@@ -1,5 +1,6 @@
 const {Schema} = require('mongoose')
-//const { validators: { isEmail } } = require('upbeat-util')
+const Links = require('./links')
+const { validators: { isEmail } } = require('upbeat-util')
 
 module.exports = new Schema ({
     username: {
@@ -28,29 +29,30 @@ module.exports = new Schema ({
         required: true,
         enum: ['solo', 'groups']
     },
-    intruments: [{
-        type: String,
-        enum: ['drums', 'guitar', 'piano', 'violin', 'bass', 'cello', 'clarinet', 'double bass', 'flute', 'oboe', 'saxophone', 'trombone', 'trumpet', 'ukelele', 'viola', 'vocal-soprano', 'vocal-mezzo', 'vocal-contralto', 'vocal-tenor', 'vocal-baritone', 'vocal-bass']
-    }],
 
-    groups: {
-        type: String,
-        required: true,
-        enum: ['band', 'choir', 'modern-ensemble', 'orchestra', 'classic-chamber']
+    format: {
+        type: Object
     },
    
     description: {
         type: String
     },
 
-    socialmedia: {
-        type: Array
-    },
+    links : [Links],
+
     favs: {
         type: Array
     },
 
     location: {
-        
+        type: {
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number],
+        }
     }
+   
 })
