@@ -30,7 +30,7 @@ The Pyrene Ski App is a web tool for a club and school of ski that manage ski cl
 
 ### Data Model
 
-![Data Model](images/ps-data-model-diagram.png)
+![Data Model](images/ps-data-model.png)
 
 ### Code Coverage
 
@@ -39,8 +39,10 @@ The Pyrene Ski App is a web tool for a club and school of ski that manage ski cl
 ### Screenshots
 
 ![Screenshots Login](images/PS_mockup_landing_register.png)
-![Screenshots Register](images/PS_mockup_login_board.png)
-![Screenshots Home](images/PS_mockup_insertclass_createteammember.png)
+![Screenshots Register](images/PS_mockup_login_lessonlist.png)
+![Screenshots Home](images/PS_mockup_team_teamcreate.png)
+![Screenshots Home](images/PS_mockup_removeteam_addlesson.png)
+![Screenshots Home](images/PS_mockup_delete_lesson.png)
 
 ## Future Version Features
 
