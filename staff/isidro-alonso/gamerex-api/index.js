@@ -6,7 +6,7 @@ const { argv: [, , port], env: { PORT = port || 8080, DB_URL } } = process
 const cors = require('./utils/cors')
 const { database } = require('gamerex-data')
 
-const { users } = require('./routes')
+const { users, games } = require('./routes')
 
 const api = express()
 
@@ -17,6 +17,7 @@ api.options('*', cors, (req, res) => {
 })
 
 api.use('/users', users)
+api.use('/games', games)
 
 database
     .connect(DB_URL)

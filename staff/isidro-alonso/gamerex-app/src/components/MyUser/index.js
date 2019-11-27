@@ -46,7 +46,7 @@ export default withRouter(function ({ history }) {
             </Link>
             <button className="user-profile__logout" onClick={handleLogout}>Logout</button>
         </section>
-        <h1 className="user-profile__title">Game collection</h1>
+        <h1 className="user-profile__title">{username}'s game collection</h1>
         <section className="game-list">
             <Link to='/newgame' className="new-game__link">
                 <button className="new-game">Add a new game</button>

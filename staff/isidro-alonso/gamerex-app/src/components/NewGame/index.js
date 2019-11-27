@@ -12,17 +12,13 @@ export default withRouter(function ({ history }) {
 
         async function handleNewGame(title, platform, sell, exchange, favourite) {
                 try {
-                        console.log('pasa por async')
 
                         const { token } = sessionStorage
-
-                        console.log(title, platform, sell, exchange, favourite)
                         
-                        console.log(token)
                         await createGame(token, title, platform, sell, exchange, favourite)
 
                         history.push('/myuser')
-                        //     await retrieveTasks(token)
+                        
                 } catch (error) {
                         console.error(error)
                 }
@@ -34,9 +30,7 @@ export default withRouter(function ({ history }) {
                 <form onSubmit={e => {
                         e.preventDefault()
 
-                        console.log('pasa por submit')
                         handleNewGame(title, platform, sell, exchange, favourite)
-                        console.log(title, platform, sell, exchange, favourite)
                         setTitle('')
                         setPlatform('')
                         setSell()

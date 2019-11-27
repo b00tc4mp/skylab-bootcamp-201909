@@ -12,8 +12,6 @@ module.exports = function (id, title, platform, sell, exchange, favourite) {
     validate.string(platform)
     validate.string.notVoid('platform', platform)
 
-    console.log('pasa por create game apI')
-
     return (async () => {
         const user = await User.findById(id)
 
