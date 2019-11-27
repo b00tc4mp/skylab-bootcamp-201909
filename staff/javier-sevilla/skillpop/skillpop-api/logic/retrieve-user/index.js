@@ -1,5 +1,5 @@
-const { validate, errors: { NotFoundError, ContentError } } = require('tasks-util')
-const { ObjectId, models: { User } } = require('tasks-data')
+const { validate, errors: { NotFoundError, ContentError } } = require('skillpop-util')
+const { ObjectId, models: { User } } = require('skillpop-data')
 
 module.exports = function (id) {
     validate.string(id)

@@ -1,5 +1,5 @@
-const { Schema } = require('mongoose')
-const Comment = require('./comments')
+const { Schema, ObjectId } = require('mongoose')
+const Comment = require('./comment')
 const { validators: { isEmail } } = require('skillpop-util')
 
 module.exports = new Schema({
@@ -17,14 +17,6 @@ module.exports = new Schema({
     },
     address: {
         type: String,
-        required: true
-    },
-    latitude: {
-        type: Number,
-        required: true
-    },
-    longitude: {
-        type: Number,
         required: true
     },
     favs: {

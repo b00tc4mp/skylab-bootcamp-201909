@@ -22,6 +22,14 @@ module.exports =  new Schema({
         type: Number,
         required: true
     },
+    latitude: {
+        type: Number,
+        required: true
+    },
+    longitude: {
+        type: Number,
+        required: true
+    },
     lastAccess: {
         type: Date
     }
