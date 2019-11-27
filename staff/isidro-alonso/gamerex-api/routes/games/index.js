@@ -32,8 +32,8 @@ router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
 //     try {
 //         const { id } = req
 
-//         listTasks(id)
-//             .then(tasks => res.json(tasks))
+//         listGames(id)
+//             .then(games => res.json(games))
 //             .catch(error => {
 //                 const { message } = error
 
@@ -47,7 +47,7 @@ router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
 //     }
 // })
 
-// router.patch('//:taskId', tokenVerifier, jsonBodyParser, (req, res) => {
+// router.patch('/:taskId', tokenVerifier, jsonBodyParser, (req, res) => {
 //     try {
 //         const { id, params: { taskId }, body: { title, description, status } } = req
 

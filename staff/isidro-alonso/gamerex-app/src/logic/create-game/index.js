@@ -3,6 +3,7 @@ const { validate, errors: { NotFoundError, CredentialsError } } = require('gamer
 const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (token, title, platform, sell, exchange, favourite) {
+    console.log('pasa por create game app')
     validate.string(token)
     validate.string.notVoid('token', token)
 
@@ -11,6 +12,8 @@ module.exports = function (token, title, platform, sell, exchange, favourite) {
 
     validate.string(platform)
     validate.string.notVoid('platform', platform)
+
+    console.log('pasa los validates 1')
 
     return (async () => {
         const res = await call(`${API_URL}/games`, {

@@ -1,8 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, Route, withRouter, Redirect } from 'react-router-dom'
+import { retrieveUser } from '../../logic'
 import MyGameList from '../MyGameList'
 
-export default withRouter(function ({ /*username, location, email, img,*/ history }) {
+export default withRouter(function ({ history }) {
+    const [username, setUsername] = useState()
+    const [location, setLocation] = useState()
+    const [email, setEmail] = useState()
+
+    useEffect(() => {
+        const { token } = sessionStorage;
+
+        (async () => {
+            if (token) {
+                const { username, location, email } = await retrieveUser(token)
+
+                setUsername(username)
+                setLocation(location)
+                setEmail(email)
+
+            }
+        })()
+    }, [sessionStorage.token])
 
     const handleLogout = async (e) => {
         e.preventDefault()
@@ -16,11 +35,11 @@ export default withRouter(function ({ /*username, location, email, img,*/ histor
     }
 
     return <section className="user-profile">
-        <h1 className="user-profile__title">my username</h1>
+        <h1 className="user-profile__title">{username}</h1>
         <section className="user-profile__item">
             <img className="user-profile__img" src="img/profile.png" alt="user" />
-            <p className="user-profile__location">my location</p>
-            <p className="user-profile__email">my email</p>
+            <p className="user-profile__location">{location}</p>
+            <p className="user-profile__email">{email}</p>
             <p className="user-profile__numofgames">XX games</p>
             <Link to='/updateuser'>
                 <button className="user-profile__update">Update profile</button>
