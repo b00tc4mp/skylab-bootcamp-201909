@@ -25,10 +25,10 @@ module.exports = new Schema({
         required: true
     },
 
-    role: {
+/*     role: {
         type: String,
         required: true
-    },
+    }, */
     lastAccess: {
         type: Date
     } 

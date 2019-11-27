@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, ObjectId } = require('mongoose')
 const { isEmail } = require('pyrene-ski-util')
 
 module.exports = new Schema({
