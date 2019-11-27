@@ -7,13 +7,14 @@
     "start": "node .",
     "debug": "node inspect .",
     "watch": "npx nodemon .",
-    "test": "npx mocha logic/**/*.spec.js",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js"
+    "test": "npx mocha logic/**/*.spec.js --timeout 50000",
+    "test-debug": "npx mocha inspect logic/*/*.spec.js --timeout 50000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

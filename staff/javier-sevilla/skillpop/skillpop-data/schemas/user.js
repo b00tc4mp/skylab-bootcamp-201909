@@ -19,12 +19,6 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    favs: {
-        type: [ObjectId], 
-        require: true,
-        ref: 'Ads'
-    },
-    comments: [Comment],
     email: {
         type: String,
         required: true,
@@ -34,6 +28,12 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+    favs: {
+        type: [ObjectId], 
+        require: true,
+        ref: 'Ads'
+    },
+    comments: [Comment],
     lastAccess: {
         type: Date
     }

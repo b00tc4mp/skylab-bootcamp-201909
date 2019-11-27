@@ -5,28 +5,34 @@ const authenticateUser = require('.')
 const { random } = Math
 const { errors: { ContentError, CredentialsError } } = require('skillpop-util')
 const { database, models: { User } } = require('skillpop-data')
+const bcrypt = require('bcryptjs')
+const salt = 10
 
-describe('logic - authenticate user', () => {
+describe.only('logic - authenticate user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, username, password
+    let id, name, surname, city, address, email, password
+    let hash
 
     beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        username = `username-${random()}`
+        city = 'barcelona'
+        address = 'calle aribau 15'
         password = `password-${random()}`
 
         await User.deleteMany()
 
-        const user = await User.create({ name, surname, email, username, password })
+        hash = await bcrypt.hash(password, salt)
+
+        const user = await User.create({ name, surname, city, address, email, password: hash })
 
         id = user.id
     })
 
     it('should succeed on correct credentials', async () => {
-        const userId = await authenticateUser(username, password)
+        const userId = await authenticateUser(email, password)
 
         expect(userId).to.exist
         expect(typeof userId).to.equal('string')
@@ -36,11 +42,11 @@ describe('logic - authenticate user', () => {
     })
 
     describe('when wrong credentials', () => {
-        it('should fail on wrong username', async () => {
-            const username = 'wrong'
+        it('should fail on wrong email', async () => {
+            const email = 'wrong@gmail.com'
 
             try {
-                await authenticateUser(username, password)
+                await authenticateUser(email, password)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -56,7 +62,7 @@ describe('logic - authenticate user', () => {
             const password = 'wrong'
 
             try {
-                await authenticateUser(username, password)
+                await authenticateUser(email, password)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -77,8 +83,8 @@ describe('logic - authenticate user', () => {
         expect(() => authenticateUser(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => authenticateUser(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => authenticateUser('')).to.throw(ContentError, 'username is empty or blank')
-        expect(() => authenticateUser(' \t\r')).to.throw(ContentError, 'username is empty or blank')
+        expect(() => authenticateUser('')).to.throw(ContentError, 'e-mail is empty or blank')
+        expect(() => authenticateUser(' \t\r')).to.throw(ContentError, 'e-mail is empty or blank')
 
         expect(() => authenticateUser(email, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => authenticateUser(email, true)).to.throw(TypeError, 'true is not a string')

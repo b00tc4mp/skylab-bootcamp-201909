@@ -5,8 +5,10 @@ const registerUser = require('.')
 const { random } = Math
 const { errors: { ContentError } } = require('skillpop-util')
 const { database, models: { User } } = require('skillpop-data')
+const bcrypt = require('bcryptjs')
+const salt = 10
 
-describe('logic - register user', () => {
+describe.only('logic - register user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let name, surname, city, address, email, password
@@ -27,7 +29,8 @@ describe('logic - register user', () => {
 
         expect(response).to.be.undefined
 
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ email })
+        const valid = await bcrypt.compare(password, user.password)
 
         expect(user).to.exist
 
@@ -36,7 +39,7 @@ describe('logic - register user', () => {
         expect(user.city).to.equal(city)
         expect(user.address).to.equal(address)
         expect(user.email).to.equal(email)    
-        expect(user.password).to.equal(password)
+        expect(valid).to.be.true
     })
 
     describe('when user already exists', () => {
@@ -53,12 +56,12 @@ describe('logic - register user', () => {
                 expect(error.message).to.exist
                 expect(typeof error.message).to.equal('string')
                 expect(error.message.length).to.be.greaterThan(0)
-                expect(error.message).to.equal(`user with username ${username} already exists`)
+                expect(error.message).to.equal(`user with email ${email} already exists`)
             }
         })
     })
 
-    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+    it('should fail on incorrect name, surname, email,city, address, password, or expression type and content', () => {
         expect(() => registerUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => registerUser(true)).to.throw(TypeError, 'true is not a string')
         expect(() => registerUser([])).to.throw(TypeError, ' is not a string')
