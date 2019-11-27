@@ -1,5 +1,6 @@
 const { validate, errors: { ConflictError } } = require('upbeat-util')
 const { models: { User } } = require('upbeat-data')
+const bcrypt = require('bcryptjs')
 
 module.exports = function (username, email, password, rol, latitude, longitude) {
     validate.string(username)
@@ -21,7 +22,9 @@ module.exports = function (username, email, password, rol, latitude, longitude) 
 
         if (user) throw new ConflictError(`user with username ${username} already exists`)
 
-        await User.create({ username, email, password, rol, location: {coordinates: [latitude, longitude]}} 
+        const hash = await bcrypt.hash(password, 10)
+
+        await User.create({ username, email, password: hash, rol, location: {coordinates: [latitude, longitude]}} 
         )
     })()
 }

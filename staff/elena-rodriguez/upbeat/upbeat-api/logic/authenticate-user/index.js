@@ -1,5 +1,6 @@
 const { validate, errors: { CredentialsError } } = require('upbeat-util')
 const { models: { User } } = require('upbeat-data')
+const bcrypt = require('bcryptjs')
 
 module.exports = function (email, password) {
     validate.string(email)
@@ -9,9 +10,9 @@ module.exports = function (email, password) {
     validate.string.notVoid('password', password)
 
     return (async () => {
-        const user = await User.findOne({ email, password })
+        const user = await User.findOne({ email })
 
-        if (!user) throw new CredentialsError('wrong credentials')
+        if (!user || !(await bcrypt.compare(password, user.password))) throw new CredentialsError('wrong credentials')
 
         user.lastAccess = new Date
 

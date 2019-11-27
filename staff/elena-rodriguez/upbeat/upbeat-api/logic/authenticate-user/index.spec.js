@@ -5,17 +5,19 @@ const authenticateUser = require('.')
 const { random } = Math
 const { errors: { ContentError, CredentialsError } } = require('upbeat-util')
 const { database, models: { User } } = require('upbeat-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - authenticate user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, username, email, password, rol, rols, latitude, longitude
+    let id, username, email, password, rol, rols, latitude, longitude, hash
     rols = ['solo','groups']
 
     beforeEach(async () => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
+        hash = await bcrypt.hash(password , 10)
         rol = rols[Math.floor(Math.random()*rols.length)]
         longitude = random()
         latitude = random()
@@ -23,7 +25,7 @@ describe('logic - authenticate user', () => {
 
         await User.deleteMany()
 
-        const user = await User.create({ username, email, password, rol, location: {coordinates: [latitude, longitude ]} })
+        const user = await User.create({ username, email, password, rol, location: {coordinates: [latitude, longitude ]}, password: hash  })
         id = user.id
     })
 
@@ -50,7 +52,7 @@ describe('logic - authenticate user', () => {
                 expect(error).to.be.an.instanceOf(CredentialsError)
 
                 const { message } = error
-                expect(message).to.equal(`wrong credentials`)
+                expect(message).to.equal('wrong credentials')
             }
         })
 
@@ -66,7 +68,7 @@ describe('logic - authenticate user', () => {
                 expect(error).to.be.an.instanceOf(CredentialsError)
 
                 const { message } = error
-                expect(message).to.equal(`wrong credentials`)
+                expect(message).to.equal('wrong credentials')
             }
         })
     })

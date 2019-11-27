@@ -8,12 +8,15 @@
     "debug": "node inspect .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/**/*.spec.js",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js"
+    "test-debug": "npx mocha inspect logic/*/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js",
+    "lint": "npx eslint index.js helpers logic routes utils"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -22,9 +25,12 @@
     "upbeat-data": "file:../upbeat-data/",
     "upbeat-util": "file:../upbeat-utils/"
   },
+  
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.0"
+    "nodemon": "^2.0.0",
+    "nyc": "^14.1.1",
+    "eslint": "^6.7.1"
   }
 }

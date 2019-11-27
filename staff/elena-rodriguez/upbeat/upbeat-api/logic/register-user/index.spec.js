@@ -5,6 +5,7 @@ const registerUser = require('.')
 const { random } = Math
 const { errors: { ContentError } } = require('upbeat-util')
 const { database, models: { User } } = require('upbeat-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
    
@@ -13,7 +14,7 @@ describe('logic - register user', () => {
     let username, email, password, rol, rols, longitude, latitude
     rols = ['solo','groups']
 
-    beforeEach(() => {
+    beforeEach(async () => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
@@ -21,7 +22,9 @@ describe('logic - register user', () => {
         longitude = random()
         latitude = random()
 
-        return User.deleteMany()
+        hash = await bcrypt.hash(password, 10)
+
+        await User.deleteMany()
     })
 
     it('should succeed on correct credentials', async () => {
@@ -37,7 +40,8 @@ describe('logic - register user', () => {
         
         expect(user.username).to.equal(username)
         expect(user.email).to.equal(email)
-        expect(user.password).to.equal(password)
+        const match = await bcrypt.compare(password, user.password)
+        expect(match).to.be.true
         expect(user.rol).to.equal(rol)
         expect(user.location.coordinates[0]).to.equal(latitude)
         expect(user.location.coordinates[1]).to.equal(longitude)

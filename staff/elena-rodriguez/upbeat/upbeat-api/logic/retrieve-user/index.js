@@ -18,5 +18,6 @@ module.exports = function (id) {
         const { username, email, rol, location: {coordinates: [latitude, longitude]} } = user.toObject()
 
         return {  id, username, email, rol, location: {coordinates: [latitude, longitude]}}
+        
     })()
 }
