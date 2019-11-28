@@ -1,5 +1,5 @@
 module.exports = {
     users: require('./users'),
-    //lessons: require('./lessons'),
-    //teams: require('./teams')
+    teams: require('./teams'),
+    //lessons: require('./lessons')
 }

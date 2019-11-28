@@ -1,11 +1,10 @@
 require('dotenv').config()
-debugger
 const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
 const authenticateUser = require('.')
 const { random } = Math
 const { errors: { ContentError, CredentialsError } } = require('pyrene-ski-util')
-debugger
+
 const { database, models: { User } } = require('pyrene-ski-data')
 
 describe('logic - authenticate user', () => {

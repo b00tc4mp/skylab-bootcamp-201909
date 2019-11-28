@@ -17,7 +17,7 @@ api.options('*', cors, (req, res) => {
 })
 
 api.use('/users', users)
-//api.use('/teams', teams)
+api.use('/teams', teams)
 //api.use('/lessons', lessons)
 
 database

@@ -7,7 +7,8 @@
     "start": "node .",
     "debug": "node inspect .",
     "test": "npx mocha logic/*/*.spec.js",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js"
+    "test-debug": "npx mocha inspect logic/*/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js"
   },
   "author": "Aitor1979",
   "license": "ISC",
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1"
   }
 }

@@ -3,12 +3,14 @@ const { Schema } = require('mongoose')
 module.exports = new Schema({
     team: {
         type: ObjectId,
-        required:true
+        required:true,
+        ref: 'Team'
 
     },
     activity: {
         type: String,
-        required: true
+        required: true,
+        ref: 'Team'
 
     },
     date: {
@@ -17,7 +19,7 @@ module.exports = new Schema({
 
     },
     timeStart: {
-        type: TimeRanges,
+        type: String,
         required: true
 
     },
@@ -27,10 +29,12 @@ module.exports = new Schema({
     },
     userCreate: {
         type: ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     client: {
         type: [Objectid],
-        required: true
+        required: true,
+        ref: 'User'
     }
 })

@@ -1,30 +1,27 @@
 const { Schema, ObjectId } = require('mongoose')
-const { isEmail } = require('pyrene-ski-util')
+const { validators: { isEmail } } = require('pyrene-ski-util')
 
 module.exports = new Schema({
-    name: {
+    teamName: {
         type: String,
         required: true
     },
-    surname: {
-        type: String,
-        required: true
-    },
-    email: {
+    teamEmail: {
         type: String,
         required: true,
         validate: isEmail
     },
-    phone: {
+    teamPhone: {
         type: Number,
         required: true
     },
-    activity: {
+    teamActivity: {
         type: String,
         required: true
     },
     user: {
         type: ObjectId,
         required: true,
-    }
+        ref: 'User'
+    } 
 })
