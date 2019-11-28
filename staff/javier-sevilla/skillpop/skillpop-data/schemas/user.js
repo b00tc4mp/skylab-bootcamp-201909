@@ -34,6 +34,9 @@ module.exports = new Schema({
         ref: 'Ads'
     },
     comments: [Comment],
+    location: {
+        coordinates: { type: [Number], index: '2dsphere'}
+    },
     lastAccess: {
         type: Date
     }

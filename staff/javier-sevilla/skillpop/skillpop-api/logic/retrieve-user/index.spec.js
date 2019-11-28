@@ -8,7 +8,7 @@ const { database, models: { User } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe.only('logic - retrieve user', () => {
+describe('logic - retrieve user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password

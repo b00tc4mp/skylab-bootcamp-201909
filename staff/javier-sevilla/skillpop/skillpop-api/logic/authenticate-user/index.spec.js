@@ -8,7 +8,7 @@ const { database, models: { User } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe.only('logic - authenticate user', () => {
+describe('logic - authenticate user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -32,6 +32,8 @@ describe.only('logic - authenticate user', () => {
     })
 
     it('should succeed on correct credentials', async () => {
+
+        debugger
         const userId = await authenticateUser(email, password)
 
         expect(userId).to.exist

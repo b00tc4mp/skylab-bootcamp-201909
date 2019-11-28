@@ -8,7 +8,9 @@
     "debug": "node inspect .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/**/*.spec.js --timeout 50000",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js --timeout 50000"
+    "test-debug": "npx mocha --inspect-brk=9230 logic/**/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js --timeout 50000",
+    "lint": "npx eslint index.js helpers logic routes utils"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
-    "nodemon": "^2.0.0"
+    "nodemon": "^2.0.0",
+    "nyc": "^14.1.1",
+    "eslint": "^6.7.1"
   }
 }

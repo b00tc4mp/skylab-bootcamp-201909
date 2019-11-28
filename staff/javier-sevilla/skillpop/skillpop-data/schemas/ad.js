@@ -14,21 +14,14 @@ module.exports =  new Schema({
         type: String,
         required: true
     },
-    image: {
-        type: String,
-        required: true,      
-    },
     price: {
         type: Number,
         required: true
     },
-    latitude: {
-        type: Number,
-        required: true
-    },
-    longitude: {
-        type: Number,
-        required: true
+    date: {
+        type: Date,
+        required: true,
+        default: Date.now
     },
     lastAccess: {
         type: Date
