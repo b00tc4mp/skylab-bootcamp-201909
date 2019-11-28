@@ -10,6 +10,7 @@ const validate = {
         this.typeOf('string', target)
     },
 
+
     function(target) {
         this.typeOf('function', target)
     },

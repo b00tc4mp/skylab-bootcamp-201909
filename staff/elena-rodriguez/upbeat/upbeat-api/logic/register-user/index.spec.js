@@ -11,7 +11,7 @@ describe('logic - register user', () => {
    
     before(() => database.connect(TEST_DB_URL))
 
-    let username, email, password, rol, rols, longitude, latitude
+    let username, email, password, rol, rols, longitude, latitude, instruments, groups
     rols = ['solo','groups']
 
     beforeEach(async () => {
@@ -21,16 +21,18 @@ describe('logic - register user', () => {
         rol = rols[Math.floor(Math.random()*rols.length)]
         longitude = random()
         latitude = random()
+        instruments = ['violin']
+        groups = 'band'
 
         hash = await bcrypt.hash(password, 10)
 
         await User.deleteMany()
     })
 
-    it('should succeed on correct credentials', async () => {
+    it('should succeed on correct credentials', async () => {debugger
         
         
-        const response = await registerUser( username, email, password, rol, latitude, longitude )
+        const response = await registerUser( username, email, password, rol, instruments, groups, latitude, longitude )
 
         expect(response).to.be.undefined
 

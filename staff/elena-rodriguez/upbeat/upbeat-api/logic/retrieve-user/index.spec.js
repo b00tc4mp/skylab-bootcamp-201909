@@ -30,7 +30,6 @@ describe('logic - retrieve user', () => {
 
     it('should succeed on correct user id', async () => {
         const user = await retrieveUser(id)
-        debugger
         expect(user).to.exist
         expect(user.id).to.equal(id)
         expect(user.id).to.be.a('string')

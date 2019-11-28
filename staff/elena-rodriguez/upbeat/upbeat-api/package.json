@@ -7,8 +7,8 @@
     "start": "node .",
     "debug": "node inspect .",
     "watch": "npx nodemon .",
-    "test": "npx mocha logic/**/*.spec.js",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js",
+    "test": "npx mocha logic/register-user/*.spec.js",
+    "test-debug": "npx mocha inspect logic/register-user/*.spec.js",
     "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js",
     "lint": "npx eslint index.js helpers logic routes utils"
   },
@@ -25,7 +25,6 @@
     "upbeat-data": "file:../upbeat-data/",
     "upbeat-util": "file:../upbeat-utils/"
   },
-  
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.2",
