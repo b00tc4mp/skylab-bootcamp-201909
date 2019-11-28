@@ -22,7 +22,7 @@ export default withRouter(function({ history }) {
 
     return <section className="login">
     <form onSubmit={handleLogin}>
-        <h1 className="login__title">Login</h1>
+        <h1 className="login__title">Login to access to all the contents</h1>
         <input className="login__field" type="text" name="username" placeholder="username" onChange={({target})=>setUsername(target.value)}/>
         <input className="login__field" type="password" name="password" placeholder="password" onChange={({target})=>setPassword(target.value)}/>
         <button className="login__submit" disabled={isDisabled}>Login</button>

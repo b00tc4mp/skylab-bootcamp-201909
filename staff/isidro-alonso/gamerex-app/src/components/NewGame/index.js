@@ -19,17 +19,6 @@ export default withRouter(function ({ history }) {
 
                         await createGame(token, title, platform, sell, exchange, favourite)
 
-                        // (() => {(async () => {
-                        //         if (token) {
-                        //             // const { name } = await retrieveUser(token)
-                    
-                        //             // setName(name)
-                    
-                                    await retrieveGames(token)
-                        //         }
-                        //     })()
-                        // }, [sessionStorage.token])
-
                         history.push('/myuser')
 
                 } catch (error) {
@@ -37,20 +26,20 @@ export default withRouter(function ({ history }) {
                 }
         }
 
-        // useEffect
-        // (() => {
-        //         const { token } = sessionStorage;
+        useEffect(() => {
+                const { token } = sessionStorage;
         
-        //         (async () => {
-        //             if (token) {
-        //                 // const { name } = await retrieveUser(token)
+                (async () => {
+                    if (token) {
+
+                        const games = await listGames(token)
+
+                        setGames(games)
         
-        //                 // setName(name)
-        
-        //                 await retrieveGames(token)
-        //             }
-        //         })()
-        //     }, [sessionStorage.token])
+                        await retrieveGames(token)
+                    }
+                })()
+            }, [sessionStorage.token])
 
         async function retrieveGames(token) {
                 const games = await listGames(token)

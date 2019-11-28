@@ -20,9 +20,6 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    games: {
-        type: Array
-    },
     lastAccess: {
         type: Date
     }

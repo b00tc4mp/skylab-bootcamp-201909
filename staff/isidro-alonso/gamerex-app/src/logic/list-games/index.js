@@ -18,7 +18,6 @@ module.exports = function (token) {
             const games = JSON.parse(res.body)
 
             games.forEach(game => {
-                game.date = new Date(game.date)
 
                 game.lastAccess = new Date(game.lastAccess)
             })
