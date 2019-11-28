@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
+const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
 const registerUser = require('.')
 const { random } = Math
@@ -7,9 +7,9 @@ const { errors: { ContentError } } = require('pyrene-ski-util')
 const { database, models: { User } } = require('pyrene-ski-data')
 
 describe('logic - register user', () => {
-    before(() => database.connect(TEST_DB_URL))
+    before(() => database.connect(DB_URL_TEST))
 
-    let name, surname, email, username, password
+    let name, surname, email, username, password, role = 'admin'
 
     beforeEach(() => {
         name = `name-${random()}`
@@ -17,12 +17,13 @@ describe('logic - register user', () => {
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
         password = `password-${random()}`
+        role = 'client' || 'admin'
 
         return User.deleteMany()
     })
 
     it('should succeed on correct credentials', async () => {
-        const response = await registerUser(name, surname, email, username, password)
+        const response = await registerUser(name, surname, email, username, password, role)
 
         expect(response).to.be.undefined
 
@@ -35,14 +36,15 @@ describe('logic - register user', () => {
         expect(user.email).to.equal(email)
         expect(user.username).to.equal(username)
         expect(user.password).to.equal(password)
+        expect(user.role).to.equal('client' || 'admin')
     })
 
     describe('when user already exists', () => {
-        beforeEach(() => User.create({ name, surname, email, username, password }))
+        beforeEach(() => User.create({ name, surname, email, username, password, role }))
 
         it('should fail on already existing user', async () => {
             try {
-                await registerUser(name, surname, email, username, password)
+                await registerUser(name, surname, email, username, password, role)
 
                 throw Error('should not reach this point')
             } catch (error) {

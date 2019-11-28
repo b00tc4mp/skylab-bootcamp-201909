@@ -1,4 +1,6 @@
+
 const { validate, errors: { CredentialsError } } = require('pyrene-ski-util')
+
 const { models: { User } } = require('pyrene-ski-data')
 
 module.exports = function (username, password) {

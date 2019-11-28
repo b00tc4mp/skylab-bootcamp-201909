@@ -1,15 +1,17 @@
 require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
+debugger
+const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
 const authenticateUser = require('.')
 const { random } = Math
 const { errors: { ContentError, CredentialsError } } = require('pyrene-ski-util')
+debugger
 const { database, models: { User } } = require('pyrene-ski-data')
 
 describe('logic - authenticate user', () => {
-    before(() => database.connect(TEST_DB_URL))
+    before(() => database.connect(DB_URL_TEST))
 
-    let id, name, surname, email, username, password
+    let id, name, surname, email, username, password, role
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -20,12 +22,12 @@ describe('logic - authenticate user', () => {
 
         await User.deleteMany()
 
-        const user = await User.create({ name, surname, email, username, password })
+        const user = await User.create({ name, surname, email, username, password, role })
 
         id = user.id
     })
 
-    it('should succeed on correct credentials', async () => {
+    it('should succeed on correct credentials', async () => { debugger
         const userId = await authenticateUser(username, password)
 
         expect(userId).to.exist
@@ -69,7 +71,7 @@ describe('logic - authenticate user', () => {
         })
     })
 
-    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+     it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
         expect(() => authenticateUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => authenticateUser(true)).to.throw(TypeError, 'true is not a string')
         expect(() => authenticateUser([])).to.throw(TypeError, ' is not a string')
@@ -89,7 +91,7 @@ describe('logic - authenticate user', () => {
 
         expect(() => authenticateUser(email, '')).to.throw(ContentError, 'password is empty or blank')
         expect(() => authenticateUser(email, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
-    })
+    }) 
 
     // TODO other cases
 

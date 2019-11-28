@@ -24,12 +24,10 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-
-/*     role: {
+    role: {
         type: String,
+        enum: ['admin', 'client'],
+        default: 'admin',
         required: true
-    }, */
-    lastAccess: {
-        type: Date
-    } 
+    }
 })

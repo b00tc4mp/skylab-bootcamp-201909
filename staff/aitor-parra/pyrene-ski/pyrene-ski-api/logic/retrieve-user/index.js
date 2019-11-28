@@ -11,12 +11,12 @@ module.exports = function (id) {
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        user.lastAccess = new Date
+        //user.lastAccess = new Date
 
         await user.save()
 
-        const { name, surname, email, username, lastAccess } = user.toObject()
+        const { name, surname, email, username, role /* lastAccess */ } = user.toObject()
 
-        return { id, name, surname, email, username, lastAccess }
+        return { id, name, surname, email, username, role /* lastAccess */ }
     })()
 }
