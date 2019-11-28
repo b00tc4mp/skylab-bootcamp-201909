@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createGame/*, listTasks, modifyTask, removeTask*/ } = require('../../logic')
+const { createGame, listGames, /*modifyTask, removeTask*/ } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
@@ -28,24 +28,24 @@ router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-// router.get('/', tokenVerifier, (req, res) => {
-//     try {
-//         const { id } = req
+router.get('/', tokenVerifier, (req, res) => {
+    try {
+        const { id } = req
 
-//         listGames(id)
-//             .then(games => res.json(games))
-//             .catch(error => {
-//                 const { message } = error
+        listGames(id)
+            .then(games => res.json(games))
+            .catch(error => {
+                const { message } = error
 
-//                 if (error instanceof NotFoundError)
-//                     return res.status(404).json({ message })
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
 
-//                 res.status(500).json({ message })
-//             })
-//     } catch ({ message }) {
-//         res.status(400).json({ message })
-//     }
-// })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
 // router.patch('/:taskId', tokenVerifier, jsonBodyParser, (req, res) => {
 //     try {
