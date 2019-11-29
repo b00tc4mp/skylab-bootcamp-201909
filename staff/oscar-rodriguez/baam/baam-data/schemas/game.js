@@ -5,5 +5,6 @@ const shoot = require('./shoot')
 module.exports = new Schema ({
     players: [player],
     shoots: [shoot],
-    currentPlayer: Number
+    currentPlayer: Number,
+    status: String
 })
