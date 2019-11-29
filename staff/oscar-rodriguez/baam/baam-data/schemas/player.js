@@ -9,13 +9,21 @@ module.exports = new Schema ({
         type: ObjectId,
         ref: 'Card'}],
     tempZone: {
-        type: ObjectId,
-        ref: 'Card'},
+        card : {
+            type: ObjectId,
+            ref: 'Card',
+        },
+        duration: {
+            type: Number,
+            default: 0
+        }
+    },
     discards: [{
         type: ObjectId,
         ref: 'Card'}],
     lifePoints: Number,
     modifier: Boolean,
     attack: Number,
-    defense: Number
+    defense: Number,
+    lastAccess: Date
 })
