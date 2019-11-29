@@ -22,14 +22,17 @@ module.exports = new Schema ({
         ref: 'Collection',
         required: true
     },
+    //ATTACK, DEFEND, HEAL, BLOCK
     effect: {
         type: String,
         required: true
     },
+    //Value of attack, defende, heal, or duration of Block
     effectValue: {
         type: Number,
         required: true
     },
+    //For future: On sabotaje type, the target of him (lifePoints, hand, turns... etc)
     target: {
         type: String,
         required: true
