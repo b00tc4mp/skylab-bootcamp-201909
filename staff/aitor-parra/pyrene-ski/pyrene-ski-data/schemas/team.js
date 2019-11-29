@@ -2,6 +2,11 @@ const { Schema, ObjectId } = require('mongoose')
 const { validators: { isEmail } } = require('pyrene-ski-util')
 
 module.exports = new Schema({
+    user: {
+        type: ObjectId,
+        required: true,
+        ref: 'User'
+    }, 
     teamName: {
         type: String,
         required: true
@@ -18,10 +23,5 @@ module.exports = new Schema({
     teamActivity: {
         type: String,
         required: true
-    },
-    user: {
-        type: ObjectId,
-        required: true,
-        ref: 'User'
-    } 
+    }
 })

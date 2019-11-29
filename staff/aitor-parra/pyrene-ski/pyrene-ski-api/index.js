@@ -4,7 +4,7 @@ const express = require('express')
 const { name, version } = require('./package.json')
 const { argv: [, , port], env: { PORT = port || 8080, DB_URL } } = process
 const cors = require('./utils/cors')
-const { database } = require('pyrene-ski-data')
+const { database, ObjectId } = require('pyrene-ski-data')
 
 const { users, teams, lessons } = require('./routes')
 

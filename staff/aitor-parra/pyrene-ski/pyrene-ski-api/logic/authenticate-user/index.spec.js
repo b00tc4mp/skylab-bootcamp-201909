@@ -26,7 +26,7 @@ describe('logic - authenticate user', () => {
         id = user.id
     })
 
-    it('should succeed on correct credentials', async () => { debugger
+    it('should succeed on correct credentials', async () => {
         const userId = await authenticateUser(username, password)
 
         expect(userId).to.exist

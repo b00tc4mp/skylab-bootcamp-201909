@@ -5,7 +5,7 @@ const createTeam = require('.')
 const { random } = Math
 const { database, models: { User, Team } } = require('pyrene-ski-data')
 
-describe('logic - create team', () => {
+describe('logic - create team', () => { 
     before(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password, role = "admin", teamName, teamEmail, teamPhone, teamActivity

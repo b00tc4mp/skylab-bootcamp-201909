@@ -1,4 +1,4 @@
-equire('dotenv').config()
+require('dotenv').config()
 const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
 const createTeam = require('.')

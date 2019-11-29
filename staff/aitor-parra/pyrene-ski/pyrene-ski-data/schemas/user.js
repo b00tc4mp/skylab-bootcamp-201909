@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, ObjectId } = require('mongoose')
 const { validators: { isEmail } } = require('pyrene-ski-util')
 
 module.exports = new Schema({
@@ -27,7 +27,11 @@ module.exports = new Schema({
     role: {
         type: String,
         enum: ['admin', 'client'],
-        default: 'admin',
+        default: 'client',
         required: true
-    }
+    },
+    lessons: [{
+        type: ObjectId,
+        ref: 'Lesson'  
+    }]
 })

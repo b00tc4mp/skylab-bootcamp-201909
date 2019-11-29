@@ -12,13 +12,14 @@ module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
     validate.string(teamEmail)
     validate.string.notVoid('teamEmail', teamEmail)
 
-/*     validate.number(teamPhone)
-    validate.number.notVoid('teamPhone', teamPhone) */
+    validate.number(teamPhone)
+    //validate.number.notVoid('teamPhone', teamPhone)
 
     validate.string(teamActivity)
     validate.string.notVoid('teamActivity', teamActivity)
 
     return (async () => {
+
         const user = await User.findById(id)
 
         if(!user) throw new NotFoundError(`user with id ${id} not found`)

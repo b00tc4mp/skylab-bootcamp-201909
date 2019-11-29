@@ -1,17 +1,15 @@
-const { Schema } = require('mongoose')
+const { Schema, ObjectId } = require('mongoose')
 
 module.exports = new Schema({
+    user: {
+        type: ObjectId,
+        required: true,
+        ref: 'User'
+    },
     team: {
         type: ObjectId,
-        required:true,
-        ref: 'Team'
-
-    },
-    activity: {
-        type: String,
         required: true,
         ref: 'Team'
-
     },
     date: {
         type: Date,
@@ -27,14 +25,9 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    userCreate: {
-        type: ObjectId,
+/*     client: {
+        type: Objectid,
         required: true,
         ref: 'User'
-    },
-    client: {
-        type: [Objectid],
-        required: true,
-        ref: 'User'
-    }
+    } */
 })

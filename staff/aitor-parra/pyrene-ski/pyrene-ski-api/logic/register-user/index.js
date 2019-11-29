@@ -19,6 +19,11 @@ module.exports = function (name, surname, email, username, password, role) {
 
         if (user) throw new ConflictError(`user with username ${username} already exists`)
 
-        await User.create({ name, surname, email, username, password, role })
+        let arr = undefined
+
+        if (role === 'client') arr = []
+
+
+        await User.create({ name, surname, email, username, password, role, arr })
     })()
 }
