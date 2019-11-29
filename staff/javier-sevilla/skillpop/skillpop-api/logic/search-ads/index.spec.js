@@ -2,13 +2,13 @@ require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
-const listAds = require('.')
+const searchAds = require('.')
 const { errors: { NotFoundError, ContentError } } = require('skillpop-util')
 const { database, ObjectId, models: { User, Ad } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe('logic - list ads', () => {
+describe('logic - search ads', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -68,7 +68,7 @@ describe('logic - list ads', () => {
 
     it('should succeed list ads by query', async () => {
         const query = 'guitar'
-        const ads = await listAds(query)
+        const ads = await searchAds(query)
 
         expect(ads).to.exist
         expect(ads).to.have.lengthOf(10)
@@ -101,7 +101,7 @@ describe('logic - list ads', () => {
 
     it('should succeed list ads by blank query', async () => {
         const query = ' '
-        const ads = await listAds(query)
+        const ads = await searchAds(query)
 
         expect(ads).to.exist
         expect(ads).to.have.lengthOf(20)
@@ -125,6 +125,14 @@ describe('logic - list ads', () => {
             expect(ad.date).to.be.an.instanceOf(Date)
 
         })
+    })
+
+    it('should not found results', async () => {
+        const query = 'asdsadasdsad'
+        const ads = await searchAds(query)
+
+        expect(ads).to.have.lengthOf(0)
+
     })
 
     after(() => Promise.all([User.deleteMany(), Ad.deleteMany()]).then(database.disconnect))

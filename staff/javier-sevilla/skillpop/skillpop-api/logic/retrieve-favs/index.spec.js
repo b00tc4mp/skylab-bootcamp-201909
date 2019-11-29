@@ -2,15 +2,15 @@ require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
-const removeAd = require('.')
-const { errors: { NotFoundError, ConflictError }, polyfills: { arrayRandom } } = require('skillpop-util')
+const retrieveFavs = require('.')
+const { errors: { NotFoundError, ContentError }, polyfills: { arrayRandom } } = require('skillpop-util')
 const { database, ObjectId, models: { User, Ad } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
 arrayRandom()
 
-describe('logic - delete ads', () => {
+describe.only('logic - retrieve favs', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -66,64 +66,21 @@ describe('logic - delete ads', () => {
             }))
 
         await Promise.all(insertions)
+
+        user.favs = adIds
+        
+        await user.save()
+
     })
 
-    it('should succeed on correct user and ad data', async () => {
-        const adId = adIds.random()
+    it('should succeed on correct user ', async () => {
+        const favs = await retrieveFavs(id)
 
-        const response = await removeAd(id, adId)
+        console.log(favs)
 
-        expect(response).to.not.exist
 
-        const ad = await Ad.findById(adId)
-
-        expect(ad).to.not.exist
     })
 
-    it('should fail on unexisting user and correct ad data', async () => {
-        const id = ObjectId().toString()
-        const adId = adIds.random()
-
-        try {
-            await removeAd(id, adId)
-
-            throw new Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
-        }
-    })
-
-    it('should fail on correct user and unexisting ad data', async () => {
-        const adId = ObjectId().toString()
-
-        try {
-            await removeAd(id, adId)
-
-            throw new Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user does not have ad with id ${adId}`)
-        }
-    })
-
-    it('should fail on correct user and wrong <ad data', async () => {
-        const { _id } = await Ad.findOne({ _id: { $nin: adIds.map(adId => ObjectId(adId)) } })
-
-        const adId = _id.toString()
-
-        try {
-            await removeAd(id, adId)
-
-            throw new Error('should not reach this point')
-        } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(ConflictError)
-            expect(error.message).to.equal(`user with id ${id} does not correspond to ad with id ${adId}`)
-        }
-    })
 
     after(() => Promise.all([User.deleteMany(), Ad.deleteMany()]).then(database.disconnect))
 })

@@ -30,7 +30,7 @@ module.exports = new Schema({
     },
     favs: {
         type: [ObjectId], 
-        require: true,
+        require: false,
         ref: 'Ads'
     },
     comments: [Comment],

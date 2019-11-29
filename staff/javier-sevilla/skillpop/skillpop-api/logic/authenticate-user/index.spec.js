@@ -33,7 +33,6 @@ describe('logic - authenticate user', () => {
 
     it('should succeed on correct credentials', async () => {
 
-        debugger
         const userId = await authenticateUser(email, password)
 
         expect(userId).to.exist
