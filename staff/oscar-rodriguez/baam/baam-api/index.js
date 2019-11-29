@@ -1,15 +1,15 @@
 require('dotenv').config()
 const express = require('express')
+const jwt = require('jsonwebtoken')
+const { argv: [, , port], env: { PORT = port || 8080, DB_URL, SECRET } } = process
 const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
-const tokenVerifier = require('./helpers/token-verifier')
-const jwt = require('jsonwebtoken')
+const tokenVerifier = require('./helpers/token-verifier')(SECRET)
 const { name, version } = require('./package.json')
-const { argv: [, , port], env: { PORT = port || 8080, DB_URL } } = process
-const {registerUser, authenticateUser, retrieveUser } = require ('./logic')
+const { registerUser, authenticateUser, retrieveUser, createGame, joinGame, retrieveGame } = require('./logic')
 const cors = require('./utils/cors')
 const { database } = require('baam-data')
-const { errors: { ConflictError } } = require('../baam-util')
+const { errors: { ConflictError, NotFoundError, CredentialsError } } = require('../baam-util')
 
 const api = express()
 
@@ -38,25 +38,25 @@ api.post('/users', jsonBodyParser, (req, res) => {
 
 })
 
-api.post('/auth', jsonBodyParser, (req, res)=> {
-    const { body : { nickname, password}} = req
+api.post('/auth', jsonBodyParser, (req, res) => {
+    const { body: { nickname, password } } = req
 
     try {
         authenticateUser(nickname, password)
-            .then (id=> {
-                const token = jwt.sign({sud: id}, SECRET, {expiresIn: '1d'})
-                res.json({token})
+            .then(id => {
+                const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
+                res.json({ token })
             })
-            .catch (error => {
-                const {message}=error
+            .catch(error => {
+                const { message } = error
 
                 if (error instanceof CredentialsError)
-                    return res.status(401).json({message})
+                    return res.status(401).json({ message })
 
-                res.status(500).json({message})
+                res.status(500).json({ message })
             })
-    } catch ({message}) {
-        res.status(400).json({message})
+    } catch ({ message }) {
+        res.status(400).json({ message })
     }
 })
 
@@ -73,7 +73,63 @@ api.get('/users', tokenVerifier, (req, res) => {
                 res.status(500).json({ message })
 
             })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+api.post('/game/create', tokenVerifier, (req, res) => {
+    try {
+        const { id } = req
+
+        createGame(id)
+            .then(id => res.json({ id }))
+            .catch(error => {
+                const { message } = error
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                res.status(500).json({ message })
+            })
+
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+api.get('/game/:gameId/status', tokenVerifier, (req,res) => {
+    try {
+        const { id: userId, params: {gameId}} = req
+
+        retrieveGame (gameId, userId)
+            .then(game => res.json(game))
+            .catch(error => {
+                const { message } = error
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(401).json({ message })
+                res.status(500).json({ message })
+            })
     } catch ({message}) {
+        res.status(400).json({message})
+    }
+})
+
+api.post('/game/:gameId/join', tokenVerifier, (req, res) => {
+    try {
+        const { id: userId, params: { gameId } } = req
+
+        joinGame(userId,gameId)
+        .then (()=> res.end())
+        .catch(error=> {
+            const {message} = error
+            if (error instanceof NotFoundError)
+                return res.status(404).json({message})
+            if (error instanceof ConflictError)
+                return res.status(400).json({message})
+            res.status(500).json({message})
+        })
+    } catch ({ message }) {
         res.status(400).json({ message })
     }
 })

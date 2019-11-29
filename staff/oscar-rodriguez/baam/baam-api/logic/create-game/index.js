@@ -2,26 +2,31 @@ const { validate, errors: { ContentError, NotFoundError } } = require('baam-util
 const { ObjectId, models: { User, Player, Game } } = require('baam-data')
 const { random, floor } = Math
 
-module.exports = function (player1, player2) {
-    validate.string(player1)
-    validate.string.notVoid('player1', player1)
-    if (!ObjectId.isValid(player1)) throw new ContentError(`wrong id: ${player1} must be a string of 12 length`)
-    player1 = ObjectId(player1)
-
-    validate.string(player2)
-    validate.string.notVoid('player2', player2)
-    if (!ObjectId.isValid(player2)) throw new ContentError(`wrong id: ${player2} must be a string of 12 length`)
-    player2 = ObjectId(player2)
+module.exports = function (id) {
+    validate.string(id)
+    validate.string.notVoid('id', id)
+    if (!ObjectId.isValid(id)) throw new ContentError(`wrong id: ${id} must be a string of 12 length`)
+    id = ObjectId(id)
 
     return (async () => {
 
-        let found1 = await Player.findById(player1).populate('user', 'nickname')
-        if (!found1) throw new NotFoundError(`invalid player: ${player1} not found`)
-        let found2 = await Player.findById(player2).populate('user', 'nickname')
-        if (!found2) throw new NotFoundError(`invalid player: ${player2} not found`)
+        const user = await User.findById(id)
+        if (!user) throw new NotFoundError('user not found')
+
+        const newPlayer = new Player ({
+            user: user._id,
+            lifePoints: 5,
+            hand: [],
+            tempZone: null,
+            discards: [],
+            modifier: false,
+            attack: 1,
+            defense: 0,
+            lastAccess: new Date()
+        })
 
         const newGame = {
-            players: [found1, found2],
+            players: [newPlayer],
             shots: [],
             currentPlayer: floor(random() * 2)
         }

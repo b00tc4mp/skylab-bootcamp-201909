@@ -8,7 +8,7 @@ const { ContentError, NotFoundError } = require('../../utils/errors') */
 const { errors: { NotFoundError, ContentError } } = require('../../../baam-util')
 const { database, ObjectId, models: { Card, Collection } } = require('../../../baam-data')
 
-describe('logic - list collection cards', () => {
+describe('logic - retrieve collection cards', () => {
 
     before(() => database.connect(TEST_DB_URL))
 
