@@ -2,7 +2,7 @@ require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
-const retrieveFavs = require('.')
+const toogleFavAd = require('.')
 const { errors: { NotFoundError, ContentError }, polyfills: { arrayRandom } } = require('skillpop-util')
 const { database, ObjectId, models: { User, Ad } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
@@ -10,7 +10,7 @@ const salt = 10
 
 arrayRandom()
 
-describe('logic - retrieve favs', () => {
+describe('logic - toggle favs', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -50,7 +50,7 @@ describe('logic - retrieve favs', () => {
                 date: new Date
             }
 
-            insertions.push(Ad.create(ad).then(ad => adIds.push(ObjectId(ad.id))))
+            insertions.push(Ad.create(ad).then(ad => adIds.push(ad.id)))
 
             titles.push(ad.title)
             descriptions.push(ad.description)
@@ -66,50 +66,34 @@ describe('logic - retrieve favs', () => {
             }))
 
         await Promise.all(insertions)
-        
-        user.favs = adIds
-
-        await user.save()
 
     })
 
-    it('should succeed on correct user and ad data', async () => {
-        const adFavs = await retrieveFavs(id)
+    it('should succeed on correct user and add fav', async () => {
+        debugger
+        const idAd = adIds.random()
+        let isFav = await toogleFavAd(id, idAd)
 
-        expect(adFavs).to.exist
-        expect(adFavs).to.have.lengthOf(10)
+        expect(isFav).to.be.true
+        expect(isFav).to.exist
+        expect(isFav).to.be.a('boolean')
 
-        adFavs.forEach(adFav => {
-            expect(adFav.id).to.exist
-            expect(adFav.id).to.be.a('string')
-            expect(adFav.id).to.have.length.greaterThan(0)
+        isFav = await toogleFavAd(id, idAd)
 
+        expect(isFav).to.be.false
+        expect(isFav).to.exist
+        expect(isFav).to.be.a('boolean')
 
-            // expect(adFav.id).be.oneOf(adIds)
-            expect(adFav.user.toString()).to.equal(id)
-
-            expect(adFav.title).to.exist
-            expect(adFav.title).to.be.a('string')
-            expect(adFav.title).to.have.length.greaterThan(0)
-            expect(adFav.title).be.oneOf(titles)
-
-            expect(adFav.description).to.exist
-            expect(adFav.description).to.be.a('string')
-            expect(adFav.description).to.have.length.greaterThan(0)
-            expect(adFav.description).be.oneOf(descriptions)
-
-            expect(adFav.date).to.exist
-            expect(adFav.date).to.be.an.instanceOf(Date)
-
-        })
     })
+
 
     describe('when wrong id', () => {
-        it('should fail on inexisting id', async () => {
-            const id = '012345678901234567890123'
+        it('should fail on inexisting idUser', async () => {
+            const idAd = adIds.random()
+            const fakeId = '012345678901234567890123'
 
             try {
-                await retrieveFavs(id)
+                await toogleFavAd(fakeId, idAd)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -117,21 +101,35 @@ describe('logic - retrieve favs', () => {
                 expect(error).to.be.an.instanceOf(NotFoundError)
 
                 const { message } = error
-                expect(message).to.equal(`user with id ${id} not found`)
+                expect(message).to.equal(`user with id ${fakeId} not found`)
+            }
+        })
+        it('should fail on inexisting idAd', async () => {
+            const fakeId = '012345678901234567890123'
+            try {
+                await toogleFavAd(id, fakeId)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(NotFoundError)
+
+                const { message } = error
+                expect(message).to.equal(`ad with id ${fakeId} not found`)
             }
         })
     })
 
     it('should fail on incorrect id', () => {
-        expect(() => retrieveFavs(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveFavs(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveFavs([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveFavs({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveFavs(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveFavs(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => toogleFavAd(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => toogleFavAd(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => toogleFavAd([])).to.throw(TypeError, ' is not a string')
+        expect(() => toogleFavAd({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => toogleFavAd(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => toogleFavAd(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => retrieveFavs('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveFavs(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => toogleFavAd('')).to.throw(ContentError, 'idUser is empty or blank')
+        expect(() => toogleFavAd(' \t\r')).to.throw(ContentError, 'idUser is empty or blank')
     })
 
 

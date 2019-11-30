@@ -8,7 +8,7 @@
     "debug": "node inspect .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/**/*.spec.js --timeout 50000",
-    "test-debug": "npx mocha --inspect-brk=9230 logic/**/*.spec.js",
+    "test-debug": "npx mocha --inspect-brk logic/**/*.spec.js --timeout 50000",
     "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js --timeout 50000",
     "lint": "npx eslint index.js helpers logic routes utils"
   },

@@ -6,7 +6,7 @@ module.exports = new Schema({
         require: true,
         ref:'User'
     },
-    text: {
+    body: {
         type: String, 
         require: true
     },

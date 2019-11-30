@@ -7,5 +7,14 @@ module.exports = {
     removeAd: require('./remove-ad'),
     searchAds: require('./search-ads'),
     retrieveAds: require('./search-ads'),
-    retrieveFavs: require('./retrieve-favs')
+    retrieveFavs: require('./retrieve-favs'),
+    createChat: require('./create-chat'),
+    retrieveChat: require('./retrieve-chat'),
+    retrieveChats: require('./retrieve-chats'),
+    addMessage: require('./retrieve-chats'),
+    removeChat: require('./remove-chat'),
+    toggleFavAd: require('./toggle-fav-ad'),
+    addComment: require('./ad-comment'),
+    retrieveComment: require('./retrieve-comment'),
+    modifyAd: require('./modify-ad')
 }

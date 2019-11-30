@@ -16,7 +16,7 @@ module.exports = function (id, title, description, price) {
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const ad = await Ad.create({ user: id, title, description, price })
+        const ad = await Ad.create({ user: id, title, description, price, date: new Date })
 
         return ad.id
 

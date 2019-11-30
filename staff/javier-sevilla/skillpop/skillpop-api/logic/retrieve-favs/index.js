@@ -1,5 +1,5 @@
 const {  validate, errors: { NotFoundError, ContentError } } = require('skillpop-util')
-const {  ObjectId, models: { User } } = require('skillpop-data')
+const {  ObjectId, models: { User, Ad } } = require('skillpop-data')
 
 module.exports = function (id) {
     validate.string(id)
@@ -11,7 +11,19 @@ module.exports = function (id) {
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        return user.favs
+        await Ad.updateMany({ user: id }, { $set: { lastAccess: new Date } })
+
+        const ads = await Ad.find({ "_id": { $in: user.favs }}, { __v: 0 }).lean()
+        // const ads = await Ad.find({ user: id }, { __v: 0 }).lean()
+
+        ads.forEach(ad => {
+            ad.id = ad._id.toString()
+            delete ad._id
+
+            ad.user = id
+        })
+
+        return ads
 
     })()
 }

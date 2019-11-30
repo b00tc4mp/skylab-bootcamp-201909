@@ -2,7 +2,7 @@ const { Schema, ObjectId } = require('mongoose')
 const Message = require('./message')
 
 module.exports =  new Schema({
-    user: {
+    users: {
         type: [ObjectId], 
         require: true,
         ref: 'User'
