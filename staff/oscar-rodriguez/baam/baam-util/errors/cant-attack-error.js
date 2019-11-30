@@ -2,8 +2,8 @@ module.exports = class CantAttackError extends Error {
     constructor(message) {
         super(message)
 
-        Error.captureStackTrace(this, NotFoundError)
+        Error.captureStackTrace(this, CantAttackError)
 
-        this.name = NotFoundError.name
+        this.name = CantAttackError.name
     }
 }

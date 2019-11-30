@@ -8,4 +8,6 @@ module.exports = {
     retrieveGame: require('./retrieve-game'),
     retrieveUser: require('./retrieve-user'),
     retrieveUserCards: require('./retrieve-user-cards'),
+    playCard: require('./play-card'),
+    addPlayerHand: require('./add-player-hand')
 }

@@ -2,14 +2,14 @@ require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random, floor } = Math
-const chooseHand = require('.')
+const addPlayerHand = require('.')
 const { errors: { NotFoundError, ContentError, ConflictError } } = require('baam-util')
 const { ObjectId, database, models: { Card, User, Game , Player} } = require('baam-data')
 
-describe('logic - choose hand', () => {
+describe('logic - add player hand', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let userId, gameId, hand = [], cards = []
+    let playerId, gameId, hand = [], cards = []
 
     let description, image, price, col, effect, effectValue, target, name
 
@@ -27,7 +27,6 @@ describe('logic - choose hand', () => {
             effectValue = random()
             target = `target-${random()}`
             
-            
             const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
             
             cards.push(card._id)
@@ -42,12 +41,11 @@ describe('logic - choose hand', () => {
 
         const user = await User.create({ name, surname, email, nickname, password, cards })
 
-        userId = user.id
         cards.forEach(card=>{
             card.id = card._id
             delete card._id
         })
-
+        
         const newPlayer1 = new Player({
             user: user._id,
             lifePoints: 5,
@@ -59,7 +57,9 @@ describe('logic - choose hand', () => {
             defense: 0,
             lastAccess: new Date()
         })
-
+        
+        playerId = newPlayer1.id
+        
         const newPlayer2 = new Player({
             user: ObjectId(),
             lifePoints: 5,
@@ -84,7 +84,7 @@ describe('logic - choose hand', () => {
     })
 
     it("should update player's hand with the selected cards", async()=>{
-        await chooseHand(gameId, userId, hand)
+        await addPlayerHand(gameId, playerId, hand)
 
         const game = await Game.findById(gameId).lean()
         expect (game).to.exist
@@ -99,7 +99,7 @@ describe('logic - choose hand', () => {
         const wrongHand = hand.slice(0,3)
 
         try {
-            await chooseHand(gameId, userId, wrongHand)
+            await addPlayerHand(gameId, playerId, wrongHand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -113,7 +113,7 @@ describe('logic - choose hand', () => {
         const game = '012345678901234567890123'
 
         try {
-            await chooseHand(game, userId, hand)
+            await addPlayerHand(game, playerId, hand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -123,47 +123,47 @@ describe('logic - choose hand', () => {
         }
     })
 
-    it('should fail on wrong user id', async () => {
-        const user = '012345678901234567890123'
+    it('should fail on wrong player id', async () => {
+        const player = '012345678901234567890123'
 
         try {
-            await chooseHand(gameId, user, hand)
+            await addPlayerHand(gameId, player, hand)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${user} not found`)
+            expect(error.message).to.equal(`${player} is not joined to game ${gameId}`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => chooseHand(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => chooseHand(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => chooseHand([])).to.throw(TypeError, ' is not a string')
-        expect(() => chooseHand({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => chooseHand(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => chooseHand(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => addPlayerHand(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => addPlayerHand(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => addPlayerHand([])).to.throw(TypeError, ' is not a string')
+        expect(() => addPlayerHand({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => addPlayerHand(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => addPlayerHand(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => chooseHand('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => chooseHand(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => addPlayerHand('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => addPlayerHand(' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
-        expect(() => chooseHand(gameId,1)).to.throw(TypeError, '1 is not a string')
-        expect(() => chooseHand(gameId,true)).to.throw(TypeError, 'true is not a string')
-        expect(() => chooseHand(gameId,[])).to.throw(TypeError, ' is not a string')
-        expect(() => chooseHand(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => chooseHand(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => chooseHand(gameId,null)).to.throw(TypeError, 'null is not a string')
+        expect(() => addPlayerHand(gameId,1)).to.throw(TypeError, '1 is not a string')
+        expect(() => addPlayerHand(gameId,true)).to.throw(TypeError, 'true is not a string')
+        expect(() => addPlayerHand(gameId,[])).to.throw(TypeError, ' is not a string')
+        expect(() => addPlayerHand(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => addPlayerHand(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => addPlayerHand(gameId,null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => chooseHand(gameId,'')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => chooseHand(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => addPlayerHand(gameId,'')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => addPlayerHand(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
-        expect(() => chooseHand(gameId, userId, 1)).to.throw(TypeError, '1 is not a Array')
-        expect(() => chooseHand(gameId, userId, true)).to.throw(TypeError, 'true is not a Array')
-        expect(() => chooseHand(gameId, userId, 'as')).to.throw(TypeError, ' is not a Array')
-        expect(() => chooseHand(gameId, userId, {})).to.throw(TypeError, '[object Object] is not a Array')
-        expect(() => chooseHand(gameId, userId, undefined)).to.throw(TypeError, 'undefined is not a Array')
-        expect(() => chooseHand(gameId, userId, null)).to.throw(TypeError, 'null is not a Array')
+        expect(() => addPlayerHand(gameId, playerId, 1)).to.throw(TypeError, '1 is not a Array')
+        expect(() => addPlayerHand(gameId, playerId, true)).to.throw(TypeError, 'true is not a Array')
+        expect(() => addPlayerHand(gameId, playerId, 'as')).to.throw(TypeError, ' is not a Array')
+        expect(() => addPlayerHand(gameId, playerId, {})).to.throw(TypeError, '[object Object] is not a Array')
+        expect(() => addPlayerHand(gameId, playerId, undefined)).to.throw(TypeError, 'undefined is not a Array')
+        expect(() => addPlayerHand(gameId, playerId, null)).to.throw(TypeError, 'null is not a Array')
     })
 
     after (()=> Promise.all([User.deleteMany(), Game.deleteMany(), Player.deleteMany()])

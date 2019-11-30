@@ -1,7 +1,7 @@
 const { validate, errors: { ContentError, NotFoundError, ConflictError } } = require('baam-util')
 const { ObjectId, models: { User, Player, Game } } = require('baam-data')
-const { random, floor } = Math
-const mongoose = require('mongoose')
+require('dotenv').config()
+const { env: { INITIAL_PLAYER_LIFE } } = process
 
 module.exports = function (userId, gameId) {
     validate.string(userId)
@@ -22,10 +22,12 @@ module.exports = function (userId, gameId) {
         const game = await Game.findById(gameId)
         if (!game) throw new NotFoundError('game not found')
 
-        if (game.players[0].user.toString() === userId.toString()) throw new ConflictError ("can't join same user 2 times")
-        const newPlayer = new Player ({
+        const [firstPlayer] = game.players
+        if (firstPlayer.user.toString() === userId.toString()) throw new ConflictError("can't join same user 2 times")
+        
+        const newPlayer = new Player({
             user: user._id,
-            lifePoints: 5,
+            lifePoints: parseInt(INITIAL_PLAYER_LIFE),
             hand: [],
             tempZone: null,
             discards: [],
@@ -36,6 +38,9 @@ module.exports = function (userId, gameId) {
         })
 
         game.players.push(newPlayer)
+        game.status = 'READY'
         await game.save()
+
+        return game.status
     })()
 }

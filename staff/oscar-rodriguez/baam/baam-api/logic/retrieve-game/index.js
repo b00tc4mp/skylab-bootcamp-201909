@@ -30,7 +30,7 @@ module.exports = function (gameId, userId) {
                 delete card._id
             })
 
-            if (tempZone) tempZone.id = tempZone._id.toString()
+            if (tempZone) player.tempZone = player.tempZone.toString()
             discards.forEach(card => {
                 card.id = card._id.toString()
                 delete card._id
