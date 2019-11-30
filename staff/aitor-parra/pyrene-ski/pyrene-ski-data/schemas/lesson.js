@@ -6,13 +6,13 @@ module.exports = new Schema({
         required: true,
         ref: 'User'
     },
-    team: {
+/*     team: {
         type: ObjectId,
         required: true,
         ref: 'Team'
-    },
+    }, */
     date: {
-        type: Date,
+        type: String,
         required: true
 
     },
@@ -25,9 +25,4 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-/*     client: {
-        type: Objectid,
-        required: true,
-        ref: 'User'
-    } */
 })

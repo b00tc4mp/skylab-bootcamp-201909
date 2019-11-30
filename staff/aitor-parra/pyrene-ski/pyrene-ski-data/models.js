@@ -5,5 +5,5 @@ module.exports = {
 
     User: model('User', user),
     Team: model('Team', team),
-    //Lesson: model('Lesson', lesson)
+    Lesson: model('Lesson', lesson)
 }

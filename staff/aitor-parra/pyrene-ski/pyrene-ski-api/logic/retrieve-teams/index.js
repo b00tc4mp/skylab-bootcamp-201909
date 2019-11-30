@@ -1,5 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('pyrene-ski-util')
-const { ObjectId, models: { User, Team } } = require('mongoose')
+const { ObjectId, models: { User, Team } } = require('pyrene-ski-data')
 
 module.exports = function (id) { 
     validate.string(id)

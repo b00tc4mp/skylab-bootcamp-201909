@@ -26,7 +26,7 @@ describe('logic - create team', () => {
 
         teamName = `teamName-${random()}`
         teamEmail = `teamEmail-${random()}@mail.com`
-        teamPhone = (random()*10)
+        teamPhone = (random()*1000000000)
         teamActivity = `teamActivity-${random()}`
 
     })
