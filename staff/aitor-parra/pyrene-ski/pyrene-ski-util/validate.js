@@ -30,6 +30,10 @@ const validate = {
         this.instanceOf(Array, target)
     },
 
+    date(target) {
+        this.instanceOf(Date, target)
+    },
+
     email(target) {
         if (!isEmail(String(target).toLowerCase())) throw new ContentError(`${target} is not an e-mail`)
     },
@@ -41,6 +45,14 @@ const validate = {
 
 validate.string.notVoid = function (name, target) {
     if (!target.trim().length) throw new ContentError(`${name} is empty or blank`)
+}
+
+validate.number.notVoid = function (name, target) {
+    if (!target) throw new ContentError(`${name} is empty or blank`)
+}
+
+validate.date.notVoid = function (name, target) {
+    if (!target) throw new ContentError(`${name} is empty or blank`)
 }
 
 module.exports = validate
