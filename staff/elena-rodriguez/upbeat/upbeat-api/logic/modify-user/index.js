@@ -37,7 +37,6 @@ module.exports = function (id, username, email, password, description, image, li
 
     }
 
-
     return (async () => {
         const user = await User.findById(id)
 

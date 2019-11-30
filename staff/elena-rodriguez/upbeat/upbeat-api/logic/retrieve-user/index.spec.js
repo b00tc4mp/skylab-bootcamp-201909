@@ -4,26 +4,36 @@ const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('.')
 const { errors: { NotFoundError } } = require('upbeat-util')
-const { database, models: { User } } = require('upbeat-data')
+const { database, models: { User, Solo, Groups } } = require('upbeat-data')
+const bcrypt = require('bcryptjs')
 
 describe('logic - retrieve user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, username, email, password, rol, rols, longitude, latitude
-    rols = ['solo','groups']
+    let id , username, email, password, rol, rols, longitude, latitude, format
+    rols = ['solo', 'groups']
+    instrumentsList = ['drums', 'guitar', 'piano', 'violin', 'bass', 'cello', 'clarinet', 'double-bass', 'flute', 'oboe', 'saxophone', 'trombone', 'trumpet', 'ukelele', 'viola', 'voice']
+    groupsList = ['band', 'choir', 'modern-ensemble', 'orchestra', 'classic-chamber']
+
+
 
     beforeEach(async () => {
-
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        rol = rols[Math.floor(Math.random()*rols.length)]
+        rol = rols[Math.floor(Math.random() * rols.length)]
         longitude = random()
         latitude = random()
+        instruments = [instrumentsList[Math.floor(Math.random() * instrumentsList.length)]]
+        groups = groupsList[Math.floor(Math.random() * groupsList.length)]
+        if (rol === 'solo') format = new Solo({ instruments })
+        else format = new Groups({ groups })
+
+        hash = await bcrypt.hash(password, 10)
 
         await User.deleteMany()
 
-        const user = await User.create({username, email, password, rol, location: {coordinates: [latitude, longitude]}})
+        const user = await User.create({ username, email, password, rol, format, location: { coordinates: [latitude, longitude] } })
 
         id = user.id
     })
@@ -40,7 +50,10 @@ describe('logic - retrieve user', () => {
         expect(user.email).to.be.a('string')
         expect(user.password).to.be.undefined
         expect(user.rol).to.be.a('string')
-        expect(user.location)
+        expect(user.rol).to.equal(rol)
+        user.rol === 'solo' && expect(user.format.instruments).to.eql(instruments)
+        user.rol === 'groups' && expect(user.format.groups).to.equal(groups)
+        expect(user.location.coordinates).to.be.an('array')
     
     })
 

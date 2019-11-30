@@ -29,14 +29,15 @@ describe('logic - modify user', () => {
 
         await User.deleteMany()
 
-        const user = await User.create({ username, email, password, description, image,links: [] , upcomings })
+        const user = await User.create({ username, email, password, description, image, links: [] , upcomings })
         user.links.push(linksObj)
-        await user.save()
         id = user.id
+        await user.save()
+        
 
 })
 
-    it('should succeed on correct user and user data', async () => {
+    it('should succeed on correct user and user data', async () => {debugger
    
         const newUsername = `new-username-${random()}`
         const newEmail = `new-email-${random()}@mail.com`

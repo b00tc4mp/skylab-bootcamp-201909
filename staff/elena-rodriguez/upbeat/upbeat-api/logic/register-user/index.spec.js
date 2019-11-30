@@ -8,54 +8,63 @@ const { database, models: { User } } = require('upbeat-data')
 const bcrypt = require('bcryptjs')
 
 describe('logic - register user', () => {
-   
+
+
     before(() => database.connect(TEST_DB_URL))
 
     let username, email, password, rol, rols, longitude, latitude, instruments, groups
-    rols = ['solo','groups']
+    rols = ['solo', 'groups']
+    instrumentsList = ['drums', 'guitar', 'piano', 'violin', 'bass', 'cello', 'clarinet', 'double-bass', 'flute', 'oboe', 'saxophone', 'trombone', 'trumpet', 'ukelele', 'viola', 'voice']
+    groupsList = ['band', 'choir', 'modern-ensemble', 'orchestra', 'classic-chamber']
 
     beforeEach(async () => {
         username = `username-${random()}`
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
-        rol = rols[Math.floor(Math.random()*rols.length)]
+        rol = rols[Math.floor(Math.random() * rols.length)]
         longitude = random()
         latitude = random()
-        instruments = ['violin']
-        groups = 'band'
-
+        instruments = [instrumentsList[Math.floor(Math.random() * instrumentsList.length)]]
+        groups = groupsList[Math.floor(Math.random() * groupsList.length)]
+        /* if (rol === 'solo') format = new Solo({ instruments })
+        else format = new Groups({ groups }) */
+        //User.create({ username, email, password, rol, format, location: { coordinates: [latitude, longitude] } })
         hash = await bcrypt.hash(password, 10)
 
         await User.deleteMany()
     })
 
-    it('should succeed on correct credentials', async () => {debugger
-        
-        
-        const response = await registerUser( username, email, password, rol, instruments, groups, latitude, longitude )
+    it('should succeed on correct credentials', async () => {
+
+        const response = await registerUser(username, email, password, rol, instruments, groups, latitude, longitude)
 
         expect(response).to.be.undefined
 
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ email })
 
         expect(user).to.exist
-        
+
         expect(user.username).to.equal(username)
         expect(user.email).to.equal(email)
+
         const match = await bcrypt.compare(password, user.password)
         expect(match).to.be.true
+
         expect(user.rol).to.equal(rol)
+        //expect(instruments).to.include(user.format.instruments)
+        user.rol === 'solo' && expect(user.format.instruments).to.eql(instruments)
+        user.rol === 'groups' && expect(user.format.groups).to.equal(groups)
         expect(user.location.coordinates[0]).to.equal(latitude)
         expect(user.location.coordinates[1]).to.equal(longitude)
-       
+
     })
 
     describe('when user already exists', () => {
-        beforeEach(() => User.create({ username, email, password, rol, location: {coordinates: [latitude, longitude ]} }))
+        beforeEach(() => User.create({ username, email, password, rol, location: { coordinates: [latitude, longitude] } }))
 
         it('should fail on already existing user', async () => {
             try {
-                await registerUser(username, email, password, rol, latitude, longitude)
+                await registerUser(username, email, password, rol, instruments, groups, latitude, longitude)
 
                 throw Error('should not reach this point')
             } catch (error) {
@@ -70,7 +79,7 @@ describe('logic - register user', () => {
     })
 
     it('should fail on incorrect username, email, password, latitude, longitude or expression type and content', () => {
-        
+
         expect(() => registerUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => registerUser(true)).to.throw(TypeError, 'true is not a string')
         expect(() => registerUser([])).to.throw(TypeError, ' is not a string')
@@ -94,7 +103,7 @@ describe('logic - register user', () => {
         expect(() => registerUser(username, email, '')).to.throw(ContentError, 'password is empty or blank')
         expect(() => registerUser(username, email, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
 
-       
+
 
         expect(() => registerUser(username, email, 1)).to.throw(TypeError, '1 is not a string')
         expect(() => registerUser(username, email, true)).to.throw(TypeError, 'true is not a string')
@@ -114,26 +123,42 @@ describe('logic - register user', () => {
         expect(() => registerUser(username, email, password, '')).to.throw(ContentError, 'rol is empty or blank')
         expect(() => registerUser(username, email, password, ' \t\r')).to.throw(ContentError, 'rol is empty or blank')
 
-        expect(() => registerUser(username, email, password, rol, 'a')).to.throw(TypeError, 'a is not a number')
-        expect(() => registerUser(username, email, password, rol, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => registerUser(username, email, password, rol, [])).to.throw(TypeError, ' is not a number')
-        expect(() => registerUser(username, email, password, rol, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => registerUser(username, email, password, rol, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => registerUser(username, email, password, rol, null)).to.throw(TypeError, 'null is not a number')
+        expect(() => registerUser(username, email, password, rol, 1)).to.throw(TypeError, '1 is not a Array')
+        expect(() => registerUser(username, email, password, rol, true)).to.throw(TypeError, 'true is not a Array')
+        //expect(() => registerUser(username, email, password, rol, [])).to.throw(TypeError, ' is not a Array')
+        expect(() => registerUser(username, email, password, rol, {})).to.throw(TypeError, '[object Object] is not a Array')
+        expect(() => registerUser(username, email, password, rol, undefined)).to.throw(TypeError, 'undefined is not a Array')
+        expect(() => registerUser(username, email, password, rol, null)).to.throw(TypeError, 'null is not a Array')
 
 
 
-        expect(() => registerUser(username, email, password, rol, latitude, 'a')).to.throw(TypeError, 'a is not a number')
-        expect(() => registerUser(username, email, password, rol, latitude, true)).to.throw(TypeError, 'true is not a number')
-        expect(() => registerUser(username, email, password, rol, latitude, [])).to.throw(TypeError, ' is not a number')
-        expect(() => registerUser(username, email, password, rol, latitude, {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => registerUser(username, email, password, rol, latitude, undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => registerUser(username, email, password, rol, latitude, null)).to.throw(TypeError, 'null is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => registerUser(username, email, password, rol, instruments, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => registerUser(username, email, password, rol, instruments, [])).to.throw(TypeError, ' is not a string')
+        expect(() => registerUser(username, email, password, rol, instruments, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => registerUser(username, email, password, rol, instruments, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => registerUser(username, email, password, rol, instruments, null)).to.throw(TypeError, 'null is not a string')
+
+        expect(() => registerUser(username, email, password, rol, instruments, groups, 'a')).to.throw(TypeError, 'a is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, true)).to.throw(TypeError, 'true is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, [])).to.throw(TypeError, ' is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, {})).to.throw(TypeError, '[object Object] is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, undefined)).to.throw(TypeError, 'undefined is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, null)).to.throw(TypeError, 'null is not a number')
+
+        expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, 'a')).to.throw(TypeError, 'a is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, true)).to.throw(TypeError, 'true is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, [])).to.throw(TypeError, ' is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, {})).to.throw(TypeError, '[object Object] is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, undefined)).to.throw(TypeError, 'undefined is not a number')
+        expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, null)).to.throw(TypeError, 'null is not a number')
 
         
+
+
+
     })
 
-    // TODO other cases
 
     after(() => User.deleteMany().then(database.disconnect))
 })

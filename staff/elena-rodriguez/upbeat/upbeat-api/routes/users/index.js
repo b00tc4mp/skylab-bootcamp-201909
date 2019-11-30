@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, addInstruments, deleteInstrument } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -11,10 +11,10 @@ const jsonBodyParser = bodyParser.json()
 const router = Router()
 
 router.post('/', jsonBodyParser, (req, res) => {
-    const { body: { username, email, password, rol,latitude, longitude }} = req
+    const { body: { username, email, password, rol, instruments, groups, latitude, longitude } } = req
 
     try {
-        registerUser(username, email, password, rol,latitude, longitude)
+        registerUser(username, email, password, rol, instruments, groups, latitude, longitude)
             .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error
@@ -24,6 +24,7 @@ router.post('/', jsonBodyParser, (req, res) => {
 
                 res.status(500).json({ message })
             })
+
     } catch ({ message }) {
         res.status(400).json({ message })
     }
@@ -73,4 +74,75 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
+
+router.post('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, body: { instru } } = req
+
+        addInstruments(id, instru)
+            .then(id => res.status(201).json({ id }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+
+router.delete('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, body: { instru } } = req
+        deleteInstrument(id, instru)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, body: { username, email, password, description, image, links, upcomings } } = req
+
+        modifyUser(id, username, email, password, description, image, links, upcomings)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+
+
 module.exports = router
+
+
+

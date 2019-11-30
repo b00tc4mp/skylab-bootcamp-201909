@@ -1,7 +1,7 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('upbeat-util')
 const { ObjectId, models: { User } } = require('upbeat-data')
 
-module.exports = function (id, instruments) {
+module.exports = function (id, instru) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -9,12 +9,13 @@ module.exports = function (id, instruments) {
     return (async () => {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-        user.format.instruments = []
+        
+    
+        instru.forEach(ele => user.format.instruments.push(ele) )
+        
+    
 
-        instruments.forEach(instrument => {
-            user.format.instruments.push(instrument)
-        })
-
-        user.save()
-    })
+        await User.updateOne({_id:id},{format: user.format.instruments})
+        
+    })()
 }
