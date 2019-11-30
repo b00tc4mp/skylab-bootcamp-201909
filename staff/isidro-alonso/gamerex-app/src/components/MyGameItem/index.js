@@ -15,7 +15,9 @@ export default function ({ game: {id, title, platform, sell, exchange, favourite
         if(exchange) return <img src="img/exchange.png" alt="exchange" />
     }
 
-    return <Link to='/mygame' className="game-item__link">
+    const gameLink = `/mygame/${id}`
+    
+    return <Link to={gameLink} className="game-item__link">
         <img className="game-item__img" src={img} alt="user" />
         <p className="game-item__title">{title}</p>
         <p className="game-item__platform">{platform}</p>

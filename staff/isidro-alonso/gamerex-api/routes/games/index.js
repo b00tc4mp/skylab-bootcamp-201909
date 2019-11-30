@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createGame, listGames, /*modifyTask, removeTask*/ } = require('../../logic')
+const { createGame, listGames, retrieveGame /*modifyGame, removeGame*/ } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
@@ -47,50 +47,70 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
-// router.patch('/:taskId', tokenVerifier, jsonBodyParser, (req, res) => {
-//     try {
-//         const { id, params: { taskId }, body: { title, description, status } } = req
+router.get('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
+    
+    try {
+        const { params: { gameId } } = req
 
-//         modifyTask(id, taskId, title, description, status)
-//             .then(() =>
-//                 res.end()
-//             )
-//             .catch(error => {
-//                 const { message } = error
+        retrieveGame(gameId)
+            .then(games => res.json(games))
+            .catch(error => {
+                const { message } = error
 
-//                 if (error instanceof NotFoundError)
-//                     return res.status(404).json({ message })
-//                 if (error instanceof ConflictError)
-//                     return res.status(409).json({ message })
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
 
-//                 res.status(500).json({ message })
-//             })
-//     } catch ({ message }) {
-//         res.status(400).json({ message })
-//     }
-// })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
-// router.delete('/:taskId', tokenVerifier, (req, res) => {
-//     try {
-//         const { id, params: { taskId } } = req
+router.patch('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, params: { gameId }, body: { title, description, status } } = req
 
-//         removeTask(id, taskId)
-//             .then(() =>
-//                 res.end()
-//             )
-//             .catch(error => {
-//                 const { message } = error
+        modifyGame(id, gameId, title, description, status)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
 
-//                 if (error instanceof NotFoundError)
-//                     return res.status(404).json({ message })
-//                 if (error instanceof ConflictError)
-//                     return res.status(409).json({ message })
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
 
-//                 res.status(500).json({ message })
-//             })
-//     } catch ({ message }) {
-//         res.status(400).json({ message })
-//     }
-// })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.delete('/:gameId', tokenVerifier, (req, res) => {
+    try {
+        const { id, params: { gameId } } = req
+
+        removeGame(id, gameId)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
 module.exports = router

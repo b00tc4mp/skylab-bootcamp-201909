@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Route, withRouter, Redirect } from 'react-router-dom'
-import { retrieveUser } from '../../logic'
+import { retrieveUser, retrieveGame } from '../../logic'
 import MyGameList from '../MyGameList'
+import MyGameItem from '../MyGameItem'
 
 export default withRouter(function ({ history }) {
     const [username, setUsername] = useState()
@@ -40,7 +41,7 @@ export default withRouter(function ({ history }) {
             <img className="user-profile__img" src="img/profile.png" alt="user" />
             <p className="user-profile__location">{location}</p>
             <p className="user-profile__email">{email}</p>
-            <p className="user-profile__numofgames">XX games</p>
+            <p className="user-profile__numofgames">{MyGameItem.length} games</p>
             <Link to='/updateuser'>
                 <button className="user-profile__update">Update profile</button>
             </Link>
