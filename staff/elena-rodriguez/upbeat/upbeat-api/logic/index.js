@@ -6,8 +6,8 @@ module.exports = {
     deleteInstrument : require('./delete-instrument'),
     modifyUser : require('./modify-user'),
     toggleFavs : require('./toggle-favs'),
-    retrieveFavs : require('./retrieve-favs')
-    //listUsers : require('./list-users')
+    retrieveFavs : require('./retrieve-favs'),
+    searchUsers : require('./search-users')
     //createTask: require('./create-task'),
     //listTasks: require('./list-tasks'),
     //modifyTask: require('./modify-task'),
