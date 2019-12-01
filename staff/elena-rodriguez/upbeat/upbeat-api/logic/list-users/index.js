@@ -2,6 +2,7 @@ const { validate, errors: { NotFoundError, ContentError } } = require('upbeat-ut
 const { ObjectId, models: { User } } = require('upbeat-data')
 const bcrypt = require('bcryptjs')
 
+
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)
@@ -12,13 +13,17 @@ module.exports = function (id) {
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        user.lastAccess = new Date
 
         await user.save()
 
-        const { username, email, rol, format, location: {coordinates: [latitude, longitude]}, description, image, links, upcomings, favs } = user.toObject()
+        //  solo me traigo favs
 
-        return {  id, username, email, rol, format, location: {coordinates: [latitude, longitude]}, description, image, links, upcomings, favs }
+        const {favs}  =  user.toObject()
+
+        return { favs }
         
     })()
 }
+
+
+

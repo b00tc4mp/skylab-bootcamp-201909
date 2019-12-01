@@ -9,6 +9,7 @@ const { database, ObjectId, models: { User, Solo } } = require('upbeat-data')
 
 
 describe('logic - delete instrument', () => {
+
     before(() => database.connect(TEST_DB_URL))
 
     let username, email, password, rol, rols, longitude, latitude, instruments, id

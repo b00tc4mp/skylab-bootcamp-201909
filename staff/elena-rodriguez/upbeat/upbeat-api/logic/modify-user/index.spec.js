@@ -37,14 +37,13 @@ describe('logic - modify user', () => {
 
 })
 
-    it('should succeed on correct user and user data', async () => {debugger
+    it('should succeed on correct user and user data', async () => {
    
         const newUsername = `new-username-${random()}`
         const newEmail = `new-email-${random()}@mail.com`
         const newPassword = `new-password-${random()}`
         const newDescription = `new-description-${random()}`
         const newImage = `new-image-${random()}`
-        //const newLinks = `new-links-${random()}`
         const newUpcomings = `new-upcomings-${random()}`
 
         const newLinks = {

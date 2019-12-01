@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser, addInstruments, deleteInstrument } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, addInstruments, deleteInstrument, toggleFavs, retrieveFavs } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -125,6 +125,51 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
             .then(() =>
                 res.end()
             )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/favs/:favId', tokenVerifier, jsonBodyParser, (req, res) => {debugger
+    try {
+        const { id, params : {favId} } = req
+
+        toggleFavs(id, favId)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/favs/:id', jsonBodyParser, (req, res) => {
+    try {
+        const { params : {id} } = req
+
+        retrieveFavs(id)
+        .then(favs => res.status(201).json({ favs }))
+            
             .catch(error => {
                 const { message } = error
 

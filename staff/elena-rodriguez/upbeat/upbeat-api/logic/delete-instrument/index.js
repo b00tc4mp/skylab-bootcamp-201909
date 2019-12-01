@@ -20,7 +20,7 @@ module.exports = function (id, instru) {
 
         user.format.instruments = finalInstruments
 
-        await User.updateOne({_id:id},{format: user.format.instruments})
+        await User.updateOne({_id:id},{format: user.format.instruments}) // aquí está el problema , transofrma format en un array. 
         
     })()
 }

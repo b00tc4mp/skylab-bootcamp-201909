@@ -39,7 +39,7 @@ module.exports = function (username, email, password, rol, instruments, groups, 
         if(rol === 'solo'){
             format = new Solo({instruments})
         }else{
-            format = new Groups({groups})
+ç                                                                                                                                                           format = new Groups({groups})
         }
         await User.create({ username, email, password: hash, rol, format, location: {coordinates: [latitude, longitude]}})
     })()
