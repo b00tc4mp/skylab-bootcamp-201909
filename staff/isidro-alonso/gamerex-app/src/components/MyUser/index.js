@@ -5,6 +5,7 @@ import MyGameList from '../MyGameList'
 import MyGameItem from '../MyGameItem'
 
 export default withRouter(function ({ history }) {
+    const [id, setId] = useState()
     const [username, setUsername] = useState()
     const [location, setLocation] = useState()
     const [email, setEmail] = useState()
@@ -14,8 +15,9 @@ export default withRouter(function ({ history }) {
 
         (async () => {
             if (token) {
-                const { username, location, email } = await retrieveUser(token)
+                const { id, username, location, email } = await retrieveUser(token)
 
+                setId(id)
                 setUsername(username)
                 setLocation(location)
                 setEmail(email)
@@ -35,6 +37,8 @@ export default withRouter(function ({ history }) {
         }
     }
 
+    const userIdLink = `/updateuser/${id}`
+
     return <section className="user-profile">
         <h1 className="user-profile__title">{username}</h1>
         <section className="user-profile__item">
@@ -42,7 +46,7 @@ export default withRouter(function ({ history }) {
             <p className="user-profile__location">{location}</p>
             <p className="user-profile__email">{email}</p>
             <p className="user-profile__numofgames">{MyGameItem.length} games</p>
-            <Link to='/updateuser'>
+            <Link to={userIdLink}>
                 <button className="user-profile__update">Update profile</button>
             </Link>
             <button className="user-profile__logout" onClick={handleLogout}>Logout</button>

@@ -1,34 +1,47 @@
 import React, { useState, useEffect } from 'react'
-// import {registerUser} from '../../logic' //crear logica de update user
-import { authenticateUser } from '../../logic'
+import { modifyUser } from '../../logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
+
+    const { location: { pathname } } = history
+    const id = pathname.substr(12)
+
     const [username, setUsername] = useState('')
     const [location, setLocation] = useState('')
-    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleUpdateUser = async (e) => {
-        e.preventDefault()
+    async function handleUpdateUser(username, location, password) {
         try {
-            // await registerUser(username, location, email, password) //crear logica de update user
-            const token = await authenticateUser(username, password)
-            sessionStorage.token = token
+            const { token } = sessionStorage
+
+            await modifyUser(token, id, username, location, password)
+
             history.push('/myuser')
+
         } catch (error) {
             console.error(error)
         }
     }
+
+    const isDisabled = !username || !location || !password
+
     return <section className="updateprofile">
-        <form onSubmit={handleUpdateUser}>
+        <form onSubmit={e => {
+            e.preventDefault()
+
+            handleUpdateUser(username, location, password)
+            setUsername('')
+            setLocation('')
+            setPassword('')
+
+        }}>
             <h1 className="updateprofile__title">Update profile</h1>
-            <input className="updateprofile__field" type="text" name="username" placeholder="username" />
-            <input className="updateprofile__field" type="text" name="location" placeholder="location" />
-            <input className="updateprofile__field" type="email" name="email" placeholder="e-mail" />
-            <input className="updateprofile__field" type="password" name="password" placeholder="password" />
+            <input className="updateprofile__field" type="text" name="username" placeholder="username" onChange={event => setUsername(event.target.value)} />
+            <input className="updateprofile__field" type="text" name="location" placeholder="location" onChange={event => setLocation(event.target.value)} />
+            <input className="updateprofile__field" type="password" name="password" placeholder="password" onChange={event => setPassword(event.target.value)} />
             <button className="updateprofile__addimg">Update profile image</button>
-            <button className="updateprofile__submit">Update</button>
+            <button className="updateprofile__submit" disabled={isDisabled}>Update</button>
         </form>
     </section>
 })

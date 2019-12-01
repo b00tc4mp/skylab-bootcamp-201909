@@ -20,6 +20,8 @@ export default function getRoute(route) {
             return MyGame;
         if (route.includes('updategame'))
             return UpdateGame; 
+        if (route.includes('updateuser'))
+            return UpdateUser; 
     }
 
     switch (route) {
@@ -31,8 +33,6 @@ export default function getRoute(route) {
             return MyUser;
         case '/user':
             return User;
-        case '/updateuser':
-            return UpdateUser;
         case '/game':
             return Game;
         case '/newgame':
