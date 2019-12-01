@@ -37,7 +37,7 @@ describe('logic - retrieve teams', () => {
                 user: id,
                 teamName: `teamName-${random()}`,
                 teamEmail: `teamEmail-${random()}@gmail.com`,
-                teamPhone: (random()*100),
+                teamPhone: `teamPhone-${random()}`,
                 teamActivity: `teamActivity-${random()}`
             }
 
@@ -54,7 +54,7 @@ describe('logic - retrieve teams', () => {
                 user: ObjectId(),
                 teamName: `teamName-${random()}`,
                 teamEmail: `teamEmail-${random()}@gmail.com`,
-                teamPhone: (random()*10),
+                teamPhone: `teamPhone-${random()}`,
                 teamActivity: `teamActivity-${random()}`
             }))
 
@@ -87,8 +87,8 @@ describe('logic - retrieve teams', () => {
             //expect(team.teamEmail).be.oneOf(teamEmails)
 
             expect(team.teamPhone).to.exist
-            expect(team.teamPhone).to.be.a('number')
-            //expect(team.teamPhone).to.have.length.greaterThan(0)
+            expect(team.teamPhone).to.be.a('string')
+            expect(team.teamPhone).to.have.length.greaterThan(0)
             //expect(team.teamPhone).be.oneOf(teamPhones)
 
             expect(team.teamActivity).to.exist

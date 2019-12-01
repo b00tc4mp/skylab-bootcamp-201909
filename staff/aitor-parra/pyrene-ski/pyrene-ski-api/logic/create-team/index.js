@@ -12,8 +12,8 @@ module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
     validate.string(teamEmail)
     validate.string.notVoid('teamEmail', teamEmail)
 
-    validate.number(teamPhone)
-    validate.number.notVoid('teamPhone', teamPhone)
+    validate.string(teamPhone)
+    validate.string.notVoid('teamPhone', teamPhone)
 
     validate.string(teamActivity)
     validate.string.notVoid('teamActivity', teamActivity)

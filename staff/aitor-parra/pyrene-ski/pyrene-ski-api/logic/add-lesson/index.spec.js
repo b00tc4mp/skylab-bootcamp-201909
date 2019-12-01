@@ -10,7 +10,7 @@ describe('logic - add lesson', () => {
 
     let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd
 
-    beforeEach(async () => {debugger
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
@@ -33,7 +33,7 @@ describe('logic - add lesson', () => {
         timeEnd = `timeEnd-${random()}`
     })
 
-    it('should succeed on correct user and lesson data', async () => { debugger
+    it('should succeed on correct user and lesson data', async () => { 
         const lessonId = await addLesson(userId, date, timeStart, timeEnd)
 
         expect(lessonId).to.exist

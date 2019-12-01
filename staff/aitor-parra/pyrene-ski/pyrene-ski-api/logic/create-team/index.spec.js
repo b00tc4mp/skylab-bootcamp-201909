@@ -5,7 +5,7 @@ const createTeam = require('.')
 const { random } = Math
 const { database, models: { User, Team } } = require('pyrene-ski-data')
 
-describe('logic - create team', () => { 
+describe('logic - create team', () => { debugger
     before(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password, role = "admin", teamName, teamEmail, teamPhone, teamActivity
@@ -26,12 +26,12 @@ describe('logic - create team', () => {
 
         teamName = `teamName-${random()}`
         teamEmail = `teamEmail-${random()}@mail.com`
-        teamPhone = (random()*1000000000)
+        teamPhone = `teamPhone-${random()}`
         teamActivity = `teamActivity-${random()}`
 
     })
 
-    it('should succeed on correct user and team data', async () => {
+    it('should succeed on correct user and team data', async () => {debugger
         const teamId = await createTeam(id, teamName, teamEmail, teamPhone, teamActivity)
 
         expect(teamId).to.exist
@@ -48,7 +48,7 @@ describe('logic - create team', () => {
         expect(team.teamActivity).to.equal(teamActivity)
     })
     
-    after(() => Promise.all([User.deleteMany(), Team.deleteMany()]).then(database.disconnect)) 
+    after(() => Promise.all([User.deleteMany(), Team.deleteMany() ]).then(database.disconnect)) 
 
 })
 

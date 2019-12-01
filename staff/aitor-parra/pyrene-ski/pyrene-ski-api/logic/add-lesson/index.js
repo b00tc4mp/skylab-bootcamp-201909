@@ -1,7 +1,7 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('pyrene-ski-util')
 const { ObjectId, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 
-module.exports = function(userId, date, timeStart, timeEnd) {debugger
+module.exports = function(userId, date, timeStart, timeEnd) {
 
     validate.string(userId)
     validate.string.notVoid('userId', userId)
@@ -23,7 +23,7 @@ module.exports = function(userId, date, timeStart, timeEnd) {debugger
     validate.string(timeEnd)
     validate.string.notVoid('timeEnd', timeEnd)
     
-    return (async() => { debugger
+    return (async() => { 
 
         const user = await User.findById(userId)
 

@@ -18,7 +18,8 @@ api.options('*', cors, (req, res) => {
 
 api.use('/users', users)
 api.use('/teams', teams)
-//api.use('/lessons', lessons)
+api.use('/lessons', lessons)
+
 
 database
     .connect(DB_URL)

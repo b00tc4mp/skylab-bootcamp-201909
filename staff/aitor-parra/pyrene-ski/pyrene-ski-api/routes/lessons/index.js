@@ -1,19 +1,18 @@
 const { Router } = require('express')
-const { createTeam, retrieveTeams, removeTeam } = require('../../logic')
+const { addLesson, retrieveLessons, deleteLesson } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('pyrene-ski-util')
-
 const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
 router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, body: { teamName, teamEmail, teamPhone, teamActivity } } = req
+        const { id, body: { date, timeStart, timeEnd } } = req
 
-        createTeam(id, teamName, teamEmail, teamPhone, teamActivity)
+        addLesson(id, date, timeStart, timeEnd)
             .then(id => res.status(201).json({ id }))
             .catch(error => {
                 const { message } = error
@@ -28,12 +27,12 @@ router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/teamlist', tokenVerifier, (req, res) => {
+router.get('/lessonlist', tokenVerifier, (req, res) => {
     try {
         const { id } = req
 
-        retrieveTeams(id)
-            .then(teams => res.json(teams))
+        retrieveLessons(id)
+            .then(lessons => res.json(lessons))
             .catch(error => {
                 const { message } = error
 
@@ -47,11 +46,11 @@ router.get('/teamlist', tokenVerifier, (req, res) => {
     }
 })
 
-router.post('/:teamId', tokenVerifier, (req, res) => {
+router.post('/:lessonId', tokenVerifier, (req, res) => {
     try {
-        const { id, params: { teamId } } = req
+        const { id, params: { lessonId } } = req
 
-        removeTeam(id, teamId)
+        deleteLesson(id, lessonId)
             .then(() => 
                 res.end()
             )

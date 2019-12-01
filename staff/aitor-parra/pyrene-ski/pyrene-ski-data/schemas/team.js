@@ -17,7 +17,7 @@ module.exports = new Schema({
         validate: isEmail
     },
     teamPhone: {
-        type: Number,
+        type: String,
         required: true
     },
     teamActivity: {
