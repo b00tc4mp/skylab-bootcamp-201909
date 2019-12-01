@@ -90,7 +90,6 @@ module.exports = function (gameId, playerId, cardId) {
         else
             game.currentPlayer = (game.currentPlayer + 1) % 2
 
-
         await game.save()
         return game.players[currentPlayer].currentPlayer
     })()

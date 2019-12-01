@@ -35,6 +35,9 @@ module.exports = function (userId) {
         }
 
         const game = await Game.create(newGame)
-        return game._id.toString()
+        return {
+            gameId: game.id,
+            playerId: newPlayer.id
+        }
     })()
 }

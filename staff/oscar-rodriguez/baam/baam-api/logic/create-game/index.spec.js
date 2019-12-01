@@ -27,7 +27,7 @@ describe('logic - create game', () => {
 
     it('should create a new game with the first player', async () => {
 
-        const gameId = await createGame(id)
+        const {gameId, playerId} = await createGame(id)
 
         const game = await Game.findById(gameId)
         expect(game).to.exist
@@ -37,6 +37,8 @@ describe('logic - create game', () => {
         expect([0, 1]).to.include(game.currentPlayer)
         
         expect(game.players[0].user.toString()).to.equal(id)
+
+        expect(playerId).to.equal(game.players[0].id)
 
     })
     after(() => Promise.all([Game.deleteMany(), Player.deleteMany()])
