@@ -2,7 +2,7 @@ const call = require('../../utils/call')
 const { validate, errors: { CredentialsError, NotFoundError, ConflictError } } = require('gamerex-util')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token, gameId, title, description, status) {
+module.exports = function (token, gameId, title, platform, sell, exchange, favourite) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
@@ -13,14 +13,9 @@ module.exports = function (token, gameId, title, description, status) {
         validate.string(title)
         validate.string.notVoid('title', title)
     }
-    if (description) {
-        validate.string(description)
-        validate.string.notVoid('description', description)
-    }
-    if (status) {
-        validate.string(status)
-        validate.string.notVoid('status', status)
-        validate.matches('status', status, 'TODO', 'DOING', 'REVIEW', 'DONE')
+    if (platform) {
+        validate.string(platform)
+        validate.string.notVoid('platform', platform)
     }
 
     return (async () => {
@@ -30,7 +25,7 @@ module.exports = function (token, gameId, title, description, status) {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title, description, status })
+            body: JSON.stringify({ title, platform, sell, exchange, favourite })
         })
 
         if (res.status === 200) return

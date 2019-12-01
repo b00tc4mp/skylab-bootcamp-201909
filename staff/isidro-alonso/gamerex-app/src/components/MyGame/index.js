@@ -42,7 +42,6 @@ export default withRouter(function ({ history }) {
         })()
     }, [sessionStorage.token])
 
-
     const handleRemoveGame = async (e) => {
         e.preventDefault()
         const { token } = sessionStorage;
@@ -57,6 +56,8 @@ export default withRouter(function ({ history }) {
         }
     }
 
+    const updateGameLink = `/updategame/${gameId}`
+
     return <section className="game-detail">
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
@@ -65,7 +66,7 @@ export default withRouter(function ({ history }) {
             {showFav()}
             {showSell()}
             {showExch()}
-            <Link to='/updategame'>
+            <Link to={updateGameLink}>
                 <button className="game-detail__edit">Edit game info</button>
             </Link>
             <button className="game-detail__remove" onClick={handleRemoveGame}>Remove game</button>

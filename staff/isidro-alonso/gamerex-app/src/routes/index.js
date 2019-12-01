@@ -18,6 +18,8 @@ export default function getRoute(route) {
     if (isRelativeRoute) {
         if (route.includes('mygame'))
             return MyGame;
+        if (route.includes('updategame'))
+            return UpdateGame; 
     }
 
     switch (route) {
@@ -35,8 +37,6 @@ export default function getRoute(route) {
             return Game;
         case '/newgame':
             return NewGame;
-        case '/updategame':
-            return UpdateGame;
         default:
             return Landing
     }

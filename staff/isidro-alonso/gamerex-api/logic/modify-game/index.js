@@ -1,7 +1,7 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('gamerex-util')
 const { ObjectId, models: { User, Game } } = require('gamerex-data')
 
-module.exports = function (id, gameId, title, description, status) {
+module.exports = function (id, gameId, title, platform, sell, exchange, favourite) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -14,14 +14,9 @@ module.exports = function (id, gameId, title, description, status) {
         validate.string(title)
         validate.string.notVoid('title', title)
     }
-    if (description) {
-        validate.string(description)
-        validate.string.notVoid('description', description)
-    }
-    if (status) {
-        validate.string(status)
-        validate.string.notVoid('status', status)
-        validate.matches('status', status, 'TODO', 'DOING', 'REVIEW', 'DONE')
+    if (platform) {
+        validate.string(platform)
+        validate.string.notVoid('platform', platform)
     }
 
     return (async () => {
@@ -38,8 +33,10 @@ module.exports = function (id, gameId, title, description, status) {
         const update = {}
 
         title && (update.title = title)
-        description && (update.description = description)
-        status && (update.status = status)
+        platform && (update.platform = platform)
+        update.sell = sell
+        update.exchange = exchange
+        update.favourite = favourite
         update.lastAccess = new Date
 
         await Game.updateOne({ _id: ObjectId(gameId) }, { $set: update })

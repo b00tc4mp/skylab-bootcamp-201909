@@ -25,6 +25,6 @@ export default function ({  }) {
     }
 
     return <section className="game-list">
-        {games.map(game => <section className="game-item" key={game.id}><MyGameItem game={game} /></section>)}
+        {games.map(game => <section className="game-item" key={game.id}><MyGameItem game={game}/></section>)}
     </section>
 }

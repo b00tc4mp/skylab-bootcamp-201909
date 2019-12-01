@@ -68,10 +68,12 @@ router.get('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
 })
 
 router.patch('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
-    try {
-        const { id, params: { gameId }, body: { title, description, status } } = req
 
-        modifyGame(id, gameId, title, description, status)
+    try {
+        const { id, params: { gameId }, body: { title, platform, sell, exchange, favourite } } = req
+
+        modifyGame(id, gameId, title, platform, sell, exchange, favourite)
+        
             .then(() =>
                 res.end()
             )
