@@ -16,8 +16,9 @@ export default function () {
             }
         })()
     }, [sessionStorage.token])
-    
-    return <section className="user-list">
-        {users.map(user => <section className="user-item" key={user.id}><UserItem user={user} /></section>)}
-    </section>
+
+    return <><h1 className="user-list__title">Best collectors</h1>
+        <section className="user-list">
+            {users.map(user => <section className="user-item" key={user.id}><UserItem user={user} /></section>)}
+        </section></>
 }

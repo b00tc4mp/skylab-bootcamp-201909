@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createGame, listGames, retrieveGame /*modifyGame, removeGame*/ } = require('../../logic')
+const { createGame, listGames, retrieveGame, modifyGame, removeGame } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')

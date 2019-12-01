@@ -53,7 +53,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 })
 
 router.get('/getusers', tokenVerifier, (req, res) => {
-    console.log('dvs')
+    
     try {
         listUsers()
             .then(user => res.json(user))

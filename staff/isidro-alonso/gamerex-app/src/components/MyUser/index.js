@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Route, withRouter, Redirect } from 'react-router-dom'
-import { retrieveUser, retrieveGame } from '../../logic'
+import { retrieveUser } from '../../logic'
 import MyGameList from '../MyGameList'
 import MyGameItem from '../MyGameItem'
 
