@@ -11,7 +11,13 @@ module.exports = function(id) {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        return user.comments
+        const comments = user.comments
+        comments.forEach(comment => {
+            comment.id = comment._id.toString()
+            delete comment._id
+        })
+
+        return comments
 
     })()
 }

@@ -10,7 +10,7 @@ const salt = 10
 
 arrayRandom()
 
-describe.only('logic - modify user', () => {
+describe('logic - modify ad', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password, title, description, price

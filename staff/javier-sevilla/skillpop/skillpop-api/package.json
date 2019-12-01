@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "debug": "node inspect .",
+    "debug": "node --inspect-brk .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/**/*.spec.js --timeout 50000",
     "test-debug": "npx mocha --inspect-brk logic/**/*.spec.js --timeout 50000",

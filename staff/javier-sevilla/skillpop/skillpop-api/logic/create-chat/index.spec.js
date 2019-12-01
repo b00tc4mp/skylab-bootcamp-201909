@@ -8,7 +8,7 @@ const { ObjectId, database, models: { User, Chat } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe('logic - create chat', () => {
+describe.only('logic - create chat', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let name, surname, city, address, email, password
@@ -54,6 +54,13 @@ describe('logic - create chat', () => {
 
         expect(chat.users.includes(id1)).to.be.true
         expect(chat.users.includes(id2)).to.be.true
+
+        const chatId2 = await createChat(id1, id2)
+
+        expect(chatId2).to.exist
+        expect(chatId2).to.be.a('string')
+        expect(chatId2).to.equal(chatId)
+
     })
 
     it('should fail on wrong user id', async() => {

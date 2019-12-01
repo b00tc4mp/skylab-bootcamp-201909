@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createTask } = require('../../logic')
+const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -10,41 +10,40 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/', jsonBodyParser, async (req, res) => {
-    const { body: { name, surname, city, address, email, password } } = req
-
+router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        await registerUser(name, surname, city, address, email, password)
-        res.status(201).end()
+        const { id, body: { title, description, price } } = req
 
-    } catch (error) {
-        const { message } = error
-
-        if (error instanceof ConflictError)
-            return res.status(409).json({ message })      
-
-        if (error instanceof TypeError || error instanceof TypeErrorContentError)
-            return res.status(400).json({ message })
-
-        res.status(500).json({ message })
-        }
-})
-
-router.post('/auth', jsonBodyParser, (req, res) => {
-    const { body: { email, password } } = req
-
-    try {
-        authenticateUser(email, password)
-            .then(id => {
-                const token = jwt.sign({ sub: id }, SECRET, { expiresIn: '1d' })
-
-                res.json({ token })
-            })
+        createAd(id, title, description, price)
+            .then(id => res.status(201).json({ id }))
             .catch(error => {
                 const { message } = error
 
-                if (error instanceof CredentialsError)
-                    return res.status(401).json({ message })
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.delete('/:adId' , tokenVerifier, (req, res) => {
+    try {
+        const { id, params: { adId } } = req
+
+        removeAd(id, adId)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
 
                 res.status(500).json({ message })
             })
@@ -56,9 +55,10 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 router.get('/', tokenVerifier, (req, res) => {
     try {
         const { id } = req
-
-        retrieveUser(id)
-            .then(user => res.json(user))
+        retrieveAds(id)
+            .then(ads => {
+                res.json(ads)
+            })
             .catch(error => {
                 const { message } = error
 
@@ -67,9 +67,69 @@ router.get('/', tokenVerifier, (req, res) => {
 
                 res.status(500).json({ message })
             })
-    } catch (error) {
-        const { message } = error
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
+router.get('/:adId', tokenVerifier, (req, res) => {
+    try {
+        const { id, params: { adId } } = req
+
+        retrieveAd(id, adId)
+            .then(ad => {
+                res.json(ad)
+            })
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/search/:query', (req, res) => {
+    try {
+        const {params: { query } } = req
+        
+        searchAds(query)
+            .then(ads => {
+                res.json(ads)
+            })
+            .catch(error => {
+                const { message } = error
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/:adId', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, params: { adId }, body: { title, description, price } } = req
+
+        modifyAd(id, adId, title, description, price)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
         res.status(400).json({ message })
     }
 })

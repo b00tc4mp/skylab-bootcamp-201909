@@ -5,14 +5,26 @@ module.exports = function (id, name, surname, city, address) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
-    validate.string(name)
-    validate.string.notVoid('name', name)
-    validate.string(surname)
-    validate.string.notVoid('surname', surname)
-    validate.string(city)
-    validate.string.notVoid('city', city)
-    validate.string(address)
-    validate.string.notVoid('address', address)
+
+    if (name) {
+        validate.string(name)
+        validate.string.notVoid('name', name)
+    }
+
+    if (surname) {
+        validate.string(surname)
+        validate.string.notVoid('surname', surname)
+    }
+
+    if (city) {
+        validate.string(city)
+        validate.string.notVoid('city', city)
+    }
+
+    if (address) {
+        validate.string(address)
+        validate.string.notVoid('address', address)
+    }
 
     return (async () => {
         const user = await User.findById(id)
@@ -27,6 +39,6 @@ module.exports = function (id, name, surname, city, address) {
         user.lastAccess = new Date
 
         await user.save()
-        
+
     })()
 }

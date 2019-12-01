@@ -76,8 +76,6 @@ describe('logic - retrieve ads', () => {
             expect(ad.id).to.exist
             expect(ad.id).to.be.a('string')
             expect(ad.id).to.have.length.greaterThan(0)
-            console.log(typeof ad.id)
-            console.log(typeof adIds)
             expect(ad.id).be.oneOf(adIds)
 
             expect(ad.user.toString()).to.equal(id)

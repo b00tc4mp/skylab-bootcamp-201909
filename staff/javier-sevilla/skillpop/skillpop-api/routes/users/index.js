@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, retrieveFavs, toggleFavAd, addComment, retrieveComments } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -9,6 +9,7 @@ const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('
 const jsonBodyParser = bodyParser.json()
 
 const router = Router()
+debugger
 
 router.post('/', jsonBodyParser, async (req, res) => {
     const { body: { name, surname, city, address, email, password } } = req
@@ -21,13 +22,13 @@ router.post('/', jsonBodyParser, async (req, res) => {
         const { message } = error
 
         if (error instanceof ConflictError)
-            return res.status(409).json({ message })      
+            return res.status(409).json({ message })
 
         if (error instanceof TypeError || error instanceof TypeErrorContentError)
             return res.status(400).json({ message })
 
         res.status(500).json({ message })
-        }
+    }
 })
 
 router.post('/auth', jsonBodyParser, (req, res) => {
@@ -73,5 +74,125 @@ router.get('/', tokenVerifier, (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+router.get('/:id', (req, res) => {
+    try {
+        const { params: { id } } = req
+
+        retrieveUser(id)
+            .then(user => res.json(user))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, body: { name, surname, city, address } } = req
+
+        modifyUser(id, name, surname, city, address)
+            .then(() =>
+                res.end()
+            )
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+console.log('entro ')
+router.get('/favs', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id } = req
+        console.log('entro ' + id)
+        retrieveFavs(id)
+            .then(ads => res.json(ads))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+console.log('salgo ')
+router.patch('/favs/:adId', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, params: { adId } } = req
+
+        toggleFavAd(id, adId)
+            .then(isFav => res.json(isFav))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.post('/comment/:id', jsonBodyParser, (req, res) => {
+    try {
+        const { params: { id }, body: { body } } = req
+
+        addComment(id, body)
+            .then(id => res.status(201).json({ id }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/comment/:id', jsonBodyParser, (req, res) => {
+    try {
+        const { params: { id } } = req
+
+        retrieveComments(id)
+            .then(comments => res.json(comments))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
 
 module.exports = router
