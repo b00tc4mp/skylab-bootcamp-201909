@@ -30,6 +30,10 @@ module.exports = new Schema({
         default: 'client',
         required: true
     },
+    teams: [{
+        type: ObjectId,
+        ref: 'Team'
+    }],
     lessons: [{
         type: ObjectId,
         ref: 'Lesson'  

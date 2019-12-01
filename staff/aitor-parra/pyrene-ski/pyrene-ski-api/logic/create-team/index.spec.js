@@ -5,7 +5,7 @@ const createTeam = require('.')
 const { random } = Math
 const { database, models: { User, Team } } = require('pyrene-ski-data')
 
-describe('logic - create team', () => { debugger
+describe('logic - create team', () => { 
     before(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password, role = "admin", teamName, teamEmail, teamPhone, teamActivity
@@ -31,7 +31,7 @@ describe('logic - create team', () => { debugger
 
     })
 
-    it('should succeed on correct user and team data', async () => {debugger
+    it('should succeed on correct user and team data', async () => {
         const teamId = await createTeam(id, teamName, teamEmail, teamPhone, teamActivity)
 
         expect(teamId).to.exist

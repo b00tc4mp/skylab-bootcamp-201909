@@ -37,6 +37,10 @@ module.exports = function(userId, date, timeStart, timeEnd) {
 
         const lesson = await Lesson.create({ user: userId, date, timeStart, timeEnd })
 
+        user.lessons.push(lesson) //intento pushear a array lessons del user
+        
+        await user.save()
+
         return lesson.id
 
     })()

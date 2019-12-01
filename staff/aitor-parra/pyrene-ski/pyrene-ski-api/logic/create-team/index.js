@@ -18,13 +18,17 @@ module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
     validate.string(teamActivity)
     validate.string.notVoid('teamActivity', teamActivity)
 
-    return (async () => {
+    return (async () => {debugger
 
         const user = await User.findById(id)
 
         if(!user) throw new NotFoundError(`user with id ${id} not found`)
 
         const team = await Team.create({ user: id, teamName, teamEmail, teamPhone, teamActivity })
+
+        const teams = await user.teams.push(team) //intento pushear al array teams del user
+
+        await user.save()
 
         return team.id
     }) ()

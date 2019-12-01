@@ -1,7 +1,7 @@
 const { validate, errors: { ConflictError } } = require('pyrene-ski-util')
 const { models: { User } } = require('pyrene-ski-data')
 
-module.exports = function (name, surname, email, username, password, role) {
+module.exports = function (name, surname, email, username, password, role, teams, lessons) {
     validate.string(name)
     validate.string.notVoid('name', name)
     validate.string(surname)
@@ -14,16 +14,18 @@ module.exports = function (name, surname, email, username, password, role) {
     validate.string(password)
     validate.string.notVoid('password', password)
 
+
     return (async () => {
         const user = await User.findOne({ username })
 
         if (user) throw new ConflictError(`user with username ${username} already exists`)
 
-        let arr = undefined
+        let teams = undefined
+        let lessons = undefined
 
         if (role === 'client') arr = []
 
 
-        await User.create({ name, surname, email, username, password, role, arr })
+        await User.create({ name, surname, email, username, password, role, teams, lessons })
     })()
 }
