@@ -31,9 +31,9 @@ describe('logic - retrieve game', () => {
         const newPlayer1 = new Player({
             user: user._id,
             lifePoints: 5,
-            hand: [],
-            tempZone: null,
-            discards: [],
+            hand: [ObjectId().toString(),ObjectId().toString()],
+            tempZone: {card: ObjectId().toString(), duration: random()},
+            discards: [ObjectId().toString(),ObjectId().toString()],
             modifier: false,
             attack: 1,
             defense: 0,
@@ -43,9 +43,9 @@ describe('logic - retrieve game', () => {
         const newPlayer2 = new Player({
             user: ObjectId(),
             lifePoints: 5,
-            hand: [],
+            hand: [ObjectId().toString(),ObjectId().toString()],
             tempZone: null,
-            discards: [],
+            discards: [ObjectId().toString(),ObjectId().toString()],
             modifier: false,
             attack: 1,
             defense: 0,
@@ -109,6 +109,7 @@ describe('logic - retrieve game', () => {
         expect(() => retrieveGame({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => retrieveGame(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveGame(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveGame('wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => retrieveGame('')).to.throw(ContentError, 'gameId is empty or blank')
         expect(() => retrieveGame(' \t\r')).to.throw(ContentError, 'gameId is empty or blank')
@@ -119,6 +120,7 @@ describe('logic - retrieve game', () => {
         expect(() => retrieveGame(gameId, {})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => retrieveGame(gameId, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveGame(gameId, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveGame(gameId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => retrieveGame(gameId, '')).to.throw(ContentError, 'userId is empty or blank')
         expect(() => retrieveGame(gameId, ' \t\r')).to.throw(ContentError, 'userId is empty or blank')

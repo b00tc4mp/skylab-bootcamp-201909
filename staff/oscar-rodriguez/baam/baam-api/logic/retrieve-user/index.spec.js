@@ -3,7 +3,7 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('.')
-const { errors: { NotFoundError } } = require('baam-util')
+const { errors: { NotFoundError, ContentError } } = require('baam-util')
 const { database, models: { User } } = require('baam-data')
 
 describe('logic - retrieve user', () => {
@@ -59,7 +59,18 @@ describe('logic - retrieve user', () => {
         }
     })
 
-    // TODO other cases
+    it('should fail on incorrect type and content', () => {
+        expect(() => retrieveUser(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => retrieveUser(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => retrieveUser([])).to.throw(TypeError, ' is not a string')
+        expect(() => retrieveUser({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => retrieveUser(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => retrieveUser(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveUser('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+
+        expect(() => retrieveUser('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveUser(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+    })
 
     after(() => User.deleteMany().then(database.disconnect))
 })

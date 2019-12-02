@@ -104,10 +104,6 @@ describe('logic - retrieve collection cards', () => {
             })
     })
 
-    it("should fail on invalid id", () =>
-        expect(() => retrieveCollectionCards('wrong').to.throw(ContentError, `wrong id: wrong must be a string of 12 length`))
-    )
-
     it('should fail on incorrect type and content', () => {
         expect(() => retrieveCollectionCards(1)).to.throw(TypeError, '1 is not a string')
         expect(() => retrieveCollectionCards(true)).to.throw(TypeError, 'true is not a string')
@@ -115,6 +111,7 @@ describe('logic - retrieve collection cards', () => {
         expect(() => retrieveCollectionCards({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => retrieveCollectionCards(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveCollectionCards(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveCollectionCards('wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => retrieveCollectionCards('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => retrieveCollectionCards(' \t\r')).to.throw(ContentError, 'id is empty or blank')

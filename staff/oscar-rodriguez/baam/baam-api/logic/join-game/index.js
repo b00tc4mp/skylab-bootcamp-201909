@@ -6,12 +6,12 @@ const { env: { INITIAL_PLAYER_LIFE } } = process
 module.exports = function (userId, gameId) {
     validate.string(userId)
     validate.string.notVoid('id', userId)
-    if (!ObjectId.isValid(userId)) throw new ContentError(`wrong id: ${userId} must be a string of 12 length`)
+    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
     userId = ObjectId(userId)
 
     validate.string(gameId)
     validate.string.notVoid('id', gameId)
-    if (!ObjectId.isValid(gameId)) throw new ContentError(`wrong id: ${gameId} must be a string of 12 length`)
+    if (!ObjectId.isValid(gameId)) throw new ContentError(`${gameId} is not a valid id`)
     gameId = ObjectId(gameId)
 
     return (async () => {

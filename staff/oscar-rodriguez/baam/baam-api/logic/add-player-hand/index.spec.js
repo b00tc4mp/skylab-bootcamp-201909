@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
+const { env: { TEST_DB_URL, HAND_LENGTH } } = process
 const { expect } = require('chai')
 const { random, floor } = Math
 const addPlayerHand = require('.')
@@ -137,6 +137,48 @@ describe('logic - add player hand', () => {
         }
     })
 
+    it('should fail on wrong hand length', async () => {
+        hand.length--
+
+        try {
+            await addPlayerHand(gameId, playerId, hand)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ConflictError)
+            expect(error.message).to.equal(`hand must have ${HAND_LENGTH} cards to play`)
+        }
+    })
+
+    it('should fail when hand has a wrong cardId', async () => {
+        hand[4] = 'wrong'
+
+        try {
+            await addPlayerHand(gameId, playerId, hand)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ConflictError)
+            expect(error.message).to.equal(`hand must have ${HAND_LENGTH} cards to play`)
+        }
+    })
+
+    it('should fail when hand has card not owned by player', async () => {
+        hand[4] = ObjectId()
+
+        try {
+            await addPlayerHand(gameId, playerId, hand)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ConflictError)
+            expect(error.message).to.equal(`one or more cards doesn't pertain to player`)
+        }
+    })
+
     it('should fail on incorrect type and content', () => {
         expect(() => addPlayerHand(1)).to.throw(TypeError, '1 is not a string')
         expect(() => addPlayerHand(true)).to.throw(TypeError, 'true is not a string')
@@ -144,6 +186,7 @@ describe('logic - add player hand', () => {
         expect(() => addPlayerHand({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => addPlayerHand(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => addPlayerHand(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => addPlayerHand('wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => addPlayerHand('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => addPlayerHand(' \t\r')).to.throw(ContentError, 'id is empty or blank')
@@ -154,6 +197,7 @@ describe('logic - add player hand', () => {
         expect(() => addPlayerHand(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => addPlayerHand(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => addPlayerHand(gameId,null)).to.throw(TypeError, 'null is not a string')
+        expect(() => addPlayerHand(gameId,'wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => addPlayerHand(gameId,'')).to.throw(ContentError, 'id is empty or blank')
         expect(() => addPlayerHand(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')

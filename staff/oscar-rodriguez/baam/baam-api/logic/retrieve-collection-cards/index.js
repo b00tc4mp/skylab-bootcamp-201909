@@ -6,7 +6,7 @@ module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)
 
-    if (!ObjectId.isValid(id)) throw new ContentError(`wrong id: ${id} must be a string of 12 length`)
+    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
     id = ObjectId(id)
 
     return (async () => {    

@@ -1,7 +1,8 @@
 require('dotenv').config()
 const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
-const { database, models: { User, Game, Player } } = require('baam-data')
+const { ObjectId, database, models: { User, Game, Player } } = require('baam-data')
+const { errors: {ContentError, NotFoundError}} = require ('baam-util')
 const { random } = Math
 const createGame = require('.')
 
@@ -39,6 +40,34 @@ describe('logic - create game', () => {
         expect(game.players[0].user.toString()).to.equal(id)
 
     })
+
+    it('should fail on a unexisting userID', async () => {
+        id = ObjectId().toString()
+
+        try {
+            await createGame(id)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user not found`)
+        }
+    })
+
+    it('should fail on incorrect type and content', () => {
+        expect(() => createGame(1)).to.throw(TypeError, '1 is not a string')
+        expect(() => createGame(true)).to.throw(TypeError, 'true is not a string')
+        expect(() => createGame([])).to.throw(TypeError, ' is not a string')
+        expect(() => createGame({})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => createGame(undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => createGame(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => createGame('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+
+        expect(() => createGame('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => createGame(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+    })
+
     after(() => Promise.all([Game.deleteMany(), Player.deleteMany()])
         .then(database.disconnect))
 })
