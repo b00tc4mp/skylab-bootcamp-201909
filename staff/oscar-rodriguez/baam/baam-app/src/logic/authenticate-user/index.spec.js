@@ -1,13 +1,11 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
-const { expect } = require('chai')
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
 const authenticateUser = require('.')
 const { random } = Math
 const { errors: { ContentError, CredentialsError } } = require('baam-util')
 const { database, models: { User } } = require('baam-data')
 
 describe('logic - authenticate user', () => {
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, email, nickname, password
 
@@ -26,13 +24,16 @@ describe('logic - authenticate user', () => {
     })
 
     it('should succeed on correct credentials', async () => {
-        const userId = await authenticateUser(nickname, password)
+        const token = await authenticateUser(nickname, password)
 
-        expect(userId).to.exist
-        expect(typeof userId).to.equal('string')
-        expect(userId.length).to.be.greaterThan(0)
+        expect(token).toBeDefined()
+        expect(typeof token).toBe('string')
+        expect(token.length).toBeGreaterThan(0)
 
-        expect(userId).to.equal(id)
+        const [,payload,] = token.split('.')
+
+        const { sub } = JSON.parse(atob(payload))
+        expect(id).toBe(sub)
     })
 
     describe('when wrong credentials', () => {
@@ -44,11 +45,11 @@ describe('logic - authenticate user', () => {
 
                 throw new Error('should not reach this point')
             } catch (error) {
-                expect(error).to.exist
-                expect(error).to.be.an.instanceOf(CredentialsError)
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(CredentialsError)
 
                 const { message } = error
-                expect(message).to.equal(`wrong credentials`)
+                expect(message).toBe(`wrong credentials`)
             }
         })
 
@@ -60,38 +61,36 @@ describe('logic - authenticate user', () => {
 
                 throw new Error('should not reach this point')
             } catch (error) {
-                expect(error).to.exist
-                expect(error).to.be.an.instanceOf(CredentialsError)
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(CredentialsError)
 
                 const { message } = error
-                expect(message).to.equal(`wrong credentials`)
+                expect(message).toBe(`wrong credentials`)
             }
         })
     })
 
     it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
-        expect(() => authenticateUser(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => authenticateUser(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => authenticateUser([])).to.throw(TypeError, ' is not a string')
-        expect(() => authenticateUser({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => authenticateUser(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => authenticateUser(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => authenticateUser(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => authenticateUser(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => authenticateUser([])).toThrow(TypeError, ' is not a string')
+        expect(() => authenticateUser({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => authenticateUser(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => authenticateUser(null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => authenticateUser('')).to.throw(ContentError, 'nickname is empty or blank')
-        expect(() => authenticateUser(' \t\r')).to.throw(ContentError, 'nickname is empty or blank')
+        expect(() => authenticateUser('')).toThrow(ContentError, 'nickname is empty or blank')
+        expect(() => authenticateUser(' \t\r')).toThrow(ContentError, 'nickname is empty or blank')
 
-        expect(() => authenticateUser(email, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => authenticateUser(email, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => authenticateUser(email, [])).to.throw(TypeError, ' is not a string')
-        expect(() => authenticateUser(email, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => authenticateUser(email, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => authenticateUser(email, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => authenticateUser(email, 1)).toThrow(TypeError, '1 is not a string')
+        expect(() => authenticateUser(email, true)).toThrow(TypeError, 'true is not a string')
+        expect(() => authenticateUser(email, [])).toThrow(TypeError, ' is not a string')
+        expect(() => authenticateUser(email, {})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => authenticateUser(email, undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => authenticateUser(email, null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => authenticateUser(email, '')).to.throw(ContentError, 'password is empty or blank')
-        expect(() => authenticateUser(email, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
+        expect(() => authenticateUser(email, '')).toThrow(ContentError, 'password is empty or blank')
+        expect(() => authenticateUser(email, ' \t\r')).toThrow(ContentError, 'password is empty or blank')
     })
 
-    // TODO other cases
-
-    after(() => User.deleteMany().then(database.disconnect))
+    afterAll(() => User.deleteMany().then(database.disconnect))
 })

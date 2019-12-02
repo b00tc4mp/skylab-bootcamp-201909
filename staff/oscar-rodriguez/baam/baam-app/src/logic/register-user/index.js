@@ -1,5 +1,7 @@
 const { validate, errors: { ConflictError } } = require('baam-util')
 const { models: { User } } = require('baam-data')
+const call = require('../utils/call')
+const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (name, surname, email, nickname, password) {
     validate.string(name)
@@ -15,10 +17,16 @@ module.exports = function (name, surname, email, nickname, password) {
     validate.string.notVoid('password', password)
 
     return (async () => {
-        const user = await User.findOne({ nickname })
+        const res = await call(`${API_URL}/users`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name, surname, email, nickname, password})
+        })
 
-        if (user) throw new ConflictError(`user with nickname ${nickname} already exists`)
+        if (res.status === 201) return
 
-        await User.create({ name, surname, email, nickname, password })
+        if (res.status === 409) throw new  ConflictError(JSON.parse(res.body).message)
+
+        throw new Error(JSON.parse(res.body).message)
     })()
 }
