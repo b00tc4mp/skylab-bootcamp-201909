@@ -15,7 +15,7 @@ module.exports = new Schema ({
         },
         duration: {
             type: Number,
-            default: 0
+            default: -1
         }
     },
     discards: [{
