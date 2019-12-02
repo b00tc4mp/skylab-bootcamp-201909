@@ -272,6 +272,7 @@ describe('logic - play card', () => {
         let col = ObjectId().toString()
         let effect = `ATTACK`
         let effectValue = 5
+
         let target = `target-${random()}`
 
         const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
@@ -503,6 +504,7 @@ describe('logic - play card', () => {
         expect(() => playCard(null)).to.throw(TypeError, 'null is not a string')
         expect(() => playCard('wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
+
         expect(() => playCard('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => playCard(' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
@@ -514,6 +516,7 @@ describe('logic - play card', () => {
         expect(() => playCard(gameId,null)).to.throw(TypeError, 'null is not a string')
         expect(() => playCard(gameId,'wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
+
         expect(() => playCard(gameId,'')).to.throw(ContentError, 'id is empty or blank')
         expect(() => playCard(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
@@ -524,6 +527,7 @@ describe('logic - play card', () => {
         expect(() => playCard(gameId, playerId, undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => playCard(gameId, playerId, null)).to.throw(TypeError, 'null is not a string')
         expect(() => playCard(gameId, playerId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
+
 
         expect(() => playCard(gameId, playerId, '')).to.throw(ContentError, 'id is empty or blank')
         expect(() => playCard(gameId, playerId, ' \t\r')).to.throw(ContentError, 'id is empty or blank')

@@ -1,5 +1,7 @@
 require('dotenv').config()
+
 const { env: { TEST_DB_URL, HAND_LENGTH } } = process
+
 const { expect } = require('chai')
 const { random, floor } = Math
 const addPlayerHand = require('.')
@@ -186,6 +188,7 @@ describe('logic - add player hand', () => {
         expect(() => addPlayerHand({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => addPlayerHand(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => addPlayerHand(null)).to.throw(TypeError, 'null is not a string')
+
         expect(() => addPlayerHand('wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => addPlayerHand('')).to.throw(ContentError, 'id is empty or blank')
@@ -197,7 +200,9 @@ describe('logic - add player hand', () => {
         expect(() => addPlayerHand(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => addPlayerHand(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => addPlayerHand(gameId,null)).to.throw(TypeError, 'null is not a string')
+
         expect(() => addPlayerHand(gameId,'wrong')).to.throw(ContentError, `wrong is not a valid id`)
+
 
         expect(() => addPlayerHand(gameId,'')).to.throw(ContentError, 'id is empty or blank')
         expect(() => addPlayerHand(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
