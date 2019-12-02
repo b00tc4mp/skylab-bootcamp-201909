@@ -65,7 +65,7 @@ describe('logic - retrieve game', () => {
     })
 
     it('should return the game status on valid userId, which is in the game', async () => {
-        const game = await retrieveGame(gameId, userId)
+        const game = await retrieveGame(gameId, playerId)
 
         expect(game).to.exist
         expect(game.id).to.equal(gameId)
@@ -77,7 +77,7 @@ describe('logic - retrieve game', () => {
 
     })
 
-    it('should fail on valid userId, which is NOT in the game', async () => {
+    it('should fail on valid playerId, which is NOT in the game', async () => {
         const wrong = ObjectId().toString()
         try {
             await retrieveGame(gameId, wrong)
@@ -92,7 +92,7 @@ describe('logic - retrieve game', () => {
         const wrong = '012345678901234567890123'
 
         try {
-            await retrieveGame(wrong, userId)
+            await retrieveGame(wrong, playerId)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -122,8 +122,8 @@ describe('logic - retrieve game', () => {
         expect(() => retrieveGame(gameId, null)).to.throw(TypeError, 'null is not a string')
         expect(() => retrieveGame(gameId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
-        expect(() => retrieveGame(gameId, '')).to.throw(ContentError, 'userId is empty or blank')
-        expect(() => retrieveGame(gameId, ' \t\r')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => retrieveGame(gameId, '')).to.throw(ContentError, 'playerId is empty or blank')
+        expect(() => retrieveGame(gameId, ' \t\r')).to.throw(ContentError, 'playerId is empty or blank')
     })
     after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(database.disconnect))
 })
