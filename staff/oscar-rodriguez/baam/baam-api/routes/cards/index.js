@@ -4,57 +4,59 @@ const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
-const tokenVerifier = require('./helpers/token-verifier')(SECRET)
+const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const { retrieveCard, retrieveCollectionCards, retrieveUserCards } = require('../../logic')
 const { errors: { NotFoundError, ContentError, ConflictError } } = require('baam-util')
 
 const router = Router()
 
-router.get('/:idCard', (req,res) => {
+router.get('/:idCard', (req, res) => {
     try {
-        const { params: { idCard}}
+        const { params: { idCard } } = req
 
         retrieveCard(cardId)
-            .then (card => res.json(card))
-            .catch (error => {
-                const {message} = error
+            .then(card => res.json(card))
+            .catch(error => {
+                const { message } = error
                 if (error instanceof NotFoundError)
-                    return res.status(404).json({message})
-                res.status(500).json({message})
+                    return res.status(404).json({ message })
+                res.status(500).json({ message })
             })
-    } catch ({message}){
-        res.status(400).json({message})
+    } catch ({ message }) {
+        res.status(400).json({ message })
     }
 })
 
-router.get('/:idCollection',(req,res) => {
-    try{
-        const { params: {idCollection}} = req
-        retrieveCollectionCards(idCollection)
-            .then (cards => res.json({cards}))
-            .catch (error => {
-                const {message} = error
-                if (error instanceof NotFoundError)
-                    return res.status(404).json({message})
-                res.status(500).json({message})
-            })
-    } catch ({message}) {
-        res.status(400).json({message})
-    }
-})
-
-router.get('/', tokenVerifier, (req,res) => {
+router.get('/:idCollection', (req, res) => {
     try {
-        const { id: userId} = req
-        retrieveUserCards(userId)
-            .then (cards => res.json ({cards}))
-            .catch (error => {
-                const {message} = error
+        const { params: { idCollection } } = req
+        retrieveCollectionCards(idCollection)
+            .then(cards => res.json({ cards }))
+            .catch(error => {
+                const { message } = error
                 if (error instanceof NotFoundError)
-                    return res.status(404).json({message})
-                res.status(500).json({message})
+                    return res.status(404).json({ message })
+                res.status(500).json({ message })
             })
-    } catch ({message}) {
-        res.status(400).json({message})
+    } catch ({ message }) {
+        res.status(400).json({ message })
     }
 })
+
+router.get('/', tokenVerifier, (req, res) => {
+    try {
+        const { id: userId } = req
+        retrieveUserCards(userId)
+            .then(cards => res.json({ cards }))
+            .catch(error => {
+                const { message } = error
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+module.exports = router

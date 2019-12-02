@@ -11,7 +11,7 @@ const cors = require('cors')
 const { database } = require('baam-data')
 const { errors: { ConflictError, NotFoundError, CredentialsError } } = require('../baam-util')
 
-const { users, games } = require ('./routes')
+const { users, games, cards } = require ('./routes')
 
 const api = express()
 
