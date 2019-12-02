@@ -6,5 +6,6 @@ module.exports = new Schema ({
     players: [player],
     shoots: [shoot],
     currentPlayer: Number,
-    status: String
+    status: String,
+    winner: Number
 })
