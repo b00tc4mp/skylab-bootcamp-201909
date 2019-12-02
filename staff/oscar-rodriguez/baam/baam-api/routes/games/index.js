@@ -16,9 +16,7 @@ router.post('/create', tokenVerifier, (req, res) => {
 
         createGame(id)
             .then(({ gameId, playerId }) => {
-                const gameToken = jwt.sign({ sub: playerId }, SECRET, { expiresIn: '1d' })
-                res.json({ gameId, gameToken })
-
+                res.json({ gameId, playerId })
             })
             .catch(error => {
                 const { message } = error
@@ -33,9 +31,9 @@ router.post('/create', tokenVerifier, (req, res) => {
 
 router.get('/:gameId/status', tokenVerifier, (req, res) => {
     try {
-        const { playerId, params: { gameId } } = req
+        const { id: userId, params: { gameId } } = req
 
-        retrieveGame(gameId, playerId)
+        retrieveGame(gameId, userId)
             .then(game => res.json(game))
             .catch(error => {
                 const { message } = error
@@ -56,8 +54,7 @@ router.post('/:gameId/join', tokenVerifier, (req, res) => {
 
         joinGame(userId, gameId)
             .then(playerId => {
-                const gameToken = jwt.sign({ sub: playerId }, SECRET, { expiresIn: '1d' })
-                res.json({ gameToken })
+                res.json({ plyerId })
             })
             .catch(error => {
                 const { message } = error
@@ -74,8 +71,8 @@ router.post('/:gameId/join', tokenVerifier, (req, res) => {
 
 router.post('/:gameId/add-hand', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { playerId, body: { hand }, params: { gameId } } = req
-        addPlayerHand(gameId, playerId, hand)
+        const { id: userId, body: { hand }, params: { gameId } } = req
+        addPlayerHand(gameId, userId, hand)
             .then(() => res.end())
             .catch((error => {
                 const { message } = error
@@ -92,9 +89,9 @@ router.post('/:gameId/add-hand', tokenVerifier, jsonBodyParser, (req, res) => {
 
 router.post('/:gameId/play-card', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { playerId, body: { cardId }, params: { gameId } } = req
+        const { id: userId, body: { cardId }, params: { gameId } } = req
 
-        playCard(gameId, playerId, cardId)
+        playCard(gameId, userId, cardId)
             .then(() => res.end())
             .catch(error => {
                 const { message } = error

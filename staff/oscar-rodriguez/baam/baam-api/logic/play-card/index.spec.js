@@ -13,7 +13,7 @@ describe('logic - play card', () => {
 
     before(() => database.connect(TEST_DB_URL))
 
-    let playerId, gameId, cardId
+    let userId, gameId, cardId
 
     beforeEach(async () => {
 
@@ -61,7 +61,7 @@ describe('logic - play card', () => {
             lastAccess: new Date()
         })
 
-        playerId = newPlayer1.id
+        userId = user.id
 
         const newPlayer2 = new Player({
             user: ObjectId(),
@@ -103,7 +103,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -131,7 +131,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -160,7 +160,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -192,7 +192,7 @@ describe('logic - play card', () => {
 
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -222,7 +222,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -250,7 +250,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -284,7 +284,7 @@ describe('logic - play card', () => {
         await game.save()
 
         try {
-            await playCard(gameId, playerId, card.id)
+            await playCard(gameId, userId, card.id)
             throw Error ('should not reach this point')
         } catch(error) {
             expect (error).to.exist
@@ -312,7 +312,7 @@ describe('logic - play card', () => {
         await game.save()
 
         try {
-            await playCard(gameId, playerId, card.id)
+            await playCard(gameId, userId, card.id)
             throw Error ('should not reach this point')
         } catch(error) {
             expect (error).to.exist
@@ -338,7 +338,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -369,7 +369,7 @@ describe('logic - play card', () => {
         game.players[0].tempZone.duration = 1
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -397,7 +397,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -425,7 +425,7 @@ describe('logic - play card', () => {
         game.players[1].lifePoints = 10
         await game.save()
 
-        await playCard(gameId, playerId, card.id)
+        await playCard(gameId, userId, card.id)
 
         const testGame = await Game.findById(gameId)
         expect(testGame).to.exist
@@ -439,7 +439,7 @@ describe('logic - play card', () => {
         const game = '012345678901234567890123'
 
         try {
-            await playCard(game, playerId, cardId)
+            await playCard(game, userId, cardId)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -457,7 +457,7 @@ describe('logic - play card', () => {
         game.players[0].hand.push(wrongCard)
         await game.save()
         try {
-            await playCard(gameId, playerId, wrongCard)
+            await playCard(gameId, userId, wrongCard)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -485,13 +485,13 @@ describe('logic - play card', () => {
         const card = '012345678901234567890123'
 
         try {
-            await playCard(gameId, playerId, card)
+            await playCard(gameId, userId, card)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(ConflictError)
-            expect(error.message).to.equal(`${playerId} doesn't own the card ${card} on his hand`)
+            expect(error.message).to.equal(`${userId} doesn't own the card ${card} on his hand`)
         }
     })
 
@@ -520,17 +520,17 @@ describe('logic - play card', () => {
         expect(() => playCard(gameId,'')).to.throw(ContentError, 'id is empty or blank')
         expect(() => playCard(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
-        expect(() => playCard(gameId, playerId, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => playCard(gameId, playerId, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => playCard(gameId, playerId, [])).to.throw(TypeError, ' is not a string')
-        expect(() => playCard(gameId, playerId, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => playCard(gameId, playerId, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => playCard(gameId, playerId, null)).to.throw(TypeError, 'null is not a string')
-        expect(() => playCard(gameId, playerId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => playCard(gameId, userId, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => playCard(gameId, userId, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => playCard(gameId, userId, [])).to.throw(TypeError, ' is not a string')
+        expect(() => playCard(gameId, userId, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => playCard(gameId, userId, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => playCard(gameId, userId, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => playCard(gameId, userId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
 
-        expect(() => playCard(gameId, playerId, '')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => playCard(gameId, playerId, ' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => playCard(gameId, userId, '')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => playCard(gameId, userId, ' \t\r')).to.throw(ContentError, 'id is empty or blank')
     })
 
     after(() => Promise.all([Card.deleteMany(), User.deleteMany(), Game.deleteMany(), Player.deleteMany()])

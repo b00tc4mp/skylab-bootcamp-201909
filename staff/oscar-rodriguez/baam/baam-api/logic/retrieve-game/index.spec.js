@@ -13,7 +13,7 @@ describe('logic - retrieve game', () => {
 
     before(() => database.connect(TEST_DB_URL))
 
-    let userId, gameId, playerId
+    let gameId, userId, playerId
 
     beforeEach(async () => {
         await Promise.all([Game.deleteMany()])
@@ -39,7 +39,7 @@ describe('logic - retrieve game', () => {
             defense: 0,
             lastAccess: new Date()
         })
-
+        playerId = newPlayer1.id
         const newPlayer2 = new Player({
             user: ObjectId(),
             lifePoints: 5,
@@ -59,13 +59,12 @@ describe('logic - retrieve game', () => {
         }
 
         const game = await Game.create(newGame)
-        playerId = game.players[0].id
         gameId = game.id
 
     })
 
     it('should return the game status on valid userId, which is in the game', async () => {
-        const game = await retrieveGame(gameId, playerId)
+        const game = await retrieveGame(gameId, userId)
 
         expect(game).to.exist
         expect(game.id).to.equal(gameId)
@@ -92,7 +91,7 @@ describe('logic - retrieve game', () => {
         const wrong = '012345678901234567890123'
 
         try {
-            await retrieveGame(wrong, playerId)
+            await retrieveGame(wrong, userId)
 
             throw Error('should not reach this point')
         } catch (error) {

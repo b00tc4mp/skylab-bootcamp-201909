@@ -1,17 +1,17 @@
 const { validate, errors: { NotFoundError, ContentError, ConflictError, CantAttackError, CredentialsError } } = require('baam-util')
 const { ObjectId, models: { Card, Game, Shoot } } = require('baam-data')
 
-module.exports = function (gameId, playerId, cardId) {
+module.exports = function (gameId, userId, cardId) {
 
     validate.string(gameId)
     validate.string.notVoid('id', gameId)
     if (!ObjectId.isValid(gameId)) throw new ContentError(`${gameId} is not a valid id`)
     gameId = ObjectId(gameId)
 
-    validate.string(playerId)
-    validate.string.notVoid('id', playerId)
-    if (!ObjectId.isValid(playerId)) throw new ContentError(`${playerId} is not a valid id`)
-    playerId = ObjectId(playerId)
+    validate.string(userId)
+    validate.string.notVoid('id', userId)
+    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
+    userId = ObjectId(userId)
 
     validate.string(cardId)
     validate.string.notVoid('id', cardId)
@@ -26,18 +26,18 @@ module.exports = function (gameId, playerId, cardId) {
         const { currentPlayer } = game
         const enemy = (currentPlayer + 1) % 2
 
-        if (playerId.toString() !== game.players[currentPlayer]._id.toString())
-            throw new CredentialsError(`Is not the ${playerId} turn. Can't play the card`)
+        if (userId.toString() !== game.players[currentPlayer].user.toString())
+            throw new CredentialsError(`Is not the ${userId} turn. Can't play the card`)
 
         const handIndex = game.players[currentPlayer].hand.findIndex(({ _id }) => _id.toString() === cardId.toString())
-        if (handIndex < 0) throw new ConflictError(`${playerId} doesn't own the card ${cardId} on his hand`)
+        if (handIndex < 0) throw new ConflictError(`${userId} doesn't own the card ${cardId} on his hand`)
 
         const card = await Card.findById(cardId).lean()
         if (!card) throw new NotFoundError(`card with id ${cardId} not found`)
 
         const { effectValue, effect } = card
 
-        await Shoot.create({ userId: playerId, cardId, date: new Date })
+        await Shoot.create({ userId, cardId, date: new Date })
         game.players[currentPlayer].hand.splice(handIndex, 1)
 
         switch (effect) {

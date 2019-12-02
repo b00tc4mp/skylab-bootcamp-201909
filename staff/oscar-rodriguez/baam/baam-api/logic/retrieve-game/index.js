@@ -1,20 +1,20 @@
 const { validate, errors: { NotFoundError, ContentError, ConflictError } } = require('baam-util')
 const { ObjectId, models: { Game } } = require('baam-data')
 
-module.exports = function (gameId, playerId) {
+module.exports = function (gameId, userId) {
     validate.string(gameId)
     validate.string.notVoid('gameId', gameId)
     if (!ObjectId.isValid(gameId)) throw new ContentError(`${gameId} is not a valid id`)
 
-    validate.string(playerId)
-    validate.string.notVoid('playerId', playerId)
-    if (!ObjectId.isValid(playerId)) throw new ContentError(`${playerId} is not a valid id`)
+    validate.string(userId)
+    validate.string.notVoid('playerId', userId)
+    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
 
     return (async () => {
         const game = await Game.findById(gameId, { '__v': 0 }).lean()
         if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
 
-        if (!game.players.find(player => player._id.toString() === playerId.toString())) throw new ConflictError(`${playerId} can't get info from a game where is not joined`)
+        if (!game.players.find(player => player.user.toString() === userId.toString())) throw new ConflictError(`${userId} can't get info from a game where is not joined`)
 
         game.players.forEach(player => {
             
