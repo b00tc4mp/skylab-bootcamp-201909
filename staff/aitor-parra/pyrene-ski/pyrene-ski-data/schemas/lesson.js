@@ -20,19 +20,19 @@ module.exports = new Schema({
         type: String,
         required: true
     },
+    teamId: {
+        type: ObjectId,
+        required: true,
+        ref: 'Team'
+        }  
 
-    team: {
+/*     team: {
         type: String,
         required: true
     },
 
     activity: {
         type: String,
-        required: true
-    }
-/*     team: {
-        type: ObjectId,
-        required: true,
-        ref: 'Team'
-    }  */
+        required: true */
+    
 })

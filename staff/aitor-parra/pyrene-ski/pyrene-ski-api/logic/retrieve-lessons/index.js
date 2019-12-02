@@ -13,13 +13,15 @@ module.exports = function(id){
 
         await Lesson.updateMany( { user: id } )
 
-        const lessons = await Lesson.find({ user: id }, { __v: 0 }).lean()
+        const lessons = await Lesson.find({ user: id }, { __v: 0 }).populate("teamId").lean()
 
-        lessons.forEach(lesson => {
+        lessons.forEach(lesson => {debugger
             lesson.id = lesson._id.toString()
-
             delete lesson._id
             lesson.user = id
+            lesson.activityName = lesson.teamId.teamActivity
+            lesson.teamName = lesson.teamId.teamName
+            delete lesson.teamId
         })
 
         return lessons

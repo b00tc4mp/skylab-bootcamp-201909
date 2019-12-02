@@ -10,9 +10,9 @@ const router = Router()
 
 router.post('/lessonadd', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, body: { date, timeStart, timeEnd, team, activity } } = req
+        const { id, body: { date, timeStart, timeEnd, teamId } } = req
 
-        addLesson(id, date, timeStart, timeEnd, team, activity)
+        addLesson(id, date, timeStart, timeEnd, teamId)
             .then(id => res.status(201).json({ id }))
             .catch(error => {
                 const { message } = error
