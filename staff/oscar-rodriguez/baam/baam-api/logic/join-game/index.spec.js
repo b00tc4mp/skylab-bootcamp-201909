@@ -7,7 +7,7 @@ const { random , floor } = Math
 const joinGame = require('.')
 
 
-describe ('logic - join game', () => {
+describe('logic - join game', () => {
     before (()=> database.connect(TEST_DB_URL))
 
     let userId, gameId, nickname, player1
