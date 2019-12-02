@@ -19,7 +19,7 @@ export default function ({ game: {_id: id, title, platform, sell, exchange, favo
 
     return <Link to={userGameLink} className="game-item__link">
         <section className="game-item">
-            <img className="game-item__img" src={img} alt="user" />
+            <img className="game-item__img" src={img} alt="game" />
             <p className="game-item__title">{title}</p>
             <p className="game-item__platform">{platform}</p>
             <span className="game-item__favourite">{showFav()}</span>

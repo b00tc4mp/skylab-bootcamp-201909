@@ -45,7 +45,7 @@ export default withRouter(function ({ history }) {
     return <section className="game-detail">
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
-            <img className="game-detail__img" src="img/dummy-game.png" alt="user" />
+            <img className="game-detail__img" src="img/dummy-game.png" alt="game" />
             <p className="game-detail__platform">{platform}</p>
             {showFav()}
             {showSell()}

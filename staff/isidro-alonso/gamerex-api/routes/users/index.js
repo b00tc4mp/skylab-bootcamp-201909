@@ -53,10 +53,9 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 })
 
 router.get('/getusers', tokenVerifier, (req, res) => {
-
     try {
         listUsers()
-            .then(user => res.json(user))
+            .then(users => res.json(users))
             .catch(error => {
                 const { message } = error
 

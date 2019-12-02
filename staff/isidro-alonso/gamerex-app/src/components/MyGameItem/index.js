@@ -18,7 +18,7 @@ export default function ({ game: {id, title, platform, sell, exchange, favourite
     const gameLink = `/mygame/${id}`
     
     return <Link to={gameLink} className="game-item__link">
-        <img className="game-item__img" src={img} alt="user" />
+        <img className="game-item__img" src={img} alt="game" />
         <p className="game-item__title">{title}</p>
         <p className="game-item__platform">{platform}</p>
         <span className="game-item__favourite">{showFav()}</span>

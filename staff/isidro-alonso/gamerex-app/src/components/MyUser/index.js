@@ -41,7 +41,7 @@ export default withRouter(function ({ history }) {
     return <section className="user-profile">
         <h1 className="user-profile__title">{username}</h1>
         <section className="user-profile__item">
-            <img className="user-profile__img" src="img/profile.png" alt="user" />
+            <img className="user-profile__img" src="img/dummy-user.png" alt="user" />
             <p className="user-profile__location">{location}</p>
             <p className="user-profile__email">{email}</p>
             <Link to={userIdLink}>
