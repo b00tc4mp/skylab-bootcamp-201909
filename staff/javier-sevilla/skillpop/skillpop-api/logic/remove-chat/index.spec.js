@@ -121,6 +121,36 @@ describe('logic - remove-chat', () => {
             expect(error.message).to.equal(`user with id ${id3} does not correspond to ad with id ${chatId}`)
         }
     })
+    it('should fail not valid id', async () => {
+        const id1 = '//'
+
+        try {
+            await removeChat(id1, chatId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${id1} is not a valid id`)
+        }
+    })
+    it('should fail not valid id', async () => {
+        const chatId = '/'
+
+        try {
+            await removeChat(id1, chatId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${chatId} is not a valid ad id`)
+        }
+    })
 
 
     after(() => Promise.all([User.deleteMany(), Chat.deleteMany()]).then(database.disconnect))

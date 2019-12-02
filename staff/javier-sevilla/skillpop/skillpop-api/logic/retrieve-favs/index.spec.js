@@ -86,7 +86,7 @@ describe('logic - retrieve favs', () => {
 
 
             // expect(adFav.id).be.oneOf(adIds)
-            expect(adFav.user.toString()).to.equal(id)
+            // expect(adFav.user.toString()).to.equal(id)
 
             expect(adFav.title).to.exist
             expect(adFav.title).to.be.a('string')

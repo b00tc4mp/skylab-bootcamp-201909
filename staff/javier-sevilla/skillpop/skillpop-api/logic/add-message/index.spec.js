@@ -83,6 +83,36 @@ describe('logic - add Message', () => {
             expect(error.message).to.equal(`user with id ${fakeId} not found`)
         }
     })
+    it('should fail not valid id', async () => {
+        const chatId = '//'
+
+        try {
+            await addMessage(chatId, id1, body)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${chatId} is not a valid id`)
+        }
+    })
+    it('should fail not valid id', async () => {
+        const id1 = '/'
+
+        try {
+            await addMessage(chatId, id1, body)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${id1} is not a valid id`)
+        }
+    })
 
 
     it('should fail on incorrect name, surname, email, password, or expression type and content', () => {

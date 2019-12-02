@@ -66,6 +66,22 @@ describe('logic - add comment', () => {
         }
     })
 
+    it('should fail not valid id', async () => {
+        const id = '//'
+        
+        try {
+            await await addComment(id, body)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${id} is not a valid id`)
+        }
+    })
+
 
     it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
 

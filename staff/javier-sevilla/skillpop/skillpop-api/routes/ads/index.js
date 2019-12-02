@@ -1,10 +1,11 @@
 const { Router } = require('express')
-const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd } = require('../../logic')
+const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd, saveImageAd } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('skillpop-util')
+const Busboy = require('busboy')
 
 const jsonBodyParser = bodyParser.json()
 
@@ -132,6 +133,42 @@ router.patch('/:adId', tokenVerifier, jsonBodyParser, (req, res) => {
     } catch ({ message }) {
         res.status(400).json({ message })
     }
+})
+
+router.post('/upload/:idAd', tokenVerifier, (req, res) => {
+    
+    const { id, params: { idAd } } = req
+  
+    const busboy = new Busboy({ headers: req.headers })
+
+    busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+        filename = 'profile'
+
+        await saveImageAd(id, idAd, file, filename)
+        
+        // let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
+        // file.pipe(fs.createWriteStream(saveTo))
+    })
+
+    busboy.on('finish', () => {
+        res.end("That's all folks!")
+    })
+
+    return req.pipe(busboy)
+
+})
+
+router.get('/profileimage/:id', async (req, res) => {
+
+    const { params: { id } } = req
+
+    const stream = await loadProfileImage(id) 
+    //let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
+    //stream = fs.createReadStream(goTo)
+
+    res.setHeader('Content-Type', 'image/jpeg')
+
+    return stream.pipe(res)
 })
 
 module.exports = router

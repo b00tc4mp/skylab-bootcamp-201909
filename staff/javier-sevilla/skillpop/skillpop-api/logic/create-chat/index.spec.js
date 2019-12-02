@@ -8,7 +8,7 @@ const { ObjectId, database, models: { User, Chat } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe.only('logic - create chat', () => {
+describe('logic - create chat', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let name, surname, city, address, email, password

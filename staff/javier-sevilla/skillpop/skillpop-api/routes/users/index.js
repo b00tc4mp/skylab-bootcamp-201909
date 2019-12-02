@@ -75,6 +75,24 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
+router.get('/favs', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id } = req
+        retrieveFavs(id)
+            .then(ads => res.json(ads))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
 router.get('/:id', (req, res) => {
     try {
         const { params: { id } } = req
@@ -116,27 +134,7 @@ router.patch('/', tokenVerifier, jsonBodyParser, (req, res) => {
         res.status(400).json({ message })
     }
 })
-console.log('entro ')
-router.get('/favs', tokenVerifier, jsonBodyParser, (req, res) => {
-    try {
-        const { id } = req
-        console.log('entro ' + id)
-        retrieveFavs(id)
-            .then(ads => res.json(ads))
-            .catch(error => {
-                const { message } = error
 
-                if (error instanceof NotFoundError)
-                    return res.status(404).json({ message })
-
-                res.status(500).json({ message })
-            })
-    } catch ({ message }) {
-        res.status(400).json({ message })
-    }
-})
-
-console.log('salgo ')
 router.patch('/favs/:adId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, params: { adId } } = req

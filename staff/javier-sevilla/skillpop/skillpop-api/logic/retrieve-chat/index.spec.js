@@ -8,7 +8,7 @@ const { ObjectId, database, models: { User, Chat, Message } } = require('skillpo
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe('logic - retrieve-chat', () => {
+describe.only('logic - retrieve-chat', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let name, surname, city, address, email, password
@@ -75,7 +75,7 @@ describe('logic - retrieve-chat', () => {
     })
 
     it('should return a correct chat', async() => {
-        const _messages = await retrieveChat(chatId)
+        const _messages = await retrieveChat(id1, chatId)
 
         _messages.forEach(message => {
             if (message.id === message1Id) {
@@ -95,7 +95,7 @@ describe('logic - retrieve-chat', () => {
     it('should throw an NotFoundError because chat doesnt exist', async() => {
         const fakeId = ObjectId().toString()
         try {
-            const chatId = await retrieveChat(fakeId)
+            await retrieveChat(id1, fakeId)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -105,18 +105,61 @@ describe('logic - retrieve-chat', () => {
         }
     })
 
+    it('should throw an NotFoundError because id doesnt exist', async() => {
+        const fakeId = ObjectId().toString()
+        try {
+            await retrieveChat(fakeId, chatId)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with id ${fakeId} not found`)
+        }
+    })
+
+    it('should fail not valid id', async () => {
+        const fakeId = '//'
+
+        try {
+            await retrieveChat(id1, fakeId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${fakeId} is not a valid id`)
+        }
+    })
+    it('should fail not valid id', async () => {
+        const fakeId = '/'
+
+        try {
+            await retrieveChat(fakeId, chatId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${fakeId} is not a valid id`)
+        }
+    })
 
     it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
 
-        expect(() => retrieveChat(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveChat(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveChat([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveChat({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveChat(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveChat(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveChat(id1, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => retrieveChat(id1, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => retrieveChat(id1, [])).to.throw(TypeError, ' is not a string')
+        expect(() => retrieveChat(id1, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => retrieveChat(id1, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => retrieveChat(id1, null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => retrieveChat('')).to.throw(ContentError, 'chatId is empty or blank')
-        expect(() => retrieveChat(' \t\r')).to.throw(ContentError, 'chatId is empty or blank')
+        expect(() => retrieveChat(id1, '')).to.throw(ContentError, 'chatId is empty or blank')
+        expect(() => retrieveChat(id1, ' \t\r')).to.throw(ContentError, 'chatId is empty or blank')
 
     })
 

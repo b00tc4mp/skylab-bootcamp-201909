@@ -118,6 +118,37 @@ describe('logic - toggle favs', () => {
                 expect(message).to.equal(`ad with id ${fakeId} not found`)
             }
         })
+        it('should fail not valid id', async () => {
+            const id = '//'
+            const idAd = adIds.random()
+
+            try {
+                await await toogleFavAd(id, idAd)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(ContentError)
+
+                const { message } = error
+                expect(message).to.equal(`${id} is not a valid id`)
+            }
+        })
+        it('should fail not valid id', async () => {
+            const idAd = '/'
+
+            try {
+                await await toogleFavAd(id, idAd)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(ContentError)
+
+                const { message } = error
+                expect(message).to.equal(`${idAd} is not a valid id`)
+            }
+        })
     })
 
     it('should fail on incorrect id', () => {

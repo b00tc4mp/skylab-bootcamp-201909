@@ -3,7 +3,7 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const modifyAd = require('.')
 const { random } = Math
-const { errors: { ContentError, NotFoundError }, polyfills: { arrayRandom } } = require('skillpop-util')
+const { errors: { ContentError, NotFoundError, ConflictError }, polyfills: { arrayRandom } } = require('skillpop-util')
 const { database, ObjectId, models: { Ad, User } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
@@ -31,6 +31,17 @@ describe('logic - modify ad', () => {
         const user = await User.create({ name, surname, city, address, email, password: hash })
 
         id = user.id
+
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        city = 'barcelona'
+        address = 'calle aribau 15'
+        password = `password-${random()}`
+
+        const user2 = await User.create({ name, surname, city, address, email, password: hash })
+
+        id2 = user2.id
 
         adIds = []
         titles = []
@@ -115,6 +126,81 @@ describe('logic - modify ad', () => {
                 expect(message).to.equal(`user with id ${id} not found`)
             }
         })
+
+        it('should fail on wrong idAd', async () => {
+            const idAd = '012345678901234567890123'
+            const newTitle = 'Paco'
+            const newDescription = 'Pil'
+            const newPrice = 15
+
+            try {
+                await modifyAd(id, idAd, newTitle, newDescription, newPrice)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(NotFoundError)
+
+                const { message } = error
+                expect(message).to.equal(`ad with id ${idAd} not found`)
+            }
+        })
+
+        it('should fail on user not equal to adId', async () => {
+            const idAd = adIds.random()
+            const newTitle = 'Paco'
+            const newDescription = 'Pil'
+            const newPrice = 15
+
+            try {
+                await modifyAd(id2, idAd, newTitle, newDescription, newPrice)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(ConflictError)
+
+                const { message } = error
+                expect(message).to.equal(`user with id ${id2} does not correspond to task with id ${idAd}`)
+            }
+        })
+        it('should fail not valid id', async () => {
+            const id = '//'
+            const idAd = adIds.random()
+            const newTitle = 'Paco'
+            const newDescription = 'Pil'
+            const newPrice = 15
+
+            try {
+                await modifyAd(id, idAd, newTitle, newDescription, newPrice)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(ContentError)
+
+                const { message } = error
+                expect(message).to.equal(`${id} is not a valid id`)
+            }
+        })
+        it('should fail not valid id', async () => {
+            const idAd = '/'
+            const newTitle = 'Paco'
+            const newDescription = 'Pil'
+            const newPrice = 15
+
+            try {
+                await modifyAd(id, idAd, newTitle, newDescription, newPrice)
+
+                throw new Error('should not reach this point')
+            } catch (error) {
+                expect(error).to.exist
+                expect(error).to.be.an.instanceOf(ContentError)
+
+                const { message } = error
+                expect(message).to.equal(`${idAd} is not a valid id`)
+            }
+        })
     })
 
     it('should fail on incorrect name, surname, city or address type and content', () => {
@@ -142,28 +228,16 @@ describe('logic - modify ad', () => {
         expect(() => modifyAd(id, adIds[0], true)).to.throw(TypeError, 'true is not a string')
         expect(() => modifyAd(id, adIds[0], [])).to.throw(TypeError, ' is not a string')
         expect(() => modifyAd(id, adIds[0], {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => modifyAd(id, adIds[0], undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => modifyAd(id, adIds[0], null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => modifyAd(id, adIds[0], '')).to.throw(ContentError, 'title is empty or blank')
-        expect(() => modifyAd(id, adIds[0], ' \t\r')).to.throw(ContentError, 'title is empty or blank')
 
         expect(() => modifyAd(id, adIds[0], titles[0], 1)).to.throw(TypeError, '1 is not a string')
         expect(() => modifyAd(id, adIds[0], titles[0], true)).to.throw(TypeError, 'true is not a string')
         expect(() => modifyAd(id, adIds[0], titles[0], [])).to.throw(TypeError, ' is not a string')
         expect(() => modifyAd(id, adIds[0], titles[0], {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => modifyAd(id, adIds[0], titles[0], undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => modifyAd(id, adIds[0], titles[0], null)).to.throw(TypeError, 'null is not a string')
-
-        expect(() => modifyAd(id, adIds[0], titles[0], '')).to.throw(ContentError, 'description is empty or blank')
-        expect(() => modifyAd(id, adIds[0], titles[0], ' \t\r')).to.throw(ContentError, 'description is empty or blank')
-
 
         expect(() => modifyAd(id, adIds[0], titles[0], descriptions[0], true)).to.throw(TypeError, 'true is not a number')
         expect(() => modifyAd(id, adIds[0], titles[0], descriptions[0], [])).to.throw(TypeError, ' is not a number')
         expect(() => modifyAd(id, adIds[0], titles[0], descriptions[0], {})).to.throw(TypeError, '[object Object] is not a number')
-        expect(() => modifyAd(id, adIds[0], titles[0], descriptions[0], undefined)).to.throw(TypeError, 'undefined is not a number')
-        expect(() => modifyAd(id, adIds[0], titles[0], descriptions[0], null)).to.throw(TypeError, 'null is not a number')
 
 
 

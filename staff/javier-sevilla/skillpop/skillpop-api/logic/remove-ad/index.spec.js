@@ -3,7 +3,7 @@ const { env: { TEST_DB_URL } } = process
 const { expect } = require('chai')
 const { random } = Math
 const removeAd = require('.')
-const { errors: { NotFoundError, ConflictError }, polyfills: { arrayRandom } } = require('skillpop-util')
+const { errors: { NotFoundError, ConflictError, ContentError }, polyfills: { arrayRandom } } = require('skillpop-util')
 const { database, ObjectId, models: { User, Ad } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
@@ -122,6 +122,36 @@ describe('logic - delete ads', () => {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(ConflictError)
             expect(error.message).to.equal(`user with id ${id} does not correspond to ad with id ${adId}`)
+        }
+    })
+    it('should fail not valid id', async () => {
+        const id = '//'
+        const adId = adIds.random()
+        try {
+            await removeAd(id, adId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${id} is not a valid id`)
+        }
+    })
+    it('should fail not valid id', async () => {
+        const adId = '/'
+
+        try {
+            await removeAd(id, adId)
+
+            throw new Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+
+            const { message } = error
+            expect(message).to.equal(`${adId} is not a valid ad id`)
         }
     })
 
