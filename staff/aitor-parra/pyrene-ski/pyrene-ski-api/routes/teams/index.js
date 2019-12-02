@@ -9,7 +9,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/teamcreate', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, body: { teamName, teamEmail, teamPhone, teamActivity } } = req
 

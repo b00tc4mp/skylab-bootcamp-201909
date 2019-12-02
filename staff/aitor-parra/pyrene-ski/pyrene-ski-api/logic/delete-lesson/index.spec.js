@@ -11,7 +11,7 @@ arrayRandom()
 describe('logic - delete lesson', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let id, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd
+    let id, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd, team , activity
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -31,6 +31,8 @@ describe('logic - delete lesson', () => {
         dates = []
         timeStarts = []
         timeEnds = []
+        teams = []
+        activities = []
  
         const insertions = []
 
@@ -39,7 +41,9 @@ describe('logic - delete lesson', () => {
                 user: id,
                 date : `date-${random()}`,
                 timeStart : `timeStart-${random()}`,
-                timeEnd : `timeEnd-${random()}`
+                timeEnd : `timeEnd-${random()}`,
+                team : `team-${random()}`,
+                activity: `activity-${random()}`
                 
             }
 
@@ -49,6 +53,8 @@ describe('logic - delete lesson', () => {
             dates.push(lesson.date)
             timeStarts.push(lesson.timeStart)
             timeEnds.push(lesson.timeEnd)
+            teams.push(lesson.team)
+            activities.push(lesson.activity)
         }
 
         for (let i = 0; i < 10; i++)
@@ -56,7 +62,9 @@ describe('logic - delete lesson', () => {
                 user: ObjectId(),
                 date : `date-${random()}`,
                 timeStart : `timeStart-${random()}`,
-                timeEnd : `timeEnd-${random()}`
+                timeEnd : `timeEnd-${random()}`,
+                team : `team-${random()}`,
+                activity: `activity-${random()}`
             }))
 
         await Promise.all(insertions) 

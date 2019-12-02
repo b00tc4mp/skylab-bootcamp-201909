@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { addLesson, retrieveLessons, deleteLesson } = require('../../logic')
+const { addLesson, retrieveLessons, deleteLesson, addLessonWithTeamData, buyLesson } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
@@ -8,11 +8,11 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/lessonadd', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, body: { date, timeStart, timeEnd } } = req
+        const { id, body: { date, timeStart, timeEnd, team, activity } } = req
 
-        addLesson(id, date, timeStart, timeEnd)
+        addLesson(id, date, timeStart, timeEnd, team, activity)
             .then(id => res.status(201).json({ id }))
             .catch(error => {
                 const { message } = error
@@ -70,5 +70,26 @@ router.post('/:lessonId', tokenVerifier, (req, res) => {
     }
 
 })
+
+
+/* router.post('/lessonbuy', tokenVerifier, jsonBodyParser, (req, res) => {
+    try {
+        const { id, body: { date, timeStart, timeEnd, team, activity } } = req
+
+        buyLesson(id, date, timeStart, timeEnd, team, activity, )
+            .then(id => res.status(201).json({ id }))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })    
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+}) */
+
 
 module.exports = router

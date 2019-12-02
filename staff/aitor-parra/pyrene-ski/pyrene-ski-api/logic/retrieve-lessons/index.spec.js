@@ -8,7 +8,7 @@ const { database, ObjectId, models: { User, Lesson } } = require('pyrene-ski-dat
 describe('logic - retrieve lessons', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let id, name, surname, email, username, password, role, lessonIds, dates, timeStarts, timeEnds
+    let id, name, surname, email, username, password, role, lessonIds, dates, timeStarts, timeEnds, teams, activities
 
     beforeEach(async () => { 
         name = `name-${random()}`
@@ -28,6 +28,8 @@ describe('logic - retrieve lessons', () => {
         dates = []
         timeStarts = []
         timeEnds = []
+        teams = []
+        activities = []
  
         const insertions = []
 
@@ -36,7 +38,9 @@ describe('logic - retrieve lessons', () => {
                 user: id,
                 date: `date-${random()}`,
                 timeStart: `timeStart-${random()}`,
-                timeEnd: `timeEnd-${random()}`
+                timeEnd: `timeEnd-${random()}`,
+                team : `team-${random()}`,
+                activity: `activity-${random()}`
             }
 
             insertions.push(Lesson.create(lesson).then(lesson => lessonIds.push(lesson.id)))
@@ -44,6 +48,9 @@ describe('logic - retrieve lessons', () => {
             dates.push(lesson.date)
             timeStarts.push(lesson.timeStart)
             timeEnds.push(lesson.timeEnd)
+            teams.push(lesson.team)
+            activities.push(lesson.activity)
+
         }
 
         for (let i = 0; i < 10; i++)
@@ -51,7 +58,9 @@ describe('logic - retrieve lessons', () => {
                 user: ObjectId(),
                 date: `date-${random()}`,
                 timeStart: `timeStart-${random()}`,
-                timeEnd: `timeEnd-${random()}`
+                timeEnd: `timeEnd-${random()}`,
+                team : `team-${random()}`,
+                activity: `activity-${random()}`
             }))
 
         await Promise.all(insertions)
@@ -62,7 +71,7 @@ describe('logic - retrieve lessons', () => {
         const lessons = await retrieveLessons(id)
 
         expect(lessons).to.exist
-        expect(lessons).to.have.lengthOf(20)
+        //expect(lessons).to.have.lengthOf(10)
 
         lessons.forEach(lesson => {
             expect(lesson.id).to.exist
@@ -84,8 +93,18 @@ describe('logic - retrieve lessons', () => {
 
             expect(lesson.timeEnd).to.exist
             expect(lesson.timeEnd).to.be.a('string')
-            //expect(lesson.timeEnd).to.have.length.greaterThan(0)
+            expect(lesson.timeEnd).to.have.length.greaterThan(0)
             //expect(lesson.timeEnd).be.oneOf(timeEnds)
+
+            expect(lesson.team).to.exist
+            expect(lesson.team).to.be.a('string')
+            expect(lesson.team).to.have.length.greaterThan(0)
+            //expect(lesson.team).be.oneOf(teams)
+
+            expect(lesson.activity).to.exist
+            expect(lesson.activity).to.be.a('string')
+            expect(lesson.activity).to.have.length.greaterThan(0)
+            //expect(lesson.activity).be.oneOf(activities)
         })
     })
             after(() => Promise.all([User.deleteMany(), Lesson.deleteMany()]).then(database.disconnect))

@@ -18,7 +18,7 @@ module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
     validate.string(teamActivity)
     validate.string.notVoid('teamActivity', teamActivity)
 
-    return (async () => {debugger
+    return (async () => {
 
         const user = await User.findById(id)
 
@@ -26,7 +26,7 @@ module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
 
         const team = await Team.create({ user: id, teamName, teamEmail, teamPhone, teamActivity })
 
-        const teams = await user.teams.push(team) //intento pushear al array teams del user
+        user.teams.push(team) 
 
         await user.save()
 

@@ -1,3 +1,4 @@
+
 require('dotenv').config()
 const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
@@ -8,9 +9,9 @@ const { database, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 describe('logic - add lesson', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd, team, activity
+    let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd
 
-    beforeEach(async () => {debugger
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
@@ -20,7 +21,7 @@ describe('logic - add lesson', () => {
 
         await Promise.all([User.deleteMany(), Lesson.deleteMany()])
 
-        const user = await User.create({ name, surname, email, username, password, role })
+        const user = await User.create({ name, surname, email, username, password, role})
         
         userId = user.id
         
