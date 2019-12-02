@@ -1,11 +1,15 @@
-const { Schema } = require('mongoose')
+const { Schema, ObjectId } = require('mongoose')
 
 module.exports = new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },
-    img: {
+    link: {
+        type: String,
+        required: true
+    },
+    price: {
         type: String,
         required: true
     },

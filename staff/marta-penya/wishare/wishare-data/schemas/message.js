@@ -1,4 +1,4 @@
-const { Schema } = require('mongoose')
+const { Schema, ObjectId  } = require('mongoose')
 
 module.exports = new Schema({
     user: {
@@ -10,7 +10,7 @@ module.exports = new Schema({
         type: String,
         required: true,
     },
-    send: {
+    date: {
         type: Date,
         required: true,
     }

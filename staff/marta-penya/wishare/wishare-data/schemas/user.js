@@ -1,5 +1,5 @@
-const { Schema } = require('mongoose')
-const { validators: { isEmail } } = require('tasks-util')
+const { Schema, ObjectId } = require('mongoose')
+const { validators: { isEmail } } = require('wishare-util')
 const Wish = require('./wish')
 
 module.exports = new Schema({
@@ -11,15 +11,11 @@ module.exports = new Schema({
         type: String,
         required: true
     },
-    username: {
-        type: String,
-        required: true,
-        unique: true
-    },
     email: {
         type: String,
         required: true,
-        validate: isEmail
+        validate: isEmail,
+        unique: true
     },
     password: {
         type: String,
@@ -29,11 +25,26 @@ module.exports = new Schema({
         type: Date,
         required: true
     },
+    image: {
+        type: String
+    },
+    description: {
+        type: String
+    },
     wishes: [Wish],
     friends: [{
         type: ObjectId,
         ref: 'User'
     }],
+    birthdayFriends: [{
+        user: {
+            type: ObjectId,
+            ref: 'User'
+        },
+        birthday: {
+            type: Date,
+        }
+    }]   ,
     savedWishes: [{
         user: {
             type: ObjectId,
