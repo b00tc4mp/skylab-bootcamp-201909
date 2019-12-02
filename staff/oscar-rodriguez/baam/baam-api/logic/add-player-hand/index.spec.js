@@ -11,7 +11,7 @@ const { ObjectId, database, models: { Card, User, Game , Player} } = require('ba
 describe('logic - add player hand', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let playerId, gameId, hand = [], cards = []
+    let userId, gameId, hand = [], cards = []
 
     let description, image, price, col, effect, effectValue, target, name
 
@@ -60,7 +60,7 @@ describe('logic - add player hand', () => {
             lastAccess: new Date()
         })
         
-        playerId = newPlayer1.id
+        userId = user.id
         
         const newPlayer2 = new Player({
             user: ObjectId(),
@@ -86,7 +86,7 @@ describe('logic - add player hand', () => {
     })
 
     it("should update player's hand with the selected cards", async()=>{
-        await addPlayerHand(gameId, playerId, hand)
+        await addPlayerHand(gameId, userId, hand)
 
         const game = await Game.findById(gameId).lean()
         expect (game).to.exist
@@ -101,7 +101,7 @@ describe('logic - add player hand', () => {
         const wrongHand = hand.slice(0,3)
 
         try {
-            await addPlayerHand(gameId, playerId, wrongHand)
+            await addPlayerHand(gameId, userId, wrongHand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -115,7 +115,7 @@ describe('logic - add player hand', () => {
         const game = '012345678901234567890123'
 
         try {
-            await addPlayerHand(game, playerId, hand)
+            await addPlayerHand(game, userId, hand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -143,7 +143,7 @@ describe('logic - add player hand', () => {
         hand.length--
 
         try {
-            await addPlayerHand(gameId, playerId, hand)
+            await addPlayerHand(gameId, userId, hand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -157,7 +157,7 @@ describe('logic - add player hand', () => {
         hand[4] = 'wrong'
 
         try {
-            await addPlayerHand(gameId, playerId, hand)
+            await addPlayerHand(gameId, userId, hand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -171,7 +171,7 @@ describe('logic - add player hand', () => {
         hand[4] = ObjectId()
 
         try {
-            await addPlayerHand(gameId, playerId, hand)
+            await addPlayerHand(gameId, userId, hand)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -207,12 +207,12 @@ describe('logic - add player hand', () => {
         expect(() => addPlayerHand(gameId,'')).to.throw(ContentError, 'id is empty or blank')
         expect(() => addPlayerHand(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
-        expect(() => addPlayerHand(gameId, playerId, 1)).to.throw(TypeError, '1 is not a Array')
-        expect(() => addPlayerHand(gameId, playerId, true)).to.throw(TypeError, 'true is not a Array')
-        expect(() => addPlayerHand(gameId, playerId, 'as')).to.throw(TypeError, ' is not a Array')
-        expect(() => addPlayerHand(gameId, playerId, {})).to.throw(TypeError, '[object Object] is not a Array')
-        expect(() => addPlayerHand(gameId, playerId, undefined)).to.throw(TypeError, 'undefined is not a Array')
-        expect(() => addPlayerHand(gameId, playerId, null)).to.throw(TypeError, 'null is not a Array')
+        expect(() => addPlayerHand(gameId, userId, 1)).to.throw(TypeError, '1 is not a Array')
+        expect(() => addPlayerHand(gameId, userId, true)).to.throw(TypeError, 'true is not a Array')
+        expect(() => addPlayerHand(gameId, userId, 'as')).to.throw(TypeError, ' is not a Array')
+        expect(() => addPlayerHand(gameId, userId, {})).to.throw(TypeError, '[object Object] is not a Array')
+        expect(() => addPlayerHand(gameId, userId, undefined)).to.throw(TypeError, 'undefined is not a Array')
+        expect(() => addPlayerHand(gameId, userId, null)).to.throw(TypeError, 'null is not a Array')
     })
 
     after (()=> Promise.all([User.deleteMany(), Game.deleteMany(), Player.deleteMany()])
