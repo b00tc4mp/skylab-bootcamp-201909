@@ -10,8 +10,6 @@ module.exports = function (id) {
     return (async () => {
         const game = await Game.findById(id)
 
-
-
         if (!game) throw new NotFoundError(`game with id ${id} not found`)
 
         game.lastAccess = new Date

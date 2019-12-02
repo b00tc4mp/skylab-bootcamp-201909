@@ -9,19 +9,23 @@ import NewGame from '../components/NewGame'
 import UpdateGame from '../components/UpdateGame'
 import Landing from '../components/Landing'
 
-const  checkIfRelative =(s)=> {
-if(s.indexOf('/') !== s.lastIndexOf('/')) return true
-return false
+const checkIfRelative = (s) => {
+    if (s.indexOf('/') !== s.lastIndexOf('/')) return true
+    return false
 }
 export default function getRoute(route) {
     const isRelativeRoute = checkIfRelative(route)
     if (isRelativeRoute) {
+        if (route.includes('usergame'))
+            return Game;
         if (route.includes('mygame'))
             return MyGame;
         if (route.includes('updategame'))
-            return UpdateGame; 
+            return UpdateGame;
         if (route.includes('updateuser'))
-            return UpdateUser; 
+            return UpdateUser;
+        if (route.includes('userinfo'))
+            return User;
     }
 
     switch (route) {
@@ -31,10 +35,6 @@ export default function getRoute(route) {
             return Register;
         case '/myuser':
             return MyUser;
-        case '/user':
-            return User;
-        case '/game':
-            return Game;
         case '/newgame':
             return NewGame;
         default:

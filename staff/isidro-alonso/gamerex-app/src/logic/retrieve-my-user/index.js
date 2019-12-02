@@ -2,15 +2,12 @@ const call = require('../../utils/call')
 const { validate, errors: { CredentialsError, NotFoundError } } = require('gamerex-util')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token, userId) {
+module.exports = function (token) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
-    validate.string(userId)
-    validate.string.notVoid('user id', userId)
-
     return (async () => {
-        const res = await call(`${API_URL}/users/${userId}`, {
+        const res = await call(`${API_URL}/users`, {
             method: 'GET',
             headers: { Authorization: `Bearer ${token}` }
         })

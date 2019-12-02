@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { listGames } from '../../logic'
+import { listMyGames } from '../../logic'
 import './index.sass'
 import MyGameItem from '../MyGameItem'
 
@@ -19,12 +19,13 @@ export default function ({  }) {
     }, [sessionStorage.token])
 
     async function retrieveGames(token) {
-        const games = await listGames(token)
+        const games = await listMyGames(token)
 
         setGames(games)
     }
 
-    return <section className="game-list">
+    return <><p className="user-profile__numofgames">{games.length} games</p>
+    <section className="game-list">
         {games.map(game => <section className="game-item" key={game.id}><MyGameItem game={game}/></section>)}
-    </section>
+    </section></>
 }
