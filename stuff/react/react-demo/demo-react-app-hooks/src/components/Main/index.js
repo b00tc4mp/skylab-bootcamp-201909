@@ -34,14 +34,14 @@ export default function ({ tasks, id, error }) {
         } */
 
     return <div className='main'>
-        {tasks.length > 0 && <ul className='main__ul'>
+        {tasks.length > 0 ? <ul className='main__ul'>
             {tasks.map(task => <li key={task.id} >
                 <p>{task.description}</p>
                 <p>{task.date}</p>
                 <button onClick={() => deleteTasks(task.id)
                 }>Remove</button>
             </li>)}
-        </ul>}
+        </ul>:<p>No ha tareas</p>}
         <form onSubmit={(event) => {
             event.preventDefault()
             registerTask(event, id)
