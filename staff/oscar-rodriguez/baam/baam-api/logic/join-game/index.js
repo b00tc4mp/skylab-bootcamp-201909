@@ -41,6 +41,6 @@ module.exports = function (userId, gameId) {
         game.status = 'READY'
         await game.save()
 
-        return game.newPlayer.id
+        return newPlayer.id
     })()
 }
