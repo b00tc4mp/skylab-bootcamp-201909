@@ -21,7 +21,6 @@ module.exports = function (gameId, playerId, hand) {
         if (!ObjectId.isValid(card)) throw new ConflictError(`hand must have ${HAND_LENGTH} cards to play`)
         return ObjectId(card)
     })
-    debugger
 
     return (async () => {
         //get the specified game

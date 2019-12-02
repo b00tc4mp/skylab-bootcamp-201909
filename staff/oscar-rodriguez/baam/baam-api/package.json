@@ -8,7 +8,8 @@
     "debug": "node inspect .",
     "watch": "npx nodemon .",
     "test": "npx mocha logic/**/*.spec.js",
-    "test-debug": "npx mocha inspect logic/*/*.spec.js"
+    "test-debug": "npx mocha inspect logic/*/*.spec.js",
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js"
   },
   "keywords": [],
   "author": "",

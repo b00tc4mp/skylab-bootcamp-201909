@@ -84,6 +84,7 @@ describe('logic - retrieve user Cards', () => {
         expect(() => retrieveUserCards({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => retrieveUserCards(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveUserCards(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveUserCards('wrong')).to.throw(ContentError, `wrong is not a valid id`)
 
         expect(() => retrieveUserCards('')).to.throw(ContentError, 'id is empty or blank')
         expect(() => retrieveUserCards(' \t\r')).to.throw(ContentError, 'id is empty or blank')
