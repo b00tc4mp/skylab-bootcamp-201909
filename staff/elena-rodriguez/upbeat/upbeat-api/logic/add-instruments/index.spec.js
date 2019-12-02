@@ -33,12 +33,19 @@ describe('logic - add instrument', () => {
 
     })
 
-    it('should succeed on add instruments', async () => {debugger
+    it('should succeed on add instruments', async () => {
         const instru = ['guitar', 'flute']
         const response = await addInstruments(id, instru)
         expect(response).to.be.undefined
         const user = await User.findById(id)
         expect(user.format.instruments).to.include.members(instru)
+        
+    })
+
+    it('should fail on not valid instruments', async () =>{
+        const instru = ['wronginstrument']
+        const response = await addInstruments(id, instru)
+        expect(response).to.exist
         
     })
 

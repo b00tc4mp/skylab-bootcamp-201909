@@ -55,7 +55,6 @@ describe('logic - search ads', () => {
         musicians.forEach(musician => {
             expect(musician.username).to.exist
             expect(musician.username).to.be.a('string')
-            expect(musician.name).to.be.oneOf(musiciansName)
             expect(musician.instruments).to.exist
             expect(musician.instruments).to.be.an('array')
             expect(musician.instruments[0]).to.equal('piano')
@@ -65,28 +64,26 @@ describe('logic - search ads', () => {
         
     })
 
-    it('should succeed on correct retrieve collecting elements according to filter', async () => {
-        // query = 'piano'
+    it('should succeed on correct retrieve all elements if empty query', async () => {
+        query = ' '
         
-        // const musicians = await searchUsers(query)
+        const musicians = await searchUsers(query)
         
-        // expect(musicians).to.exist
-        // expect(musicians).to.be.an('array')
+        expect(musicians).to.exist
+        expect(musicians).to.be.an('array')
         
-        // musicians.forEach(musician => {
-        //     expect(musician.username).to.exist
-        //     expect(musician.username).to.be.a("string")
-        //     expect(musician.name).to.be.oneOf(musiciansName)
-        //     if (musician.instruments) {
-        //         expect(musician.instruments).to.exist
-        //         expect(musician.instruments).to.be.an('array')
-        //         expect(musician.instruments).to.be.oneOf('array')
-        //     }
-        //     expect(musician.totalFavs).to.be.a("number")
-        //     expect(musician.username).to.exist
-        //     expect(musician.username).to.be.a("string")
-        //     expect(musician.userImage).to.be.undefined
-        // });
+        musicians.forEach(musician => {
+            expect(musician.username).to.exist
+            expect(musician.username).to.be.a('string')
+            //if (musician.instruments) 
+            if (musician.format === 'solo')
+            {
+                expect(musician.instruments).to.exist
+                expect(musician.instruments).to.be.an('array')
+                expect(musician.instruments).to.be.oneOf('array')
+            }
+           
+        });
     })
     after(() => User.deleteMany().then(database.disconnect))
 })

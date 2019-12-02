@@ -7,7 +7,10 @@ module.exports = {
     modifyUser : require('./modify-user'),
     toggleFavs : require('./toggle-favs'),
     retrieveFavs : require('./retrieve-favs'),
-    searchUsers : require('./search-users')
+    searchUsers : require('./search-users'),
+    saveProfileImage : require('./save-image'),
+    loadProfileImage : require('./load-profile-image'),
+    loadProfileImageUrl : require('./load-profile-url')
     //createTask: require('./create-task'),
     //listTasks: require('./list-tasks'),
     //modifyTask: require('./modify-task'),

@@ -45,7 +45,7 @@ module.exports = new Schema ({
     links : [Links],
 
     favs: {
-        type: Array
+        type: Array,
     },
 
     location: {
