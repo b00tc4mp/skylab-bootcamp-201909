@@ -49,6 +49,7 @@ module.exports = function (gameId, playerId, cardId) {
                 break
             case 'BLOCK':
                 if (game.players[currentPlayer].tempZone.duration >= 0) game.players[currentPlayer].discards.push(game.players[currentPlayer].tempZone.card)
+
                 game.players[currentPlayer].tempZone.card = cardId
                 game.players[currentPlayer].tempZone.duration = effectValue
                 game.players[enemy].attack = 0
@@ -72,12 +73,14 @@ module.exports = function (gameId, playerId, cardId) {
         }
 
         const { duration } = game.players[currentPlayer].tempZone
+
         if (duration > 0 && effect != 'BLOCK') {
             game.players[currentPlayer].tempZone.duration--
             if (!game.players[currentPlayer].tempZone.duration) {
                 game.players[currentPlayer].discards.push(game.players[currentPlayer].tempZone.card)
                 game.players[currentPlayer].tempZone.card = null
                 game.players[currentPlayer].tempZone.duration = -1
+
             }
         }
 

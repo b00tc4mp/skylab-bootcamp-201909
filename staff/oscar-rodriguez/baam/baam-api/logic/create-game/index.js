@@ -7,7 +7,9 @@ const { env: { INITIAL_PLAYER_LIFE } } = process
 module.exports = function (userId) {
     validate.string(userId)
     validate.string.notVoid('id', userId)
+
     if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
+
     userId = ObjectId(userId)
 
     return (async () => {

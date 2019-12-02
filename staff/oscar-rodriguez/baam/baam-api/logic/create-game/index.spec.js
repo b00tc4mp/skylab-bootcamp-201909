@@ -55,6 +55,7 @@ describe('logic - create game', () => {
             expect(error).to.be.an.instanceOf(NotFoundError)
             expect(error.message).to.equal(`user not found`)
         }
+
     })
 
     it('should fail on incorrect type and content', () => {
