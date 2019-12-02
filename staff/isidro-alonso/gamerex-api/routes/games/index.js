@@ -32,7 +32,7 @@ router.get('/', tokenVerifier, (req, res) => {
     try {
         const { id } = req
 
-        listGames(id)
+        listMyGames(id)
             .then(games => res.json(games))
             .catch(error => {
                 const { message } = error
@@ -47,11 +47,9 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
-router.get('/', tokenVerifier, (req, res) => {
+router.get(`/getgames`, tokenVerifier, (req, res) => {
     try {
-        const { id } = req
-
-        listMyGames(id)
+        listGames()
             .then(games => res.json(games))
             .catch(error => {
                 const { message } = error
