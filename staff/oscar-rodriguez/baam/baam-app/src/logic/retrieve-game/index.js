@@ -1,44 +1,27 @@
-const { validate, errors: { NotFoundError, ContentError, ConflictError } } = require('baam-util')
+const { validate, errors: { NotFoundError, CredentialsError } } = require('baam-util')
 const { ObjectId, models: { Game } } = require('baam-data')
+const API_URL = process.env.REACT_APP_API_URL
+const call = require('../utils/call')
 
-module.exports = function (gameId, userId) {
+module.exports = function (gameId, token) {
     validate.string(gameId)
     validate.string.notVoid('gameId', gameId)
-    if (!ObjectId.isValid(gameId)) throw new ContentError(`${gameId} is not a valid id`)
 
-    validate.string(userId)
-    validate.string.notVoid('playerId', userId)
-    if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
+    validate.string(token)
+    validate.string.notVoid('playerId', token)
 
     return (async () => {
-        const game = await Game.findById(gameId, { '__v': 0 }).lean()
-        if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
-
-        if (!game.players.find(player => player.user.toString() === userId.toString())) throw new ConflictError(`${userId} can't get info from a game where is not joined`)
-
-        game.players.forEach(player => {
-            
-            const { hand, tempZone, discards } = player
-
-            player.id = player._id.toString()
-            delete player._id
-
-            delete player.user
-
-            hand.forEach(card => {
-                card.id = card._id.toString()
-                delete card._id
-            })
-
-            if (tempZone.card) player.tempZone.card = player.tempZone.card.toString()
-            discards.forEach(card => {
-                card.id = card._id.toString()
-                delete card._id
-            })
+        const res = await call (`${API_URL}/games/${gameId}/status`, {
+            method: 'GET',
+            headers: { Authorization: `Bearer ${token}` }
         })
-        game.id = game._id.toString()
-        delete game._id
 
-        return game
+        if (res.status === 200) return JSON.parse(res.body)
+
+        if (res.status === 401) throw new CredentialsError (JSON.parse(res.body).message)
+
+        if (res.status === 404) throw new NotFoundError (JSON.parse(res.body).message)
+
+        throw Error (JSON.parse(res.body).message)
     })()
 }

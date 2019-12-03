@@ -1,19 +1,20 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
+const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
 const { random } = Math
 const retrieveUserCards = require('.')
 const { errors: { NotFoundError, ContentError } } = require('baam-util')
 const { ObjectId, database, models: { Card, User } } = require('baam-data')
+const jwt = require ('jsonwebtoken')
 
-false && describe('logic - retrieve user Cards', () => {
-    before(() => database.connect(TEST_DB_URL))
+describe('logic - retrieve user Cards', () => {
+    beforeAll(() => database.connect(TEST_DB_URL))
 
-    let id, name, description, image, price, col, effect, effectValue, target
+    let id, token
 
     beforeEach(async () => {
         await Promise.all([Card.deleteMany()],User.deleteMany())
 
-        let name = `name-${random()}`
+        name = `name-${random()}`
         let surname = `surname-${random()}`
         let email = `email-${random()}@mail.com`
         let nickname = `nickname-${random()}`
@@ -23,15 +24,17 @@ false && describe('logic - retrieve user Cards', () => {
 
         id = user.id
 
+        token = jwt.sign({sub:id}, TEST_SECRET)
+
         for (let i=0; i<10; i++) {
-            name = `name-${random()}`
-            description = `description-${random()}`
-            image = `image-${random()}`
-            price = random()
-            col = ObjectId().toString()
-            effect = `effect-${random()}`
-            effectValue = random()
-            target = `target-${random()}`
+            let name = `name-${random()}`
+            let description = `description-${random()}`
+            let image = `image-${random()}`
+            let price = random()
+            let col = ObjectId().toString()
+            let effect = `effect-${random()}`
+            let effectValue = random()
+            let target = `target-${random()}`
 
             const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
 
@@ -42,22 +45,22 @@ false && describe('logic - retrieve user Cards', () => {
     })
 
     it('should succeed on correct user id', async () => {
-        const cards = await retrieveUserCards(id)
+        const cards = await retrieveUserCards(token)
 
-        expect(cards).to.exist
-        expect(cards.length).to.equal(5)
+        expect(cards).toBeDefined()
+        expect(cards.length).toBe(5)
 
         cards.forEach(card=> {
-            expect(card.id).to.be.a('string')
-            expect(card._id).to.not.exist
-            expect(card.name).to.be.a('string')
-            expect(card.description).to.be.a('string')
-            expect(card.image).to.be.a('string')
-            expect(card.price).to.be.a('number')
-            expect(card.col.toString()).to.be.a('string')
-            expect(card.effect).to.be.a('string')
-            expect(card.effectValue).to.be.a('number')
-            expect(card.target).to.be.a('string')
+            expect(typeof card.id).toBe('string')
+            expect(card._id).toBeUndefined()
+            expect(typeof card.name).toBe('string')
+            expect(typeof card.description).toBe('string')
+            expect(typeof card.image).toBe('string')
+            expect(typeof card.price).toBe('number')
+            expect(typeof card.col.toString()).toBe('string')
+            expect(typeof card.effect).toBe('string')
+            expect(typeof card.effectValue).toBe('number')
+            expect(typeof card.target).toBe('string')
         })
         
     })
@@ -65,29 +68,30 @@ false && describe('logic - retrieve user Cards', () => {
     it('should fail on wrong user id', async () => {
         const id = '012345678901234567890123'
 
+        token = jwt.sign({sub:id}, TEST_SECRET)
+
         try {
-            await retrieveUserCards(id)
+            await retrieveUserCards(token)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`user with id ${id} not found`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => retrieveUserCards(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveUserCards(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveUserCards([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveUserCards({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveUserCards(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveUserCards(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => retrieveUserCards('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => retrieveUserCards(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveUserCards(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveUserCards([])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveUserCards({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveUserCards(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveUserCards(null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => retrieveUserCards('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveUserCards(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveUserCards('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => retrieveUserCards(' \t\r')).toThrow(ContentError, 'id is empty or blank')
     })
 
-    after(() => Card.deleteMany().then(database.disconnect))
+    afterAll(() => Card.deleteMany().then(database.disconnect))
 })

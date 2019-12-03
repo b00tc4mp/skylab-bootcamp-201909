@@ -1,16 +1,12 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL: TEST_DB_URL } } = process
-const { expect } = require('chai')
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
 const retrieveCollectionCards = require('.')
 const { random } = Math
-/* const { database, ObjectId, models: { Card } } = require('../../data')
-const { ContentError, NotFoundError } = require('../../utils/errors') */
-const { errors: { NotFoundError, ContentError } } = require('../../../baam-util')
-const { database, ObjectId, models: { Card, Collection } } = require('../../../baam-data')
+const { errors: { NotFoundError, ContentError } } = require('baam-util')
+const { database, ObjectId, models: { Card, Collection } } = require('baam-data')
 
 describe('logic - retrieve collection cards', () => {
 
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
     let id, colName
 
@@ -66,26 +62,26 @@ describe('logic - retrieve collection cards', () => {
     it('should succeed on correct user', () =>
         retrieveCollectionCards(id)
             .then(cards => {
-                expect(cards).to.exist
-                expect(cards).to.have.lengthOf(5)
+                expect(cards).toBeDefined()
+                expect(cards.length).toBe(5)
 
                 cards.forEach(card => {
-                    expect(card.id).to.exist
-                    expect(card.id).to.be.a('string')
-                    expect(card.id).to.have.length.greaterThan(0)
-                    expect(card.id).to.be.oneOf(cardIds)
+                    expect(card.id).toBeDefined()
+                    expect(typeof card.id).toBe('string')
+                    expect(card.id.length).toBeGreaterThan(0)
+                    expect(cardIds).toContain(card.id)
 
-                    expect(card.col).to.equal(colName)
+                    expect(card.col).toBe(colName)
 
-                    expect(card.name).to.exist
-                    expect(card.name).to.be.a('string')
-                    expect(card.name).to.have.length.greaterThan(0)
-                    expect(card.name).to.be.oneOf(names)
+                    expect(card.name).toBeDefined()
+                    expect(typeof card.name).toBe('string')
+                    expect(card.name.length).toBeGreaterThan(0)
+                    expect(names).toContain(card.name)
 
-                    expect(card.description).to.exist
-                    expect(card.description).to.be.a('string')
-                    expect(card.description).to.have.length.greaterThan(0)
-                    expect(card.description).to.be.oneOf(descriptions)
+                    expect(card.description).toBeDefined()
+                    expect(typeof card.description).toBe('string')
+                    expect(card.description.length).toBeGreaterThan(0)
+                    expect(descriptions).toContain(card.description)
                 })
             })
     )
@@ -98,25 +94,24 @@ describe('logic - retrieve collection cards', () => {
                 throw Error('should not reach this point')
             })
             .catch(error => {
-                expect(error).to.exist
-                expect(error).to.be.an.instanceOf(NotFoundError)
-                expect(error.message).to.equal(`there are no cards on this collection`)
+                expect(error).toBeDefined()
+                expect(error).toBeInstanceOf(NotFoundError)
+                expect(error.message).toBe(`there are no cards on this collection`)
             })
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => retrieveCollectionCards(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveCollectionCards(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveCollectionCards([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveCollectionCards({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveCollectionCards(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveCollectionCards(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => retrieveCollectionCards('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => retrieveCollectionCards(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveCollectionCards(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveCollectionCards([])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveCollectionCards({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveCollectionCards(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveCollectionCards(null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => retrieveCollectionCards('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveCollectionCards(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveCollectionCards('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => retrieveCollectionCards(' \t\r')).toThrow(ContentError, 'id is empty or blank')
     })
 
-    after(() => Promise.all([Card.deleteMany(), Collection.deleteMany()])
+    afterAll(() => Promise.all([Card.deleteMany(), Collection.deleteMany()])
         .then(database.disconnect))
 })

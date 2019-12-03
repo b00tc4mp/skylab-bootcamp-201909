@@ -1,13 +1,11 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
-const { expect } = require('chai')
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
 const { random } = Math
 const retrieveCard = require('.')
 const { errors: { NotFoundError, ContentError } } = require('baam-util')
 const { ObjectId, database, models: { Card } } = require('baam-data')
 
 describe('logic - retrieve card', () => {
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
     let id, name, description, image, price, col, effect, effectValue, target
 
@@ -31,26 +29,26 @@ describe('logic - retrieve card', () => {
     it('should succeed on correct card id', async () => {
         const card = await retrieveCard(id)
 
-        expect(card).to.exist
-        expect(card.id).to.equal(id)
-        expect(card.id).to.be.a('string')
-        expect(card._id).to.not.exist
-        expect(card.name).to.equal(name)
-        expect(card.name).to.be.a('string')
-        expect(card.description).to.equal(description)
-        expect(card.description).to.be.a('string')
-        expect(card.image).to.equal(image)
-        expect(card.image).to.be.a('string')
-        expect(card.price).to.equal(price)
-        expect(card.price).to.be.a('number')
-        expect(card.col.toString()).to.equal(col)
-        expect(card.col.toString()).to.be.a('string')
-        expect(card.effect).to.equal(effect)
-        expect(card.effect).to.be.a('string')
-        expect(card.effectValue).to.equal(effectValue)
-        expect(card.effectValue).to.be.a('number')
-        expect(card.target).to.equal(target)
-        expect(card.target).to.be.a('string')
+        expect(card).toBeDefined()
+        expect(card.id).toBe(id)
+        expect(typeof card.id).toBe('string')
+        expect(card._id).toBeUndefined()
+        expect(card.name).toBe(name)
+        expect(typeof card.name).toBe('string')
+        expect(card.description).toBe(description)
+        expect(typeof card.description).toBe('string')
+        expect(card.image).toBe(image)
+        expect(typeof card.image).toBe('string')
+        expect(card.price).toBe(price)
+        expect(typeof card.price).toBe('number')
+        expect(card.col.toString()).toBe(col)
+        expect(typeof card.col.toString()).toBe('string')
+        expect(card.effect).toBe(effect)
+        expect(typeof card.effect).toBe('string')
+        expect(card.effectValue).toBe(effectValue)
+        expect(typeof card.effectValue).toBe('number')
+        expect(card.target).toBe(target)
+        expect(typeof card.target).toBe('string')
         
     })
 
@@ -62,24 +60,23 @@ describe('logic - retrieve card', () => {
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`card with id ${id} not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`card with id ${id} not found`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => retrieveCard(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveCard(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveCard([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveCard({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveCard(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveCard(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => retrieveCard('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => retrieveCard(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveCard(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveCard([])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveCard({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveCard(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveCard(null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => retrieveCard('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveCard(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveCard('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => retrieveCard(' \t\r')).toThrow(ContentError, 'id is empty or blank')
     })
 
-    after(() => Card.deleteMany().then(database.disconnect))
+    afterAll(() => Card.deleteMany().then(database.disconnect))
 })
