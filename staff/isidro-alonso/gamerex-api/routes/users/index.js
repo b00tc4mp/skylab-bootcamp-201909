@@ -1,10 +1,11 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveMyUser, retrieveUser, listUsers, modifyUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveMyUser, retrieveUser, listUsers, modifyUser, saveImageUser, loadImageUser } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('gamerex-util')
+const Busboy = require('busboy')
 
 const jsonBodyParser = bodyParser.json()
 
@@ -133,6 +134,38 @@ router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     } catch ({ message }) {
         res.status(400).json({ message })
     }
+})
+
+router.post('/upload', tokenVerifier, (req, res) => {
+    
+    const { id } = req
+  
+    const busboy = new Busboy({ headers: req.headers })
+
+    busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+        filename = 'profile'
+
+        await saveImageUser(id, file, filename)
+        
+    })
+
+    busboy.on('finish', () => {
+        res.end()
+    })
+
+    return req.pipe(busboy)
+
+})
+
+router.get('/load/image', tokenVerifier,async (req, res) => {
+
+    const { id } = req
+
+    const stream = await loadImageUser(id) 
+
+    res.setHeader('Content-Type', 'image/jpeg')
+
+    return stream.pipe(res)
 })
 
 module.exports = router

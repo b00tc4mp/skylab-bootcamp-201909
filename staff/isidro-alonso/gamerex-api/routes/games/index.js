@@ -1,9 +1,10 @@
 const { Router } = require('express')
-const { createGame, listGames, listMyGames, retrieveGame, modifyGame, removeGame } = require('../../logic')
+const { createGame, listGames, listMyGames, retrieveGame, modifyGame, removeGame, saveImageGame, loadImageGame } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError } } = require('gamerex-util')
+const Busboy = require('busboy')
 
 const jsonBodyParser = bodyParser.json()
 
@@ -130,6 +131,30 @@ router.delete('/:gameId', tokenVerifier, (req, res) => {
     } catch ({ message }) {
         res.status(400).json({ message })
     }
+})
+
+router.post('/upload/:gameId', tokenVerifier, (req, res) => {
+    const { id, params: { gameId } } = req
+    const busboy = new Busboy({ headers: req.headers })
+    busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+        filename = 'gameimage'
+        await saveImageGame(id, gameId, file, filename)
+    })
+    busboy.on('finish', () => {
+        res.end()
+    })
+    return req.pipe(busboy)
+})
+
+router.get('/load/:gameId', tokenVerifier,async (req, res) => {
+
+    const { id, params: { gameId } } = req
+
+    const stream = await loadImageGame(id, gameId) 
+
+    res.setHeader('Content-Type', 'image/jpeg')
+
+    return stream.pipe(res)
 })
 
 module.exports = router
