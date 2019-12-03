@@ -12,7 +12,7 @@ const router = Router()
 
 router.get('/:idCard', (req, res) => {
     try {
-        const { params: { idCard } } = req
+        const { params: { idCard : cardId} } = req
 
         retrieveCard(cardId)
             .then(card => res.json(card))
@@ -27,11 +27,11 @@ router.get('/:idCard', (req, res) => {
     }
 })
 
-router.get('/:idCollection', (req, res) => {
+router.get('/collections/:idCollection', (req, res) => {
     try {
         const { params: { idCollection } } = req
         retrieveCollectionCards(idCollection)
-            .then(cards => res.json({ cards }))
+            .then(cards => res.json(cards))
             .catch(error => {
                 const { message } = error
                 if (error instanceof NotFoundError)
@@ -47,7 +47,7 @@ router.get('/', tokenVerifier, (req, res) => {
     try {
         const { id: userId } = req
         retrieveUserCards(userId)
-            .then(cards => res.json({ cards }))
+            .then(cards => res.json(cards))
             .catch(error => {
                 const { message } = error
                 if (error instanceof NotFoundError)
