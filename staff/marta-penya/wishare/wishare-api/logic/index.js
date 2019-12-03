@@ -2,6 +2,7 @@ module.exports = {
     registerUser: require('./register-user'),
     authenticateUser: require('./authenticate-user'),
     retrieveUser: require('./retrieve-user'),
+    searchUsers: require('./search-users'),
     modifyUser: require('./modify-user'),
     deleteUser: require('./delete-user'),
     saveProfileImage: require('./save-profile-image'),
