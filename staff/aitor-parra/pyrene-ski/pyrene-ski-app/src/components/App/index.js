@@ -5,6 +5,7 @@ import Register from '../Register'
 import Login from '../Login'
 import BoardAdmin from '../Board-admin'
 import BoardClient from '../Board-client'
+import Feedback from '../Feedback'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser } from '../logic'
