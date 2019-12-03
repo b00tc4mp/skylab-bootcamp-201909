@@ -19,14 +19,14 @@ module.exports = new Schema ({
 
     },
 
-    profileImage: {
+    image: {
         type: String,
-        required: true
+        //required: true
     },
 
-    rol:{
+    rol: {
         type: String,
-        required: true,
+        //required: true,
         enum: ['solo', 'groups']
     },
 
@@ -38,17 +38,22 @@ module.exports = new Schema ({
         type: String
     },
 
+    upcomings: {
+        type: String
+    },
+
     links : [Links],
 
     favs: {
-        type: Array
+        type: Array,
     },
 
     location: {
         type: {
             type: String,
             enum: ['Point'],
-            default: 'Point'
+            default: 'Point',
+            required: true
         },
         coordinates: {
             type: [Number],
