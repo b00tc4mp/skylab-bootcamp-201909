@@ -1,15 +1,15 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser, retrieveFavs, toggleFavAd, addComment, retrieveComments } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, retrieveFavs, toggleFavAd, addComment, retrieveComments, saveImageProfile, loadImageProfile } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('skillpop-util')
+const Busboy = require('busboy')
 
 const jsonBodyParser = bodyParser.json()
 
 const router = Router()
-debugger
 
 router.post('/', jsonBodyParser, async (req, res) => {
     const { body: { name, surname, city, address, email, password } } = req
@@ -190,6 +190,38 @@ router.get('/comment/:id', jsonBodyParser, (req, res) => {
     } catch ({ message }) {
         res.status(400).json({ message })
     }
+})
+
+router.post('/upload/', tokenVerifier, (req, res) => {
+    
+    const { id } = req
+  
+    const busboy = new Busboy({ headers: req.headers })
+
+    busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
+        filename = 'profile'
+
+        await saveImageProfile(id, file, filename)
+        
+    })
+
+    busboy.on('finish', () => {
+        res.end()
+    })
+
+    return req.pipe(busboy)
+
+})
+
+router.get('/load/image', tokenVerifier,async (req, res) => {
+
+    const { id } = req
+
+    const stream = await loadImageProfile(id) 
+
+    res.setHeader('Content-Type', 'image/jpeg')
+
+    return stream.pipe(res)
 })
 
 

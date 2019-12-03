@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd, saveImageAd } = require('../../logic')
+const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd, saveImageAd, loadImageAd } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -142,29 +142,25 @@ router.post('/upload/:idAd', tokenVerifier, (req, res) => {
     const busboy = new Busboy({ headers: req.headers })
 
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
-        filename = 'profile'
+        filename = 'adimage'
 
         await saveImageAd(id, idAd, file, filename)
         
-        // let saveTo = path.join(__dirname, `../../data/users/${id}/` + filename +'.png')
-        // file.pipe(fs.createWriteStream(saveTo))
     })
 
     busboy.on('finish', () => {
-        res.end("That's all folks!")
+        res.end()
     })
 
     return req.pipe(busboy)
 
 })
 
-router.get('/profileimage/:id', async (req, res) => {
+router.get('/load/:idAd', tokenVerifier,async (req, res) => {
 
-    const { params: { id } } = req
+    const { id, params: { idAd } } = req
 
-    const stream = await loadProfileImage(id) 
-    //let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
-    //stream = fs.createReadStream(goTo)
+    const stream = await loadImageAd(id, idAd) 
 
     res.setHeader('Content-Type', 'image/jpeg')
 

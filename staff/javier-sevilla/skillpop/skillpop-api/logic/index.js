@@ -18,5 +18,8 @@ module.exports = {
     toggleFavAd: require('./toggle-fav-ad'),
     addComment: require('./add-comment'),
     retrieveComments: require('./retrieve-comments'),
-    saveImageAd: require('./save-image-ad')
+    saveImageAd: require('./save-image-ad'),
+    loadImageAd: require('./load-image-ad'),
+    saveImageProfile: require('./save-image-profile'),
+    loadImageProfile: require('./load-image-profile')
 }
