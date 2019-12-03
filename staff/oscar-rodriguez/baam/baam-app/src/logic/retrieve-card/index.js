@@ -1,18 +1,20 @@
-const { validate, errors: { NotFoundError, ContentError } } = require('baam-util')
-const { ObjectId, models: { Card } } = require('baam-data')
+const { validate, errors: { NotFoundError } } = require('baam-util')
+const API_URL = process.env.REACT_APP_API_URL
+const call = require('../utils/call')
 
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     return (async () => {
-        const card = await Card.findById(id)
+        const res = await call (`${API_URL}/cards/${id}`, {
+            method: 'GET'
+        })
 
-        if (!card) throw new NotFoundError(`card with id ${id} not found`)
+        if (res.status === 200) return JSON.parse(res.body)
 
-        const { name, description, image, price, col, effect, effectValue, target } = card.toObject()
+        if (res.status === 404) throw new NotFoundError (JSON.parse(res.body).message)
 
-        return { id, name, description, image, price, col, effect, effectValue, target }
+        throw new Error (JSON.parse(res.body).message)
     })()
 }

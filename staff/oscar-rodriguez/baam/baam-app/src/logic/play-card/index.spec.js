@@ -1,19 +1,17 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL, HAND_LENGTH, INITIAL_PLAYER_LIFE } } = process
-const chai = require('chai')
-const { expect } = chai
-const chaiSubset = require('chai-subset')
-chai.use(chaiSubset)
-const { random, floor } = Math
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
+const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
+const INITIAL_PLAYER_LIFE = process.env.REACT_APP_INITIAL_PLAYER_LIFE
+const { random } = Math
 const playCard = require('.')
 const { errors: { NotFoundError, ContentError, CantAttackError, CredentialsError, ConflictError } } = require('baam-util')
 const { ObjectId, database, models: { Card, User, Game, Player } } = require('baam-data')
+const jwt = require('jsonwebtoken')
 
 describe('logic - play card', () => {
 
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
-    let userId, gameId, cardId
+    let userId, token, gameId, cardId
 
     beforeEach(async () => {
 
@@ -63,6 +61,8 @@ describe('logic - play card', () => {
 
         userId = user.id
 
+        token = jwt.sign ({sub: userId}, TEST_SECRET)
+
         const newPlayer2 = new Player({
             user: ObjectId(),
             lifePoints: parseInt(INITIAL_PLAYER_LIFE),
@@ -103,15 +103,15 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         const [_player] = testGame.players
-        expect(_player.defense).to.equal(2)
-        expect(_player.hand.length).to.equal(4)
+        expect(_player.defense).toBe(2)
+        expect(_player.hand.length).toBe(4)
 
-        expect(testGame.currentPlayer).to.equal(1)
+        expect(testGame.currentPlayer).toBe(1)
     })
 
     it('should succed on ATTACK card play', async () => {
@@ -131,16 +131,16 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         const [_player1,_player2] = testGame.players
-        expect(_player2.lifePoints).to.equal(0)
-        expect(_player1.hand.length).to.equal(4)
+        expect(_player2.lifePoints).toBe(0)
+        expect(_player1.hand.length).toBe(4)
 
-        expect(testGame.winner).to.equal(0)
-        expect(testGame.status).to.equal("END")
+        expect(testGame.winner).toBe(0)
+        expect(testGame.status).toBe("END")
     })
 
     it('should not substract LifePoints on ATTACK when enemy has a DEFENSE', async () => {
@@ -160,16 +160,16 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         const [_player1,_player2] = testGame.players
-        expect(_player2.lifePoints).to.equal(5)
-        expect(_player2.defense).to.equal(1)
-        expect(_player1.hand.length).to.equal(4)
+        expect(_player2.lifePoints).toBe(5)
+        expect(_player2.defense).toBe(1)
+        expect(_player1.hand.length).toBe(4)
 
-        expect(testGame.currentPlayer).to.equal(1)
+        expect(testGame.currentPlayer).toBe(1)
     })
 
     it('should remove a temporal Card from tempZone when its duration ends', async () => {
@@ -192,17 +192,17 @@ describe('logic - play card', () => {
 
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         const [_player1,_player2] = testGame.players
-        expect(_player2.lifePoints).to.equal(5)
-        expect(_player2.defense).to.equal(1)
-        expect(_player1.hand.length).to.equal(4)
-        expect(_player1.tempZone.card).to.equal(null)
-        expect(_player1.tempZone.duration).to.equal(-1)
-        expect(testGame.currentPlayer).to.equal(1)
+        expect(_player2.lifePoints).toBe(5)
+        expect(_player2.defense).toBe(1)
+        expect(_player1.hand.length).toBe(4)
+        expect(_player1.tempZone.card).toBe(null)
+        expect(_player1.tempZone.duration).toBe(-1)
+        expect(testGame.currentPlayer).toBe(1)
     })
 
     it('should succed on HEAL card play', async () => {
@@ -222,15 +222,15 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         const [_player1] = testGame.players
-        expect(_player1.lifePoints).to.equal(7)
-        expect(_player1.hand.length).to.equal(4)
+        expect(_player1.lifePoints).toBe(7)
+        expect(_player1.hand.length).toBe(4)
 
-        expect(testGame.currentPlayer).to.equal(1)
+        expect(testGame.currentPlayer).toBe(1)
     })
 
     it('should succed on BLOCK card play', async () => {
@@ -250,18 +250,18 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
 
         const [_player1,_player2] = testGame.players
 
-        expect(_player1.tempZone.card).to.exist
-        expect(_player1.tempZone.duration).to.equal(2)
-        expect(_player2.attack).to.equal(0)
+        expect(_player1.tempZone.card).toBeDefined()
+        expect(_player1.tempZone.duration).toBe(2)
+        expect(_player2.attack).toBe(0)
 
-        expect(testGame.currentPlayer).to.equal(1)
+        expect(testGame.currentPlayer).toBe(1)
     })
 
     it('should fail on ATTACK when player is BLOCKED', async () => {
@@ -284,12 +284,12 @@ describe('logic - play card', () => {
         await game.save()
 
         try {
-            await playCard(gameId, userId, card.id)
+            await playCard(gameId, token, card.id)
             throw Error ('should not reach this point')
         } catch(error) {
-            expect (error).to.exist
-            expect(error).to.be.an.instanceOf(CantAttackError)
-            expect (error.message).to.equal(`you are blocked and can't attack`)
+            expect (error).toBeDefined()
+            expect(error).toBeInstanceOf(CantAttackError)
+            expect (error.message).toBe(`you are blocked and can't attack`)
         }
     })
 
@@ -312,11 +312,11 @@ describe('logic - play card', () => {
         await game.save()
 
         try {
-            await playCard(gameId, userId, card.id)
+            await playCard(gameId, token, card.id)
             throw Error ('should not reach this point')
         } catch(error) {
-            expect (error).to.exist
-            expect (error.message).to.equal(`WTF?! can't recognize the card effect`)
+            expect (error).toBeDefined()
+            expect (error.message).toBe(`WTF?! can't recognize the card effect`)
         }
     })
 
@@ -338,14 +338,14 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         
-        expect(testGame.status).to.equal = 'END'
-        expect(testGame.winner).to.equal = -1
-        expect(testGame.currentPlayer).to.equal(0)
+        expect(testGame.status).toBe = 'END'
+        expect(testGame.winner).toBe = -1
+        expect(testGame.currentPlayer).toBe(0)
     })
 
     it('should change the tempzone card if exists one before', async () => {
@@ -369,15 +369,15 @@ describe('logic - play card', () => {
         game.players[0].tempZone.duration = 1
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         
         const [_player1,_player2] = testGame.players
-        expect (_player1.discards).to.equal = tempId
-        expect (_player1.tempZone.card.toString()).to.equal(card.id)
-        expect (_player2.attack).to.equal(0)
+        expect (_player1.discards).toBe = tempId
+        expect (_player1.tempZone.card.toString()).toBe(card.id)
+        expect (_player2.attack).toBe(0)
     })
 
     it('should end game when last Card is played and determine player1 winner', async () => {
@@ -397,14 +397,14 @@ describe('logic - play card', () => {
         game.players[0].hand.push(card.id)
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         
-        expect(testGame.status).to.equal = 'END'
-        expect(testGame.winner).to.equal = 0
-        expect(testGame.currentPlayer).to.equal(0)
+        expect(testGame.status).toBe('END')
+        expect(testGame.winner).toBe(0)
+        expect(testGame.currentPlayer).toBe(0)
     })
 
     it('should end game when last Card is played and determine player2 winner', async () => {
@@ -425,27 +425,28 @@ describe('logic - play card', () => {
         game.players[1].lifePoints = 10
         await game.save()
 
-        await playCard(gameId, userId, card.id)
+        await playCard(gameId, token, card.id)
 
         const testGame = await Game.findById(gameId)
-        expect(testGame).to.exist
+        expect(testGame).toBeDefined()
         
-        expect(testGame.status).to.equal = 'END'
-        expect(testGame.winner).to.equal = 1
-        expect(testGame.currentPlayer).to.equal(0)
+        expect(testGame.status).toBe('END')
+        expect(testGame.winner).toBe(1)
+        expect(testGame.currentPlayer).toBe(0)
     })
 
     it('should fail on wrong game id', async () => {
         const game = '012345678901234567890123'
 
         try {
-            await playCard(game, userId, cardId)
+            await playCard(game, token, cardId)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`game with id ${game} not found`)
+            debugger
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`game with id ${game} not found`)
         }
     })
 
@@ -457,27 +458,27 @@ describe('logic - play card', () => {
         game.players[0].hand.push(wrongCard)
         await game.save()
         try {
-            await playCard(gameId, userId, wrongCard)
+            await playCard(gameId, token, wrongCard)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`card with id ${wrongCard} not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`card with id ${wrongCard} not found`)
         }
     })
 
     it('should fail on wrong player id', async () => {
         const player = '012345678901234567890123'
-
+        const badToken= jwt.sign({sub:player}, TEST_SECRET)
         try {
-            await playCard(gameId, player, cardId)
+            await playCard(gameId, badToken, cardId)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(CredentialsError)
-            expect(error.message).to.equal(`Is not the ${player} turn. Can't play the card`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(CredentialsError)
+            expect(error.message).toBe(`Is not the ${player} turn. Can't play the card`)
         }
     })
 
@@ -485,54 +486,49 @@ describe('logic - play card', () => {
         const card = '012345678901234567890123'
 
         try {
-            await playCard(gameId, userId, card)
+            await playCard(gameId, token, card)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(ConflictError)
-            expect(error.message).to.equal(`${userId} doesn't own the card ${card} on his hand`)
+            expect(error).toBeDefined()
+            debugger
+            expect(error).toBeInstanceOf(Error)
+            expect(error.message).toBe(`${userId} doesn't own the card ${card} on his hand`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => playCard(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => playCard(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => playCard([])).to.throw(TypeError, ' is not a string')
-        expect(() => playCard({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => playCard(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => playCard(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => playCard('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => playCard(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => playCard(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => playCard([])).toThrow(TypeError, ' is not a string')
+        expect(() => playCard({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => playCard(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => playCard(null)).toThrow(TypeError, 'null is not a string')
+        
+        expect(() => playCard('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => playCard(' \t\r')).toThrow(ContentError, 'id is empty or blank')
 
+        expect(() => playCard(gameId,1)).toThrow(TypeError, '1 is not a string')
+        expect(() => playCard(gameId,true)).toThrow(TypeError, 'true is not a string')
+        expect(() => playCard(gameId,[])).toThrow(TypeError, ' is not a string')
+        expect(() => playCard(gameId,{})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => playCard(gameId,undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => playCard(gameId,null)).toThrow(TypeError, 'null is not a string')
+        
+        expect(() => playCard(gameId,'')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => playCard(gameId,' \t\r')).toThrow(ContentError, 'id is empty or blank')
 
-        expect(() => playCard('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => playCard(' \t\r')).to.throw(ContentError, 'id is empty or blank')
-
-        expect(() => playCard(gameId,1)).to.throw(TypeError, '1 is not a string')
-        expect(() => playCard(gameId,true)).to.throw(TypeError, 'true is not a string')
-        expect(() => playCard(gameId,[])).to.throw(TypeError, ' is not a string')
-        expect(() => playCard(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => playCard(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => playCard(gameId,null)).to.throw(TypeError, 'null is not a string')
-        expect(() => playCard(gameId,'wrong')).to.throw(ContentError, `wrong is not a valid id`)
-
-
-        expect(() => playCard(gameId,'')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => playCard(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
-
-        expect(() => playCard(gameId, userId, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => playCard(gameId, userId, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => playCard(gameId, userId, [])).to.throw(TypeError, ' is not a string')
-        expect(() => playCard(gameId, userId, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => playCard(gameId, userId, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => playCard(gameId, userId, null)).to.throw(TypeError, 'null is not a string')
-        expect(() => playCard(gameId, userId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
-
-
-        expect(() => playCard(gameId, userId, '')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => playCard(gameId, userId, ' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => playCard(gameId, userId, 1)).toThrow(TypeError, '1 is not a string')
+        expect(() => playCard(gameId, userId, true)).toThrow(TypeError, 'true is not a string')
+        expect(() => playCard(gameId, userId, [])).toThrow(TypeError, ' is not a string')
+        expect(() => playCard(gameId, userId, {})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => playCard(gameId, userId, undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => playCard(gameId, userId, null)).toThrow(TypeError, 'null is not a string')
+        
+        expect(() => playCard(gameId, userId, '')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => playCard(gameId, userId, ' \t\r')).toThrow(ContentError, 'id is empty or blank')
     })
 
-    after(() => Promise.all([Card.deleteMany(), User.deleteMany(), Game.deleteMany(), Player.deleteMany()])
+    afterAll(() => Promise.all([Card.deleteMany(), User.deleteMany(), Game.deleteMany(), Player.deleteMany()])
         .then(database.disconnect))
 })

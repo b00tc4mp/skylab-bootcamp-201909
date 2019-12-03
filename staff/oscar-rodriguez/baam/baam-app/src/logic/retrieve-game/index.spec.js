@@ -1,19 +1,16 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
-const chai = require('chai')
-const { expect } = chai
-const chaiSubset = require('chai-subset')
-chai.use(chaiSubset)
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
+const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
 const { random, floor } = Math
 const retrieveGame = require('.')
 const { errors: { NotFoundError, ContentError } } = require('baam-util')
 const { ObjectId, database, models: { User, Game , Player} } = require('baam-data')
+const jwt = require('jsonwebtoken')
 
 describe('logic - retrieve game', () => {
 
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
-    let gameId, userId, playerId
+    let gameId, token, userId, playerId
 
     beforeEach(async () => {
         await Promise.all([Game.deleteMany()])
@@ -27,6 +24,8 @@ describe('logic - retrieve game', () => {
         const user = await User.create({ name, surname, email, nickname, password })
 
         userId = user.id
+
+        token = jwt.sign({sub: userId}, TEST_SECRET)
 
         const newPlayer1 = new Player({
             user: user._id,
@@ -64,26 +63,29 @@ describe('logic - retrieve game', () => {
     })
 
     it('should return the game status on valid userId, which is in the game', async () => {
-        const game = await retrieveGame(gameId, userId)
+        const game = await retrieveGame(gameId, token)
 
-        expect(game).to.exist
-        expect(game.id).to.equal(gameId)
-        expect(game.players).to.containSubset([{id: playerId}])
+        expect(game).toBeDefined()
+        expect(game.id).toBe(gameId)
+        expect(game.players[0]).toMatchObject({id: playerId})
 
-        expect(game.shoots).to.be.an.instanceOf(Array)
-        expect(game.currentPlayer).to.be.a('number')
-        expect([0,1]).to.include(game.currentPlayer)
+        expect(game.shoots).toBeInstanceOf(Array)
+        expect(typeof game.currentPlayer).toBe('number')
+        expect([0,1]).toContain(game.currentPlayer)
 
     })
 
     it('should fail on valid playerId, which is NOT in the game', async () => {
         const wrong = ObjectId().toString()
+
+        const badToken = jwt.sign ({sub:wrong}, TEST_SECRET)
+
         try {
-            await retrieveGame(gameId, wrong)
+            await retrieveGame(gameId, badToken)
             throw Error('should not reach this poing')
         } catch (error) {
-            expect(error).to.exist
-            expect(error.message).to.equal(`${wrong} can't get info from a game where is not joined`)
+            expect(error).toBeDefined()
+            expect(error.message).toBe(`${wrong} can't get info from a game where is not joined`)
         }
     })
 
@@ -91,38 +93,38 @@ describe('logic - retrieve game', () => {
         const wrong = '012345678901234567890123'
 
         try {
-            await retrieveGame(wrong, userId)
+            await retrieveGame(wrong, token)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`game with id ${wrong} not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`game with id ${wrong} not found`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => retrieveGame(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveGame(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveGame([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveGame({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveGame(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveGame(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => retrieveGame('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => retrieveGame(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveGame(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveGame([])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveGame({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveGame(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveGame(null)).toThrow(TypeError, 'null is not a string')
+        
 
-        expect(() => retrieveGame('')).to.throw(ContentError, 'gameId is empty or blank')
-        expect(() => retrieveGame(' \t\r')).to.throw(ContentError, 'gameId is empty or blank')
+        expect(() => retrieveGame('')).toThrow(ContentError, 'gameId is empty or blank')
+        expect(() => retrieveGame(' \t\r')).toThrow(ContentError, 'gameId is empty or blank')
 
-        expect(() => retrieveGame(gameId, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveGame(gameId, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveGame(gameId, [])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveGame(gameId, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveGame(gameId, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveGame(gameId, null)).to.throw(TypeError, 'null is not a string')
-        expect(() => retrieveGame(gameId, 'wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => retrieveGame(gameId, 1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveGame(gameId, true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveGame(gameId, [])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveGame(gameId, {})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveGame(gameId, undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveGame(gameId, null)).toThrow(TypeError, 'null is not a string')
+        
 
-        expect(() => retrieveGame(gameId, '')).to.throw(ContentError, 'playerId is empty or blank')
-        expect(() => retrieveGame(gameId, ' \t\r')).to.throw(ContentError, 'playerId is empty or blank')
+        expect(() => retrieveGame(gameId, '')).toThrow(ContentError, 'playerId is empty or blank')
+        expect(() => retrieveGame(gameId, ' \t\r')).toThrow(ContentError, 'playerId is empty or blank')
     })
-    after(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(database.disconnect))
+    afterAll(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(database.disconnect))
 })

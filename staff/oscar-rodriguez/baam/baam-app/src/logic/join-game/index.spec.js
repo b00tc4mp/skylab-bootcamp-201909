@@ -1,16 +1,16 @@
-const {expect } = require ('chai')
-require ('dotenv').config()
-const { env: { TEST_DB_URL }} = process
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
+const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
+const PLAYER_LIFE = process.env.REACT_APP_INITIAL_PLAYER_LIFE
 const { database, models: {User, Game, Player}} = require ('baam-data')
 const {errors: { NotFoundError, ConflictError, ContentError}} = require ('baam-util')
 const { random , floor } = Math
 const joinGame = require('.')
-
+const jwt = require ('jsonwebtoken')
 
 describe('logic - join game', () => {
-    before (()=> database.connect(TEST_DB_URL))
+    beforeAll (()=> database.connect(TEST_DB_URL))
 
-    let userId, gameId, nickname, player1
+    let userId, token, token1, gameId, nickname, player1
 
     beforeEach(async ()=>{
 
@@ -26,13 +26,17 @@ describe('logic - join game', () => {
 
         userId = user.id
 
+        token = jwt.sign({sub: userId}, TEST_SECRET)
+
         player1 = await User.create ({name: `**-${random()}`, surname: `**-${random()}`, email: `**-${random()}`, nickname: `**-${random()}`, password: `**-${random()}`})
 
         player1 = player1.id
 
+        token1 = jwt.sign({sub:player1}, TEST_SECRET)
+
         const newPlayer = new Player ({
             user: player1,
-            lifePoints: 5,
+            lifePoints: PLAYER_LIFE,
             hand: [],
             tempZone: null,
             discards: [],
@@ -54,39 +58,42 @@ describe('logic - join game', () => {
 
 
     it ('should add the player into the especified game', async ()=> {
-        await joinGame(userId, gameId)
+        await joinGame(token, gameId)
 
         const game = await Game.findById(gameId)
-        expect (game.id).to.equal(gameId)
-        expect (game.players.length).to.equal(2)
-        expect (game.players[1]).to.exist
-        expect (game.players[1].user.toString()).to.equal(userId)
+        expect (game.id).toBe(gameId)
+        expect (game.players.length).toBe(2)
+        expect (game.players[1]).toBeDefined()
+        expect (game.players[1].user.toString()).toBe(userId)
     })
 
     it('should fail when trying to ad same player two times', async()=>{
         
         try {
-            await joinGame(player1, gameId)
+            
+            await joinGame(token1, gameId)
+
             throw new Error ('shouldnt reach this point')
         } catch (error) {
-            expect (error).to.exist
-            expect(error).to.be.an.instanceOf(ConflictError)
-            expect (error.message).to.equal("can't join same user 2 times")
+            expect (error).toBeDefined()
+            expect(error).toBeInstanceOf(Error)
+            expect (error.message).toBe("can't join same user 2 times")
         }
 
     })
 
     it('should fail on wrong player id', async () => {
         const player = '012345678901234567890123'
+        const newtoken = jwt.sign ({sub: player}, TEST_SECRET)
 
         try {
-            await joinGame(player, gameId)
+            await joinGame(newtoken, gameId)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`user not found`)
         }
     })
 
@@ -94,41 +101,39 @@ describe('logic - join game', () => {
         const game = '012345678901234567890123'
 
         try {
-            await joinGame(player1, game)
+            await joinGame(token, game)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`game not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`game not found`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => joinGame(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => joinGame(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => joinGame([])).to.throw(TypeError, ' is not a string')
-        expect(() => joinGame({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => joinGame(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => joinGame(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => joinGame('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => joinGame(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => joinGame(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => joinGame([])).toThrow(TypeError, ' is not a string')
+        expect(() => joinGame({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => joinGame(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => joinGame(null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => joinGame('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => joinGame(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => joinGame('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => joinGame(' \t\r')).toThrow(ContentError, 'id is empty or blank')
 
-        expect(() => joinGame(gameId,1)).to.throw(TypeError, '1 is not a string')
-        expect(() => joinGame(gameId,true)).to.throw(TypeError, 'true is not a string')
-        expect(() => joinGame(gameId,[])).to.throw(TypeError, ' is not a string')
-        expect(() => joinGame(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => joinGame(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => joinGame(gameId,null)).to.throw(TypeError, 'null is not a string')
-        expect(() => joinGame(gameId,'wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => joinGame(gameId,1)).toThrow(TypeError, '1 is not a string')
+        expect(() => joinGame(gameId,true)).toThrow(TypeError, 'true is not a string')
+        expect(() => joinGame(gameId,[])).toThrow(TypeError, ' is not a string')
+        expect(() => joinGame(gameId,{})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => joinGame(gameId,undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => joinGame(gameId,null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => joinGame(gameId,'')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => joinGame(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => joinGame(gameId,'')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => joinGame(gameId,' \t\r')).toThrow(ContentError, 'id is empty or blank')
 
     })
 
-    after (()=> Promise.all([User.deleteMany(), Game.deleteMany()])
+    afterAll (()=> Promise.all([User.deleteMany(), Game.deleteMany()])
         .then (database.disconnect))
 })

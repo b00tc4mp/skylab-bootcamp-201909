@@ -1,23 +1,26 @@
-const { validate, errors: { NotFoundError, ContentError } } = require('baam-util')
-const { ObjectId, models: { User, Card} } = require('baam-data')
+const { validate, errors: { NotFoundError, CredentialsError } } = require('baam-util')
+const API_URL = process.env.REACT_APP_API_URL
+const call = require ('../utils/call')
 
-module.exports = function (id) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+module.exports = function (token) {
+    validate.string(token)
+    validate.string.notVoid('id', token)
 
     return (async () => {
-        const user = await User.findById(id).lean()
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-        const cards = await Card.find({'_id' : {$in : user.cards}}).populate('cards', 'name description image price col effect effectValue target').lean()
-
-        cards.forEach(card => {
-            card.id = card._id.toString()
-            delete card._id
+        const res = await call (`${API_URL}/cards`, {
+            method:'GET',
+            headers: {Authorization: `Bearer ${token}`}
         })
+        if (res.status === 200) {
+            const cards = JSON.parse(res.body)
 
-        return cards
+            return cards
+        }
 
+        if (res.status === 404) throw new NotFoundError (JSON.parse(res.body).message)
+
+        if (res.status === 401) throw new CredentialsError (JSON.parse(res.body).message)
+
+        throw new Error (JSON.parse(res.body).message)
     })()
 }
