@@ -10,7 +10,7 @@ const { validate, errors: {NotFoundError} } = require('wishare-util')
  */
 
  module.exports = function (query) {
-    debugger
+
     validate.string(query)
     validate.string.notVoid('query', query)
 

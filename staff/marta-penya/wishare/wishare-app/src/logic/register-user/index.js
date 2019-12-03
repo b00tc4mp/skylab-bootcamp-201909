@@ -35,7 +35,7 @@ module.exports = function (name, surname, email, year, month, day, password, pas
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 
         throw new Error(JSON.parse(res.body).message)
-    })
+    })()
 
 
 }

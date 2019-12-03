@@ -15,7 +15,7 @@ export default withRouter (function ({ history }) {
         <section className="welcome__intro">
             <p className="welcome__text">Create a WishList</p>
             <button className="welcome__btn"> 
-            <img className="welcome__img" src={process.env.PUBLIC_URL + '/gift.png'} alt="gift" onClick={event => { event.preventDefault(); handleGoRegister() }}/>
+            <img className="welcome__img" src={process.env.PUBLIC_URL + '/img/welcome.png'} alt="gift" onClick={event => { event.preventDefault(); handleGoRegister() }}/>
             </button>
         </section>
     </section>

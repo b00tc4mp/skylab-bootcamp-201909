@@ -7,7 +7,7 @@ module.exports = function (url, { method = 'GET', headers, body} = {}) {
             xhr.open(method, url)
 
             xhr.onreadystatechange = function () {
-                if (this.readyState == 4) {
+                if (this.readyState === 4) {
                     if (this.status === 0) {
                         reject(new Error(`fail to call ${url}`))
                     } else {

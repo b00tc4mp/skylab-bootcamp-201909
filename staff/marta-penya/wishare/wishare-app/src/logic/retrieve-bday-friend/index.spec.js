@@ -1,47 +1,38 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL } } = process
-const { expect } = require('chai')
+const { env: { REACT_APP_TEST_DB_URL: TEST_DB_URL, REACT_APP_TEST_SECRET: TEST_SECRET } } = process
 const { random } = Math
 const retrieveFriendBday = require('.')
 const { errors: { NotFoundError, ContentError, ConflictError } } = require('wishare-util')
-const { database, ObjectId, models: { User } } = require('wishare-data')
+const { database, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+require('../../helpers/jest-matchers')
 
 describe.only('logic - retrieve friend bday', () => {
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2
+    let id, token, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2, password1, email2, birthday2, friendId, friend2Id
 
     beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        username = `username-${random()}`
         password = `password-${random()}`
         year = '1999'
         month = '1'
         day = '25'
-        passwordconfirm = password
         birthday = new Date(year, month - 1, day, 2, 0, 0, 0)
 
         name1 = `name-${random()}`
         surname1 = `surname-${random()}`
         email1 = `email-${random()}@mail.com`
-        username1 = `username-${random()}`
         password1 = `password-${random()}`
         year1 = '1999'
         month1 = '1'
         day1 = '25'
-        passwordconfirm1 = password
         birthday1 = new Date(year1, month1 - 1, day1, 2, 0, 0, 0)
 
         email2 = `email-${random()}@mail.com`
         birthday2 = new Date(1990, 11, 5, 2, 0, 0, 0)
-
-        title = `title-${random()}`
-        link = `link-${random()}`
-        price = `price-${random()}@mail.com`
-        description = `description-${random()}`
 
         await User.deleteMany()
 
@@ -50,6 +41,8 @@ describe.only('logic - retrieve friend bday', () => {
         const friend2 = await User.create({ name: name1, surname: surname1, email: email2, birthday: birthday2, password: await bcrypt.hash(password, 10) })
 
         id = user.id
+
+        token = jwt.sign({ sub:id }, TEST_SECRET)
 
         friendId = friend.id
         friend2Id = friend2.id
@@ -68,45 +61,44 @@ describe.only('logic - retrieve friend bday', () => {
     })
 
     it('should succeed on correct friend birthday', async () => {
-        debugger
-        const response = await retrieveFriendBday(id)
 
-        expect(response).to.exist
-        expect(response.length).to.be.greaterThan(0)
-        expect(response[0]).to.contain(friend2Id)
-        expect(response[0]).to.not.contain(birthdayfriend2)
+        const response = await retrieveFriendBday(token)
+
+        expect(response).toBeDefined()
+        expect(response.length).toBeGreaterThan(0)
+        expect(response[0]).toContain(friend2Id)
 
     })
 
     it('should fail on wrong user id', async () => {
         const id = '012345678901234567890123'
 
+        const token = jwt.sign({ sub: id }, TEST_SECRET)
+
         try {
-            await retrieveFriendBday(id)
+            await retrieveFriendBday(token)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`user with id ${id} not found`)
         }
     })
     
    
     it('should fail on incorrect id', () => {
-        const wrongId = 'wrong id'
-        expect(() => retrieveFriendBday(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => retrieveFriendBday(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => retrieveFriendBday([])).to.throw(TypeError, ' is not a string')
-        expect(() => retrieveFriendBday({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => retrieveFriendBday(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => retrieveFriendBday(null)).to.throw(TypeError, 'null is not a string')
+        expect(() => retrieveFriendBday(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveFriendBday(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveFriendBday([])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveFriendBday({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveFriendBday(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveFriendBday(null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => retrieveFriendBday('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveFriendBday(' \t\r')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveFriendBday(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
-
+        expect(() => retrieveFriendBday('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => retrieveFriendBday(' \t\r')).toThrow(ContentError, 'id is empty or blank')
+        
     })
 
-    after(() => User.deleteMany().then(database.disconnect))
+    afterAll(() => User.deleteMany().then(database.disconnect))
 })

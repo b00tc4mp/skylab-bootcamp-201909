@@ -1,4 +1,4 @@
-const { env: { REACT_APP_TEST_DB_URL: TEST_DB_URL } } = process
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
 const registerUser = require('.')
 const { random } = Math
 const { errors: { ContentError } } = require('wishare-util')
@@ -26,7 +26,7 @@ describe('logic - register user', () => {
     })
 
     it('should succeed on correct credentials', async () => {
-        debugger
+        
         const response = await registerUser(name, surname, email, year, month, day, password, passwordconfirm)
 
         expect(response).toBeUndefined()
@@ -39,9 +39,9 @@ describe('logic - register user', () => {
         expect(user.surname).toBe(surname)
         expect(user.email).toBe(email)
         expect(user.birthday.toString()).toBe(birthday.toString())
-        expect(user.birthday).to.instanceOf(Date)
+        expect(user.birthday).toBeInstanceOf(Date)
         const match = await bcrypt.compare(password, user.password)
-        expect(match).to.be.true
+        expect(match).toBe(true)
     })
 
     describe('when user already exists', () => {
@@ -63,7 +63,7 @@ describe('logic - register user', () => {
                 throw Error('should not reach this point')
             } catch (error) {
                 expect(error).toBeDefined()
-                debugger
+                
                 expect(error.message).toBeDefined()
                 expect(typeof error.message).toBe('string')
                 expect(error.message.length).toBeGreaterThan(0)
