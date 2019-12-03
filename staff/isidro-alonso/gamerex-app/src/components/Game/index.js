@@ -42,10 +42,12 @@ export default withRouter(function ({ history }) {
         })()
     }, [sessionStorage.token])
 
+    const img = 'img/nodata.png'
+
     return <section className="game-detail">
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
-            <img className="game-detail__img" src="img/dummy-game.png" alt="game" />
+            <img className="game-detail__img" src={img} alt="game" />
             <p className="game-detail__platform">{platform}</p>
             {showFav()}
             {showSell()}

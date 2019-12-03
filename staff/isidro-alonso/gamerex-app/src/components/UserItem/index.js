@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { retrieveMyUser } from '../../logic'
 
-export default withRouter(function ({ user: {_id: userId, username, img} }) {
+export default withRouter(function ({ user: {_id: userId, username} }) {
     const [id, setId] = useState()
 
     useEffect(() => {
@@ -17,6 +17,8 @@ export default withRouter(function ({ user: {_id: userId, username, img} }) {
             }
         })()
     }, [sessionStorage.token])
+
+    const img = 'img/nodata.png'
 
     const userLink = (userId !== id)? `/userinfo/${userId}`:'/myuser';
 

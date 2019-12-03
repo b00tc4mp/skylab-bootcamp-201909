@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function ({ game: {_id: id, title, platform, sell, exchange, favourite, img} }) {
+export default function ({ game: {_id: id, title, platform, sell, exchange, favourite} }) {
 
     function showFav() {
         if(favourite) return <img src="img/favourite.png" alt="favourite" />
@@ -16,6 +16,8 @@ export default function ({ game: {_id: id, title, platform, sell, exchange, favo
     }
 
     const userGameLink = `/usergame/${id}`
+
+    const img = 'img/nodata.png'
 
     return <Link to={userGameLink} className="game-item__link">
         <section className="game-item">
