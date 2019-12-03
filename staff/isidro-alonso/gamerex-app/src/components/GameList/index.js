@@ -17,7 +17,15 @@ export default withRouter(function ({ history }) {
         (async () => {
             if (token) {
                 const gameList = await listGames(token)
-                setGames(gameList)
+
+                let filteredList = []
+                for (let i = 0; i < gameList.length; i++) {
+                    if (userId === gameList[i].user) {
+                        filteredList.push(gameList[i])
+                    }
+                }
+
+                setGames(filteredList)
             }
         })()
     }, [sessionStorage.token])

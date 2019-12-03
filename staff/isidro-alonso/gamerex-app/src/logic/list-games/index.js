@@ -6,12 +6,21 @@ module.exports = function (token) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
+    // validate.string(userId)
+    // validate.string.notVoid('user id', userId)
+
     return (async () => {
         const res = await call(`${API_URL}/games/getgames`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
             }
+            // const res = await call(`${API_URL}/users/${userId}`, {
+            //     method: 'GET',
+            //     headers: {
+            //         'Authorization': `Bearer ${token}`
+            //     }
+
         })
 
         if (res.status === 200) {
