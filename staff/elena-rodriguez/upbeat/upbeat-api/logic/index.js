@@ -10,7 +10,11 @@ module.exports = {
     searchUsers : require('./search-users'),
     saveProfileImage : require('./save-image'),
     loadProfileImage : require('./load-profile-image'),
-    loadProfileImageUrl : require('./load-profile-url')
+    loadProfileImageUrl : require('./load-profile-url'),
+    createChat: require('./create-chat'),
+    retrieveChat: require('./retrieve-chat'),
+    retrieveChats: require('./retrieve-chats'),
+    sendMessage: require('./send-message')
     //createTask: require('./create-task'),
     //listTasks: require('./list-tasks'),
     //modifyTask: require('./modify-task'),
