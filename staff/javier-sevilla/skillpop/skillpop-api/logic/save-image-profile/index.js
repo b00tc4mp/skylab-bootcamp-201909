@@ -24,11 +24,11 @@ module.exports = function (id, file, filename) {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
         
-        const dir = `./data/users/${id}/profile`
+        const dir = `./data/users/${id}`
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, {recursive: true}, err => {})
         }
-        let saveTo = path.join(__dirname, `../../data/users/${id}/profile/${filename}.png`)
+        let saveTo = path.join(__dirname, `../../data/users/${id}/${filename}.png`)
         return file.pipe(fs.createWriteStream(saveTo))            
     })()
 }

@@ -26,9 +26,9 @@ body {
   font-size: 2.5rem;
 }
 .view__logo {
-  width: 23%;
-  height: 23%;
-  margin-left: 10%;
+  width: 21%;
+  height: 21%;
+  margin-left: 14%;
   margin-top: 10%;
 }
 
@@ -229,6 +229,17 @@ nav {
   margin: 4%;
 }
 
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.messages__title {
+  margin: 5%;
+  font-size: 3rem;
+}
+
 .profile {
   display: flex;
   flex-direction: column;
@@ -356,6 +367,59 @@ nav {
 
 .fa-heart {
   font-size: 1.5rem;
+}
+
+.chats {
+  list-style: none;
+  margin: 8px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 95%;
+  max-width: 700px;
+}
+.chats__item {
+  display: flex;
+  justify-content: space-between;
+  border: 0.1rem solid #8d8d8d;
+  border-radius: 0.5rem;
+  margin-bottom: 7px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.itemchat {
+  display: flex;
+  text-decoration: none;
+  color: black;
+  width: 90%;
+  margin: 2%;
+}
+.itemchat__image {
+  width: 30%;
+  border-radius: 0.4rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.itemchat__title {
+  width: 45%;
+  margin-left: 5%;
+  margin-top: 10%;
+}
+.itemchat__user {
+  width: 10%;
+  margin-right: 1%;
+  margin-top: 30%;
+}
+.itemchat__form {
+  display: flex;
+  flex-direction: column;
+}
+.itemchat__delete {
+  font-size: 1.2rem;
+  margin-right: 4%;
+  margin-top: 2%;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 4px;
 }
 
 /*# sourceMappingURL=index.css.map */

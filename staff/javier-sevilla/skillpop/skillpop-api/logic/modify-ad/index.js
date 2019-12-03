@@ -33,7 +33,7 @@ module.exports = function (idUser, idAd, title, description, price) {
 
         if (!ad) throw new NotFoundError(`ad with id ${idAd} not found`)
 
-        if (ad.user.toString() !== idUser.toString()) throw new ConflictError(`user with id ${idUser} does not correspond to task with id ${idAd}`)
+        if (ad.user.toString() !== idUser.toString()) throw new ConflictError(`user with id ${idUser} does not correspond to ad with id ${idAd}`)
 
         title && (ad.title = title)
         description && (ad.description = description)

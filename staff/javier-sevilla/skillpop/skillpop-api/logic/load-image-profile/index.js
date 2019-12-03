@@ -24,7 +24,7 @@ module.exports = function (id) {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        let goTo = path.join(__dirname, `../../data/users/${id}/profile/profile.png`)
+        let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
         return fs.createReadStream(goTo)         
     })()
 }

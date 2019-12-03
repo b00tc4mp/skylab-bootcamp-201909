@@ -12,23 +12,16 @@ const path = require('path')
 * @returns {Promise} - data of image  
 */
 
-module.exports = function (id, adId) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
-
+module.exports = function (adId) {
     validate.string(adId)
     validate.string.notVoid('wishId', adId)
     if (!ObjectId.isValid(adId)) throw new ContentError(`${adId} is not a valid id`)
     
-    return (async () => {
-        const user = await User.findById(id)
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
-        
+    return (async () => {      
         const ad = Ad.findById(adId)        
         if (!ad) throw new NotFoundError(`ad with id ${adId} not found`)
 
-        let goTo = path.join(__dirname, `../../data/users/${id}/ads/${adId}/adimage.png`)
+        let goTo = path.join(__dirname, `../../data/ads/${adId}/adimage.png`)
         return fs.createReadStream(goTo)
 
     })()

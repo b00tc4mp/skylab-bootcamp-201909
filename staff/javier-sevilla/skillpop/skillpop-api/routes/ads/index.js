@@ -156,11 +156,11 @@ router.post('/upload/:idAd', tokenVerifier, (req, res) => {
 
 })
 
-router.get('/load/:idAd', tokenVerifier,async (req, res) => {
+router.get('/load/:idAd' ,async (req, res) => {
 
-    const { id, params: { idAd } } = req
+    const { params: { idAd } } = req
 
-    const stream = await loadImageAd(id, idAd) 
+    const stream = await loadImageAd(idAd) 
 
     res.setHeader('Content-Type', 'image/jpeg')
 

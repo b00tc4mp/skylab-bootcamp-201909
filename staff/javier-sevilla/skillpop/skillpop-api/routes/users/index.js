@@ -213,9 +213,9 @@ router.post('/upload/', tokenVerifier, (req, res) => {
 
 })
 
-router.get('/load/image', tokenVerifier,async (req, res) => {
+router.get('/load/:id',async (req, res) => {
 
-    const { id } = req
+    const { params: { id } } = req
 
     const stream = await loadImageProfile(id) 
 

@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { validate, errors: { NotFoundError, ContentError }  } = require('skillpop-util')
+const { validate, errors: { NotFoundError, ContentError, ConflictError }  } = require('skillpop-util')
 const { ObjectId, models: { User, Ad } } = require('skillpop-data')
 const fs = require('fs')
 const path = require('path')
@@ -29,14 +29,16 @@ module.exports = function (id, adId, file, filename) {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const ad = Ad.findById(adId)        
+        const ad = await Ad.findById(adId)        
         if (!ad) throw new NotFoundError(`ad with id ${adId} not found`)
+
+        if (ad.user.toString() !== id.toString()) throw new ConflictError(`user with id ${id} does not correspond to ad with id ${idAd}`)
         
-        const dir = `./data/users/${id}/ads/${adId}`
+        const dir = `./data/ads/${adId}`
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, {recursive: true}, err => {})
         }
-        let saveTo = path.join(__dirname, `../../data/users/${id}/ads/${adId}/${filename}.png`)
+        let saveTo = path.join(__dirname, `../../data/ads/${adId}/${filename}.png`)
         return file.pipe(fs.createWriteStream(saveTo))            
     })()
 }

@@ -161,7 +161,7 @@ describe('logic - modify ad', () => {
                 expect(error).to.be.an.instanceOf(ConflictError)
 
                 const { message } = error
-                expect(message).to.equal(`user with id ${id2} does not correspond to task with id ${idAd}`)
+                expect(message).to.equal(`user with id ${id2} does not correspond to ad with id ${idAd}`)
             }
         })
         it('should fail not valid id', async () => {
