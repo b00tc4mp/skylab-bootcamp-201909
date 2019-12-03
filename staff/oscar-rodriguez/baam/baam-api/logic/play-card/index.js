@@ -49,7 +49,6 @@ module.exports = function (gameId, userId, cardId) {
                 break
             case 'BLOCK':
                 if (game.players[currentPlayer].tempZone.duration >= 0) game.players[currentPlayer].discards.push(game.players[currentPlayer].tempZone.card)
-
                 game.players[currentPlayer].tempZone.card = cardId
                 game.players[currentPlayer].tempZone.duration = effectValue
                 game.players[enemy].attack = 0
@@ -65,7 +64,7 @@ module.exports = function (gameId, userId, cardId) {
                     game.status = 'END'
                     game.winner = currentPlayer
                     await game.save()
-                    return
+                    return game.currentPlayer
                 }
                 break
             default: throw new Error(`WTF?! can't recognize the card effect`)
@@ -95,6 +94,6 @@ module.exports = function (gameId, userId, cardId) {
             game.currentPlayer = (game.currentPlayer + 1) % 2
 
         await game.save()
-        return game.players[currentPlayer].currentPlayer
+        return game.currentPlayer
     })()
 }
