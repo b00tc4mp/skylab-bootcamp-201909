@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './index.sass'
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import getRoute from '../../routes'
 import Header from '../Header'
 

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
 import { listGames } from '../../logic'
-import './index.sass'
 import GameItem from '../GameItem'
 
 export default withRouter(function ({ history }) {

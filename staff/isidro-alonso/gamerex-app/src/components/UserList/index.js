@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { listUsers } from '../../logic'
-import './index.sass'
 import UserItem from '../UserItem'
 
 export default function () {

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {registerUser} from '../../logic'
 import {authenticateUser} from '../../logic'
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 export default withRouter(function({ history }) {
     const [username, setUsername] = useState('')

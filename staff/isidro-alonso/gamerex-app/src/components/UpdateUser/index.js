@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { modifyUser } from '../../logic'
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import React, { useState } from 'react'
+import { modifyUser, saveImageUser } from '../../logic'
+import { withRouter } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
 
@@ -16,6 +16,19 @@ export default withRouter(function ({ history }) {
             const { token } = sessionStorage
 
             await modifyUser(token, id, username, location, password)
+
+            history.push('/myuser')
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function handleSaveImageUser() {
+        try {
+            const { token } = sessionStorage
+
+            await saveImageUser(token)
 
             history.push('/myuser')
 
@@ -40,8 +53,17 @@ export default withRouter(function ({ history }) {
             <input className="updateprofile__field" type="text" name="username" placeholder="username" onChange={event => setUsername(event.target.value)} />
             <input className="updateprofile__field" type="text" name="location" placeholder="location" onChange={event => setLocation(event.target.value)} />
             <input className="updateprofile__field" type="password" name="password" placeholder="password" onChange={event => setPassword(event.target.value)} />
-            <p className="updateprofile__subtitle">Update profile image</p><input type="file" name="filetoupload" className="updateprofile__addimg" />
-            <button className="updateprofile__submit" disabled={isDisabled}>Update</button>
+            <button className="updateprofile__submit" disabled={isDisabled}>Update info</button>
+        </form>
+        <form onSubmit={e => {
+            e.preventDefault()
+
+            handleSaveImageUser()
+
+        }}>
+            <p className="updateprofile__subtitle">Update profile image</p>
+            <input type="file" name="filetoupload" className="updateprofile__addimg" />
+            <button className="updateprofile__submit">Update image</button>
         </form>
     </section>
 })

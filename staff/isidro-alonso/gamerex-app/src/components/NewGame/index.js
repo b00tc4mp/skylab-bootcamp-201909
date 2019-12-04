@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { createGame, listGames, retrieveUser } from '../../logic'
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { createGame, listGames } from '../../logic'
+import { withRouter } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
 
