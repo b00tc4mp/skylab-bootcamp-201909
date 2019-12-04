@@ -35,6 +35,13 @@
         </form>
         <p class="login__register">Don't have an account? Create one <b><a href="#" class="link">here</a></b></p>
     </section>
+    <section class="footer">
+        <div class="footer__div">
+            <p class="footer__title">Skillpop S.L.</p>
+            <img class="footer__logo" src="./images/sklogo.png" alt="">
+        </div>
+        <p class="footer__text">Copyright © 2019 | Todos los derechos reservados</p>
+    </section>
 
     <section class='register'>
         <h1 class="register__title">Register</h1>
@@ -293,7 +300,7 @@
 
     <section class='messages'>
         <h1 class="messages__title">Messages</h1>
-        <h2>My Chats</h2>
+        <h2 class="messages__subtitle">My Chats</h2>
         <ul class="chats">
             <li class="chats__item">
                 <a href="#" class="itemchat">
@@ -311,7 +318,7 @@
                 <a href="#" class="itemchat">
                     <img class="itemchat__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
 
-                    <h2 class="itemchat__title">Titlds das sw </h2>
+                    <h2 class="itemchat__title">Profesor de mates 10 años de exp </h2>
                     <h4 class="itemchat__user">NamsdUr</h4>
                 </a>
                 <form class="itemchat__form">
@@ -324,7 +331,7 @@
                     <img class="itemchat__image" src="https://dummyimage.com/120x130/949494/1f1f1f">
 
                     <h2 class="itemchat__title">Title ads das sw </h2>
-                    <h4 class="itemchat__user">NamesadasdUr</h4>
+                    <h4 class="itemchat__user">Namesadas</h4>
                 </a>
                 <form class="itemchat__form">
                     <input type="hidden" name="id">
@@ -481,19 +488,22 @@
 
     <section class='detailAd'>
         <img class="detailAd__image" src="https://dummyimage.com/260x190/949494/1f1f1f">
-        <span class="detailAd__price">1000€</span>
-        <span class="detailAd__fav">
-            <form class="detailAd_fav-form" method="post" action="">
-                <input type="hidden" name="id">
-                <button class="detailAd__fav-submit" type="submit"><i class="far fa-heart"></i></button>
-            </form>
-        </span>
-        <h2 class="detailAd__title">sad as dasd asd asd sad asasdsadasd sad asd asd as d </h2>
+        <div class="detailAd__pf">
+            <span class="detailAd__price">10€</span>
+            <span class="detailAd__fav">
+                <form class="detailAd_fav-form" method="post" action="">
+                    <input type="hidden" name="id">
+                    <button class="detailAd__fav-submit" type="submit"><i class="far fa-heart"></i></button>
+                </form>
+            </span>
+        </div>
+        <h2 class="detailAd__title">sad as dasd asd asd sad asasdsadasd sad </h2>
         <p class="detailAd__descr">sa das das d asd asd asdsa dasd a sds ssddsdsd sd sd sdsdasdsadsa dsad asdasdsadsa
             dsa sd sd sadasd sa sdadasd ads sdasd asdasd asdasd asdasd asdsad sdasda sdsa sad sad
-            sadasdasd asd asd asd asd asd sadasdsadsad sd asdasdas dasd asd asd asdasdasd asd asdasda sda sda sd
-            asdasdasdasdasd sd sd a</p>
+            sadasdasd asd asd asd asd asd sadasdsadsad sd asdasdas dasd asd asd asdasdasd a</p>
 
+        <p class="detailAd__user">
+            </pclass>Username</p>
         <form class="chat__form">
             <input type="hidden" name="id">
             <button class="chat__button">Chat</button>
@@ -501,8 +511,43 @@
 
     </section>
 
+    <section class='newAd'>
+        <h2 class="newAd__title">New AD</h2>
+        <form class="newAd__form">
+            <input type="text" class="newAd__titlead" name="title" placeholder="New Title">
+            <input type="number" class="newAd__price" name="price" placeholder="New Price">
+            <textarea name="description" class="newAd__field" cols="28" rows="15"
+                placeholder="New Description"></textarea>
+            <button class="newAd__button">Submit</button>
+        </form>
+    </section>
+
+    <section class='modifyAd'>
+        <h2 class="modifyAd__title">Modify AD</h2>
+        <form class="modifyAd__form">
+            <input type="text" class="modifyAd__titlead" name="title" placeholder="Title">
+            <input type="number" class="modifyAd__price" name="price" placeholder="Price">
+            <textarea name="description" class="modifyAd__field" cols="28" rows="15"
+                placeholder="Description"></textarea>
+            <button class="modifyAd__button">Submit</button>
+        </form>
+        <h2 class="modifyAd__title2">Add Image</h2>
+        <form class="modifyAd__formImage" enctype="multipart/form-data">
+            <input class="modifyAd__upImage" name="uploadedfile" type="file" value="Select image" />
+            <input class="modifyAd__subImage" type="submit" value="Submit image" />
+        </form>
+    </section>
+
+    <section class="footer">
+        <div class="footer__div">
+            <p class="footer__title">Skillpop S.L.</p>
+            <img class="footer__logo" src="./images/sklogo.png" alt="">
+        </div>
+        <p class="footer__text">Copyright © 2019 | Todos los derechos reservados</p>
+    </section>
 
 
 </body>
+
 
 </html>
