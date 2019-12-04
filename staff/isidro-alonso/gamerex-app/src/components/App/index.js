@@ -10,6 +10,8 @@ export default withRouter(function ({ history }) {
     const CurrentRoute = getRoute(pathname)
     return <>
         <Header />
-        <CurrentRoute />
+        <main>
+            <CurrentRoute />
+        </main>
     </>
 })

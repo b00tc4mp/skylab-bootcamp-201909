@@ -10,7 +10,7 @@ module.exports = function (token) {
         const res = await call(`${API_URL}/upload`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }//, //'Authorization': `Bearer ${token}`
-            //body: JSON.stringify({ username, location, email, password })
+            //body: JSON.stringify({ username, location }) 
         })
 
         if (res.status === 201) return
