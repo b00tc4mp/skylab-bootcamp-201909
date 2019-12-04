@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import './index.sass'
+import '../../../src/index.sass'
 
 export default function() {
 
@@ -12,8 +12,8 @@ export default function() {
         <h2 className="landing__subtitle">ski</h2>
         </section>
 
-        <section class="landing">
-        <h3 class="landing__options">Please, proceed to <Link to="/login">LOGIN</Link> or <Link to="/register" >REGISTER</Link>.</h3>
+        <section className="landing">
+        <h3 className="landing__options">Please, proceed to <Link to="/login">LOGIN</Link> or <Link to="/register" >REGISTER</Link>.</h3>
         </section>
 
     </section>

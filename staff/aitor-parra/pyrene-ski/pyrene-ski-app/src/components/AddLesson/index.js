@@ -1,5 +1,5 @@
 import React from 'react'
-import './index.sass'
+import '../../../src/index.sass'
 import Feedback from '../Feedback'
 
 
@@ -27,7 +27,7 @@ return <section className="add-lesson">
         </select> 
         <button className="add-lesson__button">Submit</button>
     </form>
-    <h2 className="add-lesson__goback"><a href="" onClick={event => {
+    <h2 className="add-lesson__goback"><a href="/" onClick={event => {
             event.preventDefault()
 
             onBack()

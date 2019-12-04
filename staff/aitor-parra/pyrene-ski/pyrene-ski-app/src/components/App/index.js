@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import './index.sass'
+import '../../../src/index.sass'
 import Landing from '../Landing'
 import Register from '../Register'
 import Login from '../Login'
-import BoardAdmin from '../Board-admin'
-import BoardClient from '../Board-client'
+import BoardAdmin from '../BoardAdmin'
+import BoardClient from '../BoardClient'
+import CreateTeam from '../CreateTeam'
+import TeamList from '../TeamList'
+import AddLesson from '../AddLesson'
+import LessonList from '../LessonList'
 import Feedback from '../Feedback'
+import BookLesson from '../BookLesson'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser } from '../logic'
+import { authenticateUser, registerUser, retrieveUser, retrieveTeams } from '../../logic'
 
 export default withRouter(function ({ history }) {
     const [name, setName] = useState()
+    const [user, setUser] = useState()
     //const [teams, setTeams] = useState([])
 
     useEffect(() => {
@@ -23,18 +29,14 @@ export default withRouter(function ({ history }) {
 
                 setName(name)
 
-            //  COMO REDIRECCIONAR DE BOARDCLIENT O BOARDADMIN EN FUNCION DE SI ROLE "admin" o ROLE "client"
+            //  COMO REDIRECCIONAR DE BOARDCLIENT O BOARDADMIN EN FUNCION DE SI ROLE 'admin' o ROLE 'client'
 
-                await retrieveTeams(token)
+                //await retrieveTeams(token)
             }
 
         })()
 
     }, [sessionStorage.token])
-
-    function handleGoToRegister() { history.push('/register') }
-
-    function handleGoToLogin() { history.push('/login') }
 
     async function handleRegister(name, surname, email, username, password) {
 
@@ -54,18 +56,27 @@ export default withRouter(function ({ history }) {
 
             sessionStorage.token = token
 
-            //  COMO REDIRECCIONAR DE BOARDCLIENT O BOARDADMIN EN FUNCION DE SI ROLE "admin" o ROLE "client"
+            //  COMO REDIRECCIONAR DE BOARDCLIENT O BOARDADMIN EN FUNCION DE SI ROLE 'admin' o ROLE 'client'
 
-            history.push('/board')
+            const user = await retrieveUser(token)
+            
+            setUser(user)
+
+
+            user && (user.role === 'admin') && history.push('/board-admin')
+
+            user && (user.role === 'client') && history.push('/board-client')
+
+           //history.push('/board')
+     
         } catch (error) {
             console.error(error)
         }
     }
 
-    function handleGoToTeamList() { history.push('/teamlist')}
-
     function handleGoToLessonList() { history.push('/lessonlist')}
-
+    
+    function handleGoToTeamList() { history.push('/teamlist')}
 
 
     function handleGoBack() { history.push('/') }
@@ -76,23 +87,44 @@ export default withRouter(function ({ history }) {
         handleGoBack()
     }
 
+    function handleBookLesson() { history.push('/book-lesson')}
+    
+
+
+
+
 
     const { token } = sessionStorage
 
     return <>
-        <Route exact path="/" render={() => token ? <Redirect to="/landing" /> : <Landing />} />
-        <Route path="/register" render={() => token ? <Redirect to="/board-client" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
-        <Route path="/login" render={() => token /* I ES CLIENT */ ? <Redirect to="/board-client" /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
-        <Route path="/board-client" render={() => token /* I ES CLIENT */ ? <BoardClient user={name} lessons={lessons} onBuyLesson={handleBuyLesson} onLogout={handleLogout} /> : <Redirect to="/" />} />
-        <Route path="/login" render={() => token /* I ES ADMIN */ ? <Redirect to="/board-admin" /> : <Login onLogin={handleLogin} onBack={handleGoBack} /> } />       
-        <Route path="/board-admin" render={() => token /* I ES ADMIN */ ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} /> : <Redirect to="/" /> } />
+        <Route exact path='/' render={() => token ? <Redirect to='/landing' /> : <Landing />} />
+        <Route path='/register' render={() => token ? <Redirect to='/board-client' /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
+        <Route path='/login' render={() => token ? <Redirect to='/login' /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
+        <Route path='/board-admin' render={() => token && user.role === 'admin'/* I ES ADMIN */ ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} /> : <Redirect to='/' /> } />
+        <Route path='/lessonlist'render={() => token && user.role === 'admin' ? <LessonList user={name} /> : <Redirect to='/' />} />
+        <Route path='/teamlist'render={() => token && user.role === 'admin' ? <TeamList user={name} /> : <Redirect to='/' />} />
+        <Route path='/board-client' render={() => token && user.role === 'client'/* I ES CLIENT */ ? <BoardClient user={name} onBookLesson={handleBookLesson} onLogout={handleLogout} /> : <Redirect to='/' />} />
+        <Route path='/book-lesson' render={() => token && user.role === 'client' ? <BookLesson user={name} /> : <Redirect to='/' />  }/>
 
     </>
 })
 
+
+/* 
+<Route exact path='/' render={() => token ? <Redirect to='/landing' /> : <Landing />} />
+<Route path='/register' render={() => token ? <Redirect to='/board-client' /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
+<Route path='/login' render={() => token ? <Redirect to='/board-client' /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
+<Route path='/board-client' render={() => token  ? <BoardClient user={name}  lessons={lessons}  onBuyLesson={handleBuyLesson} onLogout={handleLogout} /> : <Redirect to='/' />} />
+
+<Route path='/board-admin' render={() => token ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} /> : <Redirect to='/' /> } />
+
+ */
+
+
+
 /* return <>
-<Route exact path="/" render={() => token ? <Redirect to="/board" /> : <Landing onRegister={handleGoToRegister} onLogin={handleGoToLogin} />} />
-<Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
-<Route path="/login" render={() => token ? <Redirect to="/board" /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
-<Route path="/board" render={() => token ? <Board user={name} tasks={tasks} onLogout={handleLogout} onChangeTaskStatus={handleChangeTaskStatus} onNewTask={handleNewTask} /> : <Redirect to="/" />} />
+<Route exact path='/' render={() => token ? <Redirect to='/board' /> : <Landing onRegister={handleGoToRegister} onLogin={handleGoToLogin} />} />
+<Route path='/register' render={() => token ? <Redirect to='/board' /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
+<Route path='/login' render={() => token ? <Redirect to='/board' /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
+<Route path='/board' render={() => token ? <Board user={name} tasks={tasks} onLogout={handleLogout} onChangeTaskStatus={handleChangeTaskStatus} onNewTask={handleNewTask} /> : <Redirect to='/' />} />
 </> */

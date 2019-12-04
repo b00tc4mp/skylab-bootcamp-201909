@@ -1,5 +1,5 @@
-import React from 'react'
-import './index.sass'
+/* import React from 'react'
+import '../../../src/index.sass'
 import Lesson from '../Lesson'
 
 export default function({user, lessons, onChangeLessonStatus}){
@@ -11,4 +11,4 @@ export default function({user, lessons, onChangeLessonStatus}){
             {lessons.map(lesson => <li className="lesson-list__item" key={lesson.id}><Lesson lesson={lesson} onChangeStatus={onChangeLessonStatus} /></li>)}
         </ul>
     </section>
-}
+} */

@@ -1,5 +1,5 @@
-import React from 'react'
-import './index.sass'
+/* import React from 'react'
+import '../../../src/index.sass'
 import Team from '../Team'
 
 
@@ -17,3 +17,4 @@ export default function({user, teams, onChangeTeamStatus}) {
 }
 
 
+ */

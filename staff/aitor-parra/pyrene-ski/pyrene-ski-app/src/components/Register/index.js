@@ -1,5 +1,5 @@
 import React from 'react'
-import './index.sass'
+import '../../../src/index.sass'
 import Feedback from '../Feedback'
 
 export default function({ onRegister, onBack, error }) {
@@ -19,7 +19,7 @@ export default function({ onRegister, onBack, error }) {
             <input className="register__field" type="username" name="username" placeholder="username"/>
             <input className="register__field" type="password" name="password" placeholder="password"/>
             <button className="register__button">Submit</button>
-            <a className="register__back" href="" onClick={event => {
+            <a className="register__back" href="/" onClick={event => {
                         event.preventDefault()
 
                         onBack()

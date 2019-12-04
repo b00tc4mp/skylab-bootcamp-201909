@@ -1,5 +1,5 @@
 import React from 'react'
-import './index.sass'
+import '../../../src/index.sass'
 import Feedback from '../Feedback'
 
 
@@ -22,7 +22,7 @@ export default function({ user, onCreateTeam, onBack, error}) {
         <input className="team-create__field" type="text" name="teamActivity" placeholder="activity"/>
         <button className="team-create__button">Submit</button>
     </form>
-    <h2 className="team-create__goback"><a href="" onClick={event => {
+    <h2 className="team-create__goback"><a href="/" onClick={event => {
             event.preventDefault()
 
             onBack()
