@@ -60,5 +60,6 @@ module.exports = function (id, year, month, day, password, description) {
         description && (update.description = description)
 
         await User.updateOne({ _id: id }, { $set: update })
+
     })()
 }

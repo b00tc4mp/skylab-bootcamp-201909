@@ -7,11 +7,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('../../helpers/jest-matchers')
 
-describe.only('logic - retrieve friend bday', () => {
+describe('logic - retrieve friend bday', () => {
     beforeAll(() => database.connect(TEST_DB_URL))
 
-    let id, token, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2, password1, email2, birthday2, friendId, friend2Id
-
+    let id, token, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2, password1, email2, birthday2, friendId, friend2Id, friendName, birthdayfriend
     beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -47,11 +46,13 @@ describe.only('logic - retrieve friend bday', () => {
         friendId = friend.id
         friend2Id = friend2.id
 
+        friendName = friend.name
+
         user.friends.push(friendId.toString())
         user.friends.push(friend2Id.toString())
 
-        const birthdayfriend = friend.birthday
-        const birthdayfriend2 = friend2.birthday
+        birthdayfriend = friend.birthday
+        birthdayfriend2 = friend2.birthday
 
         user.birthdayFriends.push({user: friendId.toString(), birthday: birthdayfriend})
         user.birthdayFriends.push({user: friend2Id.toString(), birthday: birthdayfriend2})
@@ -66,7 +67,9 @@ describe.only('logic - retrieve friend bday', () => {
 
         expect(response).toBeDefined()
         expect(response.length).toBeGreaterThan(0)
-        expect(response[0]).toContain(friend2Id)
+        expect(response[0].id).toBe(friend2Id)
+        expect(response[0].name).toBe(friendName)
+        expect(response[0].birthday).toBeDefined()
 
     })
 

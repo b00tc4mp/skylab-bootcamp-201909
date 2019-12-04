@@ -7,7 +7,7 @@ const { errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { database, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
-describe('logic - modify user', () => {
+describe.only('logic - modify user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let iduser, name, surname, email, year, month, day, birthday, password

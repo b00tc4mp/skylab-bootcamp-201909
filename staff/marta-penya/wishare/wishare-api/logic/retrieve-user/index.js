@@ -26,12 +26,13 @@ module.exports = function (id) {
             fs.mkdirSync(dir)
         } 
         
-        const { name, surname, email, birthday, description, wishes, savedWishes, friends } = user.toObject()
+        const { name, surname, email, description, wishes, savedWishes, friends } = user.toObject()
             wishes.forEach(wish => {
                 wish.id = wish._id.toString()
                 delete wish._id
                 delete wish.blocked
             })
+        let birthday = user.birthday.toLocaleDateString()
 
         return { id, name, surname, email, birthday, description, wishes, savedWishes, friends }
     })()

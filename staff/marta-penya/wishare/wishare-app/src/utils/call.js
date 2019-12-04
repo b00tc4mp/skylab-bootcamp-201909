@@ -1,4 +1,4 @@
-module.exports = function (url, { method = 'GET', headers, body} = {}) {
+module.exports = function (url, { method = 'GET', headers, body, formData} = {}) {
     return new Promise ((resolve, reject) => {
         try{
 
@@ -23,6 +23,8 @@ module.exports = function (url, { method = 'GET', headers, body} = {}) {
                 for (let key in headers)
                     xhr.setRequestHeader(key, headers[key])
             body ? xhr.send(body) : xhr.send()
+
+            formData && xhr.send(formData)            
         }
         catch (error) {
             reject(error)

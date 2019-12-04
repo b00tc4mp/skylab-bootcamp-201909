@@ -1,12 +1,12 @@
 import React from 'react'
 import './index.sass'
 
-export default function(){
+export default function({onMyWishes}){
     return <section className="editwish hidden">
     <section className="editwish__header">
         <h1 className="editwish__title">My Wishes</h1>
         <section className="editwish__buttons">
-            <button className="editwish__btn"> My Wishes </button>
+            <button className="editwish__btn" onClick={event => { event.preventDefault(); onMyWishes() }}> My Wishes </button>
             <button className="editwish__btn"> Add a Wish </button>
         </section>
     </section>
@@ -15,7 +15,7 @@ export default function(){
             <label>Title</label>
             <input className="editwish__field" type="text" name="name" placeholder="name"/>
             <label>Image</label>
-            <input type="file" name="pic" accept="image/*"/>
+            <input type="file" name="pic" accept="image/*" required/>
             <label>Price</label>
             <input className="editwish__field" type="text" name="price" placeholder="price"/>
             <label>Link</label>

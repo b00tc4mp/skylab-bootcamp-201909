@@ -15,7 +15,7 @@ router.post('/', jsonBodyParser, tokenVerifier, (req, res) => {
     const { id, body: { title, link, price, description } } = req
     try {
         createWish(id, title, link, price, description)
-            .then(() => res.status(201).end())
+            .then(wishId => res.status(201).json(wishId))
             .catch(error => {
                 const { message } = error
 
