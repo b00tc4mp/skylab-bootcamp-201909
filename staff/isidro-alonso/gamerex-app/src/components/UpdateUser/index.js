@@ -40,7 +40,7 @@ export default withRouter(function ({ history }) {
             <input className="updateprofile__field" type="text" name="username" placeholder="username" onChange={event => setUsername(event.target.value)} />
             <input className="updateprofile__field" type="text" name="location" placeholder="location" onChange={event => setLocation(event.target.value)} />
             <input className="updateprofile__field" type="password" name="password" placeholder="password" onChange={event => setPassword(event.target.value)} />
-            <button className="updateprofile__addimg">Update profile image</button>
+            <p className="updateprofile__subtitle">Update profile image</p><input type="file" name="filetoupload" className="updateprofile__addimg" />
             <button className="updateprofile__submit" disabled={isDisabled}>Update</button>
         </form>
     </section>

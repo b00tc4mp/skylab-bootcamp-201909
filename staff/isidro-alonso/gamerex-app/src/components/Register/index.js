@@ -30,7 +30,7 @@ export default withRouter(function({ history }) {
                 <input className="register__field" type="text" name="location" placeholder="location" onChange={({target})=>setLocation(target.value)} />
                 <input className="register__field" type="email" name="email" placeholder="e-mail" onChange={({target})=>setEmail(target.value)} />
                 <input className="register__field" type="password" name="password" placeholder="password" onChange={({target})=>setPassword(target.value)} />
-                {/* <button className="register__addimg">Add profile image</button> */}
+                <p className="register__subtitle">Add profile image</p><input type="file" name="filetoupload" className="register__addimg" />
                 <button className="register__submit" disabled={isDisabled}>Register</button>
             </form>
         </section>
