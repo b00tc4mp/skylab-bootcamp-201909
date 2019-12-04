@@ -6,6 +6,10 @@ module.exports = new Schema({
         require: true,
         ref:'User'
     },
+    userComment: {
+        type: ObjectId,
+        require: true
+    },
     body: {
         type: String, 
         require: true

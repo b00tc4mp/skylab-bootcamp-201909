@@ -154,11 +154,11 @@ router.patch('/favs/:adId', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.post('/comment/:id', jsonBodyParser, (req, res) => {
+router.post('/comment/:idUser', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { params: { id }, body: { body } } = req
+        const { id, params: { idUser }, body: { body } } = req
 
-        addComment(id, body)
+        addComment(idUser, id, body)
             .then(id => res.status(201).json({ id }))
             .catch(error => {
                 const { message } = error
