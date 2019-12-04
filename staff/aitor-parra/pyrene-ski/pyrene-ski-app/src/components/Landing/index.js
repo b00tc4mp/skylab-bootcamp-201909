@@ -1,7 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './index.sass'
 
-export default function({ onRegister, onLogin }) {
+export default function() {
 
     return <section>
     
@@ -12,7 +13,7 @@ export default function({ onRegister, onLogin }) {
         </section>
 
         <section class="landing">
-        <h3 class="landing__options">Please, proceed to <a href="" onClick={event => { event.preventDefault(); onLogin() } }>LOGIN</a> or <a href="" onClick={event => { event.preventDefault(); onRegister()}}>REGISTER</a>.</h3>
+        <h3 class="landing__options">Please, proceed to <Link to="/login">LOGIN</Link> or <Link to="/register" >REGISTER</Link>.</h3>
         </section>
 
     </section>

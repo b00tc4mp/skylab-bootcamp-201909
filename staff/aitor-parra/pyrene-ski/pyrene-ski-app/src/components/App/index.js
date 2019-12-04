@@ -80,7 +80,7 @@ export default withRouter(function ({ history }) {
     const { token } = sessionStorage
 
     return <>
-        <Route exact path="/" render={() => token ? <Redirect to="/landing" /> : <Landing onRegister={handleGoToRegister} onLogin={handleGoToLogin} />} />
+        <Route exact path="/" render={() => token ? <Redirect to="/landing" /> : <Landing />} />
         <Route path="/register" render={() => token ? <Redirect to="/board-client" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
         <Route path="/login" render={() => token /* I ES CLIENT */ ? <Redirect to="/board-client" /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
         <Route path="/board-client" render={() => token /* I ES CLIENT */ ? <BoardClient user={name} lessons={lessons} onBuyLesson={handleBuyLesson} onLogout={handleLogout} /> : <Redirect to="/" />} />
