@@ -1,4 +1,4 @@
-const { validate, errors: { ContentError, NotFoundError } } = require('baam-util')
+const { validate, errors: { CredentialsError, NotFoundError } } = require('baam-util')
 const call = require ('../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 module.exports = function (token) {
