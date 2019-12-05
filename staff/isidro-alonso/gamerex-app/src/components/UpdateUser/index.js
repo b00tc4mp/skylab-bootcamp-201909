@@ -28,7 +28,11 @@ export default withRouter(function ({ history }) {
         try {
             const { token } = sessionStorage
 
-            await saveImageUser(token)
+            let fileInput = document.getElementById('imguser')
+            
+            let file = fileInput.files[0]
+
+            await saveImageUser(token, file)
 
             history.push('/myuser')
 
@@ -55,14 +59,13 @@ export default withRouter(function ({ history }) {
             <input className="updateprofile__field" type="password" name="password" placeholder="password" onChange={event => setPassword(event.target.value)} />
             <button className="updateprofile__submit" disabled={isDisabled}>Update info</button>
         </form>
-        <form onSubmit={e => {
+        <form id="imgform" onSubmit={e => {
             e.preventDefault()
 
             handleSaveImageUser()
-
         }}>
             <p className="updateprofile__subtitle">Update profile image</p>
-            <input type="file" name="filetoupload" className="updateprofile__addimg" />
+            <input type="file" name="filetoupload" id="imguser" className="updateprofile__addimg" />
             <button className="updateprofile__submit">Update image</button>
         </form>
     </section>

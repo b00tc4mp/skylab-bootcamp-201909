@@ -1,19 +1,8 @@
 require('dotenv').config()
 const { validate, errors: { NotFoundError, ContentError }  } = require('gamerex-util')
-const { ObjectId, models: { User, Game } } = require('gamerex-data')
+const { ObjectId, models: { User } } = require('gamerex-data')
 const fs = require('fs')
 const path = require('path')
-
-/**
-* Saves profile image.
-* 
-* @param {ObjectId} id of user
-* @param {Stream} file data of the image
-* @param {Sting} filename name of the image
-*
-* @returns {Promise} - user.  
-*/
-
 
 module.exports = function (id) {
     validate.string(id)

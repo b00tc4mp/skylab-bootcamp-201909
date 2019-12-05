@@ -1,20 +1,23 @@
-const call = require('../../utils/call')
 const { validate, errors: { ConflictError } } = require('gamerex-util')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token) {
+module.exports = function (token, file) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
+    let formData = new FormData()
+    formData.append('file', file)
+
     return (async () => {
-        const res = await call(`${API_URL}/upload`, {
+
+        const res = await fetch(`${API_URL}/users/upload`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }//, //'Authorization': `Bearer ${token}`
-            //body: JSON.stringify({ username, location }) 
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData
         })
 
-        if (res.status === 201) return
-        
+        if (res.status === 201) return JSON.stringify(formData)
+
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 
         throw new Error(JSON.parse(res.body).message)

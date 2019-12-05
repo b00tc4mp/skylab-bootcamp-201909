@@ -3,16 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "busboy": "^0.3.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "gamerex-data": "file:../gamerex-data"
+    "gamerex-util": "file:../gamerex-util"
   },
   "devDependencies": {
     "jsonwebtoken": "^8.5.1",
     "node-sass": "^4.13.0",
-    "gamerex-util": "file:../gamerex-util"
+    "gamerex-data": "file:../gamerex-data"
   },
   "scripts": {
     "start": "react-scripts start",

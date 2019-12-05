@@ -13,7 +13,7 @@ module.exports = function (token) {
             //body: JSON.stringify({ username, location, email, password })
         })
 
-        if (res.status === 201) return
+        if (res.status === 201) return 
         
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 
