@@ -3,13 +3,7 @@ const { validate, errors: { NotFoundError, ContentError }  } = require('gamerex-
 const { ObjectId, models: { User, Game } } = require('gamerex-data')
 const fs = require('fs')
 const path = require('path')
-/**
-* Load the wish image
-*
-* @param {ObjectId} id of the user
-* @param {ObjectId} gameId id of the gameId
-* @returns {Promise} - data of image
-*/
+
 module.exports = function (id, gameId) {
     validate.string(id)
     validate.string.notVoid('id', id)
@@ -26,7 +20,7 @@ module.exports = function (id, gameId) {
 
         if (!game) throw new NotFoundError(`ad with id ${gameId} not found`)
 
-        let goTo = path.join(__dirname, `../../data/users/${id}/games/${gameId}/gameimage.png`)
+        let goTo = path.join(__dirname, `../../data/games/${gameId}/gameimage.png`)
 
         return fs.createReadStream(goTo)
     })()

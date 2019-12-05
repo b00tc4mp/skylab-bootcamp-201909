@@ -3,16 +3,7 @@ const { validate, errors: { NotFoundError, ContentError }  } = require('gamerex-
 const { ObjectId, models: { User, Game } } = require('gamerex-data')
 const fs = require('fs')
 const path = require('path')
-/**
-* Saves wish image.
-*
-* @param {ObjectId} id of user
-* @param {ObjectId} gameId id of gameId
-* @param {Stream} file data of the image
-* @param {Sting} filename name of the image
-*
-* @returns {Promise} - user.
-*/
+
 module.exports = function (id, gameId, file, filename) {
     validate.string(id)
     validate.string.notVoid('id', id)
@@ -30,13 +21,13 @@ module.exports = function (id, gameId, file, filename) {
 
         if (!game) throw new NotFoundError(`ad with id ${gameId} not found`)
 
-        const dir = `./data/users/${id}/games/${gameId}`
+        const dir = `./data/games/${gameId}`
 
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, {recursive: true}, err => {})
         }
 
-        let saveTo = path.join(__dirname, `../../data/users/${id}/games/${gameId}/${filename}.png`)
+        let saveTo = path.join(__dirname, `../../data/games/${gameId}/${filename}.png`)
 
         return file.pipe(fs.createWriteStream(saveTo))
     })()

@@ -146,7 +146,7 @@ router.post('/upload/:gameId', tokenVerifier, (req, res) => {
     return req.pipe(busboy)
 })
 
-router.get('/load/:gameId', tokenVerifier,async (req, res) => {
+router.get('/load/image', tokenVerifier, async (req, res) => {
 
     const { id, params: { gameId } } = req
 

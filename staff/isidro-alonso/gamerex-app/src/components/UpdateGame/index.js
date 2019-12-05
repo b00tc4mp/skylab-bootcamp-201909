@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { modifyGame } from '../../logic'
+import { modifyGame, saveImageGame } from '../../logic'
 import { withRouter } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
@@ -18,6 +18,23 @@ export default withRouter(function ({ history }) {
                         const { token } = sessionStorage
 
                         await modifyGame(token, gameId, title, platform, sell, exchange, favourite)
+
+                        history.push('/myuser')
+
+                } catch (error) {
+                        console.error(error)
+                }
+        }
+
+        async function handleSaveImageGame() {
+                try {
+                        const { token } = sessionStorage
+
+                        let fileInput = document.getElementById('imggame')
+
+                        let file = fileInput.files[0]
+
+                        await saveImageGame(token, gameId, file)
 
                         history.push('/myuser')
 
@@ -50,8 +67,16 @@ export default withRouter(function ({ history }) {
                                 <img src="img/exchange.png" alt="exchange" />...to exchange</p>
                         <p className="game-newedit__favourite"><input className="game-newedit__checkbox" type="checkbox" name="favourite" value={favourite} onChange={event => setFavourite(event.target.checked ? true : false)} />
                                 <img src="img/favourite.png" alt="favourite" />...to mark as favourite</p>
-                        <p className="game-newedit__subtitle">Update game image</p><input type="file" name="filetoupload" className="game-newedit__addimg" />
-                        <button className="game-newedit__submit" disabled={isDisabled}>Update</button>
+                        <button className="game-newedit__submit" disabled={isDisabled}>Update info</button>
+                </form>
+                <form id="imgform" onSubmit={e => {
+                        e.preventDefault()
+
+                        handleSaveImageGame()
+                }}>
+                        <p className="game-newedit__subtitle">Update game image</p>
+                        <input type="file" name="filetoupload" id="imggame" className="game-newedit__addimg" />
+                        <button className="game-newedit__submit">Update image</button>
                 </form>
         </section>
 })
