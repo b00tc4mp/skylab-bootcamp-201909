@@ -24,19 +24,21 @@ describe('logic - register user', () => {
 
     it('should succeed on correct credentials', async () => {
         const response = await registerUser(name, surname, city, address, email, password)
-
+        
         expect(response).toBeUndefined()
 
-        const user = await User.findOne({ username })
+        const user = await User.findOne({ email })
+
+        const valid = await bcrypt.compare(password, user.password)
 
         expect(user).toBeDefined()
 
-        expect(user.name).toBe(name)
+        // expect(user.name).toBe(name)
         expect(user.surname).toBe(surname)
         expect(user.city).toBe(city)
         expect(user.address).toBe(address)
         expect(user.email).toBe(email)
-        expect(user.password).toBe(password)
+        expect(valid).toBeTruthy()
     })
 
     describe('when user already exists', () => {
@@ -109,8 +111,8 @@ describe('logic - register user', () => {
         expect(() => registerUser(name, surname, city, address, '')).toThrow(ContentError, 'email is empty or blank')
         expect(() => registerUser(name, surname, city, address, ' \t\r')).toThrow(ContentError, 'email is empty or blank')
 
-        expect(() => registerUser(name, surname,  city, address, email, username, '')).toThrow(ContentError, 'password is empty or blank')
-        expect(() => registerUser(name, surname,  city, address, email, username, ' \t\r')).toThrow(ContentError, 'password is empty or blank')
+        expect(() => registerUser(name, surname,  city, address, email, '')).toThrow(ContentError, 'password is empty or blank')
+        expect(() => registerUser(name, surname,  city, address, email, ' \t\r')).toThrow(ContentError, 'password is empty or blank')
     })
 
     // TODO other cases

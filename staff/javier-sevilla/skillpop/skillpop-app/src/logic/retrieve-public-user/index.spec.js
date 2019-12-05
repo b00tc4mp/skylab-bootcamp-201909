@@ -1,17 +1,17 @@
 const { env: { REACT_APP_TEST_DB_URL: TEST_DB_URL, REACT_APP_TEST_SECRET: TEST_SECRET } } = process
-const retrieveUser = require('.')
+const retrievePublicUser = require('.')
 const { random } = Math
 const { errors: { NotFoundError, ContentError } } = require('skillpop-util')
 const { database, models: { User } } = require('skillpop-data')
-const jwt = require('jsonwebtoken')
 require('../../helpers/jest-matchers')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe('logic - retrieve user', () => {
+describe('logic - retrieve public user', () => {
     beforeAll(() => database.connect(TEST_DB_URL))
 
-    let id, token, name, surname, city, address, email, password, hash
+    let id, name, surname, city, address, email, password
+    let hash
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -24,15 +24,13 @@ describe('logic - retrieve user', () => {
         await User.deleteMany()
 
         hash = await bcrypt.hash(password, salt)
-        const user = await User.create({ name, surname, city, address, email, password: hash })
+        const user = await User.create({ name, surname, city, address, email, password: hash})
 
         id = user.id
-
-        token = jwt.sign({ sub: id }, TEST_SECRET)
     })
 
     it('should succeed on correct user id', async () => {
-        const user = await retrieveUser(token)
+        const user = await retrievePublicUser(id)
 
         expect(user).toBeDefined()
         expect(user.id).toBe(id)
@@ -56,10 +54,8 @@ describe('logic - retrieve user', () => {
     it('should fail on wrong user id', async () => {
         const id = '012345678901234567890123'
 
-        const token = jwt.sign({ sub: id }, TEST_SECRET)
-
         try {
-            await retrieveUser(token)
+            await retrievePublicUser(id)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -67,6 +63,18 @@ describe('logic - retrieve user', () => {
             expect(error).toBeInstanceOf(NotFoundError)
             expect(error.message).toBe(`user with id ${id} not found`)
         }
+    })
+
+    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+        expect(() => retrievePublicUser(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrievePublicUser(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrievePublicUser([])).toThrow(TypeError, ' is not a string')
+        expect(() => retrievePublicUser({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrievePublicUser(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrievePublicUser(null)).toThrow(TypeError, 'null is not a string')
+
+        expect(() => retrievePublicUser('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => retrievePublicUser(' \t\r')).toThrow(ContentError, 'id is empty or blank')
     })
 
     afterAll(() => User.deleteMany().then(database.disconnect))

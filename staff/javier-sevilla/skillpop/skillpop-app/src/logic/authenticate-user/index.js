@@ -5,7 +5,8 @@ const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (email, password) {
     validate.string(email)
-    validate.string.notVoid('username', email)
+    validate.string.notVoid('email', email)
+    validate.email(email)
     validate.string(password)
     validate.string.notVoid('password', password)
 

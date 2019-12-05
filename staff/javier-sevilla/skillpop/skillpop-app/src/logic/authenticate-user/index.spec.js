@@ -6,7 +6,7 @@ const { database, models: { User } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe('logic - authenticate user', () => {
+describe.only('logic - authenticate user', () => {
     beforeAll(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -16,13 +16,13 @@ describe('logic - authenticate user', () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
-        username = `username-${random()}`
+        city = 'barcelona'
+        address = 'calle aribau 15'
         password = `password-${random()}`
 
         await User.deleteMany()
 
         hash = await bcrypt.hash(password, salt)
-
         const user = await User.create({ name, surname, city, address, email, password: hash })
 
         id = user.id

@@ -3,14 +3,14 @@ const { validate, errors: { NotFoundError } } = require('skillpop-util')
 // const { env: { REACT_APP_API_URL: API_URL } } = process
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token) {
-    validate.string(token)
-    validate.string.notVoid('token', token)
+module.exports = function (id) {
+    validate.string(id)
+    validate.string.notVoid('id', id)
 
     return (async () => {
-        const res = await call(`${API_URL}/users`, {
+        const res = await call(`${API_URL}/users/${id}`, {
             method: 'GET',
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json' }
         })
 
         if (res.status === 200) {
