@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../../../src/index.sass'
+import '../../../src/template/index.sass'
 import Landing from '../Landing'
 import Register from '../Register'
 import Login from '../Login'
@@ -74,6 +74,11 @@ export default withRouter(function ({ history }) {
         }
     }
 
+    function handleGoToLogin() { history.push('/login')}
+    function handleGoToRegister() { history.push('/register')}
+
+
+
     function handleGoToLessonList() { history.push('/lessonlist')}
     
     function handleGoToTeamList() { history.push('/teamlist')}
@@ -97,10 +102,10 @@ export default withRouter(function ({ history }) {
     const { token } = sessionStorage
 
     return <>
-        <Route exact path='/' render={() => token ? <Redirect to='/landing' /> : <Landing />} />
+        <Route exact path='/' render={() => token ? <Redirect to='/' /> : <Landing onRegister={handleGoToRegister} onLogin={handleGoToLogin} />} />
         <Route path='/register' render={() => token ? <Redirect to='/board-client' /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
         <Route path='/login' render={() => token ? <Redirect to='/login' /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
-        <Route path='/board-admin' render={() => token && user.role === 'admin'/* I ES ADMIN */ ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} /> : <Redirect to='/' /> } />
+        <Route path='/board-admin' render={() => token /* && user.role === 'admin' *//* I ES ADMIN */ ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} onBack={handleGoBack}/> : <Redirect to='/' /> } />
         <Route path='/lessonlist'render={() => token && user.role === 'admin' ? <LessonList user={name} /> : <Redirect to='/' />} />
         <Route path='/teamlist'render={() => token && user.role === 'admin' ? <TeamList user={name} /> : <Redirect to='/' />} />
         <Route path='/board-client' render={() => token && user.role === 'client'/* I ES CLIENT */ ? <BoardClient user={name} onBookLesson={handleBookLesson} onLogout={handleLogout} /> : <Redirect to='/' />} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../src/index.sass'
+import '../../template/index.sass'
 
 
 export default function({user, onLessonList }) {

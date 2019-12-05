@@ -1,5 +1,5 @@
 import React from 'react'
-import '../../../src/index.sass'
+import '../../template/index.sass'
 import Feedback from '../Feedback'
 
 export default function({ onLogin, onBack, error }) {

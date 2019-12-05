@@ -20,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --runInBand --no-cache",
     "test:debug": "react-scripts inspect test --runInBand --no-cache",
-    "sass": "sass template/index.sass template/index.css",
+    "sass": "sass src/template/index.sass src/template/index.css",
     "sass:watch": "sass --watch template/index.sass template/index.css"
   },
   "eslintConfig": {
