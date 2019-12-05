@@ -16,8 +16,16 @@ module.exports = function(id, chatId) {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const chat = await Chat.findById(chatId)
+        const chat = await Chat.findById(chatId, { __v: 0 }).lean()
         if (!chat) throw new NotFoundError(`chat with id ${chatId} not found`)
+
+        chat.id = chat._id.toString()
+        delete chat._id
+
+        chat.messages.forEach(message => {
+            message.id = message._id.toString()
+            delete message._id
+        })
 
         return chat.messages
 
