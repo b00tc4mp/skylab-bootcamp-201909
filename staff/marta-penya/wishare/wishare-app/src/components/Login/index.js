@@ -3,9 +3,8 @@ import './index.sass'
 import { withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 
-export default withRouter (function({ history, onLogin, error }){
+export default function({ goRegister, onLogin, error }){
 
-    function handleGoRegister() { history.push('/register') }
 
     return <section className="login">
 
@@ -26,7 +25,7 @@ export default withRouter (function({ history, onLogin, error }){
         <input className="register__field" type="password" name="password" placeholder="*******"/>
         <button className="register__submit">Login</button>
     </form>
-    <span>Not registered yet?</span> <a href='' onClick={event => { event.preventDefault(); handleGoRegister() }}>Register</a>
+    <span>Not registered yet?</span> <a href='' onClick={event => { event.preventDefault(); goRegister() }}>Register</a>
 </section>
 
-})
+}

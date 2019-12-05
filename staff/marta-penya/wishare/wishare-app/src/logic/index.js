@@ -4,5 +4,7 @@ module.exports = {
     retrieveUser: require('./retrieve-user'),
     retrieveBirthdays: require('./retrieve-bday-friend'),
     modifyUser: require('./modify-user'),
-    saveProfileImage: require('./save-profile-image')
+    saveProfileImage: require('./save-profile-image'),
+    createWish: require('./create-wish'),
+    saveWishImage: require('./save-wish-image')
 }

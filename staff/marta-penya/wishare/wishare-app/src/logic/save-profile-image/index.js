@@ -1,6 +1,5 @@
 require('dotenv').config()
 const { validate } = require('wishare-util')
-const call = require('../../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
 /**
@@ -21,6 +20,8 @@ module.exports = function (token, image) {
     let fData = new FormData()
     fData.append('image', image);
 
+    let profileImage = false
+
     return (async () => {
 
         const res = await fetch(`${API_URL}/users/uploadimage`, {
@@ -28,7 +29,10 @@ module.exports = function (token, image) {
             headers: { Authorization: `Bearer ${token}`},
             body: fData
         })
-        if (res.status === 201) return
+        if (res.status === 200){
+            profileImage = true
+            return profileImage
+        } 
     })()
 }
 

@@ -5,19 +5,19 @@ export default function ({ onMyProfile, onModify }) {
 
     
 
-    return <section class="editprofile hidden">
-        <section class="editprofile__header">
-            <h1 class="editprofile__title">My Profile</h1>
-            <section class="editprofile__buttons">
-                <button class="editprofile__btn" onClick={event => { event.preventDefault(); onMyProfile() }}> My profile</button>
-                <button class="editprofile__btn"> Edit profile</button>
+    return <section className="editprofile hidden">
+        <section className="editprofile__header">
+            <h1 className="editprofile__title">My Profile</h1>
+            <section className="editprofile__buttons">
+                <button className="editprofile__btn" onClick={event => { event.preventDefault(); onMyProfile() }}> My profile</button>
+                <button className="editprofile__btn"> Edit profile</button>
             </section>
         </section>
 
-        <section class="editprofile__section">
-            <form class="editprofile__form" onSubmit={function (event) {
+        <section className="editprofile__section">
+            <form className="editprofile__form" onSubmit={function (event) {
             event.preventDefault()
-            debugger
+
             const { file: { files : [image]}, day: { value: day }, month: { value: month }, year: { value: year }, password: { value: password }, description: { value: description } } = event.target
 
             onModify(image, day, month, year, password, description)
@@ -77,10 +77,10 @@ export default function ({ onMyProfile, onModify }) {
                     <input className="register__input" type="number" min="1900" max="2020" step="1" placeholder="2016" name="year" />
                 </div>
                 <label>Password</label>
-                <input class="editprofile__field" type="password" name="password" placeholder="password" />
+                <input className="editprofile__field" type="password" name="password" placeholder="password" />
                 <label>Description</label>
-                <textarea rows="4" cols="50" class="editprofile__description" name="description"></textarea>
-                <button class="editprofile__submit">Save</button>
+                <textarea rows="4" cols="50" className="editprofile__description" name="description"></textarea>
+                <button className="editprofile__submit">Save</button>
 
             </form>
         </section>

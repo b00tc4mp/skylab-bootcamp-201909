@@ -1,12 +1,10 @@
 import React from 'react'
 import './index.sass'
-import { withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
 
-export default withRouter (function( { history, onRegister, error }) {
+export default function( { goLogin, onRegister, error }) {
 
-    function handleOnLogin() { history.push('/login') }
-
+    
     return <section className="register">
 
     <h1 className="register__title">Register</h1>
@@ -85,7 +83,7 @@ export default withRouter (function( { history, onRegister, error }) {
         <button className="register__submit">Register</button>
 
     </form>
-    <span>Already registered?</span> <a href='' onClick={event => { event.preventDefault(); handleOnLogin() }}>Log in</a>
+    <span>Already registered?</span> <a href='' onClick={event => { event.preventDefault(); goLogin() }}>Log in</a>
 </section>
 
-})
+}

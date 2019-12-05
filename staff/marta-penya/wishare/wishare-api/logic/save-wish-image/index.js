@@ -27,16 +27,17 @@ module.exports = function (id, wishId, file, filename) {
 
     
     return (async () => {
+        debugger
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} not found`)
 
         const wish = user.wishes.find(wish => wish.id === wishId)        
         if (!wish) throw new NotFoundError(`user does not have task with id ${wishId}`)
         
-        const dir = `./data/users/${id}/wishes`
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir)
-        }
+        // const dir = `./data/users/${id}/wishes`
+        // if (!fs.existsSync(dir)){
+        //     fs.mkdirSync(dir)
+        // }
         let saveTo = path.join(__dirname, `../../data/users/${id}/wishes/${filename}.png`)
         return file.pipe(fs.createWriteStream(saveTo))            
     })()

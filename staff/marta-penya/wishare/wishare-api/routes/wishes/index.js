@@ -15,7 +15,7 @@ router.post('/', jsonBodyParser, tokenVerifier, (req, res) => {
     const { id, body: { title, link, price, description } } = req
     try {
         createWish(id, title, link, price, description)
-            .then(wishId => res.status(201).json(wishId))
+            .then(wishId => res.json(wishId))
             .catch(error => {
                 const { message } = error
 
@@ -119,9 +119,9 @@ router.post('/upload/:wishId', tokenVerifier, (req, res) => {
 
 //endpoint download wishes images
 
-router.get('/wish/:wishId', tokenVerifier, async (req, res) => {
+router.get('/:id/wish/:wishId', async (req, res) => {
 
-    const { id, params: { wishId } } = req
+    const { params: { id, wishId } } = req
 
     const stream = await loadWishImage(id, wishId) 
 

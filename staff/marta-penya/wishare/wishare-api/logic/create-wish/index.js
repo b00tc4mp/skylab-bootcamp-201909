@@ -1,5 +1,6 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { ObjectId, models: { User, Wish } } = require('wishare-data')
+const fs = require('fs')
 
 /**
  * function to creat a new wish 
@@ -33,8 +34,14 @@ module.exports = function ( id, title, link, price, description) {
     validate.string.notVoid('description', description)
 
     return (async () => {
+
         const user = await User.findById(id)        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
+
+        const dir = `./data/users/${id}/wishes`
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir)
+        }
 
         const wish = new Wish({ title, link, price, description })
         

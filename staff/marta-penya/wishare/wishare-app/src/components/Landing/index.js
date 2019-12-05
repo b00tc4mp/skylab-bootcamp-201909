@@ -2,8 +2,9 @@ import React from 'react'
 import './index.sass'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function({ user, birthdays, onCreateWish, onSearchFriends }){
-    return     <section className="landing hidden">
+export default function({ user, birthdays, onCreateWish, onSearchFriends, profileImage }){
+
+    return <section className="landing hidden">
     <section className="landing__birthday">
     { birthdays.length < 1 && <h2 className="landing__bdaytitle"> There is no friend's birthday nearby</h2>}
 
@@ -16,7 +17,7 @@ export default function({ user, birthdays, onCreateWish, onSearchFriends }){
     </section>
 
     <section className="landing__user user">
-        <img className="user__image" src={`${API_URL}/users/profileimage/${user.id}` ? `${API_URL}/users/profileimage/${user.id}` : process.env.PUBLIC_URL + '/img/profile.png'}  alt="profile picture"/>
+        <img className="user__image" src={`${API_URL}/users/profileimage/${user.id}`}  alt="profile picture"/>
         <span className="user__welcome"> Hi {user.name}, what do you want to do?</span>
         <section className="landing__buttons">
             <button className="landing__btn" onClick={event => { event.preventDefault(); onCreateWish() }}> Create a Wish</button>

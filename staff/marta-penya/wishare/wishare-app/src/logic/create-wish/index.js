@@ -1,4 +1,4 @@
-const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
+const { validate, errors: { NotFoundError, ConflictError } } = require('wishare-util')
 const call = require('../../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -34,20 +34,14 @@ module.exports = function (token, title, link, price, description) {
 
         const res = await call(`${API_URL}/wishes`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ title, link, price, description })
         })
-
-        if (res.status === 201){
+        debugger
+        if (res.status === 200){
             const wishId = JSON.parse(res.body)
 
             return wishId
-
-            // const resImage = await call(`${API_URL}/upload/${wishId}`, {
-            //     method: 'POST',
-            //     headers: { Authorization: `Bearer ${token}` }
-            // })
-            // if (resImage.status === 201) return
         }
 
         if (res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)
@@ -55,8 +49,7 @@ module.exports = function (token, title, link, price, description) {
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 
 
-        throw new Error(JSON.parse(resImage.body).message)
-
+        throw new Error(JSON.parse(res.body).message)
 
     })()
 }

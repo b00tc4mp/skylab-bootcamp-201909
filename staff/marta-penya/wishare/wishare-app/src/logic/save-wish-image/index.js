@@ -1,14 +1,14 @@
 require('dotenv').config()
 const { validate } = require('wishare-util')
-const { ObjectId, models: { User } } = require('wishare-data')
-const call = require('../../utils/call')
+const API_URL = process.env.REACT_APP_API_URL
+
 
 
 /**
 * Saves wish image.
 * 
 * @param {String} token of user
-* @param {ObjectId} wishId id of wish
+* @param {String} wishId id of wish
 * @param {Stream} file data of the image
 * @param {Sting} filename name of the image
 *
@@ -16,20 +16,23 @@ const call = require('../../utils/call')
 */
 
 
-module.exports = function (token, wishId, file, filename) {
+module.exports = function (token, wishId, image) {
     validate.string(token)
     validate.string.notVoid('token', token)
     
     validate.string(wishId)
     validate.string.notVoid('wishId', wishId)
     
+    let fData = new FormData()
+    fData.append('image', image);
+
     return (async () => {
-            const resImage = await call(`${API_URL}/upload/${wishId}`, {
+            const res = await fetch(`${API_URL}/wishes/upload/${wishId}`, {
                 method: 'POST',
-                headers: { Authorization: `Bearer ${token}` }
+                headers: { Authorization: `Bearer ${token}` },
+                body: fData
             })
-            if (resImage.status === 201) return   
+            if (res.status === 201) return   
 
     })()
 }
-

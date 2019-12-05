@@ -1,7 +1,9 @@
 import React from 'react'
 import './index.sass'
+import Wish from '../Wish'
 
-export default function({ onCreateWish }){
+export default function({ onCreateWish, wishes, user }){
+
     return <section className="mywishes hidden">
     <section className="mywishes__header">
         <h1 className="mywishes__title">My Wishes</h1>
@@ -12,74 +14,8 @@ export default function({ onCreateWish }){
     </section>
     <section className="mywishes__wishes">
         <ul className="mywishes__list">
-            <li className="mywishes__wish">
-                <div className="mywishes__detail">
-                    <img className="mywishes__wimage" src="https://fakeimg.pl/60x60/"/>
-                    <span className="mywishes__price">Price</span>
-                </div>
-                <div className="mywishes__info">
-                    <span className="mywishes__wname"> Title </span>
-                    <p className="mywishes__wdescription">description plou i fa sol les bruixes es pentinen plou i
-                        fa sol nanan asd loren</p>
-                    <a className="mywishes__link"> Online Store </a>
-                </div>
-                <div className="mywishes__buttonscontainer">
-                    <button className="mywishes__button">Edit</button>
-                    <button className="mywishes__button">Remove</button>
-                    <button className="mywishes__button">Given</button>
-                </div>
-            </li>
-            <li className="mywishes__wish">
-                <div className="mywishes__detail">
-                    <img className="mywishes__wimage" src="https://fakeimg.pl/60x60/"/>
-                    <span className="mywishes__price">Price</span>
-                </div>
-                <div className="mywishes__info">
-                    <span className="mywishes__wname"> Title </span>
-                    <p className="mywishes__wdescription">description plou i fa sol les bruixes es pentinen plou i
-                        fa sol nanan asd loren</p>
-                    <a className="mywishes__link"> Online Store </a>
-                </div>
-                <div className="mywishes__buttonscontainer">
-                    <button className="mywishes__button">Edit</button>
-                    <button className="mywishes__button">Remove</button>
-                    <button className="mywishes__button">Given</button>
-                </div>
-            </li>
-            <li className="mywishes__wish">
-                <div className="mywishes__detail">
-                    <img className="mywishes__wimage" src="https://fakeimg.pl/60x60/"/>
-                    <span className="mywishes__price">Price</span>
-                </div>
-                <div className="mywishes__info">
-                    <span className="mywishes__wname"> Title </span>
-                    <p className="mywishes__wdescription">description plou i fa sol les bruixes es pentinen plou i
-                        fa sol nanan asd loren</p>
-                    <a className="mywishes__link"> Online Store </a>
-                </div>
-                <div className="mywishes__buttonscontainer">
-                    <button className="mywishes__button">Edit</button>
-                    <button className="mywishes__button">Remove</button>
-                    <button className="mywishes__button">Given</button>
-                </div>
-            </li>
-            <li className="mywishes__wish">
-                <div className="mywishes__detail">
-                    <img className="mywishes__wimage" src="https://fakeimg.pl/60x60/"/>
-                    <span className="mywishes__price">Price</span>
-                </div>
-                <div className="mywishes__info">
-                    <span className="mywishes__wname"> Title </span>
-                    <p className="mywishes__wdescription">description plou i fa sol les bruixes es pentinen plou i
-                        fa sol nanan asd loren</p>
-                    <a className="mywishes__link"> Online Store </a>
-                </div>
-                <div className="mywishes__buttonscontainer">
-                    <button className="mywishes__button">Edit</button>
-                    <button className="mywishes__button">Remove</button>
-                    <button className="mywishes__button">Given</button>
-                </div>
-            </li>
+            {wishes.map(wish => <li className="mywishes__wish" key={wish.id}><Wish wish={wish} user={user} /></li>)}
+            {wishes.length < 1 && <p className="mywishes__nowish"> You have no wishes, go to add a Wish to create new wishes</p>}
         </ul>
     </section>
 </section>
