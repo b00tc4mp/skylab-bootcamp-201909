@@ -8,7 +8,7 @@ module.exports = function (token) {
     validate.string.notVoid('token', token)
 
     return (async () => {
-        const res = await call(`${API_URL}/teams/teamlist`, {
+        const res = await call(`${API_URL}/lessons/lessonlist`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -16,7 +16,7 @@ module.exports = function (token) {
         })
 
         if (res.status === 200) {
-            const teams = JSON.parse(res.body)
+            const lessons = JSON.parse(res.body)
 
 /*             tasks.forEach(task => {
                 task.date = new Date(task.date)
@@ -24,7 +24,7 @@ module.exports = function (token) {
                 task.lastAccess = new Date(task.lastAccess)
             }) */
 
-            return teams
+            return lessons
         }
 
         if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)
@@ -36,33 +36,33 @@ module.exports = function (token) {
 }
 
 
+/* const { validate, errors: { ContentError, ConflictError, NotFoundError} } = require('pyrene-ski-util')
+const { ObjectId, models: { User, Lesson  } } = require('pyrene-ski-data')
 
-/* const { validate, errors: { NotFoundError, ContentError } } = require('pyrene-ski-util')
-const { ObjectId, models: { User, Team } } = require('pyrene-ski-data')
-
-module.exports = function (id) { 
+module.exports = function(id){
     validate.string(id)
     validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+    if(!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
-
-    return (async () => {
+    return ( async () => {
         const user = await User.findById(id)
 
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        if(!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        await Team.updateMany( { user: id} )
+        await Lesson.updateMany( { user: id } )
 
-        const teams = await Team.find({ user: id }, { __v: 0 }).lean()
+        const lessons = await Lesson.find({ user: id }, { __v: 0 }).populate("teamId").lean()
 
-        teams.forEach(team => {
-            team.id = team._id.toString()
-
-            delete team._id
-            team.user = id
-
+        lessons.forEach(lesson => {debugger
+            lesson.id = lesson._id.toString()
+            delete lesson._id
+            lesson.user = id
+            lesson.activityName = lesson.teamId.teamActivity
+            lesson.teamName = lesson.teamId.teamName
+            delete lesson.teamId
         })
-        
-        return teams
-    })()
+
+        return lessons
+
+    }) ()
 } */

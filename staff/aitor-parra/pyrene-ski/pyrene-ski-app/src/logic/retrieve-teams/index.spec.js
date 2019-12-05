@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { env: { DB_URL_TEST } } = process
-const { expect } = require('chai')
+//const { expect } = require('chai')
 const retrieveTeams = require('.')
 const { random } = Math
 const { database, ObjectId, models: { User, Team } } = require('pyrene-ski-data')
