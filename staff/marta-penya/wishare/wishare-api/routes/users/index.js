@@ -172,11 +172,11 @@ router.get('/', (req, res) => {
     }
 })
 
-router.get('/search', tokenVerifier, jsonBodyParser, (req, res) => {
+router.get('/search/:query', jsonBodyParser, (req, res) => {
     try {
         debugger
-        const { body: { query } } = req
-
+        const { params: { query } } = req
+        debugger
         searchUsers(query)
             .then(users => res.json(users))
             .catch(error => {

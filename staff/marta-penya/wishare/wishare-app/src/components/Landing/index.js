@@ -2,7 +2,7 @@ import React from 'react'
 import './index.sass'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function({ user, birthdays, onCreateWish, onSearchFriends, profileImage }){
+export default function({ user, birthdays, onCreateWish, onSearchFriends }){
 
     return <section className="landing hidden">
     <section className="landing__birthday">

@@ -9,5 +9,6 @@ module.exports = {
     saveWishImage: require('./save-wish-image'),
     modifyWish: require('./modify-wish'),
     removeWish: require('./delete-wish'),
-    givenWish: require('./given-wish')
+    givenWish: require('./given-wish'),
+    searchUsers: require('./search-users')
 }

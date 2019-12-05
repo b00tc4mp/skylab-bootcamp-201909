@@ -1,13 +1,13 @@
 import React from 'react'
 import './index.sass'
 
-export default function(){
+export default function({onSearchFriends}){
     return <section className="friends">
     <section className="friends__header">
         <h1 className="friends__title">Friends</h1>
         <section className="friends__buttons">
             <button className="friends__btn"> Your friends</button>
-            <button className="friends__btn"> Find friends</button>
+            <button className="friends__btn" onClick={event => { event.preventDefault(); onSearchFriends() }}> Find friends</button>
         </section>
     </section>
 

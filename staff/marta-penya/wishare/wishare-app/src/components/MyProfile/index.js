@@ -15,7 +15,7 @@ export default function({ user, onEditProfile, profileImage }){
 
     <section className="myprofile__user">
         <h2 className="myprofile__name"> {user.name} {user.surname} </h2>
-        <img className="myprofile__image" src={profileImage ?  `${API_URL}/users/profileimage/${user.id}` : process.env.PUBLIC_URL + '/img/profile.png'} alt="profile picture"/>
+        <img className="myprofile__image" src={`${API_URL}/users/profileimage/${user.id}`} alt="profile picture"/>
         <span className="myprofile__email"> {user.email}</span>
         <span className="myprofile__bday"> B-day: {user.birthday} </span>
         <p className="myprofile__description"> {user.description} </p>
