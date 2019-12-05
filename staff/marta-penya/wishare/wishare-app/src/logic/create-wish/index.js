@@ -37,7 +37,7 @@ module.exports = function (token, title, link, price, description) {
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
             body: JSON.stringify({ title, link, price, description })
         })
-        debugger
+
         if (res.status === 200){
             const wishId = JSON.parse(res.body)
 

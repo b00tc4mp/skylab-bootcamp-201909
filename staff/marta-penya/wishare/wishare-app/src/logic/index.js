@@ -6,5 +6,8 @@ module.exports = {
     modifyUser: require('./modify-user'),
     saveProfileImage: require('./save-profile-image'),
     createWish: require('./create-wish'),
-    saveWishImage: require('./save-wish-image')
+    saveWishImage: require('./save-wish-image'),
+    modifyWish: require('./modify-wish'),
+    removeWish: require('./delete-wish'),
+    givenWish: require('./given-wish')
 }

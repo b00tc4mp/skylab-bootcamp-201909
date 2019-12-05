@@ -38,17 +38,17 @@ module.exports = function ( id, title, link, price, description) {
         const user = await User.findById(id)        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const dir = `./data/users/${id}/wishes`
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir)
-        }
-
+        
         const wish = new Wish({ title, link, price, description })
         
         user.wishes.push(wish)
         
         await user.save()
-
+        
+        const dir = `./data/users/${id}/wishes`
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir)
+        }
         return wish.id
     })()
 }

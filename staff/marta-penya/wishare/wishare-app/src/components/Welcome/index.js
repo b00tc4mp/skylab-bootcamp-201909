@@ -10,7 +10,7 @@ export default withRouter (function ({ history }) {
             <h2 className="welcome__title1">Welcome to</h2>
         </section>
         <section>
-            <h1 className="welcome__title"> Wishare</h1>
+            <h1 className="welcome__title"> WiShare</h1>
         </section>
         <section className="welcome__intro">
             <p className="welcome__text">Create a WishList</p>

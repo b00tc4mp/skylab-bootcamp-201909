@@ -81,7 +81,6 @@ router.delete('/:wishId', tokenVerifier, (req, res) => {
             )
             .catch(error => {
                 const { message } = error
-
                 if (error instanceof NotFoundError)
                     return res.status(404).json({ message })
                 if (error instanceof ConflictError)
@@ -134,7 +133,7 @@ router.get('/:id/wish/:wishId', async (req, res) => {
 router.patch('/:wishId/given', tokenVerifier, (req, res) => {
     try {
         const { id, params: { wishId }} = req
-        debugger 
+ 
         givenWish(id, wishId)
             .then(() =>
                 res.end()
