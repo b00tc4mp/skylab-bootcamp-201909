@@ -6,8 +6,8 @@ module.exports = {
     //retrieveCard: require('./retrieve-card'),
     //retrieveCollectionCards: require('./retrieve-collection-cards'),
     //retrieveGame: require('./retrieve-game'),
-    retrieveUser: require('./retrieve-user')
-    //retrieveUserCards: require('./retrieve-user-cards'),
+    retrieveUser: require('./retrieve-user'),
+    retrieveUserCards: require('./retrieve-user-cards'),
     //playCard: require('./play-card'),
     //addPlayerHand: require('./add-player-hand')
 }

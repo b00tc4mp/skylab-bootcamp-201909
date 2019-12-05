@@ -1,36 +1,29 @@
 import React from 'react'
 import './index.sass'
-
-export default function () {
-
-    return <section className="game-panel">
-        <div className="cards-zone">
-            <div className="card card--oponent"><img className="card" src="img/backcard.png"></img></div>
-            <div className="card card--oponent"><img className="card" src="img/backcard.png"></img></div>
-            <div className="card card--oponent"><img className="card" src="img/backcard.png"></img></div>
-            <div className="card card--oponent"><img className="card" src="img/backcard.png"></img></div>
-            <div className="card card--oponent"></div>
+export default function ({user, onLogout, onCreate, onJoin, onHome}) {
+    return <section className="game">
+        {user &&
+            <div className="upper-menu">
+                <div className="upper-menu__container">
+                    <div className="upper-menu__item">wins: {user.stats.wins}</div>
+                    <div className="upper-menu__item">ties: {user.stats.ties}</div>
+                    <div className="upper-menu__item">loses: {user.stats.loses}</div>
+                </div>
+                <div className="upper-menu__container">
+                <div className="upper-menu__item">💰: {user.coins}</div>
+                </div>
+                <div className="upper-menu__container">
+                    <div className="upper-menu__item">Hello {user.nickname}</div>
+                    <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onLogout() }}>Log out</a>
+                    <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onHome() }}>✪</a>
+                </div>
+            </div>
+        }
+        <div className="game__option" onClick={event => onCreate()}>
+            <h2>Create a new Game</h2>
         </div>
-        <div className="life">LIFE</div>
-        <div className="game-zone">GAME ZONE</div>
-        <div className="temp-zone">
-            <img className="card card--played" src="img/block.png"></img>
-        </div>
-        <div className="discards">
-            
-        </div>
-        <div className="temp-zone">TEMP ZONE</div>
-        <div className="discards">
-        <img className="card card--played" src="img/backcard.png"></img>
-        </div>
-        <div className="cards-zone">
-            <div className="card card"><img className="card" src="img/attack.png"></img></div>
-            <div className="card card"><img className="card" src="img/block.png"></img></div>
-            <div className="card card"><img className="card" src="img/defend.png"></img></div>
-            <div className="card card"><img className="card" src="img/attack.png"></img></div>
-            <div className="card card"><img className="card" src="img/heal.png"></img></div>
-        </div>
-        <div className="life">LIFE</div>
-        <div className="user-game-menu">USER GAME MENU OPTIONS</div>
+        <div className="game__option" onClick={event => onJoin()}>
+            <h2>Join a Game</h2>
+        </div>   
     </section>
 }
