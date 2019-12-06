@@ -11,7 +11,7 @@ const salt = 10
 describe('logic - create ads', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let name, surname, city, address, email, password, title, description, price
+    let id, name, surname, city, address, email, password, title, description, price
     let hash
 
     beforeEach(async () => {

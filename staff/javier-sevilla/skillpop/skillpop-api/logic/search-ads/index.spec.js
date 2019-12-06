@@ -47,7 +47,7 @@ describe('logic - search ads', () => {
                 price: random(),
                 date: new Date
             }
-
+z
             insertions.push(Ad.create(ad).then(ad => adIds.push(ad.id)))
 
             titles.push(ad.title)
