@@ -157,11 +157,11 @@ router.post('/upload', tokenVerifier, (req, res) => {
 
 })
 
-router.get('/load/image', tokenVerifier,async (req, res) => {
+router.get('/load/:userId', async (req, res) => {
 
-    const { id } = req
+    const { params: { userId } } = req
 
-    const stream = await loadImageUser(id) 
+    const stream = await loadImageUser(userId) 
 
     res.setHeader('Content-Type', 'image/jpeg')
 

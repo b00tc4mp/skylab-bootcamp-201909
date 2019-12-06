@@ -1,19 +1,23 @@
 require('dotenv').config()
-const { validate, errors: { NotFoundError, ContentError }  } = require('gamerex-util')
-const { ObjectId, models: { User } } = require('gamerex-data')
+const { validate } = require('gamerex-util')
 const fs = require('fs')
 const path = require('path')
 
-module.exports = function (id) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+module.exports = function (userId) {
+    validate.string(userId)
+    validate.string.notVoid('user id', userId)
 
     return (async () => {
-        const user = await User.findById(id)
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
-        return fs.createReadStream(goTo)         
+        let goTo = path.join(__dirname, `../../data/users/${userId}/profile.png`)
+        try {
+            if (fs.existsSync(goTo)) {
+                return fs.createReadStream(goTo)
+            } else {
+                const defaultImage = path.join(__dirname, `../../data/nodata.png`)
+                return fs.createReadStream(defaultImage)
+            }
+        } catch (error) {
+        }   
     })()
 }

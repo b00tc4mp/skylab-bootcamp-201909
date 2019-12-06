@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+const API_URL = process.env.REACT_APP_API_URL
 
 export default function ({ game: { _id: id, title, platform, sell, exchange, favourite } }) {
 
@@ -17,10 +18,10 @@ export default function ({ game: { _id: id, title, platform, sell, exchange, fav
 
     const userGameLink = `/usergame/${id}`
 
-    const img = 'img/nodata.png'
+    const image = `${API_URL}/games/load/${id}`
 
     return <Link to={userGameLink} className="game-item__link">
-        <img className="game-item__img" src={img} alt="game" />
+        <img className="game-item__img" src={image} alt="game" />
         <p className="game-item__title">{title}</p>
         <p className="game-item__platform">{platform}</p>
         <span className="game-item__favourite">{showFav()}</span>

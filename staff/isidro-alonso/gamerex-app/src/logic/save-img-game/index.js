@@ -19,7 +19,7 @@ module.exports = function (token, gameId, file) {
             body: formData
         })
 
-        if (res.status === 201) return
+        if (res.status === 200) return
 
         if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
 

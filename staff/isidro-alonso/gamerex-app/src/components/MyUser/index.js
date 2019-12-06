@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { retrieveMyUser } from '../../logic'
 import MyGameList from '../MyGameList'
+const API_URL = process.env.REACT_APP_API_URL
 
 export default withRouter(function ({ history }) {
     const [id, setId] = useState()
@@ -38,12 +39,12 @@ export default withRouter(function ({ history }) {
 
     const userIdLink = `/updateuser/${id}`
 
-    const img = 'img/nodata.png'
+    const image = `${API_URL}/users/load/${id}`
 
     return <section className="user-profile">
         <h1 className="user-profile__title">{username}</h1>
         <section className="user-profile__item">
-            <img className="user-profile__img" src={img} alt="user" />
+            <img className="user-profile__img" src={image} alt="user" />
             <p className="user-profile__location">{location}</p>
             <p className="user-profile__email">{email}</p>
             <Link to={userIdLink}>

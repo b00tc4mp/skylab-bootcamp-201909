@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { retrieveGame, removeGame } from '../../logic'
+const API_URL = process.env.REACT_APP_API_URL
 
 export default withRouter(function ({ history }) {
 
@@ -58,12 +59,12 @@ export default withRouter(function ({ history }) {
 
     const updateGameLink = `/updategame/${gameId}`
 
-    const img = 'img/nodata.png'
+    const image = `${API_URL}/games/load/${gameId}`
 
     return <section className="game-detail">
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
-            <img className="game-detail__img" src={img} alt="game" />
+            <img className="game-detail__img" src={image} alt="game" />
             <p className="game-detail__platform">{platform}</p>
             {showFav()}
             {showSell()}
