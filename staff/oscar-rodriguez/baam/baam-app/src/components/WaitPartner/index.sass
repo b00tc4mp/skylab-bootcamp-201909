@@ -1,4 +1,4 @@
-.game
+.waiting
     width: 100vw
     height: 100vh
     position: absolute
@@ -18,16 +18,13 @@
     &__container
         position: relative
         display: flex
-        flex-direction: column
         justify-content: center
         align-items: center
         background: whitesmoke
         border-radius: 5px
         box-shadow: 10px 10px 10px black
         width: 40%
-        min-width: 550px
         height: 25%
-        min-height: 150px
         color: #2f2f2f
         z-index: 1001
     &__close
@@ -44,18 +41,10 @@
         justify-content: center
         align-items: center
         font-family: 'VT323', monospace
-    &__list
-        height: 80%
-        width: 90%
+        font-size: 3vh
+    &__img
         margin: 2% 0
-        //display: flex
-        //justify-content: flex-start
-        font-family: 'VT323', monospace
-        overflow: scroll
-        background-color: #5c5c5c
-        list-style: none
-        font-family: 'VT323', monospace
-        overflow-y: scroll
+        height: 6vh
     &__list-item
         width: 100%
         margin: 2% 1%

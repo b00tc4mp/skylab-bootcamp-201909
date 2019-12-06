@@ -1,6 +1,6 @@
 module.exports = {
     authenticateUser: require('./authenticate-user'),
-    //createGame: require('./create-game'),
+    createGame: require('./create-game'),
     //joinGame: require('./join-game'),
     registerUser: require('./register-user'),
     //retrieveCard: require('./retrieve-card'),
