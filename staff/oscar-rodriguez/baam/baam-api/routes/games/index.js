@@ -5,10 +5,25 @@ const { env: { SECRET } } = process
 const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
-const { createGame, joinGame, retrieveGame, addPlayerHand, playCard } = require('../../logic')
+const { createGame, joinGame, retrieveGame, addPlayerHand, playCard, deleteGame, retrievePendingGames } = require('../../logic')
 const { errors: { ConflictError, NotFoundError, ContentError, CredentialsError, CantAttackError } } = require('baam-util')
 
 const router = Router()
+
+router.get('/pending', tokenVerifier, (req, res) => {
+    try {
+        retrievePendingGames()
+            .then (games =>{
+                res.json(games)
+            })
+            .catch (error => {
+                const {message} = error
+                res.status (500).json({message})
+            })
+    } catch ({message}) {
+        res.status(400).json({message})
+    }
+})
 
 router.post('/create', tokenVerifier, (req, res) => {
     try {
@@ -103,6 +118,27 @@ router.patch('/:gameId/play-card', tokenVerifier, jsonBodyParser, (req, res) => 
                     return res.status(404).json({ message })
                 if (error instanceof ConflictError || error instanceof ContentError)
                     return res.status(400).json({ message })
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.delete('/:gameId', tokenVerifier, (req, res) => {
+    try {
+        const { id, params: { gameId } } = req
+
+        deleteGame(gameId, id)
+            .then(() => res.end())
+            .catch(error => {
+                const { message } = error
+                if (error instanceof CredentialsError)
+                    return res.status(401).json({ message })
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(403).json({ message })
                 res.status(500).json({ message })
             })
     } catch ({ message }) {
