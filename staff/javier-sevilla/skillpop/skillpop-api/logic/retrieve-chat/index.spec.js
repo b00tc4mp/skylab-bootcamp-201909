@@ -8,7 +8,7 @@ const { ObjectId, database, models: { User, Chat, Message } } = require('skillpo
 const bcrypt = require('bcryptjs')
 const salt = 10
 
-describe.only('logic - retrieve-chat', () => {
+describe('logic - retrieve-chat', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let name, surname, city, address, email, password
