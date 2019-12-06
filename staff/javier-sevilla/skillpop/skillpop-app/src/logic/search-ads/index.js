@@ -7,7 +7,7 @@ module.exports = function (query) {
     debugger
 
     return (async () => {
-        const res = await call(`${API_URL}/ads/search/${query}`, {
+        const res = await call(query ? `${API_URL}/search?q=${query}` : `${API_URL}/search`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
         })

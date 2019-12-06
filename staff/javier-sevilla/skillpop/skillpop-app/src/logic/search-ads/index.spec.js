@@ -111,27 +111,21 @@ describe('logic - retrieve ad', () => {
         debugger
 
         expect(ads).toBeDefined()
-        expect(ads).toHaveLength(2)
+        expect(ads).toHaveLength(4)
 
         ads.forEach(ad => {
             expect(ad).toBeDefined()
 
             expect(ad.id).toBeDefined()
             expect(ad.id).toBeOfType('string')
-            expect(adIds).toEqual(expect.arrayContaining([ad.id]))
-
-            expect(ad.user.toString()).toBe(id)
 
             expect(ad.title).toBeDefined()
             expect(ad.title).toBeOfType('string')
-            expect(titles).toEqual(expect.arrayContaining([ad.title]))
-
             expect(ad.description).toBeDefined()
             expect(ad.description).toBeOfType('string')
-            expect(descriptions).toEqual(expect.arrayContaining([ad.description]))
 
             expect(ad.price).toBeDefined()
-            expect(ad.description).toBeOfType('number')
+            expect(ad.price).toBeOfType('number')
 
             expect(ad.date).toBeDefined()
 
