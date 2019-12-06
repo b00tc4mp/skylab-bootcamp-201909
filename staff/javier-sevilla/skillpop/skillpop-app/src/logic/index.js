@@ -3,5 +3,6 @@ module.exports = {
     registerUser: require('./register-user'),
     retrieveUser: require('./retrieve-user'),
     retrievePublicUser: require('./retrieve-public-user'),
-    modifyUser: require('./modify-user')
+    modifyUser: require('./modify-user'),
+    createAd: require('./create-ad')
 }
