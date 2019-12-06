@@ -6,7 +6,7 @@ const { argv: [, , port], env: { PORT = port || 8080, DB_URL } } = process
 const cors = require('./utils/cors')
 const { database } = require('skillpop-data')
 
-const { users, ads, chats } = require('./routes')
+const { users, ads, chats, search } = require('./routes')
 
 const api = express()
 
@@ -19,6 +19,7 @@ api.options('*', cors, (req, res) => {
 api.use('/users', users)
 api.use('/ads', ads)
 api.use('/chats', chats)
+api.use('/search', search)
 
 database
     .connect(DB_URL)
