@@ -10,7 +10,7 @@ const { errors: { ConflictError, NotFoundError, ContentError, CredentialsError, 
 
 const router = Router()
 
-router.get('/pending', tokenVerifier, (req, res) => {
+router.get('/pending', (req, res) => {
     try {
         retrievePendingGames()
             .then (games =>{
