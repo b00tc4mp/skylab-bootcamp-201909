@@ -1,12 +1,12 @@
 require('dotenv').config()
-const { env: { DB_URL_TEST } } = process
+const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST} } = process
 //const { expect } = require('chai')
 const addLesson = require('.')
 const { random } = Math
 const { database, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 
 describe('logic - add lesson', () => {
-    before(() => database.connect(DB_URL_TEST))
+    beforeAll(() => database.connect(DB_URL_TEST))
 
     let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd, team, activity
 
@@ -38,21 +38,21 @@ describe('logic - add lesson', () => {
     it('should succeed on correct user and lesson data', async () => { 
         const lessonId = await addLesson(userId, date, timeStart, timeEnd, team, activity)
 
-        expect(lessonId).to.exist
-        expect(lessonId).to.be.a('string')
-        expect(lessonId).to.have.length.greaterThan(0)
+        expect(lessonId).toBeDefined()
+        expect(lessonId).toBe('string')
+        expect(lessonId).toBeGreaterThan(0)
 
         const lesson = await Lesson.findById(lessonId)
 
-        expect(lesson).to.exist
-        expect(lesson.user.toString()).to.equal(userId)
-        expect(lesson.date).to.equal(date)
-        expect(lesson.timeStart).to.equal(timeStart)
-        expect(lesson.timeEnd).to.equal(timeEnd)
-        expect(lesson.team).to.equal(team)
-        expect(lesson.activity).to.equal(activity)
+        expect(lesson).toBeDefined()
+        expect(lesson.user.toString()).toEqual(userId)
+        expect(lesson.date).toEqual(date)
+        expect(lesson.timeStart).toEqual(timeStart)
+        expect(lesson.timeEnd).toEqual(timeEnd)
+        expect(lesson.team).toEqual(team)
+        expect(lesson.activity).toEqual(activity)
 
     })
 
-    after(() => Promise.all([User.deleteMany(), Lesson.deleteMany()]).then(database.disconnect)) 
+    afterAll(() => Promise.all([User.deleteMany(), Lesson.deleteMany()]).then(database.disconnect)) 
 })

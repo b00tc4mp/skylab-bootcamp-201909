@@ -1,12 +1,12 @@
 require('dotenv').config()
-const { env: { DB_URL_TEST } } = process
+const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST } } = process
 //const { expect } = require('chai')
 const retrieveLessons = require('.')
 const { random } = Math
 const { database, ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')
 
 describe('logic - retrieve lessons', () => {
-    before(() => database.connect(DB_URL_TEST))
+    beforeAll(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password, role, lessonIds, dates, timeStarts, timeEnds, teams, activities
 
@@ -70,43 +70,43 @@ describe('logic - retrieve lessons', () => {
     it('should succeed on correct user and lesson data', async () => {
         const lessons = await retrieveLessons(id)
 
-        expect(lessons).to.exist
+        expect(lessons).toBeDefined()
         //expect(lessons).to.have.lengthOf(10)
 
         lessons.forEach(lesson => {
-            expect(lesson.id).to.exist
-            expect(lesson.id).to.be.a('string')
-            expect(lesson.id).to.have.length.greaterThan(0)
+            expect(lesson.id).toBeDefined()
+            expect(lesson.id).toBe('string')
+            expect(lesson.id).toBeGreaterThan(0)
             //expect(lesson.id).be.oneOf(lessonIds)
 
-            expect(lesson.user).to.equal(id)
+            expect(lesson.user).toEqual(id)
 
-            expect(lesson.date).to.exist
-            expect(lesson.date).to.be.a('string')
-            expect(lesson.date).to.have.length.greaterThan(0)
+            expect(lesson.date).toBeDefined()
+            expect(lesson.date).toBe('string')
+            expect(lesson.date).toBeGreaterThan(0)
             //expect(lesson.date).be.oneOf(dates)
 
-            expect(lesson.timeStart).to.exist
-            expect(lesson.timeStart).to.be.a('string')
-            expect(lesson.timeStart).to.have.length.greaterThan(0)
+            expect(lesson.timeStart).toBeDefined()
+            expect(lesson.timeStart).toBe('string')
+            expect(lesson.timeStart).toBeGreaterThan(0)
             //expect(lesson.timeStart).be.oneOf(timeStart)
 
-            expect(lesson.timeEnd).to.exist
-            expect(lesson.timeEnd).to.be.a('string')
-            expect(lesson.timeEnd).to.have.length.greaterThan(0)
+            expect(lesson.timeEnd).toBeDefined()
+            expect(lesson.timeEnd).toBe('string')
+            expect(lesson.timeEnd).toBeGreaterThan(0)
             //expect(lesson.timeEnd).be.oneOf(timeEnds)
 
-            expect(lesson.team).to.exist
-            expect(lesson.team).to.be.a('string')
-            expect(lesson.team).to.have.length.greaterThan(0)
+            expect(lesson.team).toBeDefined()
+            expect(lesson.team).toBe('string')
+            expect(lesson.team).toBeGreaterThan(0)
             //expect(lesson.team).be.oneOf(teams)
 
-            expect(lesson.activity).to.exist
-            expect(lesson.activity).to.be.a('string')
-            expect(lesson.activity).to.have.length.greaterThan(0)
+            expect(lesson.activity).toBeDefined()
+            expect(lesson.activity).toBe('string')
+            expect(lesson.activity).toBeGreaterThan(0)
             //expect(lesson.activity).be.oneOf(activities)
         })
     })
-            after(() => Promise.all([User.deleteMany(), Lesson.deleteMany()]).then(database.disconnect))
+            afterAll(() => Promise.all([User.deleteMany(), Lesson.deleteMany()]).then(database.disconnect))
 
 })

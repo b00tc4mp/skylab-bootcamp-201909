@@ -13,13 +13,15 @@ import Feedback from '../Feedback'
 import BookLesson from '../BookLesson'
 
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser, retrieveTeams, retrieveLessons, createTeam, addLesson } from '../../logic'
+import { authenticateUser, registerUser, retrieveUser, retrieveTeams, retrieveLessons, createTeam, addLesson, removeTeam  } from '../../logic'
 
 export default withRouter(function ({ history }) {
     const [name, setName] = useState()
     //const [user, setUser] = useState()
     const [teams, setTeams] = useState([])
     const [lessons, setLessons] = useState([])
+    //const [users, setUsers] = useState()
+    //const [role, setRole] = useState()
 
     useEffect(() => {
         const { token } = sessionStorage;
@@ -143,6 +145,11 @@ export default withRouter(function ({ history }) {
         //setTeams(teams) 
     }
 
+    async function handleRemoveTeam() {
+
+
+    }
+
 
     function handleGoBack() { history.push('/') }
 
@@ -151,6 +158,8 @@ export default withRouter(function ({ history }) {
 
         handleGoBack()
     }
+
+
 
     function handleBookLesson() { history.push('/book-lesson')}
     
@@ -168,7 +177,7 @@ export default withRouter(function ({ history }) {
         
         <Route path='/board-admin' render={() => token /* && user.role === 'admin' *//* I ES ADMIN */ ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} onBack={handleGoBack}/> : <Redirect to='/' /> } />
         <Route path='/lessonlist' render={() => token /* && user.role === 'admin' */ ? <LessonList user={name} lessons={lessons} onAddLesson={handleAddLesson} onBack={handleGoBack}/> : <Redirect to='/' />} />
-        <Route path='/teamlist' render={() => token /* && user.role === 'admin' */ ? <TeamList user={name} teams={teams} onCreateTeam={handleCreateTeam} onBack={handleGoBack}/> : <Redirect to='/' />} />
+        <Route path='/teamlist' render={() => token /* && user.role === 'admin' */ ? <TeamList user={name} teams={teams} onCreateTeam={handleCreateTeam} onRemoveTeam={removeTeam} onBack={handleGoBack}/> : <Redirect to='/' />} />
         <Route path='/create-team' render={() => token ? <CreateTeam user={name} teams={teams} /> : <Redirect to='/' /> } />
         <Route path='/add-lesson' render={() => token ? <AddLesson user={name} teams={teams} lessons={lessons} /> : <Redirect to='/' /> } />
         

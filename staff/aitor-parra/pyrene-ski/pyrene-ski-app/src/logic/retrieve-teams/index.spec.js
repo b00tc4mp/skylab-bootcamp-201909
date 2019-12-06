@@ -1,12 +1,12 @@
 require('dotenv').config()
-const { env: { DB_URL_TEST } } = process
+const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST } } = process
 //const { expect } = require('chai')
 const retrieveTeams = require('.')
 const { random } = Math
 const { database, ObjectId, models: { User, Team } } = require('pyrene-ski-data')
 
 describe('logic - retrieve teams', () => {
-    before(() => database.connect(DB_URL_TEST))
+    beforeAll(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password, role, teamIds, teamNames, teamEmails, teamPhones, teamActivities
 
@@ -65,35 +65,35 @@ describe('logic - retrieve teams', () => {
     it('should succeed on correct user and team data', async () => {
         const teams = await retrieveTeams(id)
 
-        expect(teams).to.exist
+        expect(teams).toBeDefined()
         expect(teams).to.have.lengthOf(20)
 
         teams.forEach(team => {
-            expect(team.id).to.exist
-            expect(team.id).to.be.a('string')
-            expect(team.id).to.have.length.greaterThan(0)
+            expect(team.id).toBeDefined()
+            expect(team.id).toBe('string')
+            expect(team.id).toBeGreaterThan(0)
             //expect(team.id).be.oneOf(teamIds)
 
-            expect(team.user).to.equal(id)
+            expect(team.user).toEqual(id)
 
-            expect(team.teamName).to.exist
-            expect(team.teamName).to.be.a('string')
-            expect(team.teamName).to.have.length.greaterThan(0)
+            expect(team.teamName).toBeDefined()
+            expect(team.teamName).toBe('string')
+            expect(team.teamName).toBeGreaterThan(0)
             //expect(team.teamName).be.oneOf(teamNames)
 
-            expect(team.teamEmail).to.exist
-            expect(team.teamEmail).to.be.a('string')
-            expect(team.teamEmail).to.have.length.greaterThan(0)
+            expect(team.teamEmail).toBeDefined()
+            expect(team.teamEmail).toBe('string')
+            expect(team.teamEmail).toBeGreaterThan(0)
             //expect(team.teamEmail).be.oneOf(teamEmails)
 
-            expect(team.teamPhone).to.exist
-            expect(team.teamPhone).to.be.a('string')
-            expect(team.teamPhone).to.have.length.greaterThan(0)
+            expect(team.teamPhone).toBeDefined()
+            expect(team.teamPhone).toBe('string')
+            expect(team.teamPhone).toBeGreaterThan(0)
             //expect(team.teamPhone).be.oneOf(teamPhones)
 
-            expect(team.teamActivity).to.exist
-            expect(team.teamActivity).to.be.a('string')
-            expect(team.teamActivity).to.have.length.greaterThan(0)
+            expect(team.teamActivity).toBeDefined()
+            expect(team.teamActivity).toBe('string')
+            expect(team.teamActivity).toBeGreaterThan(0)
             //expect(team.teamActivity).be.oneOf(teamActivities)
 
 
