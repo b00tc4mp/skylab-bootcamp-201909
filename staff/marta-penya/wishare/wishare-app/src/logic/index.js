@@ -10,5 +10,7 @@ module.exports = {
     modifyWish: require('./modify-wish'),
     removeWish: require('./delete-wish'),
     givenWish: require('./given-wish'),
-    searchUsers: require('./search-users')
+    searchUsers: require('./search-users'),
+    addFriend: require('./add-friend'),
+    retrieveFriends: require('./retrieve-friends')
 }

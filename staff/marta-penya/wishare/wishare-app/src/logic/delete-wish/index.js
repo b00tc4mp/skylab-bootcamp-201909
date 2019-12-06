@@ -23,7 +23,7 @@ module.exports = function (token, wishId) {
         const res = await call(`${API_URL}/wishes/${wishId}`, {
             method: 'DELETE',
             headers:{
-                'Authorization': `Barear ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             }
         })

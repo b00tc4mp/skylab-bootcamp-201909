@@ -43,7 +43,7 @@ module.exports = function ( token, wishId, title, link, price, description) {
         const res = await call(`${API_URL}/wishes/${wishId}`, {
             method: 'PATCH',
             headers:{
-                'Authorization': `Barear ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({title, link, price, description})

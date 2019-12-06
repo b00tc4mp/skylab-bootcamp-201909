@@ -1,7 +1,7 @@
 const { env: { REACT_APP_TEST_DB_URL: TEST_DB_URL, REACT_APP_TEST_SECRET: TEST_SECRET } } = process
 const { random } = Math
 const retrieveFriendBday = require('.')
-const { errors: { NotFoundError, ContentError, ConflictError } } = require('wishare-util')
+const { errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { database, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -31,7 +31,7 @@ describe('logic - retrieve friend bday', () => {
         birthday1 = new Date(year1, month1 - 1, day1, 2, 0, 0, 0)
 
         email2 = `email-${random()}@mail.com`
-        birthday2 = new Date(1990, 11, 5, 2, 0, 0, 0)
+        birthday2 = new Date(1990, 11, 12, 2, 0, 0, 0)
 
         await User.deleteMany()
 
@@ -62,7 +62,7 @@ describe('logic - retrieve friend bday', () => {
     })
 
     it('should succeed on correct friend birthday', async () => {
-
+        debugger
         const response = await retrieveFriendBday(token)
 
         expect(response).toBeDefined()

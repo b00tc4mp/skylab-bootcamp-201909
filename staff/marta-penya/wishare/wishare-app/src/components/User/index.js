@@ -1,12 +1,12 @@
 import React from 'react'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function({ user : { id, name, wishes }}){
+export default function({ user : { id, name, wishes }, addFriend}){
     return <li className="searchf__item">
     <div className="searchf__info">
         <span className="searchf__name">{name}</span>
-        <img className="searchf__photo" src={`${API_URL}/users/profileimage/${id}`} alt="pending wishes"/>
-        <button className="searchf__add"> Add friend</button>
+        <img className="searchf__photo" src={`${API_URL}/users/profileimage/${id}`} alt="profile photo"/>
+        <button className="searchf__add" onClick={event => { event.preventDefault(); addFriend(id) }}> Add friend</button>
     </div>
     <div className="searchf__wishes">
         <ul className="searchf__wisheslist">

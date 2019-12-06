@@ -44,7 +44,7 @@ module.exports = function (token, day, month, year, password, description) {
         const res = await fetch(`${API_URL}/users/update`, {
             method: 'PATCH',
             headers:{
-                'Authorization': `Barear ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({year, month, day, password, description})

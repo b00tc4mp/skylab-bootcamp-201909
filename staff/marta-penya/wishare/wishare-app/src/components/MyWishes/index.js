@@ -6,7 +6,7 @@ export default function({ onCreateWish, wishes, user, onEditWish, deleteWish, gi
 
     return <section className="mywishes hidden">
     <section className="mywishes__header">
-        <h1 className="mywishes__title">My Wishes</h1>
+        <h1 className="mywishes__title"> My Wishes</h1>
         <section className="mywishes__buttons">
             <button className="mywishes__btn"> My Wishes </button>
             <button className="mywishes__btn" onClick={event => { event.preventDefault(); onCreateWish() }}> Add a Wish </button>

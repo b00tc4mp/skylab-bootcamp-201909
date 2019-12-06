@@ -3,7 +3,7 @@ import './index.sass'
 import Feedback from '../Feedback'
 import UsersList from '../UsersList'
 
-export default function ({ onSearch, error, users, onMyFriends }) {
+export default function ({ onSearch, error, users, onMyFriends, addFriend }) {
     return <section className="searchf hidden">
         <section className="searchf__header">
             <h1 className="searchf__title">Friends</h1>
@@ -19,6 +19,7 @@ export default function ({ onSearch, error, users, onMyFriends }) {
             const query = event.target.query.value
 
             onSearch(query)
+            event.target.query.value = ''
         }} >
             <span className="searchf__searchtitle">Find your friends by e-mail adress</span>
             <input className="searchf__searchinput" type="search" id="search" name="query" />
@@ -27,7 +28,7 @@ export default function ({ onSearch, error, users, onMyFriends }) {
         </form>
 
 
-        {users.length > 0 && < UsersList users={users} />}
+        {users.length > 0 && < UsersList users={users} addFriend={addFriend} />}
 
     </section>
 }
