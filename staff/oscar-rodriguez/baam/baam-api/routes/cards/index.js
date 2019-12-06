@@ -5,7 +5,7 @@ const { env: { SECRET } } = process
 const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
-const { retrieveCard, retrieveCollectionCards, retrieveUserCards } = require('../../logic')
+const { retrieveCard, retrieveCollectionCards, retrieveUserCards, retrieveRandomCards } = require('../../logic')
 const { errors: { NotFoundError, ContentError, ConflictError } } = require('baam-util')
 
 const router = Router()
@@ -24,6 +24,25 @@ router.get('/:idCard', (req, res) => {
             })
     } catch ({ message }) {
         res.status(400).json({ message })
+    }
+})
+
+router.get('/random/:size', (req,res) => {
+    try {
+        const { params: { size } } = req
+
+        retrieveRandomCards(size)
+            .then (cards => {
+                res.json(cards)
+            })
+            .catch(error => {
+                const {message} = error
+                if (error instanceof NotFoundError)
+                    res.status(404).json({message})
+                res.status(500).json({message})
+            })
+    } catch ({message}) {
+        res.status(400).json({message})
     }
 })
 
