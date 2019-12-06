@@ -1,13 +1,13 @@
 require('dotenv').config()
-const { env: { DB_URL_TEST } } = process
-const { expect } = require('chai')
+const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST } } = process
+//const { expect } = require('chai')
 const { random } = Math
 const retrieveUser = require('.')
 const { errors: { NotFoundError } } = require('pyrene-ski-util')
 const { database, models: { User } } = require('pyrene-ski-data')
 
 describe('logic - retrieve user', () => {
-    before(() => database.connect(DB_URL_TEST))
+    beforeAll(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password
 
@@ -28,21 +28,21 @@ describe('logic - retrieve user', () => {
     it('should succeed on correct user id', async () => {
         const user = await retrieveUser(id)
 
-        expect(user).to.exist
-        expect(user.id).to.equal(id)
-        expect(user.id).to.be.a('string')
-        expect(user._id).to.not.exist
-        expect(user.name).to.equal(name)
-        expect(user.name).to.be.a('string')
-        expect(user.surname).to.equal(surname)
-        expect(user.surname).to.be.a('string')
-        expect(user.email).to.equal(email)
-        expect(user.email).to.be.a('string')
-        expect(user.username).to.equal(username)
-        expect(user.username).to.be.a('string')
-        expect(user.password).to.be.undefined
-        //expect(user.lastAccess).to.exist
-        //expect(user.lastAccess).to.be.an.instanceOf(Date)
+        expect(user).toBeTruthy()
+        expect(user.id).toEqual(id)
+        expect(user.id).toBe('string')
+        expect(user._id).toNotExist()
+        expect(user.name).toEqual(name)
+        expect(user.name).toBe('string')
+        expect(user.surname).toEqual(surname)
+        expect(user.surname).toBe('string')
+        expect(user.email).toEqual(email)
+        expect(user.email).toBe('string')
+        expect(user.username).toEqual(username)
+        expect(user.username).toBe('string')
+        expect(user.password).toBe(undefined)
+        //expect(user.lastAccess).toBeTruthy()
+        //expect(user.lastAccess).toBen.instanceOf(Date)
     })
 
     it('should fail on wrong user id', async () => {
@@ -53,13 +53,13 @@ describe('logic - retrieve user', () => {
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
+            expect(error).toBeTruthy()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toEqual(`user with id ${id} not found`)
         }
     })
 
     // TODO other cases
 
-    after(() => User.deleteMany().then(database.disconnect))
+    afterAll(() => User.deleteMany().then(database.disconnect))
 })

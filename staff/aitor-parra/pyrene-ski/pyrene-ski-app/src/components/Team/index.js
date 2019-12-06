@@ -2,10 +2,14 @@ import React from 'react'
 import '../../../src/template/index.sass'
 
 export default function ({ team: { id, teamName, teamEmail, teamPhone, teamActivity }, onChangeStatus }) {
-    return <a href="teamlist" className={`team team--$`}>
-        <h2 className="team__title">{teamName}</h2>
-        <p className="team__description">{teamEmail}</p>
-        <span className="team__action">
+    return <a href="/teamlist" className={'team'}>{id}
+        <p className="team__teamName">{teamName}</p>
+        <p className="team__teamEmail">{teamEmail}</p>
+        <p className="team__teamPhone">{teamPhone}</p>
+        <p className="team__teamActivity">{teamActivity}</p>
+    </a>
+}
+/*         <span className="team__action">
             <form method="post" onSubmit={event => { event.preventDefault(); onChangeStatus(id, 'TODO') }}>
                 <button type="submit" title="TODO"></button>
             </form>
@@ -24,6 +28,4 @@ export default function ({ team: { id, teamName, teamEmail, teamPhone, teamActiv
             <form method="post" onSubmit={event => { event.preventDefault(); onChangeStatus(id, 'DONE') }}>
                 <button type="submit" title="DONE"></button>
             </form>
-        </span>
-    </a>
-}
+        </span> */

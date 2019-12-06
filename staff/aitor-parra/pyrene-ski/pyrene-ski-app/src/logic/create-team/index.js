@@ -16,7 +16,7 @@ module.exports = function (token, teamName, teamEmail, teamPhone, teamActivity) 
     validate.string(teamPhone)
     validate.string.notVoid('teamPhone', teamPhone)
 
-    validate.string(description)
+    validate.string(teamActivity)
     validate.string.notVoid('teamActivity', teamActivity)
 
     return (async () => {

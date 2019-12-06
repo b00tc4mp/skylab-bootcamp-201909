@@ -4,5 +4,7 @@ module.exports = {
     registerUser: require('./register-user'),
     retrieveUser: require('./retrieve-user'),
     retrieveTeams: require('./retrieve-teams'),
-    retrieveLessons: require('./retrieve-lessons')
+    retrieveLessons: require('./retrieve-lessons'),
+    createTeam: require('./create-team'),
+    addLesson: require('./add-lesson')
 }
