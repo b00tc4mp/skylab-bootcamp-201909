@@ -31,7 +31,7 @@ router.get('/random/:size', (req,res) => {
     try {
         const { params: { size } } = req
 
-        retrieveRandomCards(size)
+        retrieveRandomCards(parseInt(size))
             .then (cards => {
                 res.json(cards)
             })
