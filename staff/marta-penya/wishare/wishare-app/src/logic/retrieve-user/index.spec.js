@@ -48,6 +48,8 @@ describe('logic - retrieve user', () => {
         expect(user.email).toBeOfType('string')
         expect(Date(user.birthday)).toBe(Date(birthday))
         expect(user.birthday).toBeOfType('string')
+        expect(user.lastAccess).toBeDefined()
+        expect(user.lastAccess).toBeOfType('string')
     })
 
     it('should fail on wrong user id', async () => {

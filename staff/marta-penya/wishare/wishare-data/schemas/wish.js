@@ -30,5 +30,8 @@ module.exports = new Schema({
         type: Boolean,
         default: false,
         required: true
+    },
+    lastAccess: {
+        type: Date
     } 
 })

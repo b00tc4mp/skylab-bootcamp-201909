@@ -8,7 +8,7 @@ const { database, ObjectId, models: { User, Wish } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 
-describe('logic - modify wish', () => {
+describe.only('logic - modify wish', () => {
     before(() => database.connect(TEST_DB_URL))
 
 
@@ -87,6 +87,9 @@ describe('logic - modify wish', () => {
         expect(wish.description).to.have.length.greaterThan(0)
         expect(wish.description).to.equal(newDescription)
 
+        expect(wish.lastAccess).to.exist
+        expect(wish.lastAccess).to.be.an.instanceOf(Date)
+
 
     })
 
@@ -106,6 +109,9 @@ describe('logic - modify wish', () => {
         expect(response).to.not.exist
 
         const user = await User.findById(id)
+
+        expect(user.lastAccess).to.exist
+        expect(user.lastAccess).to.be.an.instanceOf(Date)
 
         const wish = user.wishes.find(wish => wish.id === wishId)
         
@@ -132,6 +138,9 @@ describe('logic - modify wish', () => {
         expect(wish.description).to.be.a('string')
         expect(wish.description).to.have.length.greaterThan(0)
         expect(wish.description).to.equal(description)
+
+        expect(wish.lastAccess).to.exist
+        expect(wish.lastAccess).to.be.an.instanceOf(Date)
     })
     it('should succeed on correct user and new wish data, except for price', async () => {
         const newTitle = `new-title-${random()}`
@@ -175,6 +184,9 @@ describe('logic - modify wish', () => {
         expect(wish.description).to.be.a('string')
         expect(wish.description).to.have.length.greaterThan(0)
         expect(wish.description).to.equal(newDescription)
+
+        expect(wish.lastAccess).to.exist
+        expect(wish.lastAccess).to.be.an.instanceOf(Date)
     })
     it('should succeed on correct user and new wish data, except for link', async () => {
         const newTitle = `new-title-${random()}`
@@ -218,6 +230,9 @@ describe('logic - modify wish', () => {
         expect(wish.description).to.be.a('string')
         expect(wish.description).to.have.length.greaterThan(0)
         expect(wish.description).to.equal(newDescription)
+
+        expect(wish.lastAccess).to.exist
+        expect(wish.lastAccess).to.be.an.instanceOf(Date)
     })
 
     it('should succeed on correct user and new wish data, except for title', async () => {
@@ -262,6 +277,9 @@ describe('logic - modify wish', () => {
         expect(wish.description).to.be.a('string')
         expect(wish.description).to.have.length.greaterThan(0)
         expect(wish.description).to.equal(newDescription)
+
+        expect(wish.lastAccess).to.exist
+        expect(wish.lastAccess).to.be.an.instanceOf(Date)
     })
 
     it('should fail on wrong user id', async () => {

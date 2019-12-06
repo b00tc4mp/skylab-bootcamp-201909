@@ -64,6 +64,9 @@ describe.only('logic - modify user', () => {
         expect(user.description).to.have.length.greaterThan(0)
         expect(user.description).to.equal(newDescription)
 
+        expect(user.lastAccess).to.exist
+        expect(user.lastAccess).to.be.an.instanceOf(Date)
+
     })
     it('should succed on correct user and new data, except for birthday', async () => {
         const id = iduser
@@ -92,6 +95,9 @@ describe.only('logic - modify user', () => {
         expect(user.description).to.be.a('string')
         expect(user.description).to.have.length.greaterThan(0)
         expect(user.description).to.equal(newDescription)
+
+        expect(user.lastAccess).to.exist
+        expect(user.lastAccess).to.be.an.instanceOf(Date)
     })
     it('should succed on correct user and new data, except for password', async () => {
         const id = iduser
@@ -123,6 +129,9 @@ describe.only('logic - modify user', () => {
         expect(user.description).to.be.a('string')
         expect(user.description).to.have.length.greaterThan(0)
         expect(user.description).to.equal(newDescription)
+
+        expect(user.lastAccess).to.exist
+        expect(user.lastAccess).to.be.an.instanceOf(Date)
     })
     it('should succed on correct user and new data, except for description', async () => {
         const id = iduser
@@ -152,6 +161,9 @@ describe.only('logic - modify user', () => {
         expect(match).to.be.true
 
         expect(user.description).to.equal(description)
+
+        expect(user.lastAccess).to.exist
+        expect(user.lastAccess).to.be.an.instanceOf(Date)
     })
     it('should fail on wrong user id', async () => {
         const id = '012345678901234567890123'

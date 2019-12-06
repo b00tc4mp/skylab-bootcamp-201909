@@ -34,6 +34,10 @@ module.exports = (id, friendId) => {
 
         friends.splice(friendRemove, 1)
 
+        const friendBdayRemove = user.birthdayFriends.indexOf(ObjectId(friendId))
+
+        user.birthdayFriends.splice(friendBdayRemove, 1)
+        
         await user.save()
 
         const chat = await Chat.findOne({ owner: ObjectId(id) })

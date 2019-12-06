@@ -41,18 +41,20 @@ module.exports = function (token, day, month, year, password, description) {
     }
 
     return (async () => {
-        const res = await fetch(`${API_URL}/users/update`, {
+        const res = await call(`${API_URL}/users/update`, {
             method: 'PATCH',
             headers:{
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({year, month, day, password, description})
+            body: JSON.stringify({day, month, year, password, description})
         })
 
         if(res.status === 200) return
 
         if(res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)
+
+        if(res.status === 400) throw new NotFoundError(JSON.parse(res.body).message)
 
         if(res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)
 

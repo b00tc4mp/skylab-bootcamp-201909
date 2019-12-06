@@ -5,7 +5,7 @@ const API_URL = process.env.REACT_APP_API_URL
 export default function ({ wish : {id, title, price, link, description, given}, user, onEditWish, deleteWish, givenWish }){
     return <>
     <div className="mywishes__detail">
-        <img className="mywishes__wimage" src={`${API_URL}/wishes/${user.id}/wish/${id}`}/>
+        <img className="mywishes__wimage" src={`${API_URL}/wishes/${user.id}/wish/${id}?timestamp=${Date.now()}`}/>
         <span className="mywishes__price">{price} €</span>
     </div>
     <div className="mywishes__info">

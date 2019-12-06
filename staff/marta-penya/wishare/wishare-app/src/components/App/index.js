@@ -17,11 +17,11 @@ import EditProfile from '../EditProfile'
 import EditWish from '../EditWish'
 
 //logic
-import { registerUser, authenticateUser, retrieveUser, retrieveBirthdays, modifyUser, saveProfileImage, createWish, saveWishImage, modifyWish, removeWish, givenWish, searchUsers, addFriend, retrieveFriends } from '../../logic'
+import { registerUser, authenticateUser, retrieveUser, retrieveBirthdays, modifyUser, saveProfileImage, createWish, saveWishImage, modifyWish, removeWish, givenWish, searchUsers, addFriend, retrieveFriends, deleteFriend } from '../../logic'
 
 export default withRouter(function ({ history }) {
+
 	const [user, setUser] = useState({})
-	//const [view, setView] = useState('')
 	const [error, setError] = useState()
 	const [birthdays, setBirthdays] = useState([])
 	const [wishes, setWishes] = useState([])
@@ -29,6 +29,7 @@ export default withRouter(function ({ history }) {
 	const [idWish, setIdWish] = useState()
 	const [users, setUsers] = useState([])
 	const [friends, setFriends] = useState([])
+	const [render, setRender] = useState(true)
 
 
 	useEffect(() => {
@@ -37,6 +38,7 @@ export default withRouter(function ({ history }) {
 
 		(async () => {
 			if (token) {
+
 				const user = await retrieveUser(token)
 
 				setUser(user)
@@ -48,9 +50,12 @@ export default withRouter(function ({ history }) {
 				const friends = await retrieveFriends(token)
 
 				setFriends(friends)
+
+				const birthdays = await retrieveBirthdays(token)
+				setBirthdays(birthdays)
 			}
 		})()
-	}, [sessionStorage.token, wishes, friends])
+	}, [sessionStorage.token])
 
 
 	async function handleRegister(name, surname, email, year, month, day, password, passwordconfirm) {
@@ -93,10 +98,9 @@ export default withRouter(function ({ history }) {
 
 			if (image) {
 				let profileImage = await saveProfileImage(token, image)
-				debugger
+
 				setProfileImage(profileImage)
 			}
-			debugger
 
 			const user = await retrieveUser(token)
 			setUser(user)
@@ -119,6 +123,8 @@ export default withRouter(function ({ history }) {
 			if (image) {
 				await saveWishImage(token, wishId, image)
 			}
+
+			sessionStorage.token = token
 
 			const user = await retrieveUser(token)
 
@@ -150,9 +156,6 @@ export default withRouter(function ({ history }) {
 			const user = await retrieveUser(token)
 
 			setUser(user)
-
-			const wishes = user.wishes
-			setWishes(wishes)
 
 			history.push('/mywishes')
 
@@ -208,6 +211,7 @@ export default withRouter(function ({ history }) {
 			const users = await searchUsers(query)
 
 			setUsers(users)
+
 			history.push('/searchfriends')
 		} catch (error) {
 			const { message } = error
@@ -220,10 +224,38 @@ export default withRouter(function ({ history }) {
 	async function handleAddFriend(friendId) {
 		try {
 			const { token } = sessionStorage
-			debugger
+
 			await addFriend(token, friendId)
 
-			debugger
+			const user = await retrieveUser(token)
+			
+			setUser(user)
+			
+			const friends = await retrieveFriends(token)
+			
+			setFriends(friends)
+
+			setRender(!render)
+			
+			history.push('/myfriends')
+
+		} catch (error) {
+			const { message } = error
+			setError(message)
+		}
+	}
+
+	//delete a friend
+
+	async function handleDeleteFriend(friendId) {
+		try {
+			const { token } = sessionStorage
+
+			await deleteFriend(token, friendId)
+
+			const user = await retrieveUser(token)
+
+			setUser(user)
 
 			const friends = await retrieveFriends(token)
 
@@ -236,7 +268,6 @@ export default withRouter(function ({ history }) {
 			setError(message)
 		}
 	}
-
 	//header logout function to clear token 
 	function handleLogout() {
 		sessionStorage.clear()
@@ -284,7 +315,7 @@ export default withRouter(function ({ history }) {
 			<Route path='/createwish' render={() => token ? <AddWish onMyWishes={handleOnMyWishes} onAddWish={handleAddWish} /> : <Redirect to='/' />} />
 			<Route path='/searchfriends' render={() => token ? <SearchFriends onSearch={handleSearch} users={users} error={error} onMyFriends={handleOnMyFriends} addFriend={handleAddFriend} /> : <Redirect to='/' />} />
 			<Route path='/mywishes' render={() => token ? <MyWishes onCreateWish={handleOnCreateWish} wishes={wishes} user={user} onEditWish={handleOnEditWish} deleteWish={handleDeleteWish} givenWish={handleGivenWish} /> : <Redirect to='/' />} />
-			<Route path='/myfriends' render={() => token ? <MyFriends onSearchFriends={handleOnSearchFriends} friends={friends} /> : <Redirect to='/' />} />
+			<Route path='/myfriends' render={() => token ? <MyFriends onSearchFriends={handleOnSearchFriends} friends={friends} deleteFriend={handleDeleteFriend} /> : <Redirect to='/' />} />
 			<Route path='/savedwishes' render={() => token ? <SavedWishes /> : <Redirect to='/' />} />
 			<Route path='/myprofile' render={() => token ? <MyProfile user={user} onEditProfile={handleOnEditProfile} profileImage={profileImage} /> : <Redirect to='/' />} />
 			<Route path='/editprofile' render={() => token ? <EditProfile onMyProfile={handleOnMyProfile} onModify={handleModify} /> : <Redirect to='/' />} />

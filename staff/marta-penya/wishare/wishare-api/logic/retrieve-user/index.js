@@ -1,5 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
-const { ObjectId, models: { User } } = require('wishare-data')
+const { ObjectId, models: { User, Chat } } = require('wishare-data')
 const fs = require('fs')
 
 
@@ -25,8 +25,11 @@ module.exports = function (id) {
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir)
         } 
+        user.lastAccess = new Date
         
-        const { name, surname, email, description, wishes, savedWishes, friends } = user.toObject()
+        await user.save()
+
+        const { name, surname, email, description, wishes, savedWishes, friends, lastAccess } = user.toObject()
             wishes.forEach(wish => {
                 wish.id = wish._id.toString()
                 delete wish._id
@@ -34,7 +37,11 @@ module.exports = function (id) {
             })
         let birthday = user.birthday.toLocaleDateString()
 
-        return { id, name, surname, email, birthday, description, wishes, savedWishes, friends }
+        const chat = await Chat.create({ owner: id })
+
+        await chat.save()
+
+        return { id, name, surname, email, birthday, description, wishes, savedWishes, friends, lastAccess }
     })()
 }
 

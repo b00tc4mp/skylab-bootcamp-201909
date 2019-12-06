@@ -12,5 +12,6 @@ module.exports = {
     givenWish: require('./given-wish'),
     searchUsers: require('./search-users'),
     addFriend: require('./add-friend'),
-    retrieveFriends: require('./retrieve-friends')
+    retrieveFriends: require('./retrieve-friends'),
+    deleteFriend: require('./delete-friend')
 }

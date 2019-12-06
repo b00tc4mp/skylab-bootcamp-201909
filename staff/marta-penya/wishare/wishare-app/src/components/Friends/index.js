@@ -2,7 +2,7 @@ import React from 'react'
 import './index.sass'
 import Friend from '../Friend'
 
-export default function({onSearchFriends, friends}){
+export default function({onSearchFriends, friends, deleteFriend}){
     return <section className="friends">
     <section className="friends__header">
         <h1 className="friends__title">Friends</h1>
@@ -13,7 +13,7 @@ export default function({onSearchFriends, friends}){
     </section>
 
     <ul className="friends__list">
-        { friends.map(friend => <a className="searchf__link" key={friend._id}><Friend friend={friend} /></a>)}
+        { friends.map(friend => <a className="searchf__link" key={friend._id}><Friend friend={friend} deleteFriend={deleteFriend} /></a>)}
     </ul>
 </section>
 }

@@ -54,5 +54,8 @@ module.exports = new Schema({
             type: ObjectId,
             ref: 'Wish'
         }
-    }]   
+    }],
+    lastAccess: {
+        type: Date
+    }  
 })

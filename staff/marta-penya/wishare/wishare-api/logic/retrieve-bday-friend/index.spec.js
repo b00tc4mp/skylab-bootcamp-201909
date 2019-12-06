@@ -7,7 +7,7 @@ const { errors: { NotFoundError, ContentError, ConflictError } } = require('wish
 const { database, ObjectId, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - retrieve friend bday', () => {
+describe('logic - retrieve friend bday', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2
@@ -36,7 +36,7 @@ describe.only('logic - retrieve friend bday', () => {
         birthday1 = new Date(year1, month1 - 1, day1, 2, 0, 0, 0)
 
         email2 = `email-${random()}@mail.com`
-        birthday2 = new Date(1990, 11, 5, 2, 0, 0, 0)
+        birthday2 = new Date(1990, 11, 12, 2, 0, 0, 0)
 
         title = `title-${random()}`
         link = `link-${random()}`

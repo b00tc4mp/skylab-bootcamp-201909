@@ -19,7 +19,6 @@ export default function ({ onSearch, error, users, onMyFriends, addFriend }) {
             const query = event.target.query.value
 
             onSearch(query)
-            event.target.query.value = ''
         }} >
             <span className="searchf__searchtitle">Find your friends by e-mail adress</span>
             <input className="searchf__searchinput" type="search" id="search" name="query" />
@@ -28,7 +27,7 @@ export default function ({ onSearch, error, users, onMyFriends, addFriend }) {
         </form>
 
 
-        {users.length > 0 && < UsersList users={users} addFriend={addFriend} />}
+        {users && < UsersList users={users} addFriend={addFriend} />}
 
     </section>
 }

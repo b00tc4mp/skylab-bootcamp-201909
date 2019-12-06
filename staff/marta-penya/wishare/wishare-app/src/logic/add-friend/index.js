@@ -26,7 +26,7 @@ module.exports = (token, friendId) => {
                 'Content-Type': 'application/json'
             }
         })
-        debugger
+ 
         if (res.status === 200) return
 
         if (res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)

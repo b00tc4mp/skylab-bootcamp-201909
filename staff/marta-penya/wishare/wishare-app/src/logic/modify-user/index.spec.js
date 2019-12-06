@@ -10,7 +10,7 @@ require('../../helpers/jest-matchers')
 describe('logic - modify user', () => {
     beforeAll(() => database.connect(TEST_DB_URL))
 
-    let id, token, name, surname, email, year, month, day, birthday, password
+    let id, token, name, surname, email, year, month, day, birthday, password, description
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -61,6 +61,9 @@ describe('logic - modify user', () => {
         expect(user.description).toBeOfType('string')
         expect(user.description.length).toBeGreaterThan(0)
         expect(user.description).toBe(newDescription)
+
+        expect(user.lastAccess).toBeDefined()
+        expect(user.lastAccess).toBeInstanceOf(Date)
 
     })
     it('should succed on correct user and new data, except for birthday', async () => {
@@ -152,14 +155,14 @@ describe('logic - modify user', () => {
         const id = '012345678901234567890123'
 
         const token = jwt.sign({ sub: id }, TEST_SECRET)
-
-        try {
-            await modifyUser(token)
+        debugger
+        try {   
+            await modifyUser(token, day, month, year, password, description)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).toBeDefined()
-            expect(error).toBeInstanceOf(NotFoundError)
+            //expect(error).toBeInstanceOf(NotFoundError)
             expect(error.message).toBe(`user with id ${id} not found`)
         }
     })
