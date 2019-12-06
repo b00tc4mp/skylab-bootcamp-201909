@@ -43,7 +43,7 @@ export default withRouter(function ({ history }) {
         })()
     }, [sessionStorage.token])
 
-    const image = `${API_URL}/games/load/${gameId}`
+    const image = `${API_URL}/games/load/${gameId}?timestamp=${Date.now()}`
 
     return <section className="game-detail">
         <h1 className="game-detail__title">{title}</h1>

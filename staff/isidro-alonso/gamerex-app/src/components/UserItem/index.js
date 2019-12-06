@@ -19,7 +19,7 @@ export default withRouter(function ({ user: {_id: userId, username} }) {
         })()
     }, [sessionStorage.token])
 
-    const image = `${API_URL}/users/load/${userId}`
+    const image = `${API_URL}/users/load/${userId}?timestamp=${Date.now()}`
 
     const userLink = (userId !== id)? `/userinfo/${userId}`:`/myuser`;
 

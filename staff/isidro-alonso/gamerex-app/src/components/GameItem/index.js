@@ -18,7 +18,7 @@ export default function ({ game: { _id: id, title, platform, sell, exchange, fav
 
     const userGameLink = `/usergame/${id}`
 
-    const image = `${API_URL}/games/load/${id}`
+    const image = `${API_URL}/games/load/${id}?timestamp=${Date.now()}`
 
     return <Link to={userGameLink} className="game-item__link">
         <img className="game-item__img" src={image} alt="game" />

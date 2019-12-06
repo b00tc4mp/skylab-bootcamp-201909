@@ -28,7 +28,7 @@ export default withRouter(function ({ history }) {
         })()
     }, [sessionStorage.token])
 
-    const image = `${API_URL}/users/load/${userId}`
+    const image = `${API_URL}/users/load/${userId}?timestamp=${Date.now()}`
 
     return <section className="user-profile">
         <h1 className="user-profile__title">{username}</h1>

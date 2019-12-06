@@ -39,7 +39,7 @@ export default withRouter(function ({ history }) {
 
     const userIdLink = `/updateuser/${id}`
 
-    const image = `${API_URL}/users/load/${id}`
+    const image = `${API_URL}/users/load/${id}?timestamp=${Date.now()}`
 
     return <section className="user-profile">
         <h1 className="user-profile__title">{username}</h1>
