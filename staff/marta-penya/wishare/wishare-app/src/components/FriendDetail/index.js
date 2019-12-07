@@ -1,20 +1,31 @@
-import React, {useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.sass'
-
+import { retrieveFriend } from '../../logic'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ friend: { friendId, name, surname, email, birthday, description, wishes }, handleRetrieveFriend }) {
+export default function ({ id }) {
+    const [friend, setFriend] = useState({})
+    const [friendId, setFriendId] = useState()
 
-    useEffect(() => {	
+    useEffect(() => {
+        const { token } = sessionStorage;
+        if (token) {
+            (async () => {
 
-        const { friendId } = sessionStorage; 
+                const friend = await retrieveFriend(token, id)
 
-		(async () => {
+                setFriend(friend)
 
-            handleRetrieveFriend(friendId)
-		})()
-	}, [sessionStorage.token])
+                const friendId = id
 
+                setFriendId(friendId)
+
+            })()
+        }
+    }, [sessionStorage.token ])
+
+    const { name, surname, email, birthday, description, wishes } = friend
+    console.log(wishes)
     return <section className="friend-detail hidden">
         <section className="friend-detail__container">
             <button className="friend-detail__back"> Back </button>
@@ -30,9 +41,9 @@ export default function ({ friend: { friendId, name, surname, email, birthday, d
 
         <section className="friend-detail__wishes">
             <h2 className="friend-detail__title">{name}'s Wishes</h2>
-            <ul className="friend-detail__list">
-                {/* {wishes.length < 1 && <p classNameName="mywishes__nowish"> {name} have no wishes added</p>}
-                {wishes.map(wish => <li className="friend-detail__wish">
+            <ul className="friend-detail__list"> 
+                {!wishes && <p classNameName="mywishes__nowish"> {name} has no wishes added</p>}
+                {wishes && wishes.map(wish => <li className="friend-detail__wish" key={wish.id}>
                     <div className="friend-detail__detail">
                         <img className="friend-detail__wimage" src={`${API_URL}/wishes/${friendId}/wish/${wish.id.toString()}?timestamp=${Date.now()}`} />
                         <span className="friend-detail__price">{wish.price} €</span>
@@ -47,7 +58,7 @@ export default function ({ friend: { friendId, name, surname, email, birthday, d
                         <button className="friend-detail__save">Save wish</button>
                         <button className="friend-detail__save">Block wish</button>
                     </div>
-                </li>)} */}
+                </li>)}
             </ul>
         </section>
     </section>

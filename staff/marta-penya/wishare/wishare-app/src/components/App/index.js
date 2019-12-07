@@ -41,7 +41,6 @@ export default withRouter(function ({ history }) {
 
 		(async () => {
 			if (token) {
-				console.log('pasa')
 				const user = await retrieveUser(token)
 
 				setUser(user)
@@ -277,14 +276,15 @@ export default withRouter(function ({ history }) {
 		try {
 			const { token } = sessionStorage
 			setFriendId(friendId)
-			sessionStorage.friendId = friendId
+			//sessionStorage.friendId = friendId
 
 			const friend = await retrieveFriend(token, friendId)
 
+			const id = friend.friendId
 			setFriend(friend)
 			setRender(!render)
 
-			history.push(`/friend/${friendId}`)
+			history.push(`/friend/${id}`)
 
 		} catch (error) {
 			const { message } = error
@@ -292,18 +292,18 @@ export default withRouter(function ({ history }) {
 		}
 	}
 
-	async function handleFriendDetail1(friendId) {
-		try {
-			const { token } = sessionStorage
+	// async function handleFriendDetail1(friendId) {
+	// 	try {
+	// 		const { token } = sessionStorage
 
-			const friend = await retrieveFriend(token, friendId)
-			setFriend(friend)
+	// 		const friend = await retrieveFriend(token, friendId)
+	// 		setFriend(friend)
 
-		} catch (error) {
-			const { message } = error
-			setError(message)
-		}
-	}
+	// 	} catch (error) {
+	// 		const { message } = error
+	// 		setError(message)
+	// 	}
+	// }
 
 	//header logout function to clear token 
 	function handleLogout() {
@@ -357,8 +357,7 @@ export default withRouter(function ({ history }) {
 			<Route path='/myprofile' render={() => token ? <MyProfile user={user} onEditProfile={handleOnEditProfile} /> : <Redirect to='/' />} />
 			<Route path='/editprofile' render={() => token ? <EditProfile onMyProfile={handleOnMyProfile} onModify={handleModify} /> : <Redirect to='/' />} />
 			<Route path='/editwish' render={() => token ? <EditWish onEditWish={handleEditWish} onMyWishes={handleOnMyWishes} /> : <Redirect to='/' />} />
-			<Route path='/friend/:friendId' render={({ match: { params: { friendId } } }) => token ? <FriendDetail friendId={friendId} friend={friend} handleRetrieveFriend={handleFriendDetail1}/> : <Redirect to='/' />} />
-			
+			<Route path='/friend/:id' render={ props => token ? <FriendDetail id={props.match.params.id} friend={friend}/> : <Redirect to='/' />} />
 		</>
 	)
 })
