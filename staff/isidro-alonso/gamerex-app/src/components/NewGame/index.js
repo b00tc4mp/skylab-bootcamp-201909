@@ -70,8 +70,8 @@ export default withRouter(function ({ history }) {
                                 <img src="img/exchange.png" alt="exchange" />...to exchange</p>
                         <p className="game-newedit__favourite"><input className="game-newedit__checkbox" type="checkbox" name="favourite" value={favourite} onChange={event => setFavourite(event.target.checked ? true : false)} />
                                 <img src="img/favourite.png" alt="favourite" />...to mark as favourite</p>
-                        <p className="game-newedit__subtitle">Add game image</p><input type="file" name="filetoupload" className="game-newedit__addimg" />
-                        <button className="game-newedit__submit" disabled={isDisabled}>Add</button>
+                        {/* <p className="game-newedit__subtitle">Add game image</p><input type="file" name="filetoupload" className="game-newedit__addimg" /> */}
+                        <button className="game-newedit__submit" disabled={isDisabled}>Add game</button>
                 </form>
         </section>
 })

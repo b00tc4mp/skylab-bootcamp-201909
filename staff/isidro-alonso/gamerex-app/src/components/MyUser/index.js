@@ -39,16 +39,23 @@ export default withRouter(function ({ history }) {
 
     const userIdLink = `/updateuser/${id}`
 
+    const userIdImgLink = `/updateimguser/${id}`
+
     const image = `${API_URL}/users/load/${id}?timestamp=${Date.now()}`
 
     return <section className="user-profile">
         <h1 className="user-profile__title">{username}</h1>
         <section className="user-profile__item">
-            <img className="user-profile__img" src={image} alt="user" />
+            <Link to={userIdImgLink}>
+                <img className="user-profile__img" src={image} alt="user" />
+            </Link>
             <p className="user-profile__location">{location}</p>
             <p className="user-profile__email">{email}</p>
             <Link to={userIdLink}>
-                <button className="user-profile__update">Update profile</button>
+                <button className="user-profile__update">Update profile info</button>
+            </Link>
+            <Link to={userIdImgLink}>
+                <button className="user-profile__update">Update profile image</button>
             </Link>
             <button className="user-profile__logout" onClick={handleLogout}>Logout</button>
         </section>

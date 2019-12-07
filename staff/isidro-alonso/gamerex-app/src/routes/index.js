@@ -3,10 +3,12 @@ import Register from '../components/Register'
 import MyUser from '../components/MyUser'
 import User from '../components/User'
 import UpdateUser from '../components/UpdateUser'
+import UpdateUserImage from '../components/UpdateUserImage'
 import MyGame from '../components/MyGame'
 import Game from '../components/Game'
 import NewGame from '../components/NewGame'
 import UpdateGame from '../components/UpdateGame'
+import UpdateGameImage from '../components/UpdateGameImage'
 import Landing from '../components/Landing'
 
 const checkIfRelative = (s) => {
@@ -22,8 +24,12 @@ export default function getRoute(route) {
             return MyGame;
         if (route.includes('updategame'))
             return UpdateGame;
+        if (route.includes('updateimggame'))
+            return UpdateGameImage;
         if (route.includes('updateuser'))
             return UpdateUser;
+        if (route.includes('updateimguser'))
+            return UpdateUserImage;
         if (route.includes('userinfo'))
             return User;
     }

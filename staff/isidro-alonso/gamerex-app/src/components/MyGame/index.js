@@ -59,18 +59,25 @@ export default withRouter(function ({ history }) {
 
     const updateGameLink = `/updategame/${gameId}`
 
+    const updateGameImgLink = `/updateimggame/${gameId}`
+
     const image = `${API_URL}/games/load/${gameId}?timestamp=${Date.now()}`
 
     return <section className="game-detail">
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
-            <img className="game-detail__img" src={image} alt="game" />
+            <Link to={updateGameImgLink}>
+                <img className="game-detail__img" src={image} alt="game" />
+            </Link>
             <p className="game-detail__platform">{platform}</p>
             {showFav()}
             {showSell()}
             {showExch()}
             <Link to={updateGameLink}>
                 <button className="game-detail__edit">Edit game info</button>
+            </Link>
+            <Link to={updateGameImgLink}>
+                <button className="game-detail__edit">Edit game image</button>
             </Link>
             <button className="game-detail__remove" onClick={handleRemoveGame}>Remove game</button>
             <h1 className="game-detail__title">Chat if you are interested!</h1>

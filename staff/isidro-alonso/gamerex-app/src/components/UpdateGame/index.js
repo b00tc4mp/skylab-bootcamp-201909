@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
-import { modifyGame, saveImageGame } from '../../logic'
+import { modifyGame } from '../../logic'
 import { withRouter } from 'react-router-dom'
 
 export default withRouter(function ({ history }) {
+
+        const { location: { pathname } } = history
+        const gameId = pathname.substr(12)
 
         const [title, setTitle] = useState('')
         const [platform, setPlatform] = useState('')
@@ -10,31 +13,11 @@ export default withRouter(function ({ history }) {
         const [exchange, setExchange] = useState(false)
         const [favourite, setFavourite] = useState(false)
 
-        const { location: { pathname } } = history
-        const gameId = pathname.substr(12)
-
         async function handleUpdateGame(title, platform, sell, exchange, favourite) {
                 try {
                         const { token } = sessionStorage
 
                         await modifyGame(token, gameId, title, platform, sell, exchange, favourite)
-
-                        history.push('/myuser')
-
-                } catch (error) {
-                        console.error(error)
-                }
-        }
-
-        async function handleSaveImageGame() {
-                try {
-                        const { token } = sessionStorage
-
-                        let fileInput = document.getElementById('imggame')
-
-                        let file = fileInput.files[0]
-
-                        await saveImageGame(token, gameId, file)
 
                         history.push('/myuser')
 
@@ -68,15 +51,6 @@ export default withRouter(function ({ history }) {
                         <p className="game-newedit__favourite"><input className="game-newedit__checkbox" type="checkbox" name="favourite" value={favourite} onChange={event => setFavourite(event.target.checked ? true : false)} />
                                 <img src="img/favourite.png" alt="favourite" />...to mark as favourite</p>
                         <button className="game-newedit__submit" disabled={isDisabled}>Update info</button>
-                </form>
-                <form id="imgform" onSubmit={e => {
-                        e.preventDefault()
-
-                        handleSaveImageGame()
-                }}>
-                        <p className="game-newedit__subtitle">Update game image</p>
-                        <input type="file" name="filetoupload" id="imggame" className="game-newedit__addimg" />
-                        <button className="game-newedit__submit">Update image</button>
                 </form>
         </section>
 })
