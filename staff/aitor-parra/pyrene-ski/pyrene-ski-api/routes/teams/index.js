@@ -9,7 +9,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/teamcreate', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/teamcreate', tokenVerifier, jsonBodyParser, (req, res) => { 
     try {
         const { id, body: { teamName, teamEmail, teamPhone, teamActivity } } = req
 
@@ -21,10 +21,10 @@ router.post('/teamcreate', tokenVerifier, jsonBodyParser, (req, res) => {
                 if (error instanceof NotFoundError)
                     return res.status(404).json({ message })
 
-                res.status(500).json({ message })    
+                res.status(400).json({ message })    
             })
     } catch ({ message }) {
-        res.status(400).json({ message })
+        res.status(500).json({ message })
     }
 })
 

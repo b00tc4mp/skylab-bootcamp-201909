@@ -18,7 +18,7 @@ module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
     validate.string(teamActivity)
     validate.string.notVoid('teamActivity', teamActivity)
 
-    return (async () => {
+    return (async () => { 
 
         const user = await User.findById(id)
 
