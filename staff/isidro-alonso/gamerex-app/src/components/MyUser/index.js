@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { retrieveMyUser } from '../../logic'
 import MyGameList from '../MyGameList'
+import Feedback from '../Feedback'
 const API_URL = process.env.REACT_APP_API_URL
 
 export default withRouter(function ({ history }) {
@@ -9,6 +10,8 @@ export default withRouter(function ({ history }) {
     const [username, setUsername] = useState()
     const [location, setLocation] = useState()
     const [email, setEmail] = useState()
+
+    const [error, setError] = useState('')
 
     useEffect(() => {
         const { token } = sessionStorage;
@@ -33,7 +36,7 @@ export default withRouter(function ({ history }) {
             history.push('/')
 
         } catch (error) {
-            console.error(error)
+            setError(error.toString())
         }
     }
 
@@ -44,6 +47,7 @@ export default withRouter(function ({ history }) {
     const image = `${API_URL}/users/load/${id}?timestamp=${Date.now()}`
 
     return <section className="user-profile">
+        {error && <Feedback message={error} />}
         <h1 className="user-profile__title">{username}</h1>
         <section className="user-profile__item">
             <Link to={userIdImgLink}>

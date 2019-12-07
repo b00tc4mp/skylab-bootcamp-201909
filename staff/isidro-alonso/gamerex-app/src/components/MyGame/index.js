@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { retrieveGame, removeGame } from '../../logic'
+import Feedback from '../Feedback'
 const API_URL = process.env.REACT_APP_API_URL
 
 export default withRouter(function ({ history }) {
@@ -10,6 +11,8 @@ export default withRouter(function ({ history }) {
     const [favourite, setFavourite] = useState()
     const [sell, setSell] = useState()
     const [exchange, setExchange] = useState()
+
+    const [error, setError] = useState('')
 
     function showFav() {
         if (favourite) return <p className="game-detail__favourite"><img src="img/favourite.png" alt="favourite" /> My favourite</p>
@@ -52,7 +55,7 @@ export default withRouter(function ({ history }) {
                 history.push('/myuser')
 
             } catch (error) {
-                console.error(error)
+                setError(error.toString())
             }
         }
     }
@@ -64,6 +67,7 @@ export default withRouter(function ({ history }) {
     const image = `${API_URL}/games/load/${gameId}?timestamp=${Date.now()}`
 
     return <section className="game-detail">
+        {error && <Feedback message={error} />}
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
             <Link to={updateGameImgLink}>

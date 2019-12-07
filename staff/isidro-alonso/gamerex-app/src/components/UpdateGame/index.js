@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { modifyGame } from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Feedback from '../Feedback'
 
 export default withRouter(function ({ history }) {
 
@@ -13,6 +14,8 @@ export default withRouter(function ({ history }) {
         const [exchange, setExchange] = useState(false)
         const [favourite, setFavourite] = useState(false)
 
+        const [error, setError] = useState('')
+
         async function handleUpdateGame(title, platform, sell, exchange, favourite) {
                 try {
                         const { token } = sessionStorage
@@ -22,13 +25,14 @@ export default withRouter(function ({ history }) {
                         history.push('/myuser')
 
                 } catch (error) {
-                        console.error(error)
+                        setError(error.toString())
                 }
         }
 
         const isDisabled = !title || !platform
 
         return <section className="game-newedit">
+                {error && <Feedback message={error} />}
                 <form onSubmit={e => {
                         e.preventDefault()
 

@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import {registerUser} from '../../logic'
 import {authenticateUser} from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Feedback from '../Feedback'
 
 export default withRouter(function({ history }) {
     const [username, setUsername] = useState('')
     const [location, setLocation] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const [error, setError] = useState('')
 
     const handleRegister =async (e)=>{
         e.preventDefault()
@@ -17,13 +20,14 @@ export default withRouter(function({ history }) {
             sessionStorage.token = token
             history.push('/')
         } catch(error) {
-            console.error(error)
+            setError(error.toString())
         }
     }
 
     const isDisabled = !username || !location || !email || !password
 
     return <section className="register">
+        {error && <Feedback message={error} />}
             <form onSubmit={handleRegister}>
                 <h1 className="register__title">Register</h1>
                 <input className="register__field" type="text" name="username" placeholder="username" onChange={({target})=>setUsername(target.value)} />

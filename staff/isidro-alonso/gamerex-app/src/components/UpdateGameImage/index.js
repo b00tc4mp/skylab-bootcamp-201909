@@ -1,11 +1,14 @@
 import React from 'react'
 import { saveImageGame } from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Feedback from '../Feedback'
 
 export default withRouter(function ({ history }) {
 
         const { location: { pathname } } = history
         const gameId = pathname.substr(15)
+
+        const [error, setError] = useState('')
 
         async function handleSaveImageGame() {
                 try {
@@ -20,11 +23,12 @@ export default withRouter(function ({ history }) {
                         history.push('/myuser')
 
                 } catch (error) {
-                        console.error(error)
+                        setError(error.toString())
                 }
         }
 
         return <section className="game-newedit">
+                {error && <Feedback message={error} />}
                 <form id="imgform" onSubmit={e => {
                         e.preventDefault()
 

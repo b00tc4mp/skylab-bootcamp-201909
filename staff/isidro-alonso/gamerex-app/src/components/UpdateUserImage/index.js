@@ -1,8 +1,11 @@
 import React from 'react'
 import { saveImageUser } from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Feedback from '../Feedback'
 
 export default withRouter(function ({ history }) {
+
+    const [error, setError] = useState('')
 
     async function handleSaveImageUser() {
         try {
@@ -17,11 +20,12 @@ export default withRouter(function ({ history }) {
             history.push('/myuser')
 
         } catch (error) {
-            console.error(error)
+            setError(error.toString())
         }
     }
 
     return <section className="updateprofile">
+        {error && <Feedback message={error} />}
         <form id="imgform" onSubmit={e => {
             e.preventDefault()
 

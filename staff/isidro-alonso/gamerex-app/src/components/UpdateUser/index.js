@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { modifyUser } from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Feedback from '../Feedback'
 
 export default withRouter(function ({ history }) {
 
@@ -11,6 +12,8 @@ export default withRouter(function ({ history }) {
     const [location, setLocation] = useState('')
     const [password, setPassword] = useState('')
 
+    const [error, setError] = useState('')
+
     async function handleUpdateUser(username, location, password) {
         try {
             const { token } = sessionStorage
@@ -20,13 +23,14 @@ export default withRouter(function ({ history }) {
             history.push('/myuser')
 
         } catch (error) {
-            console.error(error)
+            setError(error.toString())
         }
     }
 
     const isDisabled = !username || !location || !password
 
     return <section className="updateprofile">
+        {error && <Feedback message={error} />}
         <form onSubmit={e => {
             e.preventDefault()
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { createGame, listGames } from '../../logic'
 import { withRouter } from 'react-router-dom'
+import Feedback from '../Feedback'
 
 export default withRouter(function ({ history }) {
 
@@ -12,6 +13,8 @@ export default withRouter(function ({ history }) {
 
         const [games, setGames] = useState([])
 
+        const [error, setError] = useState('')
+
         async function handleNewGame(title, platform, sell, exchange, favourite) {
                 try {
 
@@ -22,7 +25,7 @@ export default withRouter(function ({ history }) {
                         history.push('/myuser')
 
                 } catch (error) {
-                        console.error(error)
+                        setError(error.toString())
                 }
         }
 
@@ -50,6 +53,7 @@ export default withRouter(function ({ history }) {
         const isDisabled = !title || !platform
 
         return <section className="game-newedit">
+                {error && <Feedback message={error} />}
                 <form onSubmit={e => {
                         e.preventDefault()
 
