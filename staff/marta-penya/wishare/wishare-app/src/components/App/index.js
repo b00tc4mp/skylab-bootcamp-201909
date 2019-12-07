@@ -195,7 +195,7 @@ export default withRouter(function ({ history }) {
 		try {
 			const { token } = sessionStorage
 			await givenWish(token, id)
-
+			
 			history.push('/mywishes')
 
 		} catch (error) {
