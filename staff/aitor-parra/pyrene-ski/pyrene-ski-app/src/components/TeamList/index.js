@@ -14,29 +14,10 @@ export default function({user, teams, onChangeTeamStatus}) {
            <Link className="team-list team-list__back" to="/board-admin">Go back</Link>
             {teams.map(team => <li className="team-list__item" key={team.id}>{<Team team={team} onChangeStatus={onChangeTeamStatus} />}</li>)}
            </ul>
+           <Link className="team-list__createTeam" to="/create-team">Create new Team</Link>
         </>
 }
 
-/* 
-<h4 className="team-list__user">trying desctructuring: {user}, {Name}, {Mail}, {Phone}, {Activity}</h4>
-{
-	"_id" : ObjectId("5de912ac1b1dd52126111a02"),
-	"user" : ObjectId("5de826f91b1dd521261119fd"),
-	"teamName" : "Cleo-7",
-	"teamEmail" : "cleo@mail.com",
-	"teamPhone" : "777",
-	"teamActivity" : "ski",
-	"__v" : 0
-} */
 
 
-/*                     return <section className="team-list">
-<h3 className="team-list__title">Lessons list</h3>
-
-</section>
-*/
-
-/* export default function ({ tasks, onChangeTaskStatus }) {
-    return <ul className="task-list">
-        {tasks.map(task => <li className="task-list__item" key={task.id}><Task task={task} onChangeStatus={onChangeTaskStatus} /></li>)}
-    </ul> */
+//<h3 className="admin__teamlist"><a href="/teamlist" onClick={event => { event.preventDefault(); onTeamList()}}>Team list</a></h3>

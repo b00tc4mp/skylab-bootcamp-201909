@@ -1,27 +1,35 @@
-const { validate, errors: { NotFoundError, ConflictError, ContentError } } = require('pyrene-ski-util')
-const { ObjectId, models: { User, Team } } = require('pyrene-ski-data')
+const call = require('../../utils/call')
+const { validate, errors: { NotFoundError, ConflictError, CredentialsError } } = require('pyrene-ski-util')
+//const { ObjectId, models: { User, Team } } = require('pyrene-ski-data')
+const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (id, teamId) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+module.exports = function (token, teamId) {
+    validate.string(token)
+    validate.string.notVoid('token', token)
+    //if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     validate.string(teamId)
     validate.string.notVoid('team id', teamId)
-    if (!ObjectId.isValid(teamId)) throw new ContentError(`${teamId} is not a valid teamId`)
+    //if (!ObjectId.isValid(teamId)) throw new ContentError(`${teamId} is not a valid teamId`)
 
     return (async () => {
-        const user = await User.findById(id)
+        const res = await call(`${API_URL}/teams/${teamId}`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
 
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        })
 
-        const team = await Team.findById(teamId)
+        if (res.status === 200) return
 
-        if (!team) throw new NotFoundError(`user does not have team with id ${teamId}`)
+        if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)
 
-        if (team.user.toString() !== id.toString()) throw new ConflictError(`user with id ${id} does not correspond to task with id ${teamId}`)
+        if (res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)
 
-        await Team.deleteOne({ _id: ObjectId(teamId) })
+        if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)
+
+        throw new Error(JSON.parse(res.body).message)
     })()
 }
 

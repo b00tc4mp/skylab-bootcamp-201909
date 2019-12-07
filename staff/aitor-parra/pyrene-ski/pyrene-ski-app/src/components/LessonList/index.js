@@ -3,16 +3,14 @@ import '../../../src/template/index.sass'
 import Lesson from '../Lesson'
 import { Link } from 'react-router-dom'
 
-export default function({user, lessons, onChangeLessonStatus}){
+export default function({user, lessons, onDeleteLesson }){
 
     return <>
           <h4 className="lesson-list__user">user: {user}</h4>
           <ul className="lesson-list lesson-list__title">LESSON LIST
-          
-
-
-            {lessons.map(lesson => <li className="lesson-list__item" key={lesson.id}>{ <Lesson lesson={lesson} onChangeStatus={onChangeLessonStatus} /> }</li>)}
+            {lessons.map(lesson => <li className="lesson-list__item" key={lesson.id}>{ <Lesson lesson={lesson} onDeleteLesson={onDeleteLesson} /> }</li>)}
         </ul>
+        <Link className="lesson-list__addLesson" to="/add-lesson">Add new Lesson</Link>
         </>
     } 
     /*  

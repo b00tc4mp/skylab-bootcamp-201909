@@ -7,32 +7,17 @@ export default function ({ team: { id, teamName, teamEmail, teamPhone, teamActiv
         <p className="team__teamEmail">{teamEmail} </p>
         <p className="team__teamPhone">{teamPhone} </p>
         <p className="team__teamActivity">{teamActivity} </p>
-        <span className="team__teamDelete">
-            <form method="delete" onSubmit={event => { event.preventDefault(); onRemoveTeam(id) }}>
-                <button type="submit" title="delete-button">❌</button>
-            </form>
-        </span>
 
 
     </a>
 }
-/*         <span className="team__action">
-            <form method="post" onSubmit={event => { event.preventDefault(); onChangeStatus(id, 'TODO') }}>
-                <button type="submit" title="TODO"></button>
-            </form>
-        </span>
-        <span className="team__action">
-            <form method="post" onSubmit={event => { event.preventDefault(); onChangeStatus(id, 'DOING') }}>
-                <button type="submit" title="DOING"></button>
-            </form>
-        </span>
-        <span className="team__action">
-            <form method="post" onSubmit={event => { event.preventDefault(); onChangeStatus(id, 'REVIEW') }}>
-                <button type="submit" title="REVIEW"></button>
-            </form>
-        </span>
-        <span className="team__action">
-            <form method="post" onSubmit={event => { event.preventDefault(); onChangeStatus(id, 'DONE') }}>
-                <button type="submit" title="DONE"></button>
-            </form>
-        </span> */
+/*         
+--------- TO DELETE TEAM --------
+<span className="team__teamDelete">
+    <form method="delete" onSubmit={event => { event.preventDefault(); onRemoveTeam(id) }}>
+        <button type="submit" title="delete-button">❌</button>
+    </form>
+</span>
+---------------------------------
+
+*/

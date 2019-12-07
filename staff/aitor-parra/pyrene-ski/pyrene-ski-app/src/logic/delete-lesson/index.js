@@ -1,36 +1,34 @@
-const { validate, errors: { NotFoundError, ConflictError, ContentError } } = require('pyrene-ski-util')
-const { ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')
+const call = require('../../utils/call')
+const { validate, errors: { NotFoundError, ConflictError, CredentialsError } } = require('pyrene-ski-util')
+//const { ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')
+const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function(id, lessonId) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+module.exports = function(token, lessonId) {
+    validate.string(token)
+    validate.string.notVoid('token', token)
+    //if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     validate.string(lessonId)
     validate.string.notVoid('lessonId', lessonId)
-    if (!ObjectId.isValid(lessonId)) throw new ContentError(`${lessonId} is not a valid lessonid`)
+    //if (!ObjectId.isValid(lessonId)) throw new ContentError(`${lessonId} is not a valid lessonid`)
 
     return (async () => {
-        const user = await call(`${API_URL}/lessons/:lessonId`, {
+        const res = await call(`${API_URL}/lessons/${lessonId}`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({lessonId})
+                'Authorization': `Bearer ${token}`
+            }
         })
 
-        if (res.status === 201) return JSON.parse()
+        if (res.status === 201) return 
 
-        if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)
 
-        const lesson = await Lesson.findById(lessonId)
+        if (res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)
 
-        if (!lesson) throw new NotFoundError(`user does not have lesson with id ${lessonId}`)
+        if (res.status === 409) throw new ConflictError(JSON.parse(res.body).message)  
 
-        if (lesson.user.toString() !== id.toString()) throw new ConflictError(`user with id ${id} does not correspond to lesson with id ${lessonId}`)  
-
-        await lesson.deleteOne({ _id: ObjectId(lessonId) })
+        throw new Error(JSON.parse(res.body).message)
 
     })()
 }
@@ -49,4 +47,4 @@ module.exports = function(id, lessonId) {
 
     await lesson.deleteOne({ _id: ObjectId(lessonId) })
 
-})() */
+})() */ 

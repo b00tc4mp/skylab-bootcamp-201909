@@ -12,12 +12,13 @@ import LessonList from '../LessonList'
 import Feedback from '../Feedback'
 import BookLesson from '../BookLesson'
 
+
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser, retrieveTeams, retrieveLessons, createTeam, addLesson, removeTeam  } from '../../logic'
+import { authenticateUser, registerUser, retrieveUser, retrieveTeams, retrieveLessons, createTeam, addLesson, deleteLesson  } from '../../logic'
 
 export default withRouter(function ({ history }) {
     const [name, setName] = useState()
-    //const [user, setUser] = useState()
+    const [user, setUser] = useState()
     const [teams, setTeams] = useState([])
     const [lessons, setLessons] = useState([])
     //const [users, setUsers] = useState()
@@ -28,9 +29,11 @@ export default withRouter(function ({ history }) {
 
         (async () => {
             if (token) {
-                const { name } = await retrieveUser(token)
+                const { name, user } = await retrieveUser(token)
 
                 setName(name)
+
+                setUser(user)
 
             //  COMO REDIRECCIONAR DE BOARDCLIENT O BOARDADMIN EN FUNCION DE SI ROLE 'admin' o ROLE 'client'
 
@@ -74,7 +77,7 @@ export default withRouter(function ({ history }) {
         }
     }
 
-    async function handleLogin(username, password) {
+    async function handleLogin(username, password) {debugger
         try {
             const token = await authenticateUser(username, password)
 
@@ -84,12 +87,14 @@ export default withRouter(function ({ history }) {
 
             const user = await retrieveUser(token)
             
-            //setUser(user)
+            setUser(user)
 
 
             user && (user.role === 'admin') && history.push('/board-admin')
 
             user && (user.role === 'client') && history.push('/board-client')
+
+
 
            //history.push('/board')
      
@@ -100,7 +105,9 @@ export default withRouter(function ({ history }) {
 
 
 
-    function handleGoToLessonList() { history.push('/lessonlist'); setLessons(lessons)  }
+    function handleGoToLessonList() { history.push('/lessonlist'); setLessons(lessons) 
+
+}
 
     function handleGoToTeamList() { history.push('/teamlist'); setTeams(teams)
     }
@@ -115,7 +122,7 @@ export default withRouter(function ({ history }) {
 
     async function handleAddLesson(date, timeStart, timeEnd, teamName, teamActivity) {
         try {
-            const { token } = sessionStorage.token
+            const token = sessionStorage.token
     
             await addLesson(token, date, timeStart, timeEnd)
     
@@ -129,10 +136,10 @@ export default withRouter(function ({ history }) {
     }
 
 
-    async function handleCreateTeam(teamName, teamEmail, teamPhone, teamActivity) {
+    async function handleCreateTeam(teamName, teamEmail, teamPhone, teamActivity) {debugger
         try {
 
-            const { token } = sessionStorage.token
+            const token = sessionStorage.token
 
             await createTeam(token, teamName, teamEmail, teamPhone, teamActivity)
 
@@ -145,8 +152,19 @@ export default withRouter(function ({ history }) {
         //setTeams(teams) 
     }
 
-    async function handleRemoveTeam() {
+    async function handleDeleteLesson(id) {debugger
+        try {
 
+            const  token  = sessionStorage.token
+
+            await deleteLesson(token, id)
+
+            await retrieveLessons(token)
+        } catch (error) {
+            console.error(error)
+        }
+
+            
 
     }
 
@@ -176,10 +194,10 @@ export default withRouter(function ({ history }) {
         <Route path='/login' render={() => token ? <Redirect to='/login' /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
         
         <Route path='/board-admin' render={() => token /* && user.role === 'admin' *//* I ES ADMIN */ ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} onBack={handleGoBack}/> : <Redirect to='/' /> } />
-        <Route path='/lessonlist' render={() => token /* && user.role === 'admin' */ ? <LessonList user={name} lessons={lessons} onAddLesson={handleAddLesson} onBack={handleGoBack}/> : <Redirect to='/' />} />
-        <Route path='/teamlist' render={() => token /* && user.role === 'admin' */ ? <TeamList user={name} teams={teams} onCreateTeam={handleCreateTeam} onRemoveTeam={removeTeam} onBack={handleGoBack}/> : <Redirect to='/' />} />
-        <Route path='/create-team' render={() => token ? <CreateTeam user={name} teams={teams} /> : <Redirect to='/' /> } />
-        <Route path='/add-lesson' render={() => token ? <AddLesson user={name} teams={teams} lessons={lessons} /> : <Redirect to='/' /> } />
+        <Route path='/lessonlist' render={() => token /* && user.role === 'admin' */ ? <LessonList user={name} lessons={lessons} onDeleteLesson={handleDeleteLesson} onBack={handleGoBack}/> : <Redirect to='/' />} />
+        <Route path='/teamlist' render={() => token /* && user.role === 'admin' */ ? <TeamList user={name} teams={teams} onCreateTeam={handleCreateTeam} onBack={handleGoBack}/> : <Redirect to='/' />} />
+        <Route path='/create-team' render={() => token ? <CreateTeam user={name} teams={teams} onCreateTeam={handleCreateTeam}/> : <Redirect to='/' /> } />
+        <Route path='/add-lesson' render={() => token ? <AddLesson user={name} teams={teams} lessons={lessons} onAddLesson={handleAddLesson} /> : <Redirect to='/' /> } />
         
         <Route path='/board-client' render={() => token /* && user.role === 'client' *//* I ES CLIENT */ ? <BoardClient user={name} onBookLesson={handleBookLesson} onLessonList={handleGoToLessonList} onLogout={handleLogout} /> : <Redirect to='/' />} />
         <Route path='/book-lesson' render={() => token /* && user.role === 'client'  */? <BookLesson user={name} /> : <Redirect to='/' />  }/>

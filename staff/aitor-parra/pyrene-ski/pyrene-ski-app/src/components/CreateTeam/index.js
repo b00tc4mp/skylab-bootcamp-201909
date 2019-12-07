@@ -1,4 +1,36 @@
-import React, { useState } from 'react'
+import React from 'react'
+import '../../template/index.sass'
+import Feedback from '../Feedback'
+
+export default function({ onCreateTeam, onBack, error }) {
+    return <section className="register">
+
+        <h3 className="team-create__title">Create TEAM</h3>
+        <form className="team-create__form" onSubmit={function (event) {debugger
+            event.preventDefault()
+
+            const { teamName: { value: teamName }, teamEmail: { value: teamEmail }, teamPhone: { value: teamPhone }, teamActivity: { value: teamActivity } } = event.target
+
+            onCreateTeam(teamName, teamEmail, teamPhone, teamActivity)
+        }}>
+            <input className="team-create__field" type="text" name="teamName" placeholder="name"/>
+            <input className="team-create__field" type="email" name="teamEmail" placeholder="e-mail"/>
+            <input className="team-create__field" type="tel" pattern="[0-9]{9}" name="teamPhone" placeholder="phone"/>
+            <input className="team-create__field" type="text" name="teamActivity" placeholder="activity"/>
+            <button className="team-create__button">Creat team</button>
+            <a className="team-create__back" href="/" onClick={event => {
+                        event.preventDefault()
+
+                        onBack()
+                    }}>Go back</a>
+        </form>
+
+        {error && <Feedback message={error} />}
+</section>
+
+}
+
+/* import React, { useState } from 'react'
 
 export default function ({ onSubmit }) {
     const [teamName, setTeamName] = useState('')
@@ -18,16 +50,25 @@ export default function ({ onSubmit }) {
         }}>
             <input type="text" name="teamName" value={teamName} onChange={event => setTeamName(event.target.value)} />
             <input type="text" name="teamEmail" value={teamEmail} onChange={event => setTeamEmail(event.target.value)}/>
-            <input type="text" name="dTeamPhone" value={teamPhone} onChange={event => setTeamPhone(event.target.value)}/>
-            <input type="text" name="TeamActivity" value={teamActivity} onChange={event => setTeamActivity(event.target.value)}/>
-            <button>Create</button>
+            <input type="text" name="teamPhone" value={teamPhone} onChange={event => setTeamPhone(event.target.value)}/>
+            <input type="text" name="teamActivity" value={teamActivity} onChange={event => setTeamActivity(event.target.value)}/>
+            <button type="submit" title="create-team-button">Create</button>
 
         </form>
 
     </section>
 
-}
 
+<span className="lesson__lessonDelete">
+<form method="delete" onSubmit={event => { event.preventDefault(); onDeleteLesson(id) }}>
+    <button type="submit" title="delete-button">❌</button>
+</form>
+</span>
+
+
+
+}
+ */
 /* import React from 'react'
 import '../../template/index.sass'
 import Feedback from '../Feedback'

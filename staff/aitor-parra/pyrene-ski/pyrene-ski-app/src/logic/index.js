@@ -7,5 +7,6 @@ module.exports = {
     retrieveLessons: require('./retrieve-lessons'),
     createTeam: require('./create-team'),
     addLesson: require('./add-lesson'),
-    removeTeam: require('./remove-team')
+    //removeTeam: require('./remove-team'),
+    deleteLesson: require('./delete-lesson')
 }

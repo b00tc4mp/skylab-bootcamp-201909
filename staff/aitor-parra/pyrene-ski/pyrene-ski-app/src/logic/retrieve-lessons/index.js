@@ -7,7 +7,7 @@ module.exports = function (token) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
-    return (async () => {
+    return (async () => {debugger
         const res = await call(`${API_URL}/lessons/lessonlist`, {
             method: 'GET',
             headers: {
