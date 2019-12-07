@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './index.sass'
-import Landing from '../Landing'
 import Register from '../Register'
+import Header from '../Header'
 import Login from '../Login'
+import Landing from '../Landing'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser} from '../../logic'
-import Hello from '../Hello'
+import { authenticateUser, registerUser, retrieveUser, searchAds} from '../../logic'
 
 export default withRouter(function ({ history }) {
     // const [name, setName] = useState()
@@ -14,24 +14,21 @@ export default withRouter(function ({ history }) {
     useEffect(() => {
         const { token } = sessionStorage;
 
-        (async () => {
-            if (token) {
-                const { name } = await retrieveUser(token)
+        // (async () => {
+        //     if (token) {
+        //         const { name } = await retrieveUser(token)
 
-                setName(name)
+        //         setName(name)
 
-                await retrieveTasks(token)
-            }
-        })()
+        //         await retrieveTasks(token)
+        //     }
+        // })()
     }, [sessionStorage.token])
 
-    // function handleGoToRegister() { history.push('/register') }
 
-    // function handleGoToLogin() { history.push('/login') }
-
-    async function handleRegister(name, surname, email, username, password) {
+    async function handleRegister(name, surname, city, address, email, password) {
         try {
-            await registerUser(name, surname, email, username, password)
+            await registerUser(name, surname, city, address, email, password)
 
             history.push('/login')
         } catch (error) {
@@ -39,47 +36,51 @@ export default withRouter(function ({ history }) {
         }
     }
 
-    async function handleLogin(username, password) {
+    async function handleLogin(email, password) {
         try {
-            const token = await authenticateUser(username, password)
+            const token = await authenticateUser(email, password)
 
             sessionStorage.token = token
 
-            history.push('/search')
+            history.push('/')
         } catch (error) {
             console.error(error)
         }
     }
 
-    function handleGoBack() { history.push('/') }
+    async function handleSearch(query) {
+        try {
+            const token = await searchAds(query)
 
-    function handleLogout() {
-        sessionStorage.clear()
-
-        handleGoBack()
+            history.push('/login')
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
-    // async function handleNewTask(title, description) {
-    //     try {
-    //         const { token } = sessionStorage
+    function handleGoBack(webant) { 
+        history.push(`/${webant}`) 
+        }
 
-    //         await createTask(token, title, description)
-
-    //         await retrieveTasks(token)
-    //     } catch (error) {
-    //         console.error(error)
-    //     }
-    // }
+    function handleLogout() {
+        sessionStorage.clear()
+        const webant = "login"
+        handleGoBack(webant)
+    }
 
     const { token } = sessionStorage
 
     return <>
-        <Route exact path="/" render={() => token ? <Redirect to="/search" /> : <Landing onRegister={handleGoToRegister} onLogin={handleGoToLogin} />} />
-        <Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
-        <Route path="/login" render={() => token ? <Redirect to="/board" /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
-        <Route path="/board" render={() => token ? <Board user={name} tasks={tasks} onLogout={handleLogout} onChangeTaskStatus={handleChangeTaskStatus} onNewTask={handleNewTask} /> : <Redirect to="/" />} />
-        {/* <Route path="/hello/:name" render={props => <Hello name={props.match.params.name} />} /> */}
-        <Route path="/hello/:name" render={({ match: { params: { name } } }) => <Hello name={name} />} />
+        {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
+        <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogout={handleLogout}/></>}/> 
+        <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
+        <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/> 
+
     </>
 })
+{/* <Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
+<Route path="/login" render={() => token ? <Redirect to="/board" /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
+<Route path="/board" render={() => token ? <Board user={name} tasks={tasks} onLogout={handleLogout} onChangeTaskStatus={handleChangeTaskStatus} onNewTask={handleNewTask} /> : <Redirect to="/" />} />
+<Route path="/hello/:name" render={props => <Hello name={props.match.params.name} />} />
+<Route path="/hello/:name" render={({ match: { params: { name } } }) => <Hello name={name} />} /> */}

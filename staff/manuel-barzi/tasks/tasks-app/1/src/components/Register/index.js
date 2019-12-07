@@ -6,7 +6,7 @@ export default function({ onRegister, onBack, error }) {
     return <section className="view register _hide">
         <form onSubmit={function (event) {
             event.preventDefault()
-
+            debugger
             const { name: { value: name }, surname: { value: surname }, email: { value: email }, username: { value: username }, password: { value: password } } = event.target
 
             onRegister(name, surname, email, username, password)
@@ -20,7 +20,7 @@ export default function({ onRegister, onBack, error }) {
             <button className="register__submit">📨</button>
             <a className="register__back" href="" onClick={event => {
                 event.preventDefault()
-
+                
                 onBack()
             }}>Go back</a>
         </form>
