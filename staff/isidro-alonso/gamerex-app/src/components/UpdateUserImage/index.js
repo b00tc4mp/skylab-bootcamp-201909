@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { saveImageUser } from '../../logic'
 import { withRouter } from 'react-router-dom'
 import Feedback from '../Feedback'
