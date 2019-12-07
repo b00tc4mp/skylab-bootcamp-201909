@@ -7,7 +7,7 @@ const { errors: { NotFoundError, ContentError } } = require('wishare-util')
 const { database, models: { User } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - modify user', () => {
+describe('logic - modify user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let iduser, name, surname, email, year, month, day, birthday, password
@@ -41,7 +41,7 @@ describe.only('logic - modify user', () => {
         const newPassword = `new-password-${random()}`
         const newDescription = `new-description-${random()}`
 
-        const response = await modifyUser(id, newYear, newMonth, newDay, newPassword, newDescription)
+        const response = await modifyUser(id, newDay, newMonth, newYear, newPassword, newDescription)
 
         expect(response).to.not.exist
 
@@ -108,7 +108,7 @@ describe.only('logic - modify user', () => {
 
         const { password } = await User.findById(id)
 
-        const response = await modifyUser(id, newYear, newMonth, newDay, undefined, newDescription)
+        const response = await modifyUser(id, newDay, newMonth, newYear, undefined, newDescription)
 
         expect(response).to.not.exist
 
@@ -142,7 +142,7 @@ describe.only('logic - modify user', () => {
 
         const { description } = await User.findById(id)
 
-        const response = await modifyUser(id, newYear, newMonth, newDay, newPassword, undefined)
+        const response = await modifyUser(id, newDay, newMonth, newYear, newPassword, undefined)
 
         expect(response).to.not.exist
 

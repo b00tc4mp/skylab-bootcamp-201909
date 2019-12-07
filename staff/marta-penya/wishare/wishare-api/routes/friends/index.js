@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { addFriend, deleteFriend, saveFriendWish, removeFriendWish, retrieveBirthdayFriends, retrieveFriends } = require('../../logic')
+const { addFriend, deleteFriend, saveFriendWish, removeFriendWish, retrieveBirthdayFriends, retrieveFriends, retrieveFriend } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -123,7 +123,7 @@ router.get('/birthday', tokenVerifier, (req, res) => {
     }
 })
 
-//retrieve
+//retrieve all friends 
 router.get('/', tokenVerifier, (req, res) => {
     try {
         const { id } = req
@@ -141,5 +141,24 @@ router.get('/', tokenVerifier, (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+router.get('/:friendId', tokenVerifier, (req, res) => {
+    try {
+        const { id , params: { friendId } } = req
+        retrieveFriend(id, friendId)
+            .then(friend => res.json(friend))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
 
 module.exports = router

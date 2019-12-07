@@ -1,8 +1,8 @@
 import React from 'react'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function({ friend : { name, id, wishes }, deleteFriend}){
-    return <li className="friends__item">
+export default function({ friend : { name, id, wishes }, deleteFriend, onFriendDetail}){
+    return <a className="friends__item" href="#" onClick={event => { event.preventDefault(); onFriendDetail(id) }}>
     <div className="friends__info">
         <span className="friends__name"> {name} </span>
         <img className="friends__photo" src={`${API_URL}/users/profileimage/${id}?timestamp=${Date.now()}`} alt="profile photo"/>
@@ -15,5 +15,5 @@ export default function({ friend : { name, id, wishes }, deleteFriend}){
             </li>)}
         </ul>
     </div>
-</li>
+</a>
 }

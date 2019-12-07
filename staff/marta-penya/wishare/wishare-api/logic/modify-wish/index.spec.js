@@ -8,7 +8,7 @@ const { database, ObjectId, models: { User, Wish } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
 
-describe.only('logic - modify wish', () => {
+describe('logic - modify wish', () => {
     before(() => database.connect(TEST_DB_URL))
 
 

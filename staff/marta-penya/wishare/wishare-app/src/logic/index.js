@@ -13,5 +13,6 @@ module.exports = {
     searchUsers: require('./search-users'),
     addFriend: require('./add-friend'),
     retrieveFriends: require('./retrieve-friends'),
+    retrieveFriend: require('./retrieve-friend'),
     deleteFriend: require('./delete-friend')
 }
