@@ -11,29 +11,6 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.get('/search', (req, res) => {
-    try {
-        let { query: { q: query } } = req
-        console.log(query)
-
-        if (!query) query = " "
-
-        console.log(query)
-        
-        searchAds(query)
-            .then(ads => {
-                res.json(ads)
-            })
-            .catch(error => {
-                const { message } = error
-
-                res.status(500).json({ message })
-            })
-    } catch ({ message }) {
-        res.status(400).json({ message })
-    }
-})
-
 router.post('/', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, body: { title, description, price } } = req
