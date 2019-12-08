@@ -10,7 +10,7 @@ const salt = 10
 
 arrayRandom()
 
-describe('logic - retrieve ad', () => {
+describe.only('logic - retrieve ad', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -70,7 +70,7 @@ describe('logic - retrieve ad', () => {
 
     it('should succeed on correct user and ad ', async () => {
         const idAd = adIds.random()
-        const ad = await retrieveAd(id, idAd)
+        const ad = await retrieveAd(idAd)
 
         expect(ad).to.exist
 
@@ -98,28 +98,12 @@ describe('logic - retrieve ad', () => {
     })
 
     describe('when wrong id', () => {
-        it('should fail on inexisting id', async () => {
-            const id = '012345678901234567890123'
-            const idAd = adIds.random()
-
-            try {
-                await retrieveAd(id, idAd)
-
-                throw new Error('should not reach this point')
-            } catch (error) {
-                expect(error).to.exist
-                expect(error).to.be.an.instanceOf(NotFoundError)
-
-                const { message } = error
-                expect(message).to.equal(`user with id ${id} not found`)
-            }
-        })
-
         it('should fail on inexisting idAd', async () => {
-            const idAd = '012345678901234567890123'
+            debugger
+            const idAd = '5de55c50dbb04e0464865933'
 
             try {
-                await retrieveAd(id, idAd)
+                await retrieveAd(idAd)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -127,7 +111,7 @@ describe('logic - retrieve ad', () => {
                 expect(error).to.be.an.instanceOf(NotFoundError)
 
                 const { message } = error
-                expect(message).to.equal(`ad with id ${id} not found`)
+                expect(message).to.equal(`ad with id ${idAd} not found`)
             }
         })
     })
@@ -140,8 +124,8 @@ describe('logic - retrieve ad', () => {
         expect(() => retrieveAd(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveAd(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => retrieveAd('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => retrieveAd(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveAd('')).to.throw(ContentError, 'idAd is empty or blank')
+        expect(() => retrieveAd(' \t\r')).to.throw(ContentError, 'idAd is empty or blank')
     })
 
 

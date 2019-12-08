@@ -96,11 +96,11 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
-router.get('/:adId', tokenVerifier, (req, res) => {
+router.get('/:adId', (req, res) => {
     try {
-        const { id, params: { adId } } = req
+        const {params: { adId } } = req
 
-        retrieveAd(id, adId)
+        retrieveAd(adId)
             .then(ad => {
                 res.json(ad)
             })
@@ -116,6 +116,27 @@ router.get('/:adId', tokenVerifier, (req, res) => {
         res.status(400).json({ message })
     }
 })
+
+// router.get('/:adId', tokenVerifier, (req, res) => {
+//     try {
+//         const { id, params: { adId } } = req
+
+//         retrieveAd(id, adId)
+//             .then(ad => {
+//                 res.json(ad)
+//             })
+//             .catch(error => {
+//                 const { message } = error
+
+//                 if (error instanceof NotFoundError)
+//                     return res.status(404).json({ message })
+
+//                 res.status(500).json({ message })
+//             })
+//     } catch ({ message }) {
+//         res.status(400).json({ message })
+//     }
+// })
 
 
 
