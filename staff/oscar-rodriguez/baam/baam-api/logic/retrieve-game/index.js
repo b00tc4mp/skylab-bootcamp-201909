@@ -1,5 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError, ConflictError } } = require('baam-util')
-const { ObjectId, models: { Game } } = require('baam-data')
+const { ObjectId, models: { Game, User } } = require('baam-data')
 
 module.exports = function (gameId, userId) {
     validate.string(gameId)
@@ -11,34 +11,52 @@ module.exports = function (gameId, userId) {
     if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
 
     return (async () => {
-        const game = await Game.findById(gameId, { '__v': 0 }).lean()
+        const game = await Game.findById(gameId, { '__v': 0 }).populate('players.user', 'nickname').populate('players.hand').populate('players.tempZone.card').populate('players.discards')
         if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
+        if (!game.players.find(player => player.user.id.toString() === userId.toString())) throw new ConflictError(`${userId} can't get info from a game where is not joined`)
+        
+        game.players[0].lastAccess = new Date ()
+        game.players[1] && (game.players[1].lastAccess = new Date ())
+        
+        game.save()
 
-        if (!game.players.find(player => player.user.toString() === userId.toString())) throw new ConflictError(`${userId} can't get info from a game where is not joined`)
+        const _game = game.toObject()
 
-        game.players.forEach(player => {
+        _game.players.forEach(async player => {
             
             const { hand, tempZone, discards } = player
 
             player.id = player._id.toString()
             delete player._id
 
-            delete player.user
+            if (tempZone.card) {
+                player.tempZone.card.id = player.tempZone.card._id.toString()
+                delete player.tempZone.card._id
+            }
 
-            hand.forEach(card => {
-                card.id = card._id.toString()
-                delete card._id
-            })
-
-            if (tempZone.card) player.tempZone.card = player.tempZone.card.toString()
             discards.forEach(card => {
                 card.id = card._id.toString()
                 delete card._id
             })
-        })
-        game.id = game._id.toString()
-        delete game._id
 
-        return game
+            if (player.user._id.toString() === userId.toString()) {
+                hand.forEach(card => {
+                    card.id = card._id.toString()
+                    delete card._id
+                })
+                
+                
+                player.user.id = player.user._id.toString()
+                delete player.user._id
+            } else {
+                player.hand = player.hand.fill(undefined)
+                player.discards = player.discards.fill(undefined)
+                delete player.user._id
+            }   
+        })
+        _game.id = _game._id.toString()
+        delete _game._id
+
+        return _game
     })()
 }
