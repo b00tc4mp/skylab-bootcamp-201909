@@ -6,5 +6,6 @@ module.exports = {
     modifyUser: require('./modify-user'),
     createAd: require('./create-ad'),
     searchAds: require('./search-ads'),
-    retrieveAd: require('./retrieve-ad')
+    retrieveAd: require('./retrieve-ad'),
+    retrieveAds: require('./retrieve-ads')
 }

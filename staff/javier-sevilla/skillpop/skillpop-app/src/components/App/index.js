@@ -5,8 +5,9 @@ import Header from '../Header'
 import Login from '../Login'
 import Landing from '../Landing'
 import Detail from '../Detail'
+import Profile from '../Profile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser} from '../../logic'
+import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -14,6 +15,7 @@ export default withRouter(function ({ history }) {
     const [ads, setAds] = useState([])
     const [adId, setAdId] = useState([])
     const [ad, setAd] = useState([])
+    const [user, setUser] = useState([])
     // const [name, setName] = useState()
     // const [tasks, setTasks] = useState([])
 
@@ -33,6 +35,8 @@ export default withRouter(function ({ history }) {
 
 
     function handleGoBack(webant) { 
+
+        
         history.push(`/${webant}`) 
     }
 
@@ -74,7 +78,6 @@ export default withRouter(function ({ history }) {
         try {
             const ads = await searchAds(query)
 
-            debugger
             setAds(ads)
 
             history.push("/")
@@ -103,6 +106,16 @@ export default withRouter(function ({ history }) {
 
     async function handleProfile() {
         try {
+            const token = sessionStorage.token
+
+            const user = await retrieveUser(token)
+
+            const ads = await retrieveAds(token)
+
+            setAds(ads)
+            setUser(user)
+
+            history.push("/profile")
 
         } catch (error) {
             console.error(error)
@@ -117,6 +130,7 @@ export default withRouter(function ({ history }) {
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
+        <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail}/></>}/> 
 
     </>
 })
