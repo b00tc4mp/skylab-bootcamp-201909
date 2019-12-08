@@ -4,7 +4,6 @@ const { validate, errors: { NotFoundError, CredentialsError } } = require('skill
 const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (query) {
-    debugger
 
     return (async () => {
         const res = await call(query ? `${API_URL}/search?q=${query}` : `${API_URL}/search`, {

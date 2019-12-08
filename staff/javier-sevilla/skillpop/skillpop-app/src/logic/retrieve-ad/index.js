@@ -3,17 +3,14 @@ const { validate, errors: { NotFoundError, CredentialsError } } = require('skill
 // const { env: { REACT_APP_API_URL: API_URL } } = process
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token, idAd) {
-    validate.string(token)
-    validate.string.notVoid('token', token)
-
+module.exports = function (idAd) {
     validate.string(idAd)
     validate.string.notVoid('id', idAd)
 
     return (async () => {
         const res = await call(`${API_URL}/ads/${idAd}`, {
             method: 'GET',
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { 'Content-Type': 'application/json' }
         })
 
         if (res.status === 200) {
