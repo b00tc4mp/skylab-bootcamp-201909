@@ -4,10 +4,16 @@ import Register from '../Register'
 import Header from '../Header'
 import Login from '../Login'
 import Landing from '../Landing'
+import Detail from '../Detail'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser, searchAds} from '../../logic'
+import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser} from '../../logic'
+
+import queryString from 'query-string'
 
 export default withRouter(function ({ history }) {
+    const [ads, setAds] = useState([])
+    const [adId, setAdId] = useState([])
+    const [ad, setAd] = useState([])
     // const [name, setName] = useState()
     // const [tasks, setTasks] = useState([])
 
@@ -26,6 +32,21 @@ export default withRouter(function ({ history }) {
     }, [sessionStorage.token])
 
 
+    function handleGoBack(webant) { 
+        history.push(`/${webant}`) 
+    }
+
+    function handleLogout() {
+        sessionStorage.clear()
+        const webant = "login"
+        handleGoBack(webant)
+    }
+
+    function handleGoToRegister() { history.push('/register') }
+
+    function handleGoToLogin() { history.push('/login') }
+
+
     async function handleRegister(name, surname, city, address, email, password) {
         try {
             await registerUser(name, surname, city, address, email, password)
@@ -39,8 +60,9 @@ export default withRouter(function ({ history }) {
     async function handleLogin(email, password) {
         try {
             const token = await authenticateUser(email, password)
-
+            console.log(token)
             sessionStorage.token = token
+            
 
             history.push('/')
         } catch (error) {
@@ -50,32 +72,51 @@ export default withRouter(function ({ history }) {
 
     async function handleSearch(query) {
         try {
-            const token = await searchAds(query)
+            const ads = await searchAds(query)
 
-            history.push('/login')
+            debugger
+            setAds(ads)
+
+            history.push("/")
+
         } catch (error) {
             console.error(error)
         }
     }
 
+    async function handleAdDetail(adId) {
+        try {
+            const ad = await retrieveAd(adId)
+            const { name } = await retrievePublicUser(ad.user)
 
-    function handleGoBack(webant) { 
-        history.push(`/${webant}`) 
+            ad.name = name
+
+            setAdId(adId)
+            setAd(ad)
+
+            history.push(`/ad/${adId}`)
+
+        } catch (error) {
+            console.error(error)
         }
+    }
 
-    function handleLogout() {
-        sessionStorage.clear()
-        const webant = "login"
-        handleGoBack(webant)
+    async function handleProfile() {
+        try {
+
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     const { token } = sessionStorage
 
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
-        <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogout={handleLogout}/></>}/> 
+        <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}/></>}/> 
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
-        <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/> 
+        <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
+        <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
 
     </>
 })
