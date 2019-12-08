@@ -1,7 +1,30 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import './index.sass'
+import {retrievePendingGames} from '../../logic'
 
-export default function ({ games, onJoin, onClose}) {
+
+export default function ({ onJoin, onClose}) {
+
+    const [games, setGames] = useState()
+    const [feed, setFeed] = useState()
+    let refresher
+
+    useEffect(() => {
+        if (typeof refresher !== 'number') refresher = setInterval(()=> {
+            (async () => {
+                
+                try {
+                    const games = await retrievePendingGames ()
+                    setGames(games)
+                } catch ({message}) {
+                    debugger
+                    setFeed({ title: "🦖 There was an error:", message })
+                } 
+            })()
+        }, 500)
+        return () => {clearInterval(refresher)}
+    }, [setGames])
+
     return <section className="game">
         <div className="game__back">
         </div>
@@ -12,7 +35,7 @@ export default function ({ games, onJoin, onClose}) {
             }}>✖︎</div>
             <h1 className="game__title">🎮 Theese are the avaiable games:</h1>
             <ul className="game__list">
-                {games.map(game => <li className="game__list-item" key={game.id} onClick={event => {
+                {games && games.map(game => <li className="game__list-item" key={game.id} onClick={event => {
                     event.preventDefault()
                     event.stopPropagation()
                     onJoin(game.id)

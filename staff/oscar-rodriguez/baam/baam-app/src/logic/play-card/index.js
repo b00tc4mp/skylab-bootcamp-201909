@@ -1,5 +1,4 @@
 const { validate, errors: { NotFoundError, CantAttackError, CredentialsError } } = require('baam-util')
-const { models: { Card, Game, Shoot } } = require('baam-data')
 const call = require ('../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
