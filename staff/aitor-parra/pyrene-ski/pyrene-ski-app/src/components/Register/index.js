@@ -5,7 +5,7 @@ import Feedback from '../Feedback'
 export default function({ onRegister, onBack, error }) {
     return <section className="register">
 
-        <h3 className="register__title">Register</h3>
+        <h3 className="register__title">REGISTER</h3>
         <form className="register__form" onSubmit={function (event) {
             event.preventDefault()
 

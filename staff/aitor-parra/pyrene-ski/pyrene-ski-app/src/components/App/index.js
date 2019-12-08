@@ -60,6 +60,13 @@ export default withRouter(function ({ history }) {
 
     }
 
+    async function listLessons(token) {
+        const lessons = await retrieveLessons(token)
+
+        setLessons(lessons)
+
+    }
+
 
     function handleGoToLogin() { history.push('/login')}
     
@@ -77,7 +84,7 @@ export default withRouter(function ({ history }) {
         }
     }
 
-    async function handleLogin(username, password) {debugger
+    async function handleLogin(username, password) {
         try {
             const token = await authenticateUser(username, password)
 
@@ -113,20 +120,23 @@ export default withRouter(function ({ history }) {
     }
 
     
-    function handleTeamList() {}
+    function handleTeamList(token) {}
     function handleLessonList(token) {
 
 
     }
 
 
-    async function handleAddLesson(date, timeStart, timeEnd, teamName, teamActivity) {
-        try {
+    async function handleAddLesson(date, timeStart, timeEnd, teamId) {
+        try {  
             const token = sessionStorage.token
     
-            await addLesson(token, date, timeStart, timeEnd)
+            await addLesson(token, date, timeStart, timeEnd, teamId)
     
-            await retrieveLessons(token)
+            await listLessons(token)
+
+            history.push('/lessonlist')
+
         } catch (error) {
             console.error(error)
         }
@@ -136,7 +146,7 @@ export default withRouter(function ({ history }) {
     }
 
 
-    async function handleCreateTeam(teamName, teamEmail, teamPhone, teamActivity) {debugger
+    async function handleCreateTeam(teamName, teamEmail, teamPhone, teamActivity) {
         try {
 
             const token = sessionStorage.token
@@ -144,6 +154,9 @@ export default withRouter(function ({ history }) {
             await createTeam(token, teamName, teamEmail, teamPhone, teamActivity)
 
             await listTeams(token)
+
+            history.push('/teamlist')
+
         } catch (error) {
             console.error(error)
         }
@@ -152,14 +165,17 @@ export default withRouter(function ({ history }) {
         //setTeams(teams) 
     }
 
-    async function handleDeleteLesson(id) {debugger
+    async function handleDeleteLesson(id) {
         try {
 
             const  token  = sessionStorage.token
 
             await deleteLesson(token, id)
 
-            await retrieveLessons(token)
+            await listLessons(token)
+
+            history.push('/lessonlist')
+
         } catch (error) {
             console.error(error)
         }

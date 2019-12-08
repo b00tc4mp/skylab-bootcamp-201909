@@ -14,13 +14,13 @@ export default function({ onLogin, onBack, error }) {
             onLogin(username, password)      
         }}>
             <input className="login__field" type="username" name="username" placeholder="username"/>
-            <input className="login__field1" type="password" name="password" placeholder="password"/>
+            <input className="login__field" type="password" name="password" placeholder="password"/>
             <button className="login__button">Submit</button>
             <a className="login__back" href="/" onClick={event => {
                         event.preventDefault()
 
                         onBack()
-                    }}>Go back</a>
+                    }}>Go Back</a>
         </form>
 
         {error && <Feedback message={error} />}

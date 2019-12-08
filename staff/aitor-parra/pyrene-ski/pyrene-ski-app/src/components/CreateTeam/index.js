@@ -1,11 +1,13 @@
 import React from 'react'
 import '../../template/index.sass'
 import Feedback from '../Feedback'
+import { Link } from  'react-router-dom'
 
-export default function({ onCreateTeam, onBack, error }) {
-    return <section className="register">
-
+export default function({ user, onCreateTeam, error }) {
+    return <section className="team-create">
+        <h4 className="team-create__user">user: {user}</h4>
         <h3 className="team-create__title">Create TEAM</h3>
+        <Link className="team-create__back" to="/teamlist">back to TEAM LIST</Link>
         <form className="team-create__form" onSubmit={function (event) {debugger
             event.preventDefault()
 
@@ -17,12 +19,7 @@ export default function({ onCreateTeam, onBack, error }) {
             <input className="team-create__field" type="email" name="teamEmail" placeholder="e-mail"/>
             <input className="team-create__field" type="tel" pattern="[0-9]{9}" name="teamPhone" placeholder="phone"/>
             <input className="team-create__field" type="text" name="teamActivity" placeholder="activity"/>
-            <button className="team-create__button">Creat team</button>
-            <a className="team-create__back" href="/" onClick={event => {
-                        event.preventDefault()
-
-                        onBack()
-                    }}>Go back</a>
+            <button className="team-create__button">Submit</button>
         </form>
 
         {error && <Feedback message={error} />}
@@ -30,14 +27,23 @@ export default function({ onCreateTeam, onBack, error }) {
 
 }
 
-/* import React, { useState } from 'react'
+/* 
+<a className="team-create__back" href="/" onClick={event => {
+            event.preventDefault()
+
+            onBack()
+        }}>Go back</a>
+
+
+
+import React, { useState } from 'react'
 
 export default function ({ onSubmit }) {
     const [teamName, setTeamName] = useState('')
     const [teamEmail, setTeamEmail] = useState('')
     const [teamPhone, setTeamPhone] = useState('')
     const [teamActivity, setTeamActivity] = useState('')
-
+    
     return <section className="view">
         <h3 className="team-create__title">Create team member</h3>
         <form onSubmit={event => {

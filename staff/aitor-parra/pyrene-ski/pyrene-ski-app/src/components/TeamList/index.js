@@ -9,12 +9,14 @@ export default function({user, teams, onChangeTeamStatus}) {
       //const { name: { value: name }, surname: { value: surname }, email: { value: email }, username: { value: username }, password: { value: password } } = event.target
 
     return <>
-           <h4 className="team-list__user">user: {user}</h4>
-           <ul className="team-list team-list__title"> TEAM LIST
+           <h4 className="team-list team-list__user">user: {user}</h4>
+           <section className="team-list team-list__nav">
+           <Link className="team-list team-list__createTeam" to="/create-team">Create new Team</Link>
            <Link className="team-list team-list__back" to="/board-admin">Go back</Link>
+           </section>
+           <ul className="team-list team-list__title"> TEAM LIST
             {teams.map(team => <li className="team-list__item" key={team.id}>{<Team team={team} onChangeStatus={onChangeTeamStatus} />}</li>)}
            </ul>
-           <Link className="team-list__createTeam" to="/create-team">Create new Team</Link>
         </>
 }
 
