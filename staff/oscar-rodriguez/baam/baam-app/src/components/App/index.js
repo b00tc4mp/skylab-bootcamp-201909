@@ -11,92 +11,167 @@ import GameBoard from '../GameBoard'
 import Feedback from '../Feedback'
 import Game from '../Game'
 import JoinGame from '../JoinGame'
-import { retrieveUser, registerUser, authenticateUser } from '../../logic'
+import WaitPartner from '../WaitPartner'
+import Context from '../Context'
+import { retrieveUser, registerUser, authenticateUser, createGame, deleteGame, joinGame, retrieveGame, addPlayerHand, retrieveUserCards } from '../../logic'
 
 
 export default withRouter(function ({ history }) {
     const [user, setUser] = useState()
-    const [message, setMessage] = useState()
-    const [gameId, setGameId] = useState()
-    const [games, setGames] = useState()
+    const [feed, setFeed] = useState()
+    const [join, setJoin] = useState(false)
+    const [wait, setWait] = useState(false)
 
     useEffect(() => {
-        
+
         const { token } = sessionStorage;
 
         (async () => {
             if (token) {
                 try {
-                    debugger
                     const user = await retrieveUser(token)
-                    
                     setUser(user)
-
-                } catch (error) {
-                    setMessage(error.message)
+                } catch ({ message }) {
+                    setFeed({ title: "🦖 There was an error:", message })
                 }
             }
         })()
     }, [sessionStorage.token])
 
-    function handleGoToRegister() { history.push('/register') }
+    useEffect(() => {
 
+        const { gameId } = sessionStorage;
+
+        (async () => {
+            if (gameId) {
+                try {
+                    const game = await retrieveGame(gameId, token)
+                    game.status === "READY" && history.push(`/board-game/${gameId}`)
+                } catch ({ message }) {
+                    setFeed({ title: "🦖 There was an error:", message })
+                }
+            }
+        })()
+    }, [sessionStorage.gameId])
+    
+    ////***********  NAVIGATION HANDLERS 
     function handleGoToLanding() { history.push('/') }
+    function handleGoToRegister() { history.push('/register') }
+    function handleGoGetNewCards() { history.push('/newcards') }
+    function handleGoShowCards() { history.push('/cards') }
+    function handleGoStartGame() { history.push('/newgame') }
+    function handleGoToJoinGame() { setJoin(true) }
+
+
+    function handleCloseError() { setFeed(undefined) }
+    function handleCloseJoinWindow() { setJoin(!join) }
 
     async function handleRegister(name, surname, email, username, password) {
         try {
             await registerUser(name, surname, email, username, password)
 
-            setMessage("Registered Succesfully. Proceed to Login.")
+            setFeed({ title: "🕶 Weeell done!!", message: "Registered Succesfully. Proceed to Login." })
+
             history.push('/')
-        } catch({message}){
-            setMessage(message)
+        } catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
         }
     }
 
-    async function handleLogin (nickname, password) {
+    async function handleLogin(nickname, password) {
         try {
-            
-            const token = await authenticateUser (nickname, password)
-    
+            const token = await authenticateUser(nickname, password)
             sessionStorage.token = token
-    
+
             history.push('/home')
         }
-        catch (error) {
-            setMessage(error.message)
+        catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
         }
     }
 
-    function handleCloseError () { setMessage(undefined) }
-
-    function handleCloseGames () { setGames(undefined) }
-    
-    function handleLogout () {
+    function handleLogout() {
         sessionStorage.clear()
         history.push('/')
     }
 
-    function handleGoGetNewCards () { history.push('/newcards') }
-    function handleGoShowCards () { history.push('/cards') }
-    function handleGoStartGame () { history.push('/game') }
-    function handleCreateGame () {}
-    
-    function handleGoToJoinGame () { setGames([{id:"HFHGHG", nickname:"PAKOO"},
-    {id:"HFHGHG", nickname:"PAKOO"},{id:"HFHGHG", nickname:"PAKOO"},{id:"HFHGHG", nickname:"PAKOO"},{id:"HFHGHG", nickname:"PAKOO"}])}
-    function handleJoinGame (id) { debugger }
+    async function handleGoToCreateGame() {
+        try {
+            const { token } = sessionStorage
+            const { gameId, playerId } = await createGame(token)
+            const userCards = await retrieveUserCards(token)
+            debugger
+            const playerHand = []
+            userCards.forEach(card=>playerHand.push(card.id))
+            await addPlayerHand(gameId, token, playerHand)
+            sessionStorage.gameId = gameId
 
-    const { token } = sessionStorage
+            setWait(!wait)
+        }
+        catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
+        }
+    }
+
+    async function handleCloseWaiting(gameId) {
+        try {
+            const { token } = sessionStorage
+            const game = await retrieveGame(gameId, token)
+            if (game.status === 'PENDING')
+                await deleteGame(gameId, token)
+
+            delete sessionStorage.gameId
+
+            setWait(!wait)
+
+        } catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
+        }
+    }
+    
+    function handleChangeStatus(newStatus, gameId) {
+        setWait(!wait)
+        debugger
+        history.push(`/board-game/${gameId}`)
+    }
+
+    async function handleJoinGame(gameId) {
+        try {
+            debugger
+            const { token } = sessionStorage
+            await joinGame(token, gameId)
+            const userCards = await retrieveUserCards(token)
+            const playerHand = []
+            userCards.forEach(card=>playerHand.push(card.id))
+            await addPlayerHand(gameId, token, playerHand)
+            sessionStorage.gameId = gameId
+
+            setJoin(!join)
+            history.push(`/board-game/${gameId}`)
+        } catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
+        }
+    }
+
+    const { token, gameId } = sessionStorage
 
     return <>
-        <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onLogin={handleLogin} />} />
-        <Route path="/register" render={() => token ? <Redirect to="/home" /> : <Register onBack={handleGoToLanding} onRegister={handleRegister}/>} />
-        <Route path="/home" render={() => token ? <Home user={user} onLogout={handleLogout} onShowCards={handleGoShowCards} onGetNewCards={handleGoGetNewCards} onStartGame={handleGoStartGame}/> : <Redirect to="/" /> } />
-        <Route path="/cards" render={() => token ? <YourCards user={user} onLogout={handleLogout} onGetNewCards={handleGoGetNewCards} onHome={handleGoToLanding}/> : <Redirect to="/" /> } />
-        <Route path="/newcards" render={() => token ? <NewCards onLogout={handleLogout} onHome={handleGoToLanding}/> : <Redirect to="/" />} />
-        <Route exact path="/game" render={() => token ? <Game user={user} onLogout={handleLogout} onCreate={handleCreateGame} onJoin={handleGoToJoinGame} onHome={handleGoToLanding}/> : <Redirect to="/" />} />
-        { games && token && <JoinGame games={games} onLogout={handleLogout} onJoin={handleJoinGame} onHome={handleGoToLanding} onClose={handleCloseGames}/> }
-        {gameId && <Route path={`/game/${gameId}`} render={() => token ? <GameBoard /> : <Redirect to="/home" /> } />}
-        {message && <Feedback message={message} onClose={handleCloseError}/>}
+        <Context.Provider value={{feed,setFeed}}>
+            <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onLogin={handleLogin} />} />
+            <Route path="/register" render={() => token ? <Redirect to="/home" /> : <Register onBack={handleGoToLanding} onRegister={handleRegister} />} />
+            <Route path="/home" render={() => token ? 
+                                                    gameId ? <Redirect to={`/board-game/${gameId}`} /> 
+                                                    : 
+                                                    <Home user={user} onLogout={handleLogout} onShowCards={handleGoShowCards} onGetNewCards={handleGoGetNewCards} onStartGame={handleGoStartGame} /> 
+                                                :
+                                                <Redirect to="/" />} />
+            <Route path="/cards" render={() => token ? <YourCards user={user} onLogout={handleLogout} onGetNewCards={handleGoGetNewCards} onHome={handleGoToLanding} /> : <Redirect to="/" />} />
+            <Route path="/newcards" render={() => token ? <NewCards onLogout={handleLogout} onHome={handleGoToLanding} /> : <Redirect to="/" />} />
+            <Route path="/newgame" render={() => token ? <Game user={user} onLogout={handleLogout} onCreate={handleGoToCreateGame} onJoin={handleGoToJoinGame} onHome={handleGoToLanding} /> : <Redirect to="/" />} />
+            {join && token && <JoinGame onJoin={handleJoinGame} onClose={handleCloseJoinWindow} />}
+            {wait && token && <WaitPartner onChangeStatus={handleChangeStatus} gameId={gameId} onClose={handleCloseWaiting} history={history} />}
+            <Route path="/board-game/:gameId" render={() => token ? <GameBoard history={history}/> : <Redirect to="/home" />} />}
+            {feed && <Feedback title={feed.title} message={feed.message} onClose={handleCloseError} />}
+        </Context.Provider>
     </>
 })

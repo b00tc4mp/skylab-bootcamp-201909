@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.sass'
 
-export default function ({message, onClose}) {
+export default function ({title, message, onClose}) {
 
     return <section className="feedback">
             <div className="feedback__back">
@@ -11,7 +11,7 @@ export default function ({message, onClose}) {
                     event.preventDefault()
                     onClose()
                 }}>✖︎</div>
-                <h1 className="feedback__title">🦖 There was an error:</h1>
+                <h1 className="feedback__title">{title}</h1>
                 <p className="feedback__message">{message}</p>
             </div>
     </section>
