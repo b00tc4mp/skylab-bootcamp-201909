@@ -23,7 +23,7 @@ export default withRouter(function ({ history }) {
                         history.push('/myuser')
 
                 } catch (error) {
-                        setError(error.toString())
+                        setError(error.message.toString())
                 }
         }
 

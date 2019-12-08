@@ -7,6 +7,7 @@ module.exports = {
     modifyUser: require('./modify-user'),
     saveImageUser: require('./save-img-user'),
     loadImageUser: require('./load-img-user'),
+    searchUser: require('./search-user'),
     createGame: require('./create-game'),
     listGames: require('./list-games'),
     listMyGames: require('./list-my-games'),

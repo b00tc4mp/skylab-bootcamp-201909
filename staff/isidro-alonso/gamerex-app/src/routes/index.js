@@ -1,5 +1,6 @@
 import Login from '../components/Login'
 import Register from '../components/Register'
+import Search from '../components/Search'
 import MyUser from '../components/MyUser'
 import User from '../components/User'
 import UpdateUser from '../components/UpdateUser'
@@ -39,6 +40,8 @@ export default function getRoute(route) {
             return Login;
         case '/register':
             return Register;
+        case '/search':
+            return Search;
         case '/myuser':
             return MyUser;
         case '/newgame':

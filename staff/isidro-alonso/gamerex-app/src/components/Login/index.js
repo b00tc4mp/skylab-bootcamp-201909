@@ -17,7 +17,7 @@ export default withRouter(function({ history }) {
             history.push('/')
           
         } catch (error) {
-            setError(error.toString())
+            setError(error.message.toString())
         }
     }
 

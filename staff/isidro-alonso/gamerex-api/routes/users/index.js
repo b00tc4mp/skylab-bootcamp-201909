@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveMyUser, retrieveUser, listUsers, modifyUser, saveImageUser, loadImageUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveMyUser, retrieveUser, listUsers, modifyUser, saveImageUser, loadImageUser, searchUser } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -113,7 +113,6 @@ router.get('/:userId', tokenVerifier, jsonBodyParser, (req, res) => {
 })
 
 router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
-
     try {
         const { params: { id }, body: { username, location, password } } = req
 
@@ -166,6 +165,27 @@ router.get('/load/:userId', async (req, res) => {
     res.setHeader('Content-Type', 'image/jpeg')
 
     return stream.pipe(res)
+})
+
+router.get('/search/:query', jsonBodyParser, (req, res) => {
+    try {
+        const { params: { query } } = req
+
+        searchUser(query)
+            .then(user => res.json(user))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
 })
 
 module.exports = router

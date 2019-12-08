@@ -5,6 +5,7 @@ import retrieveMyUser from './retrieve-my-user'
 import listUsers from './list-users'
 import modifyUser from './modify-user'
 import saveImageUser from './save-img-user'
+import searchUser from './search-user'
 import createGame from './create-game'
 import listGames from './list-games'
 import listMyGames from './list-my-games'
@@ -21,6 +22,7 @@ export {
     listUsers,
     modifyUser,
     saveImageUser,
+    searchUser,
     createGame,
     listGames,
     listMyGames,

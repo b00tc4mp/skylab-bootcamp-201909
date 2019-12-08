@@ -20,7 +20,7 @@ export default withRouter(function({ history }) {
             sessionStorage.token = token
             history.push('/')
         } catch(error) {
-            setError(error.toString())
+            setError(error.message.toString())
         }
     }
 
