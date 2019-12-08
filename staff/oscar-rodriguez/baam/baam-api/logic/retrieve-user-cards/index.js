@@ -7,17 +7,15 @@ module.exports = function (id) {
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     return (async () => {
-        const user = await User.findById(id).lean()
+        const user = await User.findById(id).populate('cards').lean()
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        const cards = await Card.find({'_id' : {$in : user.cards}}).populate('cards', 'name description image price col effect effectValue target').lean()
-
-        cards.forEach(card => {
-            card.id = card._id.toString()
+        user.cards.forEach(card => {
+            card._id && (card.id = card._id.toString())
             delete card._id
         })
 
-        return cards
+        return user.cards
 
     })()
 }
