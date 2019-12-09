@@ -16,9 +16,9 @@ module.exports = function (id) {
 
         await user.save()
 
-        const { username, email, rol, format, location: {coordinates: [latitude, longitude]}, description, image, links, upcomings, favs } = user.toObject()
+        const { username, email, rol, format, location, description, image, links, upcomings, favs } = user.toObject()
 
-        return {  id, username, email, rol, format, location: {coordinates: [latitude, longitude]}, description, image, links, upcomings, favs }
+        return {  id, username, email, rol, format, location, description, image, links, upcomings, favs }
         
     })()
 }

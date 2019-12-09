@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - authenticate user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, username, email, password, rol, rols, latitude, longitude, hash
+    let id, username, email, password, rol, rols, location, hash
     rols = ['solo','groups']
 
     beforeEach(async () => {
@@ -19,13 +19,12 @@ describe('logic - authenticate user', () => {
         password = `password-${random()}`
         hash = await bcrypt.hash(password , 10)
         rol = rols[Math.floor(Math.random()*rols.length)]
-        longitude = random()
-        latitude = random()
+        location = `location-${random()}`
     
 
         await User.deleteMany()
 
-        const user = await User.create({ username, email, password, rol, location: {coordinates: [latitude, longitude ]}, password: hash  })
+        const user = await User.create({ username, email, password: hash, rol, location })
         id = user.id
     })
 

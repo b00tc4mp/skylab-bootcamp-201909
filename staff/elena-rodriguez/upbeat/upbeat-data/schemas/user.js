@@ -1,4 +1,4 @@
-const {Schema} = require('mongoose')
+const {Schema, ObjectId} = require('mongoose')
 const Links = require('./links')
 const { validators: { isEmail } } = require('upbeat-util')
 
@@ -7,6 +7,7 @@ module.exports = new Schema ({
         type: String,
         required: true,    
     },
+
     email: {
         type: String,
         required: true,
@@ -21,12 +22,10 @@ module.exports = new Schema ({
 
     image: {
         type: String,
-        //required: true
     },
 
     rol: {
         type: String,
-        //required: true,
         enum: ['solo', 'groups']
     },
 
@@ -45,19 +44,12 @@ module.exports = new Schema ({
     links : [Links],
 
     favs: {
-        type: Array,
+        type: [ObjectId],
+        ref: 'User'
     },
 
     location: {
-        type: {
-            type: String,
-            enum: ['Point'],
-            default: 'Point',
-            required: true
-        },
-        coordinates: {
-            type: [Number],
-        }
+        type: String 
     }
    
 })

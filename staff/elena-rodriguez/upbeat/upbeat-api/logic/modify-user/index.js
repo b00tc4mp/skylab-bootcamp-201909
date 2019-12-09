@@ -1,7 +1,7 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('upbeat-util')
 const { ObjectId, models: { User } } = require('upbeat-data')
 
-module.exports = function (id, username, email, password, description, image, links, upcomings ) {
+module.exports = function (id, username, email, password, description, image, links, upcomings, location ) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -37,6 +37,12 @@ module.exports = function (id, username, email, password, description, image, li
 
     }
 
+    if (location) {
+        validate.string(location)
+        validate.string.notVoid('location', location)
+
+    }
+
     return (async () => {
         const user = await User.findById(id)
 
@@ -51,6 +57,7 @@ module.exports = function (id, username, email, password, description, image, li
         image && (update.image = image)
         links && (update.links = links)
         upcomings && (update.upcomings = upcomings)
+        location && (update.location = location)
 
         await User.updateOne({ _id: ObjectId(id) }, { $set: update })
     })()

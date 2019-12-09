@@ -4,14 +4,14 @@ const { models: { User } } = require('upbeat-data')
 module.exports = function (query) {
 
     return (async () => {
-        const musicians = await User.find({ $or:[ { "username": { $regex: `.*${query}*` } }, { "format.instruments": { $in: [query] } }, { "groups": { $regex: `.*${query}*` } }] })
+        const musicians = await User.find({ $or:[ { "username": {$regex: `.*${query}*`,$options: 'i'}  } , { "format.instruments": { $in: [query] } }, { "format.groups": { $regex: `.*${query}*` } }] })
         // {$or:[{ 'username' : {$regex : `.*piano*`}},{ 'format.instruments': {$in: ["piano"]}},{ 'format.groups': {$regex : `.*orchestra*`}}]}
         if (musicians.length === 0) return musicians
 
         let results = []
         musicians.forEach(musician => {
-            const {username, format: {instruments, groups}} = musician
-            musician = {username, instruments, groups}
+            const {id, username, rol, format: {instruments, groups}, location} = musician
+            musician = {id, username, rol, format : {instruments, groups}, location}
             results.push(musician)
         })
     

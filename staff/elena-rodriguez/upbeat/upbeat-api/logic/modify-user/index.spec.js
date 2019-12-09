@@ -11,7 +11,7 @@ arrayRandom()
 describe('logic - modify user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, username, email, password, description, image, links, upcomings
+    let id, username, email, password, description, image, links, upcomings, location
 
     beforeEach(async () => {
         username = `name-${random()}`
@@ -26,10 +26,11 @@ describe('logic - modify user', () => {
 
         const linksObj = await new Links(links)
         upcomings = `upcomings-${random()}`
+        location = `location-${random()}`
 
         await User.deleteMany()
 
-        const user = await User.create({ username, email, password, description, image, links: [] , upcomings })
+        const user = await User.create({ username, email, password, description, image, links: [] , upcomings, location })
         user.links.push(linksObj)
         id = user.id
         await user.save()
@@ -45,6 +46,7 @@ describe('logic - modify user', () => {
         const newDescription = `new-description-${random()}`
         const newImage = `new-image-${random()}`
         const newUpcomings = `new-upcomings-${random()}`
+        const newLocation = `new-upcomings-${random()}`
 
         const newLinks = {
             name: 'spotify',
@@ -54,7 +56,7 @@ describe('logic - modify user', () => {
         const newLinksObj = new Links(newLinks)
         
 
-        const response = await modifyUser(id, newUsername, newEmail, newPassword, newDescription, newImage, newLinksObj , newUpcomings)
+        const response = await modifyUser(id, newUsername, newEmail, newPassword, newDescription, newImage, newLinksObj , newUpcomings, newLocations)
 
         expect(response).to.not.exist
 
@@ -96,6 +98,11 @@ describe('logic - modify user', () => {
         expect(user.upcomings).to.be.a('string')
         expect(user.upcomings).to.have.length.greaterThan(0)
         expect(user.upcomings).to.equal(newUpcomings)
+
+        expect(user.location).to.exist
+        expect(user.location).to.be.a('string')
+        expect(user.location).to.have.length.greaterThan(0)
+        expect(user.location).to.equal(newLocation)
 
 
     })

@@ -10,7 +10,7 @@ describe('logic- toggle favs', () => {
 
     before(() => database.connect(TEST_DB_URL))
 
-    let username, email, password, rol, rols, longitude, latitude, instruments, user, favs, idFav, userId
+    let username, email, password, rol, rols, location, instruments, user, favs, idFav, userId
     rols = ['solo', 'groups']
     instrumentsList = ['drums', 'guitar', 'piano', 'violin', 'bass', 'cello', 'clarinet', 'double-bass', 'flute', 'oboe', 'saxophone', 'trombone', 'trumpet', 'ukelele', 'viola', 'voice']
 
@@ -23,13 +23,12 @@ describe('logic- toggle favs', () => {
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
         rol = rols[Math.floor(Math.random() * rols.length)]
-        longitude = random()
-        latitude = random()
+        location = `location-${random()}`
         instruments = ['drums']
         format = new Solo({ instruments })
         favs = []
         
-        user = await User.create({ username, email, password, rol, format, location: { coordinates: [latitude, longitude] }, favs })
+        user = await User.create({ username, email, password, rol, format, location, favs })
         userId = user.id
     })
 

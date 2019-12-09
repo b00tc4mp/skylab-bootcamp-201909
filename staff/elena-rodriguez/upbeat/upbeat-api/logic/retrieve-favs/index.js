@@ -3,6 +3,7 @@ const { ObjectId, models: { User } } = require('upbeat-data')
 
 
 module.exports = function (id) {
+    
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -15,8 +16,8 @@ module.exports = function (id) {
         const { favs } = user
 
         result = favs.map((fav) => {
-            const {username, email, rol, image, format, location, description, links, upcomings} = fav
-            return { username, email, rol, image, format, location, description, links, upcomings }
+            const { id, username, email, rol, image, format, location, description, links, upcomings} = fav
+            return { id, username, email, rol, image, format, location, description, links, upcomings }
         })
 
         return result
