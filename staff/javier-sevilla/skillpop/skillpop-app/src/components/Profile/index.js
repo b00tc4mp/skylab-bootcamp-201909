@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.sass'
 import MyAds from '../MyAds'
-export default function ({ ads, user: {name, surname, city, address}, adDetail }) {
+export default function ({ ads, user: {name, surname, city, address}, adDetail, onDeleteAd, onToUpdateAd }) {
     return <section className='profile'>
                 <h1 className="profile__title">Profile</h1>
                 <form className="profile__form">
@@ -11,7 +11,7 @@ export default function ({ ads, user: {name, surname, city, address}, adDetail }
                     <input type="text" className="profile__field" name="address" placeholder={address}/>
                     <button className="profile__button">Update</button>
                 </form>
-                <MyAds ads={ads} adDetail={adDetail} />
+                <MyAds ads={ads} adDetail={adDetail} onDeleteAd={onDeleteAd} onToUpdateAd={onToUpdateAd}/>
             </section> 
              
 }

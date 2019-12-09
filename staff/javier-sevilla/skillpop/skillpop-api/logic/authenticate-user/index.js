@@ -2,7 +2,6 @@ const { validate, errors: { CredentialsError } } = require('skillpop-util')
 const { models: { User } } = require('skillpop-data')
 const bcrypt = require('bcryptjs')
 const salt = 10
-debugger
 module.exports = function (email, password) {
     validate.string(email)
     validate.string.notVoid('e-mail', email)

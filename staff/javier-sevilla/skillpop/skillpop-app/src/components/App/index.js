@@ -6,8 +6,9 @@ import Login from '../Login'
 import Landing from '../Landing'
 import Detail from '../Detail'
 import Profile from '../Profile'
+import ModifyAd from '../ModifyAd'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds} from '../../logic'
+import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -122,6 +123,70 @@ export default withRouter(function ({ history }) {
         }
     }
 
+    async function handleDeleteAd(adId) {
+        try {
+            const token = sessionStorage.token
+
+            await removeAd(token, adId)
+
+            const ads = await retrieveAds(token)
+
+            setAds(ads)            
+
+            history.push("/profile")
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async function handleToUpdateAd(adId) {
+
+         try {
+
+            const token = sessionStorage.token 
+
+            const ad = await retrieveAd(adId)
+
+            setAd(ad)        
+
+            // history.push("/update")    
+
+            history.push(`/update/${adId}`)
+
+        } catch (error) {
+            console.error(error)
+        }      
+    }
+
+    async function handleOnUpdateAd(image, adId, title, description, price ) {
+
+         try {
+
+            const token = sessionStorage.token 
+
+            const priceN = Number.parseInt(price)
+
+            await modifyAd(token, adId, title, description, priceN)
+
+            if (image) {
+				await saveImageAd(token, adId, image)
+			}
+
+            const ad = await retrieveAd(adId)
+
+            setAd(ad)            
+
+           history.push(`/update/${adId}`)
+
+        } catch (error) {
+            console.error(error)
+        }      
+    }
+
+
+
+
     const { token } = sessionStorage
 
     return <>
@@ -130,7 +195,9 @@ export default withRouter(function ({ history }) {
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
-        <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail}/></>}/> 
+        <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd}/></>}/> 
+        <Route path="/update" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
+        {/* <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>  */}
 
     </>
 })
