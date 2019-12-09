@@ -10,7 +10,7 @@ import ModifyAd from '../ModifyAd'
 import CreateAd from '../CreateAd'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
-         createAd} from '../../logic'
+         createAd, retrievePublicAds} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -257,11 +257,11 @@ export default withRouter(function ({ history }) {
             id = user.id
             const ads = await retrieveAds(token)
         } else {
+            const user = await retrievePublicUser(id)
+            id = user.id
+            const ads = await retrievePublicAds(id)
 
-
-        }
-
-        
+        } 
 
         setAds(ads)   
         setUser(user)

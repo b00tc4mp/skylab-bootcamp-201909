@@ -13,5 +13,6 @@ module.exports = {
     removeAd: require('./remove-ad'),
     modifyUser: require('./modify-user'),
     saveImageProfile: require('./save-image-profile'),
-    createAd: require('./create-ad')
+    createAd: require('./create-ad'),
+    retrievePublicAds: require('./retrieve-public-ads')
 }
