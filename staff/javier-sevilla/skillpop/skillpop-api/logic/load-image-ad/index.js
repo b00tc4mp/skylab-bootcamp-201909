@@ -22,7 +22,15 @@ module.exports = function (adId) {
         if (!ad) throw new NotFoundError(`ad with id ${adId} not found`)
 
         let goTo = path.join(__dirname, `../../data/ads/${adId}/adimage.png`)
-        return fs.createReadStream(goTo)
+                try {
+            if (fs.existsSync(goTo)) {
+                return fs.createReadStream(goTo)
+            } else {
+                const defaultImage = path.join(__dirname, `../../data/ads/defaultimage/avatar.png`)
+                return fs.createReadStream(defaultImage)
+            }
+        } catch (error) {
+        }
 
     })()
 }
