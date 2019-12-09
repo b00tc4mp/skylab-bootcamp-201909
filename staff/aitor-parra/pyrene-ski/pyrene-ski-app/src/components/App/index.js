@@ -224,15 +224,15 @@ export default withRouter(function ({ history }) {
         <Route path='/register' render={() => token ? <Redirect to='/board-client' /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
         <Route path='/login' render={() => token ? <Redirect to='/login' /> : <Login onLogin={handleLogin} onBack={handleGoBack} />} />
         
-        <Route path='/board-admin' render={() => token && role === 'admin'/* && user.role === 'admin' *//* I ES ADMIN */ ? <BoardAdmin user={user} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} onBack={handleGoBack} onLogout={handleLogout}/> : <Redirect to='/' /> } />
-        <Route path='/lessonlist' render={() => token && role === 'admin'/* && user.role === 'admin' */ ? <LessonList user={name} user={user} lessons={lessons} onDeleteLesson={handleDeleteLesson} onBack={handleGoBack}/> : <Redirect to='/' />} />
-        <Route path='/teamlist' render={() => token && role === 'admin'/* && user.role === 'admin' */ ? <TeamList user={name} teams={teams} onCreateTeam={handleCreateTeam} onBack={handleGoBack}/> : <Redirect to='/' />} />
-        <Route path='/create-team' render={() => token && role === 'admin'? <CreateTeam user={name} teams={teams} onCreateTeam={handleCreateTeam}/> : <Redirect to='/' /> } />
-        <Route path='/add-lesson' render={() => token && role === 'admin' ? <AddLesson user={name} teams={teams} lessons={lessons} onAddLesson={handleAddLesson} /> : <Redirect to='/' /> } />
+        <Route path='/board-admin' render={() => token && role === 'admin' ? <BoardAdmin user={name} onTeamList={handleGoToTeamList} onLessonList={handleGoToLessonList} onBack={handleGoBack} onLogout={handleLogout}/> : <Redirect to='/board-client' /> } />
+        <Route path='/lessonlist' render={() => token && role === 'admin' ? <LessonList user={name} /* user={user} */ lessons={lessons} onDeleteLesson={handleDeleteLesson} onBack={handleGoBack}/> : <Redirect to='/board-client' />} />
+        <Route path='/teamlist' render={() => token && role === 'admin' ? <TeamList user={name} teams={teams} onCreateTeam={handleCreateTeam} onBack={handleGoBack}/> : <Redirect to='/board-client' />} />
+        <Route path='/create-team' render={() => token && role === 'admin' ? <CreateTeam user={name} teams={teams} onCreateTeam={handleCreateTeam}/> : <Redirect to='/board-client' /> } />
+        <Route path='/add-lesson' render={() => token && role === 'admin' ? <AddLesson user={name} teams={teams} lessons={lessons} onAddLesson={handleAddLesson} /> : <Redirect to='/board-client' /> } />
         
         <Route path='/board-client' render={() => token /* && user.role === 'client' *//* I ES CLIENT */ ? <BoardClient user={name} onBookLesson={handleBookLesson} onLessonList={handleGoToLessonList} onLogout={handleLogout} /> : <Redirect to='/' />} />
-        <Route path='/book-lesson' render={() => token && role === 'admin' /* && user.role === 'client'  */? <BookLesson user={name} onBookLessons={handleBookLesson} /> : <Redirect to='/' />  }/>
+        <Route path='/book-lesson' render={() => token ? <BookLesson user={name} onBookLessons={handleBookLesson} /> : <Redirect to='/' />  }/>
 
-        <Route path='/logout' render={() => token /* && user.role === 'client'  */? <BookLesson user={name} /> : <Redirect to='/' />  }/>
+        <Route path='/logout' render={() => /* token && user.role === 'client'  *//* ? <BookLesson user={name} /> : */ <Redirect to='/' />  }/>
     </>
 })
