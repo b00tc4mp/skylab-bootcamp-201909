@@ -7,8 +7,10 @@ import Landing from '../Landing'
 import Detail from '../Detail'
 import Profile from '../Profile'
 import ModifyAd from '../ModifyAd'
+import CreateAd from '../CreateAd'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd} from '../../logic'
+import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
+         createAd} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -148,7 +150,8 @@ export default withRouter(function ({ history }) {
 
             const ad = await retrieveAd(adId)
 
-            setAd(ad)        
+            setAd(ad)   
+            setAdId(adId)       
 
             // history.push("/update")    
 
@@ -159,7 +162,7 @@ export default withRouter(function ({ history }) {
         }      
     }
 
-    async function handleOnUpdateAd(image, adId, title, description, price ) {
+    async function handleOnUpdateAd(image, adId, title, description, price) {
 
          try {
 
@@ -175,13 +178,96 @@ export default withRouter(function ({ history }) {
 
             const ad = await retrieveAd(adId)
 
-            setAd(ad)            
+            setAd(ad)   
+            setAdId(adId)     
 
-           history.push(`/update/${adId}`)
+            history.push("/profile")    
+
+            // history.push(`/update/${adId}`)
 
         } catch (error) {
             console.error(error)
         }      
+    }
+
+    async function handleUpdateUser(image, name, surname, city, address ) {
+
+         try {
+
+            const token = sessionStorage.token 
+
+            await modifyUser(token, name, surname, city, address)
+
+            if (image) {
+				await saveImageProfile(token, image)
+			}
+
+            const user = await retrieveUser(token)
+
+            setUser(user)            
+
+           history.push("/profile")
+
+        } catch (error) {
+            console.error(error)
+        }      
+    }
+
+    async function handleToCreateAd( ) {   
+
+           history.push("/newad")
+  
+    }
+
+    async function handleCreateAd(image, title, price, description) {   
+
+         try {
+
+            const token = sessionStorage.token 
+
+            const priceN = Number.parseInt(price)
+
+            const adId = await createAd(token, title, description, priceN)
+
+            if (image) {
+				await saveImageAd(token, adId, image)
+			}
+
+            const user = await retrieveUser(token)
+            const ad = await retrieveAd(adId)
+
+            setAd(ad)  
+            setUser(user)            
+
+           history.push(`/ad/${adId}`)
+
+        } catch (error) {
+            console.error(error)
+        }  
+    }
+
+
+    // ESTOY AQUI
+
+    async function handleToPubliProfile(id) {   
+
+        if (!id) {
+            const token = sessionStorage.token 
+            const user = await retrieveUser(token)
+            id = user.id
+            const ads = await retrieveAds(token)
+        } else {
+
+
+        }
+
+        
+
+        setAds(ads)   
+        setUser(user)
+        
+        history.push("/profile/:id")
+  
     }
 
 
@@ -191,13 +277,17 @@ export default withRouter(function ({ history }) {
 
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
-        <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}/></>}/> 
+        <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}
+                                                       onToCreateAd={handleToCreateAd}/></>}/> 
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
-        <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd}/></>}/> 
-        <Route path="/update" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
-        {/* <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>  */}
+        <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
+        <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
+        <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
+
+        {/* ESTOY AQUI */}
+        {/* <Route path="/profile/:id" render={() => <PubliProfile ad={ad} onUpdateAd={handleOnUpdateAd}/>}/> */}
 
     </>
 })

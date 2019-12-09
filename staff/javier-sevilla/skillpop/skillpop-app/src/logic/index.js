@@ -9,5 +9,9 @@ module.exports = {
     retrieveAd: require('./retrieve-ad'),
     retrieveAds: require('./retrieve-ads'),
     saveImageAd: require('./save-image-ad'),
-    modifyAd: require('./modify-ad')
+    modifyAd: require('./modify-ad'),
+    removeAd: require('./remove-ad'),
+    modifyUser: require('./modify-user'),
+    saveImageProfile: require('./save-image-profile'),
+    createAd: require('./create-ad')
 }

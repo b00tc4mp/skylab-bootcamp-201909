@@ -8,8 +8,7 @@ export default function ({ ad: { id, title, price }, adDetail }) {
 
             adDetail(id)
         }}>
-            {/* <img className="item__image" src={`${API_URL}/ads/${user.id}/wish/${id}?timestamp=${Date.now()}`}/> */}
-            <img className="item__image" src="https://dummyimage.com/120x130/949494/1f1f1f"/>
+            <img className="item__image" src={`${API_URL}/ads/load/${id}?timestamp=${Date.now()}`}/>
             <div className="item__pf">
                 <span className="item__price">{price}€</span>
                 <span className="item__fav">

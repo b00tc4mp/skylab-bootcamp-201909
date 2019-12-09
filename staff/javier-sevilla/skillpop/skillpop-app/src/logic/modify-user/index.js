@@ -6,14 +6,26 @@ const API_URL = process.env.REACT_APP_API_URL
 module.exports = function (token, name, surname, city, address) {
     validate.string(token)
     validate.string.notVoid('token', token)
-    validate.string(name)
-    validate.string.notVoid('name', name)
-    validate.string(surname)
-    validate.string.notVoid('surname', surname)
-    validate.string(city)
-    validate.string.notVoid('city', city)
-    validate.string(address)
-    validate.string.notVoid('address', address)
+
+    if (name) {
+        validate.string(name)
+        validate.string.notVoid('name', name)
+    }
+    if (surname) {
+        validate.string(surname)
+        validate.string.notVoid('surname', surname)
+
+    }
+
+    if (city) {
+        validate.string(city)
+        validate.string.notVoid('city', city)
+    }
+
+    if (address) {
+        validate.string(address)
+        validate.string.notVoid('address', address)
+    }
 
     return (async () => {
         const res = await call(`${API_URL}/users`, {

@@ -3,7 +3,7 @@ import './index.sass'
 import AdsSearch from '../AdsSearch'
 // import { Link } from 'react-router-dom'
 
-export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail, onProfile }) {
+export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail, onProfile, onToCreateAd, onToPubliProfile }) {
     return      <section className="search">
         <div className="search__header">
             <nav>
@@ -13,8 +13,6 @@ export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail
                     <span></span>
                     <span></span>
                     <ul className="menu">
-                        {/* <li><Link className="menu__item" to="/login">Login</Link></li>
-                        <li><Link className="menu__item" to="/register">Register</Link></li> */}
                         <li><a className="menu__item" onClick={event => {
                              event.preventDefault()
 
@@ -25,16 +23,27 @@ export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail
 
                               onRegister()
                         }}>Register</a></li>
-                        <li><a className="menu__item" onClick={event => {
-                             event.preventDefault()
 
-                              onLogout()
-                        }}>Logout</a></li>
                         <li><a className="menu__item" onClick={event => {
                              event.preventDefault()
 
                               onProfile()
                         }}>My Profile</a></li>
+                        <li><a className="menu__item" onClick={event => {
+                             event.preventDefault()
+
+                              onToPubliProfile()
+                        }}>Public Profile</a></li>
+                        <li><a className="menu__item" onClick={event => {
+                             event.preventDefault()
+
+                              onToCreateAd()
+                        }}>Create Ad</a></li>
+                        <li><a className="menu__item" onClick={event => {
+                             event.preventDefault()
+
+                              onLogout()
+                        }}>Logout</a></li>
                     </ul>
                 </div>
             </nav>
