@@ -7,11 +7,9 @@ module.exports = function (query) {
 
     return (async () => {
 
-        const users = await User.find({username}).lean()
+        const users = await User.find({"username": {$regex : `.*${query}*`}}).lean()
 
-        if (users.length === 0) throw new NotFoundError(`user with name ${query} not found`)
-
-        users.forEach(user => { user.id = user._id.toString(); delete user._id })
+        if (users.length === 0) throw new NotFoundError(`user ${query} not found`)
 
         return users
     })()

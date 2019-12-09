@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { searchUser } from '../../logic'
 import { withRouter } from 'react-router-dom'
+import UserItem from '../UserItem'
 import Feedback from '../Feedback'
 
-export default withRouter(function({ history }) {
+export default withRouter(function({ }) {
 
     const [users, setUsers] = useState([])
 
@@ -12,12 +13,10 @@ export default withRouter(function({ history }) {
     async function handleSearch(query) {
         try {
             const { token } = sessionStorage
-            
+
             const users = await searchUser(token, query)
 
             setUsers(users)
-
-            history.push('/search')
         } catch (error) {
             setError(error.message.toString())
         }
@@ -33,7 +32,10 @@ export default withRouter(function({ history }) {
             handleSearch(query)
         }}>
             <input className="search__field" type="search" name="query" placeholder="search collector" />
-            <button className="search__button"><img src="img/search.png" alt="search" /></button>
+            <button className="search__button">Search</button>
         </form>
+        <section className="user-list">
+            {users && users.map(user => <section className="user-item" key={user.id}><UserItem user={user} /></section>)}
+        </section>
     </section>
 })

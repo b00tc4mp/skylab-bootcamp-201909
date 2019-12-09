@@ -169,10 +169,10 @@ router.get('/load/:userId', async (req, res) => {
 
 router.get('/search/:query', jsonBodyParser, (req, res) => {
     try {
-        const { params: { query } } = req
+        let { params: { query } } = req
 
         searchUser(query)
-            .then(user => res.json(user))
+            .then(users => res.json(users))
             .catch(error => {
                 const { message } = error
 

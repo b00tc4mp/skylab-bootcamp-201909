@@ -16,11 +16,11 @@ module.exports = function (token, query) {
         })
 
         if (res.status === 200) {
-            const user = JSON.parse(res.body)
+            const users = JSON.parse(res.body)
 
-            user.lastAccess = new Date(user.lastAccess)
+            users.lastAccess = new Date(users.lastAccess)
 
-            return user
+            return users
         }
         
         if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)
