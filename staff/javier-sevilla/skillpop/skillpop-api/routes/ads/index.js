@@ -94,28 +94,26 @@ router.get('/:adId', (req, res) => {
     }
 })
 
-// router.get('/:adId', tokenVerifier, (req, res) => {
-//     try {
-//         const { id, params: { adId } } = req
+router.get('/publicid/:id', (req, res) => {
+    try {
+        const {params: { id } } = req
 
-//         retrieveAd(id, adId)
-//             .then(ad => {
-//                 res.json(ad)
-//             })
-//             .catch(error => {
-//                 const { message } = error
+        retrieveAds(id)
+            .then(ad => {
+                res.json(ad)
+            })
+            .catch(error => {
+                const { message } = error
 
-//                 if (error instanceof NotFoundError)
-//                     return res.status(404).json({ message })
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
 
-//                 res.status(500).json({ message })
-//             })
-//     } catch ({ message }) {
-//         res.status(400).json({ message })
-//     }
-// })
-
-
+                res.status(500).json({ message })
+            })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
 
 router.patch('/:adId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
