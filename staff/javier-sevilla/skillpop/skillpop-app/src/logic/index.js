@@ -7,5 +7,7 @@ module.exports = {
     createAd: require('./create-ad'),
     searchAds: require('./search-ads'),
     retrieveAd: require('./retrieve-ad'),
-    retrieveAds: require('./retrieve-ads')
+    retrieveAds: require('./retrieve-ads'),
+    saveImageAd: require('./save-image-ad'),
+    modifyAd: require('./modify-ad')
 }
