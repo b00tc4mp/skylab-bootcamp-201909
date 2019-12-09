@@ -13,7 +13,7 @@ return <section className="add-lesson">
     <form className="add-lesson__form" onSubmit={function (event) {
         event.preventDefault()
 
-        const { date: { value: date }, timeStart: { value: timeStart }, timeEnd: { value: timeEnd },  teamName: {value: teamId } /*teamActivity: { value: teamActivity} */ /* teamName: { value: teamName } */  /*teamActivity: { value: teamActivity } */ } = event.target
+        const { date: { value: date }, timeStart: { value: timeStart }, timeEnd: { value: timeEnd },  teamName: {value: teamId } } = event.target
 
 
         onAddLesson(date, timeStart, timeEnd, teamId )
@@ -23,7 +23,7 @@ return <section className="add-lesson">
         <input className="add-lesson__field" type="text" name="timeStart" placeholder="starting time"/>
         <input className="add-lesson__field" type="text" name="timeEnd" placeholder="ending time"/>
         <select className="add-lesson__field-select" name="teamName">
-            {teams.map(team => <option className="add-lesson__field" value={team.id}>{team.teamName}</option>)}
+            {teams.map(team => <option className="add-lesson__field" key={team.id} value={team.id}>{team.teamName}</option>)}
         </select>  
         <button className="add-lesson__button">Submit</button>
     </form>
