@@ -7,7 +7,7 @@ const { errors: { NotFoundError, ContentError, ConflictError } } = require('wish
 const { database, ObjectId, models: { User, Wish } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 
-describe.only('logic - retrieve friend wish', () => {
+describe('logic - retrieve friend wish', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, friendWish, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, wishId, title, link, price, description 

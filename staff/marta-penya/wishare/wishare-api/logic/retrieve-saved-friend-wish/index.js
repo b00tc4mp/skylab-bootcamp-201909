@@ -22,7 +22,6 @@ module.exports = function (id) {
         user = await User.findById(id).populate('savedWishes.user', 'id name')
 
         let savedWishes = user.savedWishes.toObject()
-        debugger
 
         let response = []
 
@@ -34,7 +33,9 @@ module.exports = function (id) {
                 title: savedWish.wish.title,
                 link: savedWish.wish.link,
                 price: savedWish.wish.price,
-                description: savedWish.wish.description
+                description: savedWish.wish.description,
+                blocked: savedWish.wish.blocked,
+                given: savedWish.wish.given
             })
         })
         return response

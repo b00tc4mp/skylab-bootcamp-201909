@@ -18,7 +18,7 @@ import EditWish from '../EditWish'
 import FriendDetail from '../FriendDetail'
 
 //logic
-import { registerUser, authenticateUser, retrieveUser, retrieveBirthdays, modifyUser, saveProfileImage, createWish, saveWishImage, modifyWish, removeWish, givenWish, searchUsers, addFriend, retrieveFriends, deleteFriend, retrieveFriend, saveFriendWish, retrieveFriendWish } from '../../logic'
+import { registerUser, authenticateUser, retrieveUser, retrieveBirthdays, modifyUser, saveProfileImage, createWish, saveWishImage, modifyWish, removeWish, givenWish, searchUsers, addFriend, retrieveFriends, deleteFriend, retrieveFriend, saveFriendWish, retrieveFriendWish, removeFriendWish, blockWish } from '../../logic'
 
 
 export default withRouter(function ({ history }) {
@@ -213,6 +213,26 @@ export default withRouter(function ({ history }) {
 
 	}
 
+	//mark a friend wish as blocked
+
+	async function handleBlockWish(friendId, wishId){
+		try {
+			const { token } = sessionStorage
+
+			await blockWish(token, friendId, wishId)
+
+			const savedWishes = await retrieveFriendWish(token)
+
+			setSavedWishes(savedWishes)
+
+			history.push(`/savedwishes`)
+			
+		} catch (error) {
+			const { message } = error
+			setError(message)
+		}
+	}
+
 	// search users by their e-mail
 
 	async function handleSearch(query) {
@@ -316,6 +336,26 @@ export default withRouter(function ({ history }) {
 		}
 	}
 
+	//delete a friend wish saved in saved wishes list
+
+	async function handleRemoveWish(friendId, wishId){
+		try {
+			const { token } = sessionStorage
+
+			await removeFriendWish(token, friendId, wishId)
+
+			const savedWishes = await retrieveFriendWish(token)
+
+			setSavedWishes(savedWishes)
+
+			history.push(`/savedwishes`)
+
+		} catch (error) {
+			const { message } = error
+			setError(message)
+		}
+	}
+
 	//header logout function to clear token 
 	function handleLogout() {
 		sessionStorage.clear()
@@ -367,7 +407,7 @@ export default withRouter(function ({ history }) {
 			<Route path='/searchfriends' render={() => token ? <SearchFriends onSearch={handleSearch} users={users} error={error} onMyFriends={handleOnMyFriends} addFriend={handleAddFriend} /> : <Redirect to='/' />} />
 			<Route path='/mywishes' render={() => token ? <MyWishes onCreateWish={handleOnCreateWish} wishes={wishes} user={user} onEditWish={handleOnEditWish} deleteWish={handleDeleteWish} givenWish={handleGivenWish} /> : <Redirect to='/' />} />
 			<Route path='/myfriends' render={() => token ? <MyFriends onSearchFriends={handleOnSearchFriends} friends={friends} deleteFriend={handleDeleteFriend} onFriendDetail={handleFriendDetail} /> : <Redirect to='/' />} />
-			<Route path='/savedwishes' render={() => token ? <SavedWishes savedWishes={savedWishes} /> : <Redirect to='/' />} />
+			<Route path='/savedwishes' render={() => token ? <SavedWishes savedWishes={savedWishes} removeWish={handleRemoveWish} blockWish={handleBlockWish} /> : <Redirect to='/' />} />
 			<Route path='/myprofile' render={() => token ? <MyProfile user={user} onEditProfile={handleOnEditProfile} /> : <Redirect to='/' />} />
 			<Route path='/editprofile' render={() => token ? <EditProfile onMyProfile={handleOnMyProfile} onModify={handleModify} /> : <Redirect to='/' />} />
 			<Route path='/editwish' render={() => token ? <EditWish onEditWish={handleEditWish} onMyWishes={handleOnMyWishes} /> : <Redirect to='/' />} />

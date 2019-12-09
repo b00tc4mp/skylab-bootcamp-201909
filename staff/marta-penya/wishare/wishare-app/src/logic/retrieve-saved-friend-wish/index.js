@@ -21,6 +21,7 @@ module.exports = function (token) {
             method: 'GET',
             headers: {Authorization: `Bearer ${token}`}
         })
+
         if(res.status === 200){
             const savedWishes = JSON.parse(res.body)
  

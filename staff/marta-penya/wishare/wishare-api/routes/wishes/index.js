@@ -152,11 +152,11 @@ router.patch('/:wishId/given', tokenVerifier, (req, res) => {
 })
 
 //to mark a wish as given, only the friends of the owner of the wish can do it
-router.patch('/:wishId/blocked', tokenVerifier, jsonBodyParser, (req, res) => {
+router.patch('/:wishId/:friendId/blocked', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, params: { wishId } } = req
+        const { id, params: { wishId, friendId } } = req
 
-        blockedWish(id, wishId)
+        blockedWish(id, friendId, wishId)
             .then(() =>
                 res.end()
             )

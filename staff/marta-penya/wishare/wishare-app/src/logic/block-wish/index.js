@@ -3,26 +3,29 @@ const call = require('../../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
 /**
- * function to mark a wish as given 
+ * Method to block a friend wish 
  * 
- * @param {string} token of user 
- * @param {String} wishId wish
+ * @param {string} id user id 
+ * @param {String} friendId friend id
+ * @param {String} wishId wish id
  * 
  * @returns {Promise}
  * 
  */
 
-module.exports = function ( token, wishId ) {
+module.exports = function ( token, friendId, wishId ) {
 
     validate.string(token)
     validate.string.notVoid('token', token)
-   
+
+    validate.string(friendId)
+    validate.string.notVoid('friendId', friendId)
+
     validate.string(wishId)
     validate.string.notVoid('wishId', wishId)
-   
 
     return (async () => {
-        const res = await call(`${API_URL}/wishes/${wishId}/given`, {
+        const res = await call(`${API_URL}/wishes/${wishId}/${friendId}/blocked`, {
             method: 'PATCH',
             headers:{
                 'Authorization':`Bearer ${token}`,
@@ -35,6 +38,5 @@ module.exports = function ( token, wishId ) {
         if(res.status === 400) throw new NotFoundError(JSON.parse(res.body).message)
 
         if(res.status === 404) throw new NotFoundError(JSON.parse(res.body).message)
-
     })()
 }

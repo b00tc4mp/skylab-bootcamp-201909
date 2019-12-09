@@ -17,7 +17,7 @@ export default function({ user, birthdays, onCreateWish, onSearchFriends }){
     </section>
 
     <section className="landing__user user">
-        <img className="user__image" src={`${API_URL}/users/profileimage/${user.id}`}  alt="profile picture"/>
+        <img className="user__image" src={`${API_URL}/users/profileimage/${user.id}?timestamp=${Date.now()}`}  alt="profile picture"/>
         <span className="user__welcome"> Hi {user.name}, what do you want to do?</span>
         <section className="landing__buttons">
             <button className="landing__btn" onClick={event => { event.preventDefault(); onCreateWish() }}> Create a Wish</button>

@@ -1,7 +1,7 @@
 import React from 'react'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function( { savedWish } ){
+export default function( { savedWish, removeWish, blockWish } ){
     return <>
     <div className="saved-wishes__owner">
     <img className="saved-wishes__img" src={`${API_URL}/users/profileimage/${savedWish.id}?timestamp=${Date.now()}`}/>
@@ -14,11 +14,14 @@ export default function( { savedWish } ){
 <div className="saved-wishes__info">
     <span className="saved-wishes__wname"> {savedWish.title} </span>
     <p className="saved-wishes__wdescription">{savedWish.description}</p>
-    <a className="saved-wishes__link" href={savedWish.link}> Online Store </a>
+   {!savedWish.given && <a className="saved-wishes__link" href={savedWish.link}> Online Store </a>}
+   {savedWish.given && <p className="saved-wishes__given"> GIVEN GIFT!! </p>}
+   {savedWish.blocked && <p className="saved-wishes__given"> THIS GIFT HAS BEEN BLOCKED!! </p>}
+
 </div>
 <div className="saved-wishes__buttonscontainer">
-    <button className="saved-wishes__button">Remove</button>
-    <button className="saved-wishes__button">Block</button>
+    <button className="saved-wishes__button" onClick={event => { event.preventDefault(); removeWish(savedWish.id, savedWish.wish ) }}>Remove</button>
+    {!savedWish.blocked && <button className="saved-wishes__button" onClick={event => { event.preventDefault(); blockWish(savedWish.id, savedWish.wish ) }}>Block</button>}
 </div>
 </>
 }
