@@ -23,7 +23,7 @@ module.exports = function (id) {
         const wishes = user.wishes
             
         if (!wishes) throw new NotFoundError(`wishes not found`)
-        debugger
+
         wishes.forEach(wish => {
             wish.id = wish._id.toString()
             delete wish._id

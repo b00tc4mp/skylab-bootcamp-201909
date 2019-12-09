@@ -14,5 +14,7 @@ module.exports = {
     addFriend: require('./add-friend'),
     retrieveFriends: require('./retrieve-friends'),
     retrieveFriend: require('./retrieve-friend'),
-    deleteFriend: require('./delete-friend')
+    deleteFriend: require('./delete-friend'),
+    saveFriendWish: require('./save-friend-wish'),
+    retrieveFriendWish: require('./retrieve-saved-friend-wish')
 }

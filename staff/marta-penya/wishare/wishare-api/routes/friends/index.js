@@ -1,11 +1,10 @@
 const { Router } = require('express')
-const { addFriend, deleteFriend, saveFriendWish, removeFriendWish, retrieveBirthdayFriends, retrieveFriends, retrieveFriend } = require('../../logic')
-const jwt = require('jsonwebtoken')
+const { addFriend, deleteFriend, saveFriendWish, retrieveFriendWish, removeFriendWish, retrieveBirthdayFriends, retrieveFriends, retrieveFriend } = require('../../logic')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const bodyParser = require('body-parser')
 const { errors: { NotFoundError, ConflictError, CredentialsError } } = require('wishare-util')
-const Busboy = require('busboy')
+
 
 const jsonBodyParser = bodyParser.json()
 
@@ -63,6 +62,31 @@ router.post('/wish/:friendId', tokenVerifier, jsonBodyParser, (req, res) => {
 
         saveFriendWish(id, friendId, wishId)
             .then(wish => res.json(wish))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                if (error instanceof ConflictError)
+                    return res.status(409).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+//retrieve saved friends wishes
+
+router.get('/wishes', tokenVerifier, (req, res) => {
+    try {
+        const { id } = req
+
+        retrieveFriendWish(id)
+            .then(savedWish => res.json(savedWish))
             .catch(error => {
                 const { message } = error
 
@@ -142,6 +166,7 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
+//retrieve a friend
 router.get('/:friendId', tokenVerifier, (req, res) => {
     try {
         const { id , params: { friendId } } = req

@@ -50,10 +50,7 @@ module.exports = new Schema({
             type: ObjectId,
             ref: 'User'
         },
-        wish: {
-            type: ObjectId,
-            ref: 'Wish'
-        }
+        wish: Wish
     }],
     lastAccess: {
         type: Date

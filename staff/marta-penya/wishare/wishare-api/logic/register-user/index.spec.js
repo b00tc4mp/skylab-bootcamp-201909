@@ -34,7 +34,7 @@ describe('logic - register user', () => {
         expect(response).to.be.undefined
 
         const user = await User.findOne({ email })
-        debugger
+
         expect(user).to.exist
 
         expect(user.name).to.equal(name)
@@ -65,7 +65,7 @@ describe('logic - register user', () => {
                 throw Error('should not reach this point')
             } catch (error) {
                 expect(error).to.exist
-                debugger
+
                 expect(error.message).to.exist
                 expect(typeof error.message).to.equal('string')
                 expect(error.message.length).to.be.greaterThan(0)

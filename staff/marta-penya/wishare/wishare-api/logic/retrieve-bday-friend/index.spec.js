@@ -68,7 +68,7 @@ describe('logic - retrieve friend bday', () => {
     })
 
     it('should succeed on correct friend birthday', async () => {
-        debugger
+
         const response = await retrieveFriendBday(id)
 
         expect(response).to.exist
