@@ -18,5 +18,7 @@ module.exports = {
     deleteFriend: require('./delete-friend'),
     saveFriendWish: require('./save-friend-wish'),
     retrieveFriendWish: require('./retrieve-saved-friend-wish'),
-    removeFriendWish: require('./remove-friend-wish')
+    removeFriendWish: require('./remove-friend-wish'),
+    retrieveChat: require('./retrieve-chat'),
+    sendMessage: require('./send-message')
 }

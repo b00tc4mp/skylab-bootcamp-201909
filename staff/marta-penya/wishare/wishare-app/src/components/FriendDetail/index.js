@@ -3,7 +3,7 @@ import './index.sass'
 import { retrieveFriend } from '../../logic'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ id, onMyFriends, saveWish }) {
+export default function ({ id, onMyFriends, saveWish, onChatRoom }) {
     const [friend, setFriend] = useState({})
     const [friendId, setFriendId] = useState()
 
@@ -22,12 +22,13 @@ export default function ({ id, onMyFriends, saveWish }) {
 
             })()
         }
-    }, [sessionStorage.token ])
+    }, [sessionStorage.token])
 
     const { name, surname, email, birthday, description, wishes } = friend
 
     return <section className="friend-detail hidden">
         <section className="friend-detail__container">
+            <button className="friend-detail__back" onClick={event => { event.preventDefault(); onChatRoom(friendId) }}> ChatRoom </button>
             <button className="friend-detail__back" onClick={event => { event.preventDefault(); onMyFriends() }}> Back </button>
         </section>
 
@@ -43,7 +44,7 @@ export default function ({ id, onMyFriends, saveWish }) {
 
         <section className="friend-detail__wishes">
             <h2 className="friend-detail__title">{name}'s Wishes</h2>
-            <ul className="friend-detail__list"> 
+            <ul className="friend-detail__list">
                 {!wishes && <p className="mywishes__nowish"> {name} has no wishes added</p>}
                 {wishes && wishes.map(wish => <li className="friend-detail__wish" key={wish.id}>
                     <div className="friend-detail__detail">
@@ -57,7 +58,7 @@ export default function ({ id, onMyFriends, saveWish }) {
                         {wish.given && <p className="friend-detail__given"> GIVEN GIFT!! </p>}
                     </div>
                     <div className="friend-detail__btn">
-                        <button className="friend-detail__save" onClick={event => { event.preventDefault(); saveWish(wish.id, id ) }}>Save wish</button>
+                        <button className="friend-detail__save" onClick={event => { event.preventDefault(); saveWish(wish.id, id) }}>Save wish</button>
                         <button className="friend-detail__save">Block wish</button>
                     </div>
                 </li>)}

@@ -34,10 +34,10 @@ router.post('/', tokenVerifier, (req, res) => {
 })
 
 //retrieve chat by chatId, it comes by params
-router.get('/:chatId',tokenVerifier, (req, res) => {    
+router.get('/:userId', tokenVerifier, (req, res) => {    
     try {
-        const { params: { chatId } } = req
-        retrieveChat(chatId)
+        const { id, params:{userId}} = req
+        retrieveChat(id, userId)
             .then(chat =>{ 
                 res.status(201)
                 res.json({ chat }).end()
@@ -57,12 +57,13 @@ router.get('/:chatId',tokenVerifier, (req, res) => {
 
 
 //send a message on chat
-router.post('/:chatId', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/message/:userId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, body: { text }, params: { chatId } } = req
+        debugger
+        const { id, body: { text }, params: { userId } } = req
 
-        sendMessage(chatId, id, text)
-            .then(id => res.status(201).json({ id }))
+        sendMessage(id, userId, text)
+            .then(() => res.status(201).end())
             .catch(error => {
                 const { message } = error
                 if (error instanceof NotFoundError)

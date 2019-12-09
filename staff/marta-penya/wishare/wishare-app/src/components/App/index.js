@@ -16,9 +16,10 @@ import MyProfile from '../MyProfile'
 import EditProfile from '../EditProfile'
 import EditWish from '../EditWish'
 import FriendDetail from '../FriendDetail'
+import Chat from '../Chat'
 
 //logic
-import { registerUser, authenticateUser, retrieveUser, retrieveBirthdays, modifyUser, saveProfileImage, createWish, saveWishImage, modifyWish, removeWish, givenWish, searchUsers, addFriend, retrieveFriends, deleteFriend, retrieveFriend, saveFriendWish, retrieveFriendWish, removeFriendWish, blockWish } from '../../logic'
+import { registerUser, authenticateUser, retrieveUser, retrieveBirthdays, modifyUser, saveProfileImage, createWish, saveWishImage, modifyWish, removeWish, givenWish, searchUsers, addFriend, retrieveFriends, deleteFriend, retrieveFriend, saveFriendWish, retrieveFriendWish, removeFriendWish, blockWish, retrieveChat, sendMessage } from '../../logic'
 
 
 export default withRouter(function ({ history }) {
@@ -31,10 +32,11 @@ export default withRouter(function ({ history }) {
 	const [users, setUsers] = useState([])
 	const [friends, setFriends] = useState([])
 	const [friend, setFriend] = useState({})
-	const [render, setRender] = useState(true)	
+	const [render, setRender] = useState(true)
 	const [savedWishes, setSavedWishes] = useState([])
+	const [chat, setChat] = useState({})
 
-	useEffect(() => {	
+	useEffect(() => {
 
 		const { token } = sessionStorage;
 
@@ -203,7 +205,7 @@ export default withRouter(function ({ history }) {
 			await givenWish(token, id)
 
 			setRender(!render)
-			
+
 			history.push('/mywishes')
 
 		} catch (error) {
@@ -215,7 +217,7 @@ export default withRouter(function ({ history }) {
 
 	//mark a friend wish as blocked
 
-	async function handleBlockWish(friendId, wishId){
+	async function handleBlockWish(friendId, wishId) {
 		try {
 			const { token } = sessionStorage
 
@@ -226,7 +228,7 @@ export default withRouter(function ({ history }) {
 			setSavedWishes(savedWishes)
 
 			history.push(`/savedwishes`)
-			
+
 		} catch (error) {
 			const { message } = error
 			setError(message)
@@ -319,7 +321,7 @@ export default withRouter(function ({ history }) {
 
 	//save a wish from a friend into user saved wishes list
 
-	async function handleSaveWish(wishId, friendId){
+	async function handleSaveWish(wishId, friendId) {
 		try {
 			const { token } = sessionStorage
 
@@ -329,7 +331,7 @@ export default withRouter(function ({ history }) {
 
 			setSavedWishes(savedWishes)
 
-			history.push(`/savedwishes`)			
+			history.push(`/savedwishes`)
 		} catch (error) {
 			const { message } = error
 			setError(message)
@@ -338,7 +340,7 @@ export default withRouter(function ({ history }) {
 
 	//delete a friend wish saved in saved wishes list
 
-	async function handleRemoveWish(friendId, wishId){
+	async function handleRemoveWish(friendId, wishId) {
 		try {
 			const { token } = sessionStorage
 
@@ -349,6 +351,40 @@ export default withRouter(function ({ history }) {
 			setSavedWishes(savedWishes)
 
 			history.push(`/savedwishes`)
+
+		} catch (error) {
+			const { message } = error
+			setError(message)
+		}
+	}
+
+	//go to chat room
+
+	async function handleChatRoom(friendId) {
+		try {
+			const { token } = sessionStorage
+
+			const chat = await retrieveChat(token, friendId)
+
+			setChat(chat)
+
+			const id = chat.owner._id
+
+			history.push(`/chat/${id}`)
+
+		} catch (error) {
+			const { message } = error
+			setError(message)
+		}
+	}
+
+	//send a message on chat
+
+	async function handleSendMessage(text, friendId) {
+		try {
+			const { token } = sessionStorage
+
+			await sendMessage(token, friendId, text)
 
 		} catch (error) {
 			const { message } = error
@@ -383,9 +419,9 @@ export default withRouter(function ({ history }) {
 
 	function handleOnMyFriends() { history.push('/myfriends') }
 
-	function handleOnSavedWishes() { 
+	function handleOnSavedWishes() {
 
-		history.push('/savedwishes') 
+		history.push('/savedwishes')
 	}
 
 	function handleOnMyProfile() { history.push('/myprofile') }
@@ -411,7 +447,8 @@ export default withRouter(function ({ history }) {
 			<Route path='/myprofile' render={() => token ? <MyProfile user={user} onEditProfile={handleOnEditProfile} /> : <Redirect to='/' />} />
 			<Route path='/editprofile' render={() => token ? <EditProfile onMyProfile={handleOnMyProfile} onModify={handleModify} /> : <Redirect to='/' />} />
 			<Route path='/editwish' render={() => token ? <EditWish onEditWish={handleEditWish} onMyWishes={handleOnMyWishes} /> : <Redirect to='/' />} />
-			<Route path='/friend/:id' render={ props => token ? <FriendDetail id={props.match.params.id} friend={friend} onMyFriends={handleOnMyFriends} saveWish={handleSaveWish} /> : <Redirect to='/' />} />
+			<Route path='/friend/:id' render={props => token ? <FriendDetail id={props.match.params.id} friend={friend} onMyFriends={handleOnMyFriends} saveWish={handleSaveWish} onChatRoom={handleChatRoom} /> : <Redirect to='/' />} />
+			<Route path='/chat/:id' render={props => token ? <Chat id={props.match.params.id} chat={chat} onBack={handleFriendDetail} onSendMessage={handleSendMessage} /> : <Redirect to='/' />} />
 		</>
 	)
 })

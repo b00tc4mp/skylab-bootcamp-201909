@@ -30,7 +30,7 @@ export default function ({ user, birthdays, onCreateWish, onSearchFriends, saved
             <section className="landing__imgwishes">
                 <a  href="#" className="list__item" onClick={event => { event.preventDefault(); onSavedWishes() }}>
                     <ul className="landing__savedwisheslist">
-                        {savedWishes.map(savedWish => <li>
+                        {savedWishes.map(savedWish => <li key={savedWish.wish} >
                             <img src={`${API_URL}/wishes/${savedWish.id}/wish/${savedWish.wish.toString()}?timestamp=${Date.now()}`} alt="pending wishes" className="searchf__wish" />
                         </li>)}
                     </ul>
