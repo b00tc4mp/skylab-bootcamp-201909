@@ -205,10 +205,16 @@
                     </div>
                     <h2 class="item__title">This is a ad numer two aasdasda aasdads </h2>
                 </a>
-                <form class="item__form">
-                    <input type="hidden" name="id">
-                    <button class="item__delete">Delete</button>
-                </form>
+                <div class="item__actions">
+                    <form class="item__form">
+                        <input type="hidden" name="id">
+                        <button class="item__delete">Delete</button>
+                    </form>
+                    <form class="item__form">
+                        <input type="hidden" name="id">
+                        <button class="item__update">Update</button>
+                    </form>
+                </div>
             </li>
             <li class="results__item">
                 <a href="#" class="item">
@@ -224,10 +230,16 @@
                     </div>
                     <h2 class="item__title">This is a ad numer two aasdasda as </h2>
                 </a>
-                <form class="item__form">
-                    <input type="hidden" name="id">
-                    <button class="item__delete">Delete</button>
-                </form>
+                <div class="item__actions">
+                    <form class="item__form">
+                        <input type="hidden" name="id">
+                        <button class="item__delete">Delete</button>
+                    </form>
+                    <form class="item__form">
+                        <input type="hidden" name="id">
+                        <button class="item__update">Update</button>
+                    </form>
+                </div>
             </li>
         </ul>
     </section>
@@ -517,6 +529,11 @@
             <textarea name="description" class="newAd__field" cols="28" rows="15"
                 placeholder="New Description"></textarea>
             <button class="newAd__button">Submit</button>
+        </form>
+        <h2 class="newAd__title2">Add Image</h2>
+        <form class="newAd_formImage" enctype="multipart/form-data">
+            <input class="newAd__upImage" name="uploadedfile" type="file" value="Select image" />
+            <input class="newAd__subImage" type="submit" value="Submit image" />
         </form>
     </section>
 
