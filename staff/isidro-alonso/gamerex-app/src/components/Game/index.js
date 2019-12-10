@@ -53,8 +53,13 @@ export default withRouter(function ({ history }) {
             {showFav()}
             {showSell()}
             {showExch()}
-            <h1 className="game-detail__title">Chat if you are interested!</h1>
-            <span className="game-detail__chat">chat content</span>
+            <h1 className="game-detail__title">Comment if you are interested!</h1>
+            <span className="game-detail__chat">
+                <form id="commentform">
+                    <textarea className="chat__textcomment" rows="5" cols="30" name="comment" form="commentform" placeholder="Leave your comment here..."></textarea>
+                    <button className="chat__send">Send comment</button>
+                </form>
+            </span>
         </section>
     </section>
 })

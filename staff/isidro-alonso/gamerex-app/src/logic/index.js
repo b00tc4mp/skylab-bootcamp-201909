@@ -13,6 +13,8 @@ import modifyGame from './modify-game'
 import removeGame from './remove-game'
 import retrieveGame from './retrieve-game'
 import saveImageGame from './save-img-game'
+import addComment from './add-comment'
+import retrieveComments from './retrieve-comments'
 
 export {
     authenticateUser,
@@ -29,5 +31,7 @@ export {
     modifyGame,
     removeGame,
     retrieveGame,
-    saveImageGame
+    saveImageGame,
+    addComment,
+    retrieveComments
 }

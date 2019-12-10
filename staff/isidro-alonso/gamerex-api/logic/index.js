@@ -15,5 +15,7 @@ module.exports = {
     removeGame: require('./remove-game'),
     retrieveGame: require('./retrieve-game'),
     saveImageGame: require('./save-img-game'),
-    loadImageGame: require('./load-img-game')
+    loadImageGame: require('./load-img-game'),
+    addComment: require('./add-comment'),
+    retrieveComments: require('./retrieve-comments')
 }

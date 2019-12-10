@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import { retrieveGame, removeGame } from '../../logic'
+import { retrieveGame, removeGame, addComment } from '../../logic'
 import Feedback from '../Feedback'
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -11,6 +11,8 @@ export default withRouter(function ({ history }) {
     const [favourite, setFavourite] = useState()
     const [sell, setSell] = useState()
     const [exchange, setExchange] = useState()
+
+    const [body, setBody] = useState()
 
     const [error, setError] = useState('')
 
@@ -60,6 +62,18 @@ export default withRouter(function ({ history }) {
         }
     }
 
+    async function handleNewComment(body) {
+        const { token } = sessionStorage;
+        if (token) {
+            try {
+                await addComment(token, gameId, body)
+
+            } catch (error) {
+                setError(error.message.toString())
+            }
+        }
+    }
+
     const updateGameLink = `/updategame/${gameId}`
 
     const updateGameImgLink = `/updateimggame/${gameId}`
@@ -84,8 +98,19 @@ export default withRouter(function ({ history }) {
                 <button className="game-detail__edit">Edit game image</button>
             </Link>
             <button className="game-detail__remove" onClick={handleRemoveGame}>Remove game</button>
-            <h1 className="game-detail__title">Chat if you are interested!</h1>
-            <span className="game-detail__chat">chat content</span>
+            <h1 className="game-detail__title">Comment if you are interested!</h1>
+            <span className="game-detail__chat">
+                <form id="commentform" onSubmit={e => {
+                    e.preventDefault()
+
+                    handleNewComment(body)
+
+                    setBody('')
+                }}>
+                    <textarea className="chat__textcomment" rows="5" cols="30" name="comment" form="commentform" value={body} placeholder="Leave your comment here..." onChange={event => setBody(event.target.value)}></textarea>
+                    <button className="chat__send">Send comment</button>
+                </form>
+            </span>
         </section>
     </section>
 })
