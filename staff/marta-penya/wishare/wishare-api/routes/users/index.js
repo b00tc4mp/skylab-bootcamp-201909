@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, saveProfileImage, loadProfileImage, retrieveUsers } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, modifyUser, deleteUser, saveProfileImage, loadProfileImage, retrieveUsers, searchUsers } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -74,9 +74,9 @@ router.get('/user', tokenVerifier, (req, res) => {
     }
 })
 
-router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+router.patch('/update', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { params: { id }, body: { year, month, day, password, description } } = req
+        const { id , body: { year, month, day, password, description } } = req
   
         modifyUser(id, year, month, day, password, description)
             .then(() =>
@@ -116,12 +116,12 @@ router.delete('/:id', tokenVerifier, (req, res) => {
 })
 
 
-router.post('/upload/:id', (req, res) => {
-    
-    const { params: { id } } = req
+router.post('/uploadimage',tokenVerifier, (req, res) => {
+    debugger
+    const { id } = req
   
     const busboy = new Busboy({ headers: req.headers })
-
+    debugger
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
         filename = 'profile'
 
@@ -156,6 +156,28 @@ router.get('/', (req, res) => {
     try {
 
         retrieveUsers()
+            .then(users => res.json(users))
+            .catch(error => {
+                const { message } = error
+
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+
+                res.status(500).json({ message })
+            })
+    } catch (error) {
+        const { message } = error
+
+        res.status(400).json({ message })
+    }
+})
+
+router.get('/search/:query', jsonBodyParser, (req, res) => {
+    try {
+        debugger
+        const { params: { query } } = req
+        debugger
+        searchUsers(query)
             .then(users => res.json(users))
             .catch(error => {
                 const { message } = error

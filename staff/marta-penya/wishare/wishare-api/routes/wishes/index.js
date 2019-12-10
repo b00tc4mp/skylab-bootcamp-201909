@@ -15,7 +15,7 @@ router.post('/', jsonBodyParser, tokenVerifier, (req, res) => {
     const { id, body: { title, link, price, description } } = req
     try {
         createWish(id, title, link, price, description)
-            .then(() => res.status(201).end())
+            .then(wishId => res.json(wishId))
             .catch(error => {
                 const { message } = error
 
@@ -81,7 +81,6 @@ router.delete('/:wishId', tokenVerifier, (req, res) => {
             )
             .catch(error => {
                 const { message } = error
-
                 if (error instanceof NotFoundError)
                     return res.status(404).json({ message })
                 if (error instanceof ConflictError)
@@ -119,9 +118,9 @@ router.post('/upload/:wishId', tokenVerifier, (req, res) => {
 
 //endpoint download wishes images
 
-router.get('/wish/:wishId', tokenVerifier, async (req, res) => {
+router.get('/:id/wish/:wishId', async (req, res) => {
 
-    const { id, params: { wishId } } = req
+    const { params: { id, wishId } } = req
 
     const stream = await loadWishImage(id, wishId) 
 
@@ -134,7 +133,7 @@ router.get('/wish/:wishId', tokenVerifier, async (req, res) => {
 router.patch('/:wishId/given', tokenVerifier, (req, res) => {
     try {
         const { id, params: { wishId }} = req
-        debugger 
+ 
         givenWish(id, wishId)
             .then(() =>
                 res.end()
@@ -153,11 +152,11 @@ router.patch('/:wishId/given', tokenVerifier, (req, res) => {
 })
 
 //to mark a wish as given, only the friends of the owner of the wish can do it
-router.patch('/:wishId/blocked', tokenVerifier, jsonBodyParser, (req, res) => {
+router.patch('/:wishId/:friendId/blocked', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { id, params: { wishId } } = req
+        const { id, params: { wishId, friendId } } = req
 
-        blockedWish(id, wishId)
+        blockedWish(id, friendId, wishId)
             .then(() =>
                 res.end()
             )

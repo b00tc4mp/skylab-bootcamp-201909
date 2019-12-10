@@ -16,7 +16,7 @@ module.exports = function (id) {
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     return (async () => {
-        const user = await User.findById(id)
+        const user = await User.findById(id).populate('birthdayFriends.user', 'name')
 
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
@@ -38,7 +38,11 @@ module.exports = function (id) {
             const birthdayMillis = birth.getTime()
             const counter = birthdayMillis - todayMillis
 
-            if(counter < week && counter > 0) response.push([birthday.user._id.toString(), birthday.birthday.toLocaleDateString()])     
+            if(counter < week && counter > 0) response.push({
+                name: birthday.user.name, 
+                id: birthday.user._id.toString(), 
+                birthday: birthday.birthday.toLocaleDateString()
+            })     
         })
         
         return response

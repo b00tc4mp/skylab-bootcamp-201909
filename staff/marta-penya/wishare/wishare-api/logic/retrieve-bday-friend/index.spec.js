@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - retrieve friend bday', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2
+    let id, name, friendName,  surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, birthdayfriend2
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -36,7 +36,7 @@ describe('logic - retrieve friend bday', () => {
         birthday1 = new Date(year1, month1 - 1, day1, 2, 0, 0, 0)
 
         email2 = `email-${random()}@mail.com`
-        birthday2 = new Date(1990, 11, 5, 2, 0, 0, 0)
+        birthday2 = new Date(1990, 11, 12, 2, 0, 0, 0)
 
         title = `title-${random()}`
         link = `link-${random()}`
@@ -50,7 +50,7 @@ describe('logic - retrieve friend bday', () => {
         const friend2 = await User.create({ name: name1, surname: surname1, email: email2, birthday: birthday2, password: await bcrypt.hash(password, 10) })
 
         id = user.id
-
+        friendName = friend.name
         friendId = friend.id
         friend2Id = friend2.id
 
@@ -68,13 +68,14 @@ describe('logic - retrieve friend bday', () => {
     })
 
     it('should succeed on correct friend birthday', async () => {
-        debugger
+
         const response = await retrieveFriendBday(id)
 
         expect(response).to.exist
         expect(response.length).to.be.greaterThan(0)
-        expect(response[0]).to.contain(friend2Id)
-        expect(response[0]).to.not.contain(birthdayfriend2)
+        expect(response[0].id).to.equal(friend2Id)
+        expect(response[0].birthday).to.exist
+        expect(response[0].name).to.equal(friendName)
 
     })
 

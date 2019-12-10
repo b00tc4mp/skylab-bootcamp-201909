@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - sendMessage', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let text, id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, friend2Id, friendId, chatId, message1Id, message2Id, users
+    let text, id, name, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, friend2Id, friendId
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -43,7 +43,7 @@ describe('logic - sendMessage', () => {
         price = `price-${random()}@mail.com`
         description = `description-${random()}`
 
-        await User.deleteMany()
+        await Promise.all([User.deleteMany(), Chat.deleteMany()])
 
         const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
         const friend = await User.create({ name: name1, surname: surname1, email: email1, birthday: birthday1, password: await bcrypt.hash(password, 10) })
@@ -63,17 +63,15 @@ describe('logic - sendMessage', () => {
 
         const chat = await Chat.create({ owner: id, users: [friendId, friend2Id]})
 
-        chatId = chat.id
-
         await chat.save()
 
         text = "hey! what's up?"
     })
 
     it('should return a correct chat', async() => {
-        const messageId = await sendMessage(chatId, friendId, text)
+        const messageId = await sendMessage(friendId, id, text)
 
-        const chat = await Chat.findById(chatId)
+        const chat = await Chat.findOne({ "owner": ObjectId(id) })
 
         chat.message.forEach(element => {
             if (element.id === messageId) {
@@ -89,22 +87,7 @@ describe('logic - sendMessage', () => {
     it('should throw an NotFoundError because chat doesnt exist', async() => {
         const fakeId = ObjectId().toString()
         try {
-            await sendMessage(fakeId, friendId, text)
-
-            throw Error('should not reach this point')
-        } catch (error) {
-
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`chat with id ${fakeId} not found`)
-        }
-    })
-
-
-    it('should throw an NotFoundError because user doesnt exist', async() => {
-        const fakeId = ObjectId().toString()
-        try {
-            await sendMessage(chatId, fakeId, text)
+            await sendMessage(fakeId, id, text)
 
             throw Error('should not reach this point')
         } catch (error) {
@@ -116,7 +99,22 @@ describe('logic - sendMessage', () => {
     })
 
 
-    it('should fail on incorrect chatId, id or text', () => {
+    it('should throw an NotFoundError because user doesnt exist', async() => {
+        const fakeId = ObjectId().toString()
+        try {
+            await sendMessage(friendId, fakeId, text)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`chat with id ${fakeId} not found`)
+        }
+    })
+
+
+    it('should fail on incorrect friendId, id or text', () => {
         const wrongId = 'wrong id'
 
         expect(() => sendMessage(1)).to.throw(TypeError, '1 is not a string')
@@ -126,31 +124,30 @@ describe('logic - sendMessage', () => {
         expect(() => sendMessage(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => sendMessage(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => sendMessage('')).to.throw(ContentError, 'chatId is empty or blank')
-        expect(() => sendMessage(' \t\r')).to.throw(ContentError, 'chatId is empty or blank')
+        expect(() => sendMessage('')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => sendMessage(' \t\r')).to.throw(ContentError, 'userId is empty or blank')
         expect(() => sendMessage(wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
-        expect(() => sendMessage(chatId, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => sendMessage(chatId, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => sendMessage(chatId, [])).to.throw(TypeError, ' is not a string')
-        expect(() => sendMessage(chatId, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => sendMessage(chatId, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => sendMessage(chatId, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => sendMessage(friendId, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => sendMessage(friendId, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => sendMessage(friendId, [])).to.throw(TypeError, ' is not a string')
+        expect(() => sendMessage(friendId, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => sendMessage(friendId, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => sendMessage(friendId, null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => sendMessage(chatId, '')).to.throw(ContentError, 'userId is empty or blank')
-        expect(() => sendMessage(chatId, ' \t\r')).to.throw(ContentError, 'userId is empty or blank')
-        expect(() => sendMessage(chatId, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
+        expect(() => sendMessage(friendId, '')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => sendMessage(friendId, ' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => sendMessage(friendId, wrongId)).to.throw(ContentError,  `${wrongId} is not a valid id`)
 
-        expect(() => sendMessage(chatId, id, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => sendMessage(chatId, id, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => sendMessage(chatId, id, [])).to.throw(TypeError, ' is not a string')
-        expect(() => sendMessage(chatId, id, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => sendMessage(chatId, id, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => sendMessage(chatId, id, null)).to.throw(TypeError, 'null is not a string')
+        expect(() => sendMessage(friendId, id, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => sendMessage(friendId, id, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => sendMessage(friendId, id, [])).to.throw(TypeError, ' is not a string')
+        expect(() => sendMessage(friendId, id, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => sendMessage(friendId, id, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => sendMessage(friendId, id, null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => sendMessage(chatId, id, '')).to.throw(ContentError, 'text is empty or blank')
-        expect(() => sendMessage(chatId, id, ' \t\r')).to.throw(ContentError, 'text is empty or blank')
-
+        expect(() => sendMessage(friendId, id, '')).to.throw(ContentError, 'text is empty or blank')
+        expect(() => sendMessage(friendId, id, ' \t\r')).to.throw(ContentError, 'text is empty or blank')
     })
 
     after(() => Promise.all([User.deleteMany(), Chat.deleteMany()]).then(database.disconnect))

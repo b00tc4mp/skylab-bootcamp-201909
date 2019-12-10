@@ -47,10 +47,15 @@ module.exports = function ( id, wishId, title, link, price, description) {
         const wish = user.wishes.find(wish => wish.id === wishId)        
         if (!wish) throw new NotFoundError(`user does not have task with id ${wishId}`)
 
+        user.lastAccess = new Date
+
+        await user.save()
+
         title && (wish.title = title)
         link && (wish.link = link)
         price && (wish.price = price)
         description && (wish.description = description)
+        wish.lastAccess = new Date
        
         await User.updateOne(
             { _id: ObjectId(id) },

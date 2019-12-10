@@ -15,7 +15,7 @@ const bcrypt = require('bcryptjs')
 * @returns {Promise} - user.  
 */
 
-module.exports = function (id, year, month, day, password, description) {
+module.exports = function (id, day, month, year, password, description) {
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
@@ -59,6 +59,9 @@ module.exports = function (id, year, month, day, password, description) {
         }     
         description && (update.description = description)
 
+        update.lastAccess = new Date
+
         await User.updateOne({ _id: id }, { $set: update })
+
     })()
 }

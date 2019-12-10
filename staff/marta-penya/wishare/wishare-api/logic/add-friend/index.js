@@ -29,7 +29,7 @@ module.exports = (id, friendId) => {
         
         const friend = user.friends.includes(ObjectId(friendId))
         
-        if(friend) throw new ConflictError(`friend with id ${friendId} is already added`)
+        if(friend) throw new ConflictError(`friend already added`)
 
         const birthdayfriend = user2.birthday
 

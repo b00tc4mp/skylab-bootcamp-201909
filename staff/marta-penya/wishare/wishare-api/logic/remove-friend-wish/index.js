@@ -4,9 +4,9 @@ const { validate,  errors: { ContentError, NotFoundError, ConflictError }  } = r
 /**
  * Removes the indicated wish from the saved friend wishes list of the user
  * 
- * @param {ObjectId} id of user
- * @param {ObjectId} friendId of user friend 
- * @param {ObjectId} wishId of user friend wish
+ * @param {String} token of user
+ * @param {String} friendId of user friend 
+ * @param {String} wishId of user friend wish
  * 
  */
 module.exports = (id, friendId, wishId) => {
@@ -33,16 +33,27 @@ module.exports = (id, friendId, wishId) => {
         const wish = friend.wishes.find(wish => wish.id === wishId)        
         if (!wish) throw new NotFoundError(`friend does not have wish with id ${wishId}`)
 
-        const savewish = user.savedWishes.find(wish => wish.wish.toString() === wishId)
+        const savewish = user.savedWishes.find(wish => wish.wish.id.toString() === wishId)
         if (!savewish) throw new ConflictError(`wish with id ${wishId} isn't saved`)
 
-        const savedWishes = user.savedWishes
+        let index = user.savedWishes.findIndex(savedWish => savedWish.wish.id === wishId)
 
-        wishRemove = savedWishes.indexOf({wish: ObjectId(wishId)})
+        user.savedWishes.splice(index, 1)
+       
+        await user.save()
 
-        savedWishes.splice(wishRemove, 1)
 
-        await user.save()        
+        //
+        
+        const wishb = friend.wishes.find(wishb => wishb.id === wishId)        
+
+        wishb.blocked = false
+               
+        await User.updateOne(
+            { _id: ObjectId(friendId) },
+            { $set: { "wishes.$[wish]" : wishb} },
+            { arrayFilters: [ { "wish._id": ObjectId(wishId)  } ] }
+        )
         
     })()
 }

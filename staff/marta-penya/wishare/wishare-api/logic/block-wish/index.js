@@ -11,11 +11,15 @@ const { ObjectId, models: { User } } = require('wishare-data')
  * 
  */
 
-module.exports = function ( id, wishId ) {
+module.exports = function ( id, friendId, wishId ) {
 
     validate.string(id)
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new NotFoundError(`user with id ${id} not found`)
+
+    validate.string(friendId)
+    validate.string.notVoid('friendId', friendId)
+    if (!ObjectId.isValid(friendId)) throw new NotFoundError(`user with id ${friendId} not found`)
 
     validate.string(wishId)
     validate.string.notVoid('wishId', wishId)
@@ -25,17 +29,24 @@ module.exports = function ( id, wishId ) {
     return (async () => {
         const user = await User.findById(id)        
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
+
+        const friend = await User.findById(friendId)        
+        if (!user) throw new NotFoundError(`user with id ${friendId} not found`)
         
-        const wish = user.wishes.find(wish => wish.id === wishId)        
+        const wish = friend.wishes.find(wish => wish.id === wishId)        
         if (!wish) throw new NotFoundError(`user does not have wish with id ${wishId}`)
 
         wish.blocked = !wish.blocked
                
         await User.updateOne(
-            { _id: ObjectId(id) },
+            { _id: ObjectId(friendId) },
             { $set: { "wishes.$[wish]" : wish} },
-            { arrayFilters: [ { "wish._id": ObjectId(wishId)  } ] }
+            { arrayFilters: [ { "wish._id": ObjectId(wishId)  } ]}
         )
+        debugger
+        let index = user.savedWishes.findIndex(savedWish => savedWish.wish.id === wishId)
+        user.savedWishes[index].wish.blocked = !user.savedWishes[index].wish.blocked
 
+        user.save()
     })()
 }

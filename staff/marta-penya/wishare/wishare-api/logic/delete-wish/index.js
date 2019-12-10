@@ -1,5 +1,7 @@
-const { validate, errors: { NotFoundError, ContentError } } = require('wishare-util')
+const { validate, errors: { NotFoundError } } = require('wishare-util')
 const { ObjectId, models: { User } } = require('wishare-data')
+const fs = require('fs')
+const path = require('path')
 
 /**
  * Deletes the indicated wish of the user
@@ -26,8 +28,10 @@ module.exports = function (id, wishId) {
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
         const wish = user.wishes.find(wish => wish.id === wishId)
-        if (!wish) throw new NotFoundError(`user does not have task with id ${wishId}`)
-        debugger
+        if (!wish) throw new NotFoundError(`user does not have wish with id ${wishId}`)
+        
+        const file = path.join(__dirname, `../../data/users/${id}/wishes/${wishId}.png`)
+        fs.unlinkSync(file) 
 
         await User.updateOne(
             { _id: ObjectId(id) },
