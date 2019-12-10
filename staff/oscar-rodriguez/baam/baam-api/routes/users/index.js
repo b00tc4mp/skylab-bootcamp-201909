@@ -5,7 +5,7 @@ const { env: { SECRET } } = process
 const bodyParser = require('body-parser')
 const jsonBodyParser = bodyParser.json()
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
-const { registerUser, authenticateUser, retrieveUser } = require('../../logic')
+const { registerUser, authenticateUser, retrieveUser, updateUserCards } = require('../../logic')
 const { errors: { ConflictError, NotFoundError, CredentialsError } } = require('baam-util')
 
 const router = Router()
@@ -64,6 +64,24 @@ router.get('/', tokenVerifier, (req, res) => {
                 res.status(500).json({ message })
 
             })
+    } catch ({ message }) {
+        res.status(400).json({ message })
+    }
+})
+
+router.patch('/cards', tokenVerifier, jsonBodyParser, (req,res) => {
+    try {
+        const { id, body : { cards } } = req
+
+        updateUserCards(id, cards)
+            .then(() => res.end())
+            .catch((error => {
+                const { message } = error
+                if (error instanceof NotFoundError)
+                    return res.status(404).json({ message })
+                res.status(500).json({ message })
+            }))
+
     } catch ({ message }) {
         res.status(400).json({ message })
     }

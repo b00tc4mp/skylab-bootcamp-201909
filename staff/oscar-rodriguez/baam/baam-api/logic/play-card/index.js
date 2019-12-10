@@ -1,5 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError, ConflictError, CantAttackError, CredentialsError } } = require('baam-util')
-const { ObjectId, models: { Card, Game, Shoot } } = require('baam-data')
+const { ObjectId, models: { Card, Game, Shoot, User } } = require('baam-data')
 
 module.exports = function (gameId, userId, cardId) {
 
@@ -17,6 +17,20 @@ module.exports = function (gameId, userId, cardId) {
     validate.string.notVoid('id', cardId)
     if (!ObjectId.isValid(cardId)) throw new ContentError(`${cardId} is not a valid id`)
     cardId = ObjectId(cardId)
+
+
+    async function updateStats(player1, player2, stats) {
+        let user1 = await User.findById(player1)
+        let user2 = await User.findById(player2)
+
+        user1.stats[stats[0]]++
+        user2.stats[stats[1]]++
+
+        await user1.save()
+        await user2.save()
+
+        return
+    }
 
     return (async () => {
 
@@ -37,7 +51,11 @@ module.exports = function (gameId, userId, cardId) {
 
         const { effectValue, effect } = card
 
-        await Shoot.create({ userId, cardId, date: new Date })
+        if (effect != "BLOCK") {
+            const shoot = new Shoot({ user: userId, card: cardId, date: new Date })
+            game.shoots.push(shoot)
+        }
+        
         game.players[currentPlayer].hand.splice(handIndex, 1)
 
         switch (effect) {
@@ -62,7 +80,8 @@ module.exports = function (gameId, userId, cardId) {
 
                 if (!game.players[enemy].lifePoints) {
                     game.status = 'END'
-                    game.winner = currentPlayer
+                    game.winner = currentPlayer 
+                    await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["wins", "loses"])
                     await game.save()
                     return game.currentPlayer
                 }
@@ -79,16 +98,25 @@ module.exports = function (gameId, userId, cardId) {
                 game.players[currentPlayer].discards.push(game.players[currentPlayer].tempZone.card)
                 game.players[currentPlayer].tempZone.card = null
                 game.players[currentPlayer].tempZone.duration = -1
-
+                game.players[enemy].attack = 1
             }
         }
 
         //END OF TURN
         if (!game.players[currentPlayer].hand.length) {
             game.status = 'END'
-            if (game.players[currentPlayer].lifePoints > game.players[enemy].lifePoints) game.winner = currentPlayer
-            else if (game.players[currentPlayer].lifePoints < game.players[enemy].lifePoints) game.winner = enemy
-            else game.winner = -1
+            if (game.players[currentPlayer].lifePoints > game.players[enemy].lifePoints) {
+                game.winner = currentPlayer
+                await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["wins", "loses"])
+            }
+            else if (game.players[currentPlayer].lifePoints < game.players[enemy].lifePoints) {
+                        game.winner = enemy
+                        await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["loses", "wins"])
+            }
+            else {
+                game.winner = -1
+                await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["ties", "ties"])
+            }
         }
         else
             game.currentPlayer = (game.currentPlayer + 1) % 2
