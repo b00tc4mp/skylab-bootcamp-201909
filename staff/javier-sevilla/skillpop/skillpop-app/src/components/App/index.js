@@ -8,33 +8,39 @@ import Detail from '../Detail'
 import Profile from '../Profile'
 import ModifyAd from '../ModifyAd'
 import CreateAd from '../CreateAd'
+import Favorites from '../Favorites'
 import PublicProfile from '../PublicProfile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
-         createAd, retrievePublicAds} from '../../logic'
+         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs} from '../../logic'
 
 import queryString from 'query-string'
+
 
 export default withRouter(function ({ history }) {
     const [ads, setAds] = useState([])
     const [adId, setAdId] = useState([])
     const [ad, setAd] = useState([])
     const [user, setUser] = useState([])
-    // const [name, setName] = useState()
-    // const [tasks, setTasks] = useState([])
+    const [idPublic, setIdPublic] = useState([])
+    const [comments, setComments] = useState([])
+
+    //history.pathname.split('/')
 
     useEffect(() => {
-        const { token } = sessionStorage;
+        const { token } = sessionStorage;      
 
-        // (async () => {
-        //     if (token) {
-        //         const { name } = await retrieveUser(token)
+        (async () => {
+            if (token) {
 
-        //         setName(name)
+                const user = await retrieveUser(token)
 
-        //         await retrieveTasks(token)
-        //     }
-        // })()
+                const ads = await retrieveAds(token)
+
+                setAds(ads)   
+                setUser(user)
+            }
+        })()
     }, [sessionStorage.token])
 
 
@@ -251,24 +257,72 @@ export default withRouter(function ({ history }) {
         let token = ""
         let user = ""
         let ads = []
+        let idPublic = ""
 
         if (!id) {
             token = sessionStorage.token 
             user = await retrieveUser(token)
             id = user.id
             ads = await retrieveAds(token)
-            console.log(ads)
+            
+
+
         } else {
             user = await retrievePublicUser(id)
             id = user.id
             ads = await retrievePublicAds(id)
+            idPublic = id
+            setIdPublic(idPublic)  
 
         } 
+        const comments = await retrieveComments(id)
 
         setAds(ads)   
         setUser(user)
+        setComments(comments)
         
         history.push(`/publicprofile/${id}`)
+  
+    }
+
+    async function handleCreateComment(comment, id) {   
+
+        if (comment != "") {
+            const token = sessionStorage.token 
+  
+            const idComment = await addComment(token, id, comment)
+
+            const comments = await retrieveComments(id)
+
+            setComments(comments)
+
+        }
+        
+        history.push(`/publicprofile/${id}`)
+  
+    }
+
+    async function handleToFavorites() { 
+
+        const token = sessionStorage.token   
+
+        const ads = await retrieveFavs(token)
+
+        setAds(ads)   
+    
+        history.push(`/favorites`)
+  
+    }
+
+    async function handleFav() { 
+
+        const token = sessionStorage.token   
+
+        const ads = await retrieveFavs(token)
+
+        setAds(ads)   
+    
+        history.push(`/favorites`)
   
     }
 
@@ -280,14 +334,16 @@ export default withRouter(function ({ history }) {
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
         <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}
-                                                       onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}/></>}/> 
+                                                       onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile} onToFavorites={handleToFavorites}/></>}/> 
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
         <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
         <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
         <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
-        <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile ads={ads} user={user} adDetail={handleAdDetail}/></>}/>
+        <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment}/></>}/>
+        <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail}/></>}/>
+
 
     </>
 })
