@@ -3,7 +3,7 @@ import './index.sass'
 import AdsSearch from '../AdsSearch'
 // import { Link } from 'react-router-dom'
 
-export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail, onProfile, onToCreateAd, onToPubliProfile, onToFavorites }) {
+export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail, onProfile, onToCreateAd, onToPubliProfile, onToFavorites, onFav }) {
     return      <section className="search">
         <div className="search__header">
             <nav>
@@ -68,6 +68,6 @@ export default function({ onSearch, onLogin, onRegister, onLogout, ads, adDetail
         <div className="title__landing">
             <h2>Productos cerca de ti</h2>
         </div>
-        <AdsSearch ads={ads} adDetail={adDetail} /> 
+        <AdsSearch ads={ads} adDetail={adDetail} onFav={onFav} /> 
     </section>
 }

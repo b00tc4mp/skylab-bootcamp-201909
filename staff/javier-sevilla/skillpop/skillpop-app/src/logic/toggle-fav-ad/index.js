@@ -3,25 +3,23 @@ const { validate, errors: { NotFoundError, CredentialsError } } = require('skill
 // const { env: { REACT_APP_API_URL: API_URL } } = process
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token, idAd) {
+module.exports = function (token, adId) {
     validate.string(token)
     validate.string.notVoid('token', token)
-    validate.string(idAd)
-    validate.string.notVoid('id', idAd)
+
+    validate.string(adId)
+    validate.string.notVoid('adId', adId)
 
     return (async () => {
-        const res = await call(`${API_URL}/ads/${idAd}`, {
-            method: 'GET',
-            headers: { Authorization: `Bearer ${token}` }
+        const res = await call(`${API_URL}/users/favs/${adId}`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         })
 
-        if (res.status === 200) {
-            const ad = JSON.parse(res.body)
-
-            ad.lastAccess = new Date(ad.lastAccess)
-
-            return ad
-        }
+        if (res.status === 200) return 
 
         if (res.status === 401) throw new CredentialsError(JSON.parse(res.body).message)
         

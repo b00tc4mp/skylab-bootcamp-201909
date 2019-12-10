@@ -12,7 +12,7 @@ import Favorites from '../Favorites'
 import PublicProfile from '../PublicProfile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
-         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs} from '../../logic'
+         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs, toggleFavAd} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -86,7 +86,8 @@ export default withRouter(function ({ history }) {
 
     async function handleSearch(query) {
         try {
-            const ads = await searchAds(query)
+            // const token = sessionStorage.token
+            const ads = await searchAds(token, query)
 
             setAds(ads)
 
@@ -99,7 +100,8 @@ export default withRouter(function ({ history }) {
 
     async function handleAdDetail(adId) {
         try {
-            const ad = await retrieveAd(adId)
+            const token = sessionStorage.token
+            const ad = await retrieveAd(token, adId)
             const { name } = await retrievePublicUser(ad.user)
 
             ad.name = name
@@ -155,7 +157,7 @@ export default withRouter(function ({ history }) {
 
             const token = sessionStorage.token 
 
-            const ad = await retrieveAd(adId)
+            const ad = await retrieveAd(token, adId)
 
             setAd(ad)   
             setAdId(adId)       
@@ -183,7 +185,7 @@ export default withRouter(function ({ history }) {
 				await saveImageAd(token, adId, image)
 			}
 
-            const ad = await retrieveAd(adId)
+            const ad = await retrieveAd(token, adId)
 
             setAd(ad)   
             setAdId(adId)     
@@ -241,7 +243,7 @@ export default withRouter(function ({ history }) {
 			}
 
             const user = await retrieveUser(token)
-            const ad = await retrieveAd(adId)
+            const ad = await retrieveAd(token, adId)
 
             setAd(ad)  
             setUser(user)            
@@ -254,13 +256,12 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleToPubliProfile(id) {   
-        let token = ""
+        const token = sessionStorage.token 
         let user = ""
         let ads = []
         let idPublic = ""
 
         if (!id) {
-            token = sessionStorage.token 
             user = await retrieveUser(token)
             id = user.id
             ads = await retrieveAds(token)
@@ -270,7 +271,7 @@ export default withRouter(function ({ history }) {
         } else {
             user = await retrievePublicUser(id)
             id = user.id
-            ads = await retrievePublicAds(id)
+            ads = await retrievePublicAds(token, id)
             idPublic = id
             setIdPublic(idPublic)  
 
@@ -303,6 +304,7 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleToFavorites() { 
+        
 
         const token = sessionStorage.token   
 
@@ -315,6 +317,7 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleFav() { 
+        debugger
 
         const token = sessionStorage.token   
 
@@ -326,15 +329,25 @@ export default withRouter(function ({ history }) {
   
     }
 
+    async function handleOnFav(id, comeFrom) { 
+        const token = sessionStorage.token   
 
+        await toggleFavAd(token, id)
+        
+        const ads = await retrieveAds(token)
 
+        setAds(ads)   
+    
+        history.push(`/${comeFrom}`)
+  
+    }
 
     const { token } = sessionStorage
 
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
         <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}
-                                                       onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile} onToFavorites={handleToFavorites}/></>}/> 
+                                                       onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile} onToFavorites={handleToFavorites} onFav={handleOnFav}/></>}/> 
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
@@ -342,7 +355,7 @@ export default withRouter(function ({ history }) {
         <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
         <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
         <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment}/></>}/>
-        <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail}/></>}/>
+        <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/></>}/>
 
 
     </>
