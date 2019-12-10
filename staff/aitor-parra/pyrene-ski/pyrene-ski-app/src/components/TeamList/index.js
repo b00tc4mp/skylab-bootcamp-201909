@@ -14,7 +14,8 @@ export default function({user, teams, onChangeTeamStatus}) {
            <Link className="team-list team-list__createTeam" to="/create-team">Create new Team</Link>
            <Link className="team-list team-list__back" to="/board-admin">Go back</Link>
            </section>
-           <ul className="team-list team-list__title"> TEAM LIST
+           <h2 className="team-list team-list__title" >TEAM LIST</h2>
+           <ul className="team-list team-list__title"> 
             {teams.map(team => <li className="team-list__item" key={team.id}>{<Team team={team} onChangeStatus={onChangeTeamStatus} />}</li>)}
            </ul>
         </>
