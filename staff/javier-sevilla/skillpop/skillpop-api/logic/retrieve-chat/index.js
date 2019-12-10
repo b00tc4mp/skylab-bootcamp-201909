@@ -25,6 +25,7 @@ module.exports = function(id, chatId) {
         chat.messages.forEach(message => {
             message.id = message._id.toString()
             delete message._id
+            message.nameDestUser=chat.nameDestUser 
         })
 
         return chat.messages

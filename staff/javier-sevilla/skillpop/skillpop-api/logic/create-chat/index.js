@@ -26,7 +26,7 @@ module.exports = function(userId1, userId2) {
             return chat.id          
         }
 
-        chat = await Chat.create({ users: [ObjectId(userId1), ObjectId(userId2)] })
+        chat = await Chat.create({ users: [ObjectId(userId1), ObjectId(userId2)], nameDestUser: user2.name })
 
         return chat.id
     })()
