@@ -35,7 +35,8 @@ export default withRouter(function ({ history }) {
 
                 const user = await retrieveUser(token)
 
-                const ads = await retrieveAds(token)
+                // const ads = await retrieveAds(token)
+                const ads = await searchAds(token, " ")
 
                 setAds(ads)   
                 setUser(user)
@@ -46,8 +47,8 @@ export default withRouter(function ({ history }) {
 
     function handleGoBack(webant) { 
 
-        
-        history.push(`/${webant}`) 
+        history.goBack()
+        // history.push(`/${webant}`) 
     }
 
     function handleLogout() {
@@ -256,38 +257,43 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleToPubliProfile(id) {   
-        const token = sessionStorage.token 
-        let user = ""
-        let ads = []
-        let idPublic = ""
+        try {
+            const token = sessionStorage.token 
+            let user = ""
+            let ads = []
+            let idPublic = ""
 
-        if (!id) {
-            user = await retrieveUser(token)
-            id = user.id
-            ads = await retrieveAds(token)
-            
+            if (!id) {
+                user = await retrieveUser(token)
+                id = user.id
+                ads = await retrieveAds(token)
 
 
-        } else {
-            user = await retrievePublicUser(id)
-            id = user.id
-            ads = await retrievePublicAds(token, id)
-            idPublic = id
-            setIdPublic(idPublic)  
 
-        } 
-        const comments = await retrieveComments(id)
+            } else {
+                user = await retrievePublicUser(id)
+                id = user.id
+                ads = await retrievePublicAds(token, id)
+                idPublic = id
+                setIdPublic(idPublic)  
 
-        setAds(ads)   
-        setUser(user)
-        setComments(comments)
-        
-        history.push(`/publicprofile/${id}`)
+            } 
+            const comments = await retrieveComments(id)
+
+            setAds(ads)   
+            setUser(user)
+            setComments(comments)
+
+            history.push(`/publicprofile/${id}`)
+        } catch(error) {
+            console.error(error)
+        }
   
     }
 
-    async function handleCreateComment(comment, id) {   
+    async function handleCreateComment(comment, id) {  
 
+        try {
         if (comment != "") {
             const token = sessionStorage.token 
   
@@ -300,12 +306,16 @@ export default withRouter(function ({ history }) {
         }
         
         history.push(`/publicprofile/${id}`)
+        }catch(error){
+            console.log(error)
+        }
+
   
     }
 
     async function handleToFavorites() { 
         
-
+        try {
         const token = sessionStorage.token   
 
         const ads = await retrieveFavs(token)
@@ -313,11 +323,14 @@ export default withRouter(function ({ history }) {
         setAds(ads)   
     
         history.push(`/favorites`)
+        }catch(error){
+            console.log(error)
+        }
   
     }
 
     async function handleFav() { 
-        debugger
+        try {
 
         const token = sessionStorage.token   
 
@@ -326,10 +339,15 @@ export default withRouter(function ({ history }) {
         setAds(ads)   
     
         history.push(`/favorites`)
+        }catch(error){
+            console.log(error)
+        }
   
     }
 
     async function handleOnFav(id, comeFrom) { 
+
+        try {
         const token = sessionStorage.token   
 
         await toggleFavAd(token, id)
@@ -339,6 +357,10 @@ export default withRouter(function ({ history }) {
         setAds(ads)   
     
         history.push(`/${comeFrom}`)
+        }catch(error){
+            console.log(error)
+        }
+
   
     }
 
@@ -356,8 +378,6 @@ export default withRouter(function ({ history }) {
         <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
         <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment}/></>}/>
         <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/></>}/>
-
-
     </>
 })
 {/* <Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
