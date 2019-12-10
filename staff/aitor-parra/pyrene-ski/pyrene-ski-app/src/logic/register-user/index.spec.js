@@ -43,7 +43,7 @@ describe('logic - register user', () => {
     describe('when user already exists', () => {
         beforeEach(() => User.create({ name, surname, email, username, password, role }))
 
-        it('should fail on already existing user', async () => {
+        it('should fail on already existing user', async () => {debugger
             try {
                 await registerUser(name, surname, email, username, password, role)
 
@@ -59,7 +59,7 @@ describe('logic - register user', () => {
         })
     })
 
-    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
+    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {debugger
         expect(() => registerUser(1)).toThrow(TypeError, '1 is not a string')
         expect(() => registerUser(true)).toThrow(TypeError, 'true is not a string')
         expect(() => registerUser([])).toThrow(TypeError, ' is not a string')

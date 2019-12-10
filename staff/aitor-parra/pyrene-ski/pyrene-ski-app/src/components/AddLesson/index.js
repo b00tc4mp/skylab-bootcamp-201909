@@ -10,7 +10,7 @@ return <section className="add-lesson">
     <h4 className="add-lesson__user">user: {user}</h4>
     <h3 className="add-lesson__title">ADD LESSON NAME</h3>
     <Link className="add-lesson__back" to="/lessonlist">back to TEAM LIST</Link>
-    <form className="add-lesson__form" onSubmit={function (event) {
+    <form className="add-lesson__form" onSubmit={function (event) {debugger
         event.preventDefault()
 
         const { date: { value: date }, timeStart: { value: timeStart }, timeEnd: { value: timeEnd },  teamName: {value: teamId } } = event.target
@@ -19,9 +19,9 @@ return <section className="add-lesson">
         onAddLesson(date, timeStart, timeEnd, teamId )
 
     }}>
-        <input className="add-lesson__field" type="text" name="date" placeholder="date"/>
-        <input className="add-lesson__field" type="text" name="timeStart" placeholder="starting time"/>
-        <input className="add-lesson__field" type="text" name="timeEnd" placeholder="ending time"/>
+        <input className="add-lesson__field" type="date" name="date" placeholder="date"/>
+        <input className="add-lesson__field" type="time" min="08:00" max="16:00" name="timeStart" placeholder="starting time"/>
+        <input className="add-lesson__field" type="time" min="08:00" max="16:00" name="timeEnd" placeholder="ending time"/>
         <select className="add-lesson__field-select" name="teamName">
             {teams.map(team => <option className="add-lesson__field" key={team.id} value={team.id}>{team.teamName}</option>)}
         </select>  

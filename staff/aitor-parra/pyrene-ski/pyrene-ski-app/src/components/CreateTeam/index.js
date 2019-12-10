@@ -15,9 +15,9 @@ export default function({ user, onCreateTeam, error }) {
 
             onCreateTeam(teamName, teamEmail, teamPhone, teamActivity)
         }}>
-            <input className="team-create__field" type="text" name="teamName" placeholder="name"/>
+            <input className="team-create__field" type="text" name="teamName" required="true" placeholder="name"/>
             <input className="team-create__field" type="email" name="teamEmail" placeholder="e-mail"/>
-            <input className="team-create__field" type="tel" pattern="[0-9]{9}" name="teamPhone" placeholder="phone"/>
+            <input className="team-create__field" type="tel" min="9" max="9" pattern="[0-9]{3}[ -][0-9]{2}[ -][0-9]{2}[ -][0-9]{2}" name="teamPhone" placeholder="000-00-00-00"/>
             <input className="team-create__field" type="text" name="teamActivity" placeholder="activity"/>
             <button className="team-create__button">Submit</button>
         </form>

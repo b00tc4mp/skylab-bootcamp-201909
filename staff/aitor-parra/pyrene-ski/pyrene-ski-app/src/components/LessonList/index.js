@@ -3,7 +3,7 @@ import '../../../src/template/index.sass'
 import Lesson from '../Lesson'
 import { Link } from 'react-router-dom'
 
-export default function({user, lessons, onDeleteLesson, onBack }){
+export default function({user, lessons, onDeleteLesson, onBack }){debugger
 
 return <>
     <h4 className="lesson-list lesson-list__user">user: {user}</h4>

@@ -18,7 +18,7 @@ export default function() {
         </section>
 
         <section className="landing">
-        <h3 className="landing__options">{/* Please, proceed to */} <Link className="landing__login" to="/login">LOGIN</Link> or <Link className="landing__register" to="/register" >REGISTER</Link></h3>
+        <h3 className="landing__options">{/* Please, proceed to */} <Link  className="landing__login" to="/login">LOGIN</Link> or <Link className="landing__register" to="/register" >REGISTER</Link></h3>
         </section>
 
        {/*  <figure className="picture">

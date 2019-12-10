@@ -22,7 +22,7 @@ module.exports = function (name, surname, email, username, password/* , role, te
         const res = await call(`${API_URL}/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, surname, email, username, password/* , role, teams, lessons */ })
+            body: JSON.stringify({ name, surname, email, username, password })
         })
 
         if (res.status === 201) return
