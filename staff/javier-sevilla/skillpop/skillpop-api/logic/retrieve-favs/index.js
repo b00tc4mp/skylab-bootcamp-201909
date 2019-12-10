@@ -19,6 +19,7 @@ module.exports = function (id) {
         ads.forEach(ad => {
             ad.id = ad._id.toString()
             delete ad._id
+            ad.isFav = user.favs.includes(ObjectId(ad.id))
         })
 
         return ads
