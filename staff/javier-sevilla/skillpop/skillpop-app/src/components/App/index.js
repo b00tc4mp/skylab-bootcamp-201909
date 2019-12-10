@@ -4,15 +4,19 @@ import Register from '../Register'
 import Header from '../Header'
 import Login from '../Login'
 import Landing from '../Landing'
+import Search from '../Search'
 import Detail from '../Detail'
 import Profile from '../Profile'
 import ModifyAd from '../ModifyAd'
 import CreateAd from '../CreateAd'
 import Favorites from '../Favorites'
+import Chats from '../Chats'
+
+import Footer from '../Footer'
 import PublicProfile from '../PublicProfile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
-         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs, toggleFavAd} from '../../logic'
+         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs, toggleFavAd, retrieveChats} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -24,6 +28,7 @@ export default withRouter(function ({ history }) {
     const [user, setUser] = useState([])
     const [idPublic, setIdPublic] = useState([])
     const [comments, setComments] = useState([])
+    const [chats, setChats] = useState([])
 
     //history.pathname.split('/')
 
@@ -53,8 +58,7 @@ export default withRouter(function ({ history }) {
 
     function handleLogout() {
         sessionStorage.clear()
-        const webant = "login"
-        handleGoBack(webant)
+        history.push('/')
     }
 
     function handleGoToRegister() { history.push('/register') }
@@ -79,7 +83,7 @@ export default withRouter(function ({ history }) {
             sessionStorage.token = token
             
 
-            history.push('/')
+            history.push('/search')
         } catch (error) {
             console.error(error)
         }
@@ -92,7 +96,7 @@ export default withRouter(function ({ history }) {
 
             setAds(ads)
 
-            history.push("/")
+            history.push("/search")
 
         } catch (error) {
             console.error(error)
@@ -360,7 +364,27 @@ export default withRouter(function ({ history }) {
         }catch(error){
             console.log(error)
         }
+  
+    }
 
+    async function handleToChats() { 
+
+        try {
+        const token = sessionStorage.token   
+        
+        const chats = await retrieveChats(token)
+        const user = await retrieveUser(token)
+
+            
+        debugger
+        setUser(user)
+        setChats(chats)   
+    
+        history.push(`/chats`)
+
+        }catch(error){
+            console.log(error)
+        }
   
     }
 
@@ -368,16 +392,18 @@ export default withRouter(function ({ history }) {
 
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
-        <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}
-                                                       onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile} onToFavorites={handleToFavorites} onFav={handleOnFav}/></>}/> 
+        <Route exact path="/" render={() => <><Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister}/><Footer/></>}/> 
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
+        <Route path="/search" render={() => <><Search onSearch={handleSearch} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile} onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}
+                                                      onToFavorites={handleToFavorites} onFav={handleOnFav} onToChats={handleToChats}/></>}/> 
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
         <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
         <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
         <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
         <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment}/></>}/>
         <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/></>}/>
+        <Route path="/chats" render={() => <><Header onBack={handleGoBack}/><Chats chats={chats} user={user}/></>}/>
     </>
 })
 {/* <Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />
