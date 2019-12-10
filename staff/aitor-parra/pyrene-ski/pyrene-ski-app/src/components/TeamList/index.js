@@ -4,10 +4,7 @@ import Team from '../Team'
 import { Link } from 'react-router-dom'
 
 export default function({user, teams, onChangeTeamStatus}) {
-
-      //const {teamName: { Name } , teamEmail: { Mail }, teamPhone: { Phone }, teamActivity: { Activity }} = teams.user
-      //const { name: { value: name }, surname: { value: surname }, email: { value: email }, username: { value: username }, password: { value: password } } = event.target
-
+  
     return <>
            <h4 className="team-list team-list__user">user: {user}</h4>
            <section className="team-list team-list__nav">
@@ -20,7 +17,3 @@ export default function({user, teams, onChangeTeamStatus}) {
            </ul>
         </>
 }
-
-
-
-//<h3 className="admin__teamlist"><a href="/teamlist" onClick={event => { event.preventDefault(); onTeamList()}}>Team list</a></h3>

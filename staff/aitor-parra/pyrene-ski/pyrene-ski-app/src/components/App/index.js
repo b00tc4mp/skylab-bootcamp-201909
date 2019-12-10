@@ -41,7 +41,6 @@ export default withRouter(function ({ history }) {
             //  COMO REDIRECCIONAR DE BOARDCLIENT O BOARDADMIN EN FUNCION DE SI ROLE 'admin' o ROLE 'client'
 
                 //await retrieveTeams(token)
-
                 const teams = await retrieveTeams(token)
 
                 setTeams(teams)
@@ -53,13 +52,13 @@ export default withRouter(function ({ history }) {
 
         })()
 
-    }, [sessionStorage.token, lessons, error])
+    }, [sessionStorage.token, lessons, teams, error])
 
 
     async function listTeams(token) {
         const teams = await retrieveTeams(token)
 
-        setTeams(teams)
+        setTeams(teams) 
 
     }
 
