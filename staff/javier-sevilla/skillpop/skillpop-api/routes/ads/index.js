@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd, saveImageAd, loadImageAd } = require('../../logic')
+const { createAd, removeAd, retrieveAds, retrieveAd, searchAds, modifyAd, saveImageAd, loadImageAd, retrievePublicAds } = require('../../logic')
 const jwt = require('jsonwebtoken')
 const { env: { SECRET } } = process
 const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
@@ -73,11 +73,11 @@ router.get('/', tokenVerifier, (req, res) => {
     }
 })
 
-router.get('/:adId', (req, res) => {
+router.get('/:adId', tokenVerifier, (req, res) => {
     try {
-        const {params: { adId } } = req
+        const {id, params: { adId } } = req
 
-        retrieveAd(adId)
+        retrieveAd(id, adId)
             .then(ad => {
                 res.json(ad)
             })
@@ -94,13 +94,13 @@ router.get('/:adId', (req, res) => {
     }
 })
 
-router.get('/publicid/:id', (req, res) => {
+router.get('/publicid/:idPublic', tokenVerifier, (req, res) => {
     try {
-        const {params: { id } } = req
+        const {id, params: { idPublic} } = req
 
-        retrieveAds(id)
-            .then(ad => {
-                res.json(ad)
+        retrievePublicAds(id, idPublic)
+            .then(ads => {
+                res.json(ads)
             })
             .catch(error => {
                 const { message } = error

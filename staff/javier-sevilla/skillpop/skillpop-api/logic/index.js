@@ -21,5 +21,6 @@ module.exports = {
     saveImageAd: require('./save-image-ad'),
     loadImageAd: require('./load-image-ad'),
     saveImageProfile: require('./save-image-profile'),
-    loadImageProfile: require('./load-image-profile')
+    loadImageProfile: require('./load-image-profile'),
+    retrievePublicAds: require('./retrieve-public-ads')
 }
