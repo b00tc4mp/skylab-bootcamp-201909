@@ -10,7 +10,7 @@ export default function({ user : { id, name, wishes }, addFriend}){
     </div>
     <div className="searchf__wishes">
         <ul className="searchf__wisheslist">
-            {wishes.map(wish => <li key={wish._id}>
+            {wishes.map(wish => <li key={wish._id} className="searchf__wishesitem">
              <img src={`${API_URL}/wishes/${id}/wish/${wish._id.toString()}`} alt="pending wishes" className="searchf__wish"/>
             </li>)}
             

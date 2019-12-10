@@ -38,7 +38,7 @@ export default function ({ id, onBack, onSendMessage }) {
             </section>
             <section className="chat__container">
                 <ul className="chat__messages">
-                {chat.message && chat.message.map(message => <li className="chat__message" key={message.id}><Message message={message}/></li>)}
+                {chat.message && chat.message.map(message => <li className="chat__message" key={message._id}><Message message={message}/></li>)}
                 </ul>
                 <section className="chat_sendmessage">
                     <form className="chat__form" name="text" onSubmit={function (event) {
