@@ -4,7 +4,6 @@ const API_URL = process.env.REACT_APP_API_URL
 
 
 export default function ({ ad: { id, title, price }, adDetail, onDeleteAd, onToUpdateAd }) {
-    console.log(`${API_URL}/ads/load/${id}?timestamp=${Date.now()}`)
     return <><a href="#" className="item" onClick={event => {
             event.preventDefault()
 
