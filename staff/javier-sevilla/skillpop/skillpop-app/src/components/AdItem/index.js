@@ -15,7 +15,7 @@ export default function ({ ad: { id, title, price, isFav }, adDetail, onFav }) {
                 event.preventDefault()
                 event.stopPropagation()
 
-                onFav(id)
+                onFav(id, "")
                 }}> {isFav ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>} </span>
             </div>
             <h2 className="item__title">{title}</h2>

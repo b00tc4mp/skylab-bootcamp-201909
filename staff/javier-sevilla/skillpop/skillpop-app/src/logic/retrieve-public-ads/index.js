@@ -12,8 +12,7 @@ module.exports = function (token, id) {
     return (async () => {
         const res = await call(`${API_URL}/ads/publicid/${id}`, {
             method: 'GET',
-            Authorization: `Bearer ${token}`,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { Authorization: `Bearer ${token}` }
         })
 
         if (res.status === 200) {

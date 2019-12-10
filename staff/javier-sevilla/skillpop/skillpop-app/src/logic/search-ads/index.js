@@ -4,17 +4,15 @@ const { validate, errors: { NotFoundError, CredentialsError } } = require('skill
 const API_URL = process.env.REACT_APP_API_URL
 
 module.exports = function (token, query) {
-    debugger
-
     validate.string(token)
     validate.string.notVoid('token', token)
 
     return (async () => {
         const res = await call(query ? `${API_URL}/search?q=${query}` : `${API_URL}/search`, {
             method: 'GET',
-            Authorization: `Bearer ${token}`
+             headers: { Authorization: `Bearer ${token}` }
         })
-        debugger
+
         if (res.status === 200) {
             const ads = JSON.parse(res.body)
 

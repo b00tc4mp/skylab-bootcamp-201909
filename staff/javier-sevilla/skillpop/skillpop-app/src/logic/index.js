@@ -17,5 +17,6 @@ module.exports = {
     retrievePublicAds: require('./retrieve-public-ads'),
     retrieveComments: require('./retrieve-comments'),
     addComment: require('./add-comment'),
-    retrieveFavs: require('./retrieve-favs')
+    retrieveFavs: require('./retrieve-favs'),
+    toggleFavAd: require('./toggle-fav-ad')
 }

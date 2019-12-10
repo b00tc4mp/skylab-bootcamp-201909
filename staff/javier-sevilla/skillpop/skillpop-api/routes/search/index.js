@@ -7,6 +7,7 @@ const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 const router = Router()
 
 router.get('/', tokenVerifier,  (req, res) => {
+    debugger
     try {
         let { id,  query: { q: query } } = req
 
