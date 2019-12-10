@@ -3,14 +3,15 @@
     display: flex
     flex-direction: column
     height: 90%
+    background: url(https://i.gyazo.com/16cd75edd84b6ad239c6275342a7ded3.png)
     &__header
         display: flex
         flex-direction: column
         justify-content: center
         align-items: center
         border-bottom: 1px solid white
-        background-color: gainsboro
-        color: slategrey
+        background-color: #625b5b85
+        color: white
     &__title
         font-size: 1.5rem
     &__buttons
@@ -18,11 +19,11 @@
         width: 100%
         justify-content: space-around
     &__btn
-        color: slategray
+        color: white
         font-weight: bold
         width: 30%
         border: none
-        background-color: lavender
+        background-color: #a24d45
     &__search
         display: flex
         flex-direction: column
@@ -33,8 +34,12 @@
     &__searchtitle
         width: 90%
         text-align: center
-        height: 50%
-        color: lavender
+        height: 22%
+        color: white
+        font-weight: bold
+        background-color: #0000007a
+        border-radius: 15px
+        text-align: center
     &__searchinput
         width: 40%
         border-radius: 15px
@@ -42,12 +47,16 @@
         border-radius: 15px
         width: 20%
         margin-top: 0.3rem
-        color: #6f87a7
+        color: white
+        background-color: #a24d45
+        font-weight: bold
     &__list
         width: 100%
         display: flex
         flex-direction: column
-        height: 90%
+        height: 80%
+        overflow: auto
+        padding-top: 1rem
     &__link
         width: 90%
         align-self: center
@@ -61,9 +70,8 @@
         border-radius: 15px
         align-self: center
         justify-content: space-around
-        height: 100%
-        background-color: gainsboro
-        color: slategrey
+        background-color: #2e2920a6
+        color: white
     &__info
         display: flex
         flex-direction: column
@@ -79,11 +87,12 @@
         display: block
         object-fit: cover
     &__add
-        color: slategray
+        color: white
         font-weight: bold
         width: 100%
         border: none
-        background-color: lavender
+        border-radius: 15px
+        background-color: #a24d45
     &__wishes
         border: 1px solid white
         height: 66%
@@ -94,7 +103,7 @@
         display: flex
         flex-shrink: 0
         width: 100%
-        height: 100%
+        height: 90%
         overflow-x: scroll
     &__wish
         margin: 0.5rem

@@ -83,7 +83,7 @@ export default function( { goLogin, onRegister, error }) {
         <button className="register__submit">Register</button>
 
     </form>
-    <span>Already registered?</span> <a href='' onClick={event => { event.preventDefault(); goLogin() }}>Log in</a>
+    <span className="register__login">Already registered?</span> <a className="register__login" href='' onClick={event => { event.preventDefault(); goLogin() }}>Log in</a>
 </section>
 
 }

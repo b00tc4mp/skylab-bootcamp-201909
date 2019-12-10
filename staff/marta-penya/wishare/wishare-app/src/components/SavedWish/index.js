@@ -14,7 +14,7 @@ export default function( { savedWish, removeWish, blockWish } ){
 <div className="saved-wishes__info">
     <span className="saved-wishes__wname"> {savedWish.title} </span>
     <p className="saved-wishes__wdescription">{savedWish.description}</p>
-   {!savedWish.given && <a className="saved-wishes__link" href={savedWish.link}> Online Store </a>}
+   {!savedWish.given && !savedWish.blocked && <a className="saved-wishes__link" href={savedWish.link}> Online Store </a>}
    {savedWish.given && <p className="saved-wishes__given"> GIVEN GIFT!! </p>}
    {savedWish.blocked && <p className="saved-wishes__given"> THIS GIFT HAS BEEN BLOCKED!! </p>}
 

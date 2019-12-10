@@ -30,8 +30,8 @@ module.exports = function (id, wishId) {
         const wish = user.wishes.find(wish => wish.id === wishId)
         if (!wish) throw new NotFoundError(`user does not have wish with id ${wishId}`)
         
-        // const file = path.join(__dirname, `../../data/users/${id}/wishes/${wishId}.png`)
-        // fs.unlinkSync(file) 
+        const file = path.join(__dirname, `../../data/users/${id}/wishes/${wishId}.png`)
+        fs.unlinkSync(file) 
 
         await User.updateOne(
             { _id: ObjectId(id) },

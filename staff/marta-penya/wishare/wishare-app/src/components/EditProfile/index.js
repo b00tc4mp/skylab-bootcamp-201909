@@ -26,8 +26,8 @@ export default function ({ onMyProfile, onModify }) {
                 <label>Profile picture</label>
                 <input type="file" name="file" accept="image/*" />
                 <label>Birthday</label>
-                <div className="register__birthday">
-                    <select className="register__input" name="day">
+                <div className="editprofile__birthday">
+                    <select className="editprofile__input" name="day">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -60,7 +60,7 @@ export default function ({ onMyProfile, onModify }) {
                         <option value="30">30</option>
                         <option value="31">31</option>
                     </select>
-                    <select className="register__input" name="month">
+                    <select className="editprofile__input" name="month">
                         <option value="1">January</option>
                         <option value="2">February</option>
                         <option value="3">March</option>
@@ -74,7 +74,7 @@ export default function ({ onMyProfile, onModify }) {
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <input className="register__input" type="number" min="1900" max="2020" step="1" placeholder="2016" name="year" />
+                    <input className="editprofile__input" type="number" min="1900" max="2020" step="1" placeholder="2016" name="year" />
                 </div>
                 <label>Password</label>
                 <input className="editprofile__field" type="password" name="password" placeholder="password" />

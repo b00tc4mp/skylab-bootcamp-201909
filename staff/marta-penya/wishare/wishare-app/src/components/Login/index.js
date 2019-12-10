@@ -22,10 +22,10 @@ export default function({ goRegister, onLogin, error }){
         <label>E-mail</label>
         <input className="login__field" type="email" name="email" placeholder="e-mail"/>
         <label>Password</label>
-        <input className="register__field" type="password" name="password" placeholder="*******"/>
-        <button className="register__submit">Login</button>
+        <input className="login__field" type="password" name="password" placeholder="*******"/>
+        <button className="login__submit">Login</button>
     </form>
-    <span>Not registered yet?</span> <a href='' onClick={event => { event.preventDefault(); goRegister() }}>Register</a>
+    <span className="register__login">Not registered yet?</span> <a  className="register__login" href='' onClick={event => { event.preventDefault(); goRegister() }}>Register</a>
 </section>
 
 }
