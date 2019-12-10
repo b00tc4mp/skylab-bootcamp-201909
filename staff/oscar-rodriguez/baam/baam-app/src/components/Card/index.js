@@ -1,7 +1,10 @@
 import React from 'react'
 import './index.sass'
 
-export default function ({className, src, card}) {
+export default function ({className, src, card, onDragCard, attack}) {
+    const {effect} = card
+    let dragable = effect != 'ATTACK' ? true : attack != 0 ? true : false
 
-    return <img className={className} src={src} />
+    if (!dragable) className+= ' card--not-playable'
+    return <img className={className} src={src} id={card.id} draggable={dragable} onDragStart={event => onDragCard(event,card)}/>
 }

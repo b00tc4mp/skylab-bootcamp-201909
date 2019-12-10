@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import Context from '../Context'
 import './index.sass'
 import { retrieveUserCards } from '../../logic'
 
 export default function ({ onLogout, onGetNewCards, user, onHome }) {
     const [cards, setCards] = useState()
-    const [error, setError] = useState()
-
+    const { feed, setFeed } = useContext(Context)
 
     useEffect(() => {
         const { token } = sessionStorage;
@@ -13,19 +13,14 @@ export default function ({ onLogout, onGetNewCards, user, onHome }) {
         (async () => {
             if (token) {
                 try {
-                    debugger
                     let cards = await retrieveUserCards(token)
-                    cards = cards.concat(cards)
                     setCards(cards)
-
-                    debugger
-                } catch (error) {
-                    setError(error)
-                    debugger
+                } catch ({message}) {
+                    setFeed({ title: "🦖 There was an error:", message })
                 }
             }
         })()
-    }, [sessionStorage.token])
+    }, [])
 
     return <section class="your-cards">
         <div class="upper-menu">
@@ -38,7 +33,7 @@ export default function ({ onLogout, onGetNewCards, user, onHome }) {
             {user && <div className="upper-menu__container">
                 <div className="upper-menu__item">Hello {user.nickname}</div>
                 <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onLogout() }}>Log out</a>
-                <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onHome() }}>✪</a>
+                <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onHome() }}>HOME</a>
             </div>}
         </div>
         <div class="your-cards__title">YOUR CARDS:</div>
@@ -47,7 +42,11 @@ export default function ({ onLogout, onGetNewCards, user, onHome }) {
                 {cards && cards.map(card =>
                     <div class="your-cards__card-detail">
                         <img class="your-cards__card-front" src={`img/${card.image}`}></img>
-                        <div class="your-cards__card-back"> {`Name: ${card.name}`}</div>
+                        <div class="your-cards__card-back"> 
+                            <p>{`Name: ${card.name}`}</p>
+                            <p>{`Description: ${card.description}`}</p>
+                            <p>{`Price: ${card.price}`}</p>
+                        </div>
                     </div>)}
             </div>
         </div>
