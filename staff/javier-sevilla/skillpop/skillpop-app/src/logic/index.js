@@ -14,5 +14,8 @@ module.exports = {
     modifyUser: require('./modify-user'),
     saveImageProfile: require('./save-image-profile'),
     createAd: require('./create-ad'),
-    retrievePublicAds: require('./retrieve-public-ads')
+    retrievePublicAds: require('./retrieve-public-ads'),
+    retrieveComments: require('./retrieve-comments'),
+    addComment: require('./add-comment'),
+    retrieveFavs: require('./retrieve-favs')
 }
