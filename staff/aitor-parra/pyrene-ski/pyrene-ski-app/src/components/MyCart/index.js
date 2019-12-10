@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom'
 import React from 'react'
 import '../../../src/template/index.sass'
+import Feedback from '../Feedback'
 
 
-export default function({}) {
+export default function({error}) {
 
-return <Link className="lesson-list lesson-list__back" to="/board-client">Go Back</Link>
+return <section className="mycart__section">
+    <Link className="mycart__back" to="/board-client">Go Back</Link>
 
-
+{error && <Feedback message={error} />} 
+</section>
 }

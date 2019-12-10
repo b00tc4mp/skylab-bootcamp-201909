@@ -3,7 +3,8 @@ import '../../../src/template/index.sass'
 import Lesson from '../Lesson'
 import { Link } from 'react-router-dom'
 
-export default function({user, lessons, onDeleteLesson, onBack }){debugger
+
+export default function({user, lessons, onDeleteLesson, onBack }){
 
 return <>
     <h4 className="lesson-list lesson-list__user">user: {user}</h4>
@@ -16,19 +17,6 @@ return <>
     </ul>
 
 
+
 </>
     } 
-    /*  
-    <a className="lesson-list lesson-list__back" href="" onClick={event => {
-        event.preventDefault()
-        
-        onBack()
-    }}>Go back</a>
-    
-    {users.role === 'admin' ? <Link className="lesson-list lesson-list__back" to="/board-admin" >Go back</Link> : <Link className="lesson-list lesson-list__back" to="/board-client" >Go back</Link>}
-    <Link className="lesson-list lesson-list__back" to="/">Go back</Link>
-    {user.role === 'admin' } <Link className="lesson-list lesson-list__back" to="/board-admin" >Go back</Link>
-    {user.role === 'client'} <Link className="lesson-list lesson-list__back" to="/board-client" >Go back</Link>
-    return <h3 className="lesson-list__title">Lessons list</h3>
-      <section className="lesson-list">
-    </section> */

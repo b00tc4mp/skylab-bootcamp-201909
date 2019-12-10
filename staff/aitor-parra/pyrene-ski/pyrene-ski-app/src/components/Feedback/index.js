@@ -8,6 +8,4 @@ export default function({ message }) {
         <p className="feedback__message">{message}</p>
         <span className="feedback__icon" role="img" aria-label="thumbs down">👎🏼</span>
     </section>
-
-
 }

@@ -10,7 +10,7 @@ return <section className="add-lesson">
     <h4 className="add-lesson__user">user: {user}</h4>
     <h3 className="add-lesson__title">ADD LESSON NAME</h3>
     <Link className="add-lesson__back" to="/lessonlist">back to TEAM LIST</Link>
-    <form className="add-lesson__form" onSubmit={function (event) {debugger
+    <form className="add-lesson__form" onSubmit={function (event) {
         event.preventDefault()
 
         const { date: { value: date }, timeStart: { value: timeStart }, timeEnd: { value: timeEnd },  teamName: {value: teamId } } = event.target
