@@ -1,15 +1,18 @@
 const { Router } = require('express')
+const jwt = require('jsonwebtoken')
+const { env: { SECRET } } = process
 const { searchAds } = require('../../logic')
+const tokenVerifier = require('../../helpers/token-verifier')(SECRET)
 
 const router = Router()
 
-router.get('/', (req, res) => {
+router.get('/', tokenVerifier,  (req, res) => {
     try {
-        let { query: { q: query } } = req
+        let { id,  query: { q: query } } = req
 
         if (!query) query = " "
         
-        searchAds(query)
+        searchAds(id, query)
             .then(ads => {
                 res.json(ads)
             })
