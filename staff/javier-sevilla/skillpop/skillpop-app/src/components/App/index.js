@@ -86,7 +86,8 @@ export default withRouter(function ({ history }) {
 
     async function handleSearch(query) {
         try {
-            const ads = await searchAds(query)
+            const token = sessionStorage.token
+            const ads = await searchAds(token, query)
 
             setAds(ads)
 
@@ -99,7 +100,8 @@ export default withRouter(function ({ history }) {
 
     async function handleAdDetail(adId) {
         try {
-            const ad = await retrieveAd(adId)
+            const token = sessionStorage.token
+            const ad = await retrieveAd(token, adId)
             const { name } = await retrievePublicUser(ad.user)
 
             ad.name = name
@@ -155,7 +157,7 @@ export default withRouter(function ({ history }) {
 
             const token = sessionStorage.token 
 
-            const ad = await retrieveAd(adId)
+            const ad = await retrieveAd(token, adId)
 
             setAd(ad)   
             setAdId(adId)       
@@ -183,7 +185,7 @@ export default withRouter(function ({ history }) {
 				await saveImageAd(token, adId, image)
 			}
 
-            const ad = await retrieveAd(adId)
+            const ad = await retrieveAd(token, adId)
 
             setAd(ad)   
             setAdId(adId)     
@@ -241,7 +243,7 @@ export default withRouter(function ({ history }) {
 			}
 
             const user = await retrieveUser(token)
-            const ad = await retrieveAd(adId)
+            const ad = await retrieveAd(token, adId)
 
             setAd(ad)  
             setUser(user)            
@@ -254,13 +256,12 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleToPubliProfile(id) {   
-        let token = ""
+        const token = sessionStorage.token 
         let user = ""
         let ads = []
         let idPublic = ""
 
         if (!id) {
-            token = sessionStorage.token 
             user = await retrieveUser(token)
             id = user.id
             ads = await retrieveAds(token)
@@ -270,7 +271,7 @@ export default withRouter(function ({ history }) {
         } else {
             user = await retrievePublicUser(id)
             id = user.id
-            ads = await retrievePublicAds(id)
+            ads = await retrievePublicAds(token, id)
             idPublic = id
             setIdPublic(idPublic)  
 
