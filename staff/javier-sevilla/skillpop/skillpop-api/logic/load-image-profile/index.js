@@ -25,13 +25,12 @@ module.exports = function (id) {
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-        let goTo = path.join(__dirname, `../../data/ads/${id}/adimage.png`)
-        debugger
+        let goTo = path.join(__dirname, `../../data/users/${id}/profile.png`)
         try {
             if (fs.existsSync(goTo)) {
                 return fs.createReadStream(goTo)
             } else {
-                const defaultImage = path.join(__dirname, `../../data/ads/defaultimage/avatar.png`)
+                const defaultImage = path.join(__dirname, `../../data/users/defaultimage/avatar.png`)
                 return fs.createReadStream(defaultImage)
             }
         } catch (error) {
