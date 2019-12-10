@@ -8,6 +8,7 @@ import Detail from '../Detail'
 import Profile from '../Profile'
 import ModifyAd from '../ModifyAd'
 import CreateAd from '../CreateAd'
+import PublicProfile from '../PublicProfile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
          createAd, retrievePublicAds} from '../../logic'
@@ -246,27 +247,28 @@ export default withRouter(function ({ history }) {
         }  
     }
 
-
-    // ESTOY AQUI
-
     async function handleToPubliProfile(id) {   
+        let token = ""
+        let user = ""
+        let ads = []
 
         if (!id) {
-            const token = sessionStorage.token 
-            const user = await retrieveUser(token)
+            token = sessionStorage.token 
+            user = await retrieveUser(token)
             id = user.id
-            const ads = await retrieveAds(token)
+            ads = await retrieveAds(token)
+            console.log(ads)
         } else {
-            const user = await retrievePublicUser(id)
+            user = await retrievePublicUser(id)
             id = user.id
-            const ads = await retrievePublicAds(id)
+            ads = await retrievePublicAds(id)
 
         } 
 
         setAds(ads)   
         setUser(user)
         
-        history.push("/profile/:id")
+        history.push(`/publicprofile/${id}`)
   
     }
 
@@ -278,16 +280,14 @@ export default withRouter(function ({ history }) {
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
         <Route exact path="/" render={() => <><Landing onSearch={handleSearch} onLogin={handleGoToLogin} onRegister={handleGoToRegister} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile}
-                                                       onToCreateAd={handleToCreateAd}/></>}/> 
+                                                       onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}/></>}/> 
         <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
         <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
         <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
         <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
-
-        {/* ESTOY AQUI */}
-        {/* <Route path="/profile/:id" render={() => <PubliProfile ad={ad} onUpdateAd={handleOnUpdateAd}/>}/> */}
+        <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile ads={ads} user={user} adDetail={handleAdDetail}/></>}/>
 
     </>
 })
