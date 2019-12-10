@@ -2,7 +2,7 @@ import React from 'react'
 import './index.sass'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ ad: { id, title, price, isFav }, adDetail, onFav }) {
+export default function ({ ad: { id, title, price, isFav }, adDetail, onFav, comeFrom }) {
     return <a href="#" className="item" onClick={event => {
             event.preventDefault()
 
@@ -15,7 +15,7 @@ export default function ({ ad: { id, title, price, isFav }, adDetail, onFav }) {
                 event.preventDefault()
                 event.stopPropagation()
 
-                onFav(id, "")
+                onFav(id, comeFrom)
                 }}> {isFav ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>} </span>
             </div>
             <h2 className="item__title">{title}</h2>
