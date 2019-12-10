@@ -14,9 +14,9 @@ export default function ({ onClose, gameId, history, onChangeStatus }) {
                 try {
                     const { token } = sessionStorage
                     const game = await retrieveGame(gameId, token)
-                    if (game.status === 'READY'){
+                    if (game.status === 'READY' && game.players[1].hand.length > 0){
                         debugger
-                        onChangeStatus(game.status, gameId)
+                        onChangeStatus(gameId)
                     } 
                 } catch ({ message }) {
                     setFeed({ title: "🦖 There was an error:", message })

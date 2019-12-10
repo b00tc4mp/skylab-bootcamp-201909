@@ -14,8 +14,8 @@ export default function ({user, onLogout, onCreate, onJoin, onHome}) {
                 </div>
                 <div className="upper-menu__container">
                     <div className="upper-menu__item">Hello {user.nickname}</div>
-                    <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onLogout() }}>Log out</a>
-                    <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onHome() }}>✪</a>
+                    <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); event.stopPropagation(); onLogout() }}>Log out</a>
+                    <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); event.stopPropagation(); onHome() }}>HOME</a>
                 </div>
             </div>
         }
