@@ -7,6 +7,9 @@ module.exports = function(token, userId) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
+    validate.string(userId)
+    validate.string.notVoid('userId', userId)
+
     return (async() => {
         const res = await call(`${API_URL}/chat/${userId}`, {
             method: 'GET',

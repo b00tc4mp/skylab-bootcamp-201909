@@ -26,6 +26,8 @@ export default function ({ id, onBack, onSendMessage }) {
                 }
             })()
         }, 1000);
+
+        return () => { clearInterval(refresher)}
     }, [setChat])
 
     return <>

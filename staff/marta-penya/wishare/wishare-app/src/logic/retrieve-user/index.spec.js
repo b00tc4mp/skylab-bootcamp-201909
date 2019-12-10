@@ -2,7 +2,7 @@ const { env: { REACT_APP_TEST_DB_URL: TEST_DB_URL, REACT_APP_TEST_SECRET: TEST_S
 const { random } = Math
 const retrieveUser = require('.')
 const { errors: { NotFoundError, ContentError } } = require('wishare-util')
-const { database, models: { User } } = require('wishare-data')
+const { database, models: { User, Chat } } = require('wishare-data')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('../../helpers/jest-matchers')
@@ -23,7 +23,7 @@ describe('logic - retrieve user', () => {
 
         birthday = new Date(year,month-1,day, 2, 0, 0, 0)
 
-        await User.deleteMany()
+        await Promise.all([User.deleteMany(), Chat.deleteMany()])
 
         const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
 
@@ -81,5 +81,5 @@ describe('logic - retrieve user', () => {
     
      })
 
-    afterAll(() => User.deleteMany().then(database.disconnect))
+    afterAll(() => Promise.all([User.deleteMany(), Chat.deleteMany()]).then(database.disconnect))
 })

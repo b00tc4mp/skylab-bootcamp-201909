@@ -3,13 +3,13 @@ const { validate, errors: { ContentError, NotFoundError } } = require('wishare-u
 
 
 module.exports = function(userId, id, text) {
-    validate.string(id)
-    validate.string.notVoid('id', id)
-    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
-
     validate.string(userId)
     validate.string.notVoid('userId', userId)
     if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
+
+    validate.string(id)
+    validate.string.notVoid('id', id)
+    if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
     validate.string(text)
     validate.string.notVoid('text', text)

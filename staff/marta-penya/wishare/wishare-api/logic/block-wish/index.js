@@ -43,7 +43,7 @@ module.exports = function ( id, friendId, wishId ) {
             { $set: { "wishes.$[wish]" : wish} },
             { arrayFilters: [ { "wish._id": ObjectId(wishId)  } ]}
         )
-
+        debugger
         let index = user.savedWishes.findIndex(savedWish => savedWish.wish.id === wishId)
         user.savedWishes[index].wish.blocked = !user.savedWishes[index].wish.blocked
 

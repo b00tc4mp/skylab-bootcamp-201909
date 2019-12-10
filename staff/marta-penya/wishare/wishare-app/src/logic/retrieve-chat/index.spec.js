@@ -10,7 +10,7 @@ require('../../helpers/jest-matchers')
 describe('logic - retrieve chat', () => {
     beforeAll(() => database.connect(TEST_DB_URL))
 
-    let id, token, name, ownerName, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, friend2Id, friendId, message1Id, message2Id, users, birthday2, email2, message1, message2, messages, chatId
+    let id, token, userId, name, ownerName, surname, email, year, month, day, birthday, password, name1, surname1, email1, year1, month1, day1, birthday1, friend2Id, friendId, message1Id, message2Id, users, birthday2, email2, message1, message2, messages, chatId
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -43,10 +43,11 @@ describe('logic - retrieve chat', () => {
 
         ownerName = usuario.name
 
-        token = jwt.sign({ sub:id }, TEST_SECRET)
-
+        
         friendId = friend.id
         friend2Id = friend2.id
+        
+        token = jwt.sign({ sub: friendId }, TEST_SECRET)
 
         users = [friendId, friend2Id]
 
@@ -75,7 +76,7 @@ describe('logic - retrieve chat', () => {
 
     it('should return a correct chat', async() => {
 
-        const _chat = await retrieveChat(token)
+        const _chat = await retrieveChat(token, id)
         debugger
         expect(_chat).toBeDefined()
         expect(_chat.owner.name).toBe(ownerName)
@@ -101,19 +102,19 @@ describe('logic - retrieve chat', () => {
     })
 
     it('should throw an NotFoundError because chat doesnt exist', async() => {
-        const id = '012345678901234567890123'
+        const friendId = '012345678901234567890123'
 
-        const token = jwt.sign({ sub: id }, TEST_SECRET)
+        const token = jwt.sign({ sub: friendId }, TEST_SECRET)
 
 
         try {
-            await retrieveChat(token)
+            await retrieveChat(token, id)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).toBeDefined()
             expect(error).toBeInstanceOf(NotFoundError)
-            expect(error.message).toBe(`chat with id ${id} not found`)
+            expect(error.message).toBe(`chat with id ${friendId} not found`)
         }
     })
 
@@ -129,6 +130,16 @@ describe('logic - retrieve chat', () => {
 
         expect(() => retrieveChat('')).toThrow(ContentError, 'chatId is empty or blank')
         expect(() => retrieveChat(' \t\r')).toThrow(ContentError, 'chatId is empty or blank')
+
+        expect(() => retrieveChat(token, 1)).toThrow(TypeError, '1 is not a string')
+        expect(() => retrieveChat(token, true)).toThrow(TypeError, 'true is not a string')
+        expect(() => retrieveChat(token, [])).toThrow(TypeError, ' is not a string')
+        expect(() => retrieveChat(token, {})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => retrieveChat(token, undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => retrieveChat(token, null)).toThrow(TypeError, 'null is not a string')
+
+        expect(() => retrieveChat(token, '')).toThrow(ContentError, 'chatId is empty or blank')
+        expect(() => retrieveChat(token, ' \t\r')).toThrow(ContentError, 'chatId is empty or blank')
 
     })
 

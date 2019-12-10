@@ -13,7 +13,7 @@ module.exports = function(id, userId) {
 
     return (async() => {
         const user = await Chat.findOne({ "users": ObjectId(id) })
-        if (!user) throw new NotFoundError(`chat with id ${userId} not found`)
+        if (!user) throw new NotFoundError(`chat with id ${id} not found`)
 
         const chat = await Chat.findOne({ "owner": ObjectId(userId) }).populate('owner', 'name')
 

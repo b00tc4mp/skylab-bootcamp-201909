@@ -33,7 +33,7 @@ describe('logic - add friend', () => {
 
         birthday1 = new Date(year1, month1 - 1, day1, 2, 0, 0, 0)
 
-        await User.deleteMany()
+        await Promise.all([User.deleteMany(), Chat.deleteMany()])
 
         const user = await User.create({ name, surname, email, birthday, password: await bcrypt.hash(password, 10) })
         const friend = await User.create({ name: name1, surname: surname1, email: email1, birthday: birthday1, password: await bcrypt.hash(password, 10) })
@@ -137,5 +137,5 @@ describe('logic - add friend', () => {
         expect(() => addFriend(token, ' \t\r')).toThrow(ContentError, 'friendId is empty or blank')
     })
 
-    afterAll(() => User.deleteMany().then(database.disconnect))
+    afterAll(() => Promise.all([User.deleteMany(), Chat.deleteMany()]).then(database.disconnect))
 })

@@ -42,7 +42,6 @@ module.exports = function (id) {
         if (!chat) {
             await Chat.create({ owner: ObjectId(id), users: friends})
 
-            await chat.save()
         }
 
         return { id, name, surname, email, birthday, description, wishes, savedWishes, friends, lastAccess }

@@ -59,7 +59,6 @@ export default function ({ id, onMyFriends, saveWish, onChatRoom }) {
                     </div>
                     <div className="friend-detail__btn">
                         <button className="friend-detail__save" onClick={event => { event.preventDefault(); saveWish(wish.id, id) }}>Save wish</button>
-                        <button className="friend-detail__save">Block wish</button>
                     </div>
                 </li>)}
             </ul>

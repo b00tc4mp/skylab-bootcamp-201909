@@ -52,16 +52,17 @@ describe('logic - blocked wish', () => {
 
         user.friends.push(friendId.toString())
 
+        
+        const wish = new Wish({ title, link, price, description })
+        
+        wishId = wish.id
+        
+        friend.wishes.push(wish)
+        await friend.save()
+        
+        user.savedWishes.push({user: friendId, wish})
         await user.save()
 
-        const wish = new Wish({ title, link, price, description })
-
-        wishId = wish.id
-
-        friend.wishes.push(wish)
-
-
-        await friend.save()
 
     })
 

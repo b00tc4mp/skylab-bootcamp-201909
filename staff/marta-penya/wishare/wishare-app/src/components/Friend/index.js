@@ -10,7 +10,7 @@ export default function({ friend : { name, id, wishes }, deleteFriend, onFriendD
     </div>
     <div className="friends__wishes">
     <ul className="friends__wisheslist">
-            {wishes.map(wish => <li>
+            {wishes.map(wish => <li key={wish._id} >
              <img src={`${API_URL}/wishes/${id}/wish/${wish._id.toString()}?timestamp=${Date.now()}`} alt="wish photo" className="friends__wish"/>
             </li>)}
         </ul>

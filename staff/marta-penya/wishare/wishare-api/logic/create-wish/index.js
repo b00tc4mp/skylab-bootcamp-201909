@@ -45,10 +45,10 @@ module.exports = function ( id, title, link, price, description) {
         
         await user.save()
         
-        const dir = `./data/users/${id}/wishes`
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir)
-        }
+        // const dir = `./data/users/${id}/wishes`
+        // if (!fs.existsSync(dir)){
+        //     fs.mkdirSync(dir)
+        // }
         return wish.id
     })()
 }

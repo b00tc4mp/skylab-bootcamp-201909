@@ -41,11 +41,11 @@ describe('logic - sendMessage', () => {
 
         id = user.id
 
-        token = jwt.sign({ sub:id }, TEST_SECRET)
-
+        
         friendId = friend.id
         friend2Id = friend2.id
-
+        
+        token = jwt.sign({ sub:friendId }, TEST_SECRET)
         users = [friendId, friend2Id]
 
         user.friends.push(friendId.toString())
@@ -65,7 +65,7 @@ describe('logic - sendMessage', () => {
     it('should return a correct chat', async() => {
 
         debugger
-        const messageId = await sendMessage(token, friendId, text)
+        const messageId = await sendMessage( token, id, text)
 
         const chat = await Chat.findOne({ "owner": ObjectId(id) })
 
@@ -73,7 +73,7 @@ describe('logic - sendMessage', () => {
             if (element.id === messageId) {
                 expect(element).toBeDefined()
                 expect(element.id).toBe(messageId)
-                expect(element.user.toString()).toBe(friendId)
+                expect(element.user.toString()).toBe(id)
                 expect(element.text).toBe("hey! what's up?")
                 expect(element.date).toBeInstanceOf(Date)
             }
@@ -84,31 +84,31 @@ describe('logic - sendMessage', () => {
         const id = '012345678901234567890123'
 
         const token = jwt.sign({ sub: id }, TEST_SECRET)
-
         try {
-            await sendMessage(token, friendId, text)
+            await sendMessage(token, id, text)
 
             throw Error('should not reach this point')
         } catch (error) {
 
             expect(error).toBeDefined()
             expect(error).toBeInstanceOf(NotFoundError)
-            expect(error.message).toBe(`chat with id ${id} not found`)
+            expect(error.message).toBe(`user with id ${id} not found`)
         }
     })
 
 
     it('should throw an NotFoundError because user doesnt exist', async() => {
         const fakeId = ObjectId().toString()
+
         try {
-            await sendMessage(token, fakeId, text)
+            await sendMessage(token, fakeId , text)
 
             throw Error('should not reach this point')
         } catch (error) {
 
             expect(error).toBeDefined()
             expect(error).toBeInstanceOf(NotFoundError)
-            expect(error.message).toBe(`user with id ${fakeId} not found`)
+            expect(error.message).toBe(`chat with id ${fakeId} not found`)
         }
     })
     it('should fail on incorrect chatId, id or text', () => {
@@ -123,25 +123,25 @@ describe('logic - sendMessage', () => {
         expect(() => sendMessage('')).toThrow(ContentError, 'chatId is empty or blank')
         expect(() => sendMessage(' \t\r')).toThrow(ContentError, 'chatId is empty or blank')
 
-        expect(() => sendMessage(token, 1)).toThrow(TypeError, '1 is not a string')
-        expect(() => sendMessage(token, true)).toThrow(TypeError, 'true is not a string')
-        expect(() => sendMessage(token, [])).toThrow(TypeError, ' is not a string')
-        expect(() => sendMessage(token, {})).toThrow(TypeError, '[object Object] is not a string')
-        expect(() => sendMessage(token, undefined)).toThrow(TypeError, 'undefined is not a string')
-        expect(() => sendMessage(token, null)).toThrow(TypeError, 'null is not a string')
+        expect(() => sendMessage(friendId, 1)).toThrow(TypeError, '1 is not a string')
+        expect(() => sendMessage(friendId, true)).toThrow(TypeError, 'true is not a string')
+        expect(() => sendMessage(friendId, [])).toThrow(TypeError, ' is not a string')
+        expect(() => sendMessage(friendId, {})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => sendMessage(friendId, undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => sendMessage(friendId, null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => sendMessage(token, '')).toThrow(ContentError, 'userId is empty or blank')
-        expect(() => sendMessage(token, ' \t\r')).toThrow(ContentError, 'userId is empty or blank')
+        expect(() => sendMessage(friendId, '')).toThrow(ContentError, 'userId is empty or blank')
+        expect(() => sendMessage(friendId, ' \t\r')).toThrow(ContentError, 'userId is empty or blank')
 
-        expect(() => sendMessage(token, id, 1)).toThrow(TypeError, '1 is not a string')
-        expect(() => sendMessage(token, id, true)).toThrow(TypeError, 'true is not a string')
-        expect(() => sendMessage(token, id, [])).toThrow(TypeError, ' is not a string')
-        expect(() => sendMessage(token, id, {})).toThrow(TypeError, '[object Object] is not a string')
-        expect(() => sendMessage(token, id, undefined)).toThrow(TypeError, 'undefined is not a string')
-        expect(() => sendMessage(token, id, null)).toThrow(TypeError, 'null is not a string')
+        expect(() => sendMessage(friendId, token, 1)).toThrow(TypeError, '1 is not a string')
+        expect(() => sendMessage(friendId, token, true)).toThrow(TypeError, 'true is not a string')
+        expect(() => sendMessage(friendId, token, [])).toThrow(TypeError, ' is not a string')
+        expect(() => sendMessage(friendId, token, {})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => sendMessage(friendId, token, undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => sendMessage(friendId, token, null)).toThrow(TypeError, 'null is not a string')
 
-        expect(() => sendMessage(token, id, '')).toThrow(ContentError, 'text is empty or blank')
-        expect(() => sendMessage(token, id, ' \t\r')).toThrow(ContentError, 'text is empty or blank')
+        expect(() => sendMessage(friendId, token, '')).toThrow(ContentError, 'text is empty or blank')
+        expect(() => sendMessage(friendId, token, ' \t\r')).toThrow(ContentError, 'text is empty or blank')
 
     })
 
