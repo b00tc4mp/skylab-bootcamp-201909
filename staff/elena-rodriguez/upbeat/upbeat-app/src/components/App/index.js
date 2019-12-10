@@ -72,10 +72,12 @@ export default withRouter(function ({ history }) {
 
     
 
-    async function handleSearch(query) {
+    async function handleSearch(query) {debugger
+        
 
         try {
             if (query) {const result = await searchUsers(query) 
+                
                 
                 setResult(result)
     
@@ -95,9 +97,8 @@ export default withRouter(function ({ history }) {
             const { favs } = await retrieveFavs(token) 
                 
             setFavs(favs) 
+            history.push('/favs') 
 
-            history.push('/favs')
-       
         }
          catch (error) {
             console.error(error)
@@ -204,7 +205,7 @@ export default withRouter(function ({ history }) {
         
         <Route path="/search" render={() => token ? <><Header /><Search username={username} onSearch={handleSearch} results={result} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch} /> </> : <Redirect to="/" />} />
         
-        <Route path="/favs" render={() => token ? <><Header /><Favs username={username} onFavs={handleFavs} favs={favs} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> : <Redirect to="/" />} />
+        <Route path="/favs" render={() => token ? <><Header /><Favs username={username} onFavs={handleFavs} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> : <Redirect to="/" />} />
         
         <Route path="/detail/:id" render={() => token && user? <><Header /><Detail onToggleFavs = {handleToggleFavs} musician={musician} favs = {user.favs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> : <Redirect to= "/" />} />
         

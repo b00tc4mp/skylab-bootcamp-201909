@@ -10,8 +10,8 @@ module.exports = function (query) {
 
         let results = []
         musicians.forEach(musician => {
-            const {id, username, rol, format: {instruments, groups}, location} = musician
-            musician = {id, username, rol, format : {instruments, groups}, location}
+            const {id, username, rol, format: {instruments, groups}, location, image} = musician
+            musician = {id, username, rol, format : {instruments, groups}, location, image}
             results.push(musician)
         })
     

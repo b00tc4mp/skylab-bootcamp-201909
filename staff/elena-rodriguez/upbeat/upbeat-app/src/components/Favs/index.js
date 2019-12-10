@@ -1,13 +1,39 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 
 import Results from '../Results'
+import {retrieveFavs, toggleFavs} from '../../logic'
 
-export default function ({ username, favs, onDetail, onToggleFavs }) {
-    debugger
+export default function ({ username, onDetail }) {
+    const [favs, setFavs] = useState([])
+    const [control, setControl]= useState(Math.random())
+    const { token } = sessionStorage
+
+    async function handleToggleFavs(favId) {debugger
+        try {
+            await toggleFavs(token, favId)
+            setControl(!control)
+        }
+         catch (error) {
+            console.error(error)
+        }
+    }
+    useEffect(()=>{
+        try{
+            if(token){
+                (async ()=>{debugger
+                    const { favs } = await retrieveFavs(token) 
+                    debugger
+                    setFavs(favs)
+                })()
+            }
+        }catch({message}){
+            console.error(message)
+        }
+    },[control])
     return <>
         <section className="search">
             <p className='greeting'>Hello, {username}! Your favorites:  </p>
-            <Results results={favs} onDetail = {onDetail} onToggleFavs={onToggleFavs} />
+            <Results control={control} setControl={setControl}results={favs} onDetail = {onDetail} onToggleFavs={handleToggleFavs} />
         </section>
     </>
 }
