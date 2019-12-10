@@ -1,38 +1,57 @@
-@import menu
-
-.search
+.landing
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 4%
     background-color: rgba(252, 247, 243, 0.945)
+    border-radius: 1rem
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 10px 0 rgba(0, 0, 0, 0.14)
 
-    &__header
-        display: flex   
-        justify-content: space-between
-
-    &__form
-        margin-top: 8px
-        padding: 12px
-
-    &__criteria
-        width: 35vw
-        border: solid .6px #999999
-        padding: 3px 5px
-        border-radius: 2em
-        background-color: #f1eded
-
-    &__submit
-        border-radius: 2em
-        background-color: #111118
-        border: .2px solid
+    &__welcome
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+        margin-top: 35%
 
     &__logo
-        width: 60px
-        height: 60px
-        padding: 3px
+        width: 21%
+        height: 21%
+        margin-top: 5%
 
-.title__landing
-        margin-top: 10px
-        padding: 15px
-        margin-left: 2px
-        font-size: 1rem
+    &__title
+        margin-top: 5%
+        margin-bottom: 5%
+        font-size: 25px
+
+    &__actions
+        display: flex
+        flex-direction: column
+        justify-content: center
+        align-items: center
+
+    &__login
+        margin-top: 5%
+        margin-bottom: 15px
+        font-size: 23px
+        text-decoration: none
+        background-color: #ffb1b1
+        color: #0f0c0c
+        border: 1px solid #ce5353
+        border-radius: 5px
+        padding: .1rem
+
+    &__register
+        margin-top: 15%
+        margin-bottom: 120px
+        font-size: 23px
+        text-decoration: none
+        background-color: #ffb1b1
+        color: #0f0c0c
+        border: 1px solid #ce5353
+        border-radius: 5px
+        padding: .1rem
 
 
 
