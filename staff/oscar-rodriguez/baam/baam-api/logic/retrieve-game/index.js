@@ -11,12 +11,19 @@ module.exports = function (gameId, userId) {
     if (!ObjectId.isValid(userId)) throw new ContentError(`${userId} is not a valid id`)
 
     return (async () => {
-        const game = await Game.findById(gameId, { '__v': 0 }).populate('players.user', 'nickname').populate('players.hand').populate('players.tempZone.card').populate('players.discards')
+        const game = await Game.findById(gameId, { '__v': 0 })
+                                        .populate('shoots.card')
+                                        .populate('shoots.user', 'id nickname')
+                                        .populate('players.user', 'nickname')
+                                        .populate('players.hand')
+                                        .populate('players.tempZone.card')
+                                        .populate('players.discards')
+                                        
         if (!game) throw new NotFoundError(`game with id ${gameId} not found`)
         if (!game.players.find(player => player.user.id.toString() === userId.toString())) throw new ConflictError(`${userId} can't get info from a game where is not joined`)
         
-        game.players[0].lastAccess = new Date ()
-        game.players[1] && (game.players[1].lastAccess = new Date ())
+        let index = game.players.findIndex(player => player.user.id.toString() === userId.toString())
+        game.players[index].lastAccess = new Date ()
         
         game.save()
 

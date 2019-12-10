@@ -1,10 +1,10 @@
 const {Schema, ObjectId} = require ('mongoose')
 module.exports = new Schema ({
-    userId: {
+    user: {
         type: ObjectId,
         ref: 'User'
     },
-    cardId: {
+    card: {
         type: ObjectId,
         ref: 'Card'
     },

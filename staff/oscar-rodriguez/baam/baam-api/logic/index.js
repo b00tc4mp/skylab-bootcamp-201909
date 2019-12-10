@@ -12,5 +12,6 @@ module.exports = {
     retrievePendingGames: require('./retrieve-pending-games'),
     retrieveRandomCards: require('./retrieve-random-cards'),
     retrieveUser: require('./retrieve-user'),
-    retrieveUserCards: require('./retrieve-user-cards')
+    retrieveUserCards: require('./retrieve-user-cards'),
+    updateUserCards: require('./update-user-cards')
 }
