@@ -1,4 +1,4 @@
-import React, { useState, useEffect, UseParams } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.sass'
 import Landing from '../Landing'
 import Register from '../Register'
@@ -12,7 +12,7 @@ import EditProfile from '../Edit-profile'
 import Favs from '../Favs'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchUsers, retrieveMusician, editProfile, retrieveFavs, toggleFavs } from '../../logic/'
-// import { authenticateUser, registerUser, retrieveUser, listTasks, modifyTask, createTask } from '../../logic'
+
 
 export default withRouter(function ({ history }) {
     const [username, setUsername] = useState()
@@ -21,26 +21,27 @@ export default withRouter(function ({ history }) {
     const [favs, setFavs] = useState([])
     const [musician, setMusician] = useState({})
     const [render, setRender] = useState(true)
+    const { token } = sessionStorage;
 
     useEffect(() => {
-        const { token, musicianId } = sessionStorage;
          
-        
+        debugger
         (async () => {
             if (token) {
                 
                 const user = await retrieveUser(token)
-                
                 setUsername(user.username)
                 setUser(user)
-                if(musicianId !== undefined) {
-                const musician = await retrieveMusician(musicianId)
-                setMusician(musician)
-                }
+
+
+                // if(musicianId !== undefined) {
+                // const musician = await retrieveMusician(musicianId)
+                // setMusician(musician)
+                // }
 
             }
         })()
-    }, [sessionStorage.musicianId, setUser, render])
+    }, [ render])
 
 
 
@@ -57,9 +58,10 @@ export default withRouter(function ({ history }) {
 
     async function handleLogin(email, password) {
         try {
-            const token = await authenticateUser(email, password)
+            sessionStorage.token = await authenticateUser(email, password)
 
-            sessionStorage.token = token
+            setRender(!render)
+            
 
             history.push('/search')
         
@@ -75,7 +77,8 @@ export default withRouter(function ({ history }) {
         try {
             if (query) {const result = await searchUsers(query) 
                 
-                setResult(result) 
+                setResult(result)
+    
             } else {setResult([])}
             }   
             
@@ -87,7 +90,6 @@ export default withRouter(function ({ history }) {
 
     async function handleFavs() {
 
-        const token = sessionStorage.token
 
         try {
             const { favs } = await retrieveFavs(token) 
@@ -105,13 +107,12 @@ export default withRouter(function ({ history }) {
 
     async function handleToggleFavs(favId) {
 
-        const token = sessionStorage.token
 
         try {
-            debugger
+            
             await toggleFavs(token, favId)
             const { favs } = await retrieveFavs(token) 
-            debugger
+            
             setFavs(favs) 
             setRender(!render)
             
@@ -130,7 +131,7 @@ export default withRouter(function ({ history }) {
             setUser(await retrieveUser(token))
             const musician = await retrieveMusician(id)
             setMusician(musician)
-            debugger
+
             history.push(`/detail/${musician.id}`)
         }
             catch (error) {
@@ -151,10 +152,14 @@ export default withRouter(function ({ history }) {
         history.push('/edit') 
     }
 
+
+    function handleGoToSearch() { 
+        history.push('/search') 
+    }
+
     async function handleEdit(id, username, email, description, upcomings, location) { 
         
         try { 
-            const token = sessionStorage.token
 
             await editProfile(id, token, username, email, description, upcomings, location)
             const user = await retrieveUser(token)
@@ -175,7 +180,7 @@ export default withRouter(function ({ history }) {
     async function handleAccount(token) {
 
         try {
-            
+            debugger
             const user = await retrieveUser(token)
             
         }
@@ -189,7 +194,6 @@ export default withRouter(function ({ history }) {
         
 
 
-    const { token } = sessionStorage
 
     return <>
         <Route exact path="/" render={() => token ? <Redirect to="/search" /> : <Landing />} />
@@ -198,14 +202,14 @@ export default withRouter(function ({ history }) {
         
         <Route path="/login" render={() => token ? <Redirect to="/search" /> : <><Header /><Login onLogin={handleLogin} /> </>} />
         
-        <Route path="/search" render={() => token  ? <><Header /><Search username={username} onSearch={handleSearch} results={result} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs}/> </> : <Redirect to="/" />} />
+        <Route path="/search" render={() => token ? <><Header /><Search username={username} onSearch={handleSearch} results={result} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch} /> </> : <Redirect to="/" />} />
         
-        <Route path="/favs" render={() => token ? <><Header /><Favs username={username} onFavs={handleFavs} favs={favs} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs}/> </> : <Redirect to="/" />} />
+        <Route path="/favs" render={() => token ? <><Header /><Favs username={username} onFavs={handleFavs} favs={favs} onDetail={handleDetail} onToggleFavs={handleToggleFavs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> : <Redirect to="/" />} />
         
-        <Route path="/detail/:id" render={() => token && user? <><Header /><Detail onToggleFavs = {handleToggleFavs} musician={musician} favs = {user.favs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs}/> </> : <Redirect to= "/" />} />
+        <Route path="/detail/:id" render={() => token && user? <><Header /><Detail onToggleFavs = {handleToggleFavs} musician={musician} favs = {user.favs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> : <Redirect to= "/" />} />
         
-        <Route path="/edit" render={() => token? <><Header /><EditProfile  user={user} onEdit={handleEdit}/> <Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} /> </>: <Redirect to= "/" />}/>
+        <Route path="/edit" render={() => token? <><Header /><EditProfile  user={user} onEdit={handleEdit}/> <Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch} /> </>: <Redirect to= "/" />}/>
         
-        <Route path="/account" render={() => token && user ? <><Header /><Account onAccount={handleAccount} user={user}/><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs}/> </> :  <Redirect to= "/" />  }/>        
+        <Route path="/account" render={() => token && user ? <><Header /><Account onAccount={handleAccount} user={user}/><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> :  <Redirect to= "/" />  }/>        
     </>
 })

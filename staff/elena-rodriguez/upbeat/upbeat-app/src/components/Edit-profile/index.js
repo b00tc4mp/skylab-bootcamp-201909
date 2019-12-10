@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom'
 import {saveImage} from '../../logic'
 
 export default function ({ user : {id, username, email, description, upcomings, location }, onEdit }) { 
-    const {token} = sessionStorage
     async function onSaveImage(event) {
         event.preventDefault()  
-        try {      
-            const {file : {files : [image]}} = event.target
-
+        const {file : {files : [image]}} = event.target
+        try {
             debugger
-            
+            const {token} = sessionStorage
             await saveImage(token, image)
 
         } catch (error) {
@@ -28,7 +26,7 @@ export default function ({ user : {id, username, email, description, upcomings, 
 
                 const { username: { value: username }, email: { value: email }, description: { value: description }, upcomings: { value: upcomings }, location : {value: location} } = event.target
 
-                onEdit( id, username, email, description,  upcomings)
+                onEdit( id, username, email, description, upcomings, location)
             }}>
                 <p className="instructions">{username}, tell us something about you: </p>
                 <textarea className="edit-form__description" name="description" cols="30" rows="10"
@@ -41,6 +39,7 @@ export default function ({ user : {id, username, email, description, upcomings, 
                 <p className="instructions">Modify your info here: </p>
                 <input className="register-form__username" type="username" name="username" defaultValue={username} />
                 <input className="register-form__email" type="email" name="email" defaultValue={email} />
+                <p className="instructions">Your city: </p>
                 <input className="register-form__location" type="location" name="location" defaultValue={location} />
                 <button className="edit-form__submit">Submit</button>
 

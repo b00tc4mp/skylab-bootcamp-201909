@@ -15,12 +15,14 @@ module.exports = function (token, image) {
     validate.string.notVoid('token', token)
     let fData = new FormData()
     fData.append('image', image);
+    debugger
     return (async () => {
-        const res = await fetch(`${API_URL}/users/uploadImage`, {
+        const res = await fetch(`${API_URL}/users/profile`, {
             method: 'POST',
             headers: { Authorization: `Bearer ${token}`},
             body: fData
         })
+        debugger
         if (res.status === 200) return 
         throw new Error(JSON.parse(res.body).message)
     })()

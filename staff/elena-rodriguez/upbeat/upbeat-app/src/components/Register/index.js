@@ -48,7 +48,8 @@ export default function ({ onRegister, error }) {
                 <input className="register-form__username" type="username" name="username" placeholder="user or artistic name" />
                 <input className="register-form__email" type="email" name="email" placeholder="e-mail" />
                 <input className="register-form__password" type="password" name="password" placeholder="password" />
-                <input className="register-form__location" type="location" name="location" placeholder="location" />
+                <p className="instructions">Your city: </p>
+                <input className="register-form__location" type="location" name="location" placeholder="city" />
                 <div className="checking-container">
                     <p className="instructions">Are you a single musician or a group?</p>
 

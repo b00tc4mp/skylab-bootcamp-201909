@@ -76,7 +76,7 @@ router.get('/', tokenVerifier, (req, res) => {
 })
 
 
-router.post('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
+router.post('/instruments', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, body: { instru } } = req
 
@@ -118,9 +118,11 @@ router.delete('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.patch('/:id', tokenVerifier, jsonBodyParser, (req, res) => { 
+
+router.patch('/profile', tokenVerifier, jsonBodyParser, (req, res) => { 
+    
     try {
-        const { params: {id} , body: { username, email, password, description, image, links, upcomings, location } } = req
+        const { id , body: { username, email, password, description, image, links, upcomings, location } } = req
 
         modifyUser(id, username, email, password, description, image, links, upcomings, location)
             .then(() =>
@@ -187,12 +189,11 @@ router.get('/favs', tokenVerifier, (req, res) => {
     }
 })
 
-router.post('/uploadImage', tokenVerifier, (req, res) => {
+router.post('/profile', tokenVerifier, (req, res) => {
     const {  id  } = req
     const busboy = new Busboy({ headers: req.headers })
-    debugger
     busboy.on('file', async(fieldname, file, filename, encoding, mimetype) => {
-        filename = 'profile'
+        filename = 'profile.png'
         await saveImage(id, file, filename)
     })
     busboy.on('finish', () => {

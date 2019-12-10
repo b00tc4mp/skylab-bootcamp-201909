@@ -4,7 +4,7 @@ import Detail from '../Detail'
 export default function ({result , onDetail, onToggleFavs, favs}) {
     const { username, format, image, rol, location} = result
 
-    return <a href="#" className="item" onClick={event => {event.preventDefault()
+    return  <a href="#" className="item" onClick={event => {event.preventDefault()
 
 onDetail(result.id)    
 }}>
@@ -23,10 +23,6 @@ onDetail(result.id)
             <p className="profile__ubication">{location}</p>
         </div>
     </div>
-</a>
+    </a> 
 }
 
-
-// .far.fa-heart {
-//     background-color: darkred;
-//     color: white;

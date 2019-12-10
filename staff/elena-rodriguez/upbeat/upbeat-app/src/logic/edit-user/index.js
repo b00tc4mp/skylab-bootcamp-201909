@@ -40,7 +40,7 @@ module.exports = function (id, token, username, email, description, upcomings, l
     // const id = sub
 
     return (async () => {
-        const res = await call(`${API_URL}/users/${id}`, {
+        const res = await call(`${API_URL}/users/profile`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`,

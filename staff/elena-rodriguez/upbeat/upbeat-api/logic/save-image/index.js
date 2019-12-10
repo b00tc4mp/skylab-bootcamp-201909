@@ -24,13 +24,15 @@ module.exports = function(id, file, filename) {
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
     /* fs.readFile(__dirname) */
     return (async() => {
-        imgPath = path.join(__dirname, `../../public/data/users/${id}/` + filename + '.png')
+        
+        imgPath = path.join(__dirname, `../../public/data/users/${id}/${filename}`)
         route = path.join(__dirname, `../../public/data/users/${id}/`)
         try {
+            debugger
             const user = await User.findById(id)
-            user.image = `http://localhost:8000/data/users/${id}/` + filename + '.png'
-            user.save()
-            if (await fs.existsSync(route)) {
+            user.image = `http://localhost:8000/data/users/${id}/${filename}`
+            await user.save()
+            if (fs.existsSync(route)) {
                 return file.pipe(fs.createWriteStream(imgPath))
             } else {
                 fs.mkdirSync(route)

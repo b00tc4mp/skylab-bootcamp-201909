@@ -1,27 +1,30 @@
-import React, {useEffect, useState }from 'react'
+import React, { useEffect, useState } from 'react'
 import ResultsItem from '../Results-item'
-import {retrieveUser} from '../../logic'
+import { retrieveUser } from '../../logic'
 
-export default function ({ results, onDetail, onToggleFavs}) {
+export default function ({ results, onDetail, onToggleFavs }) {
     const [user, setUser] = useState()
+    const { token } = sessionStorage
 
-    useEffect(()=>{
+    useEffect(() => {
         try {
+            if (token) {
+                (async () => {
+                    debugger
+                    setUser(await retrieveUser(token))
 
-            (async () => {const {token} = sessionStorage
-            setUser(await retrieveUser(token))
-        })()
-
+                })()
+            }
         } catch (error) {
             console.log(error)
-        }    
-    })
+        }
+    },[])
     return <> {user && <ul className="results">
-        {results ? results.map(result => <li className="task-list__item" key={result.id}><ResultsItem result={result} onDetail = {onDetail} onToggleFavs = {onToggleFavs} favs= {user.favs} /></li>): <></>}
+        {results ? results.map(result => <li className="task-list__item" key={result.id}><ResultsItem result={result} onDetail={onDetail} onToggleFavs={onToggleFavs} favs={user.favs} /></li>) : <></>}
 
-</ul>}</>
-    
-    
-    
+    </ul>}</>
+
+
+
 }
 // {results && results.map(result => <li className="results__item" key={result.id}><ResultsItem result={result} /></li>)}

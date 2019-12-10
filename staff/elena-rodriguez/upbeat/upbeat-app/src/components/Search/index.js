@@ -18,5 +18,5 @@ export default function ({ username, onSearch, results, onDetail, onToggleFavs }
             </form>
             <Results results={results} onDetail = {onDetail} onToggleFavs = {onToggleFavs}  />
         </section>
-    </>
+</>
 }
