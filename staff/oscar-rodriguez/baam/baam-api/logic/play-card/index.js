@@ -19,12 +19,15 @@ module.exports = function (gameId, userId, cardId) {
     cardId = ObjectId(cardId)
 
 
-    async function updateStats(player1, player2, stats) {
+    async function updateStats(player1, player2, stats, coins) {
         let user1 = await User.findById(player1)
         let user2 = await User.findById(player2)
 
         user1.stats[stats[0]]++
         user2.stats[stats[1]]++
+
+        user1.coins += coins[0]
+        user2.coins += coins[1]
 
         await user1.save()
         await user2.save()
@@ -60,7 +63,7 @@ module.exports = function (gameId, userId, cardId) {
 
         switch (effect) {
             case 'DEFEND':
-                game.players[currentPlayer].defense = effectValue
+                game.players[currentPlayer].defense += effectValue
                 break
             case 'HEAL':
                 game.players[currentPlayer].lifePoints += effectValue
@@ -81,7 +84,7 @@ module.exports = function (gameId, userId, cardId) {
                 if (!game.players[enemy].lifePoints) {
                     game.status = 'END'
                     game.winner = currentPlayer 
-                    await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["wins", "loses"])
+                    await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["wins", "loses"], [game.players[currentPlayer].lifePoints*5, -5])
                     await game.save()
                     return game.currentPlayer
                 }
@@ -107,15 +110,15 @@ module.exports = function (gameId, userId, cardId) {
             game.status = 'END'
             if (game.players[currentPlayer].lifePoints > game.players[enemy].lifePoints) {
                 game.winner = currentPlayer
-                await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["wins", "loses"])
+                await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["wins", "loses"], [game.players[currentPlayer].lifePoints*10, -5])
             }
             else if (game.players[currentPlayer].lifePoints < game.players[enemy].lifePoints) {
                         game.winner = enemy
-                        await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["loses", "wins"])
+                        await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["loses", "wins"], [-5, game.players[currentPlayer].lifePoints*10])
             }
             else {
                 game.winner = -1
-                await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["ties", "ties"])
+                await updateStats(game.players[currentPlayer].user, game.players[enemy].user, ["ties", "ties"], [3,3])
             }
         }
         else
