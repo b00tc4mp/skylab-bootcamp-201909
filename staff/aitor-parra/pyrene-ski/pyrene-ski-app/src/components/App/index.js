@@ -52,7 +52,7 @@ export default withRouter(function ({ history }) {
 
         })()
 
-    }, [sessionStorage.token, lessons, teams, error])
+    }, [sessionStorage.token, lessons,  error])
 
 
     async function listTeams(token) {
