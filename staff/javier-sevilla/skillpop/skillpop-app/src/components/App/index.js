@@ -12,6 +12,7 @@ import CreateAd from '../CreateAd'
 import Favorites from '../Favorites'
 import Chats from '../Chats'
 import Messages from '../Messages'
+import Feedback from '../Feedback'
 
 import Footer from '../Footer'
 import PublicProfile from '../PublicProfile'
@@ -31,7 +32,8 @@ export default withRouter(function ({ history }) {
     const [comments, setComments] = useState([])
     const [chats, setChats] = useState([])
     const [chat, setChat] = useState([])
-
+    const [error, setError] = useState([])
+    
     //history.pathname.split('/')
 
     useEffect(() => {
@@ -52,7 +54,7 @@ export default withRouter(function ({ history }) {
     }, [sessionStorage.token])
 
 
-    function handleGoBack(webant) { 
+    function handleGoBack() { 
 
         history.goBack()
         // history.push(`/${webant}`) 
@@ -74,7 +76,8 @@ export default withRouter(function ({ history }) {
 
             history.push('/login')
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
     }
 
@@ -87,7 +90,8 @@ export default withRouter(function ({ history }) {
 
             history.push('/search')
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
     }
 
@@ -101,7 +105,8 @@ export default withRouter(function ({ history }) {
             history.push("/search")
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
     }
 
@@ -120,7 +125,8 @@ export default withRouter(function ({ history }) {
             history.push(`/ad/${adId}`)
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
     }
 
@@ -138,7 +144,8 @@ export default withRouter(function ({ history }) {
             history.push("/profile")
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
     }
 
@@ -155,7 +162,8 @@ export default withRouter(function ({ history }) {
             history.push("/profile")
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
     }
 
@@ -175,7 +183,8 @@ export default withRouter(function ({ history }) {
             history.push(`/update/${adId}`)
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }      
     }
 
@@ -203,7 +212,8 @@ export default withRouter(function ({ history }) {
             // history.push(`/update/${adId}`)
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }      
     }
 
@@ -226,7 +236,8 @@ export default withRouter(function ({ history }) {
            history.push("/profile")
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }      
     }
 
@@ -259,7 +270,8 @@ export default withRouter(function ({ history }) {
            history.push(`/ad/${adId}`)
 
         } catch (error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }  
     }
 
@@ -293,7 +305,8 @@ export default withRouter(function ({ history }) {
 
             history.push(`/publicprofile/${id}`)
         } catch(error) {
-            console.error(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -314,7 +327,8 @@ export default withRouter(function ({ history }) {
         
         history.push(`/publicprofile/${id}`)
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -330,7 +344,8 @@ export default withRouter(function ({ history }) {
     
         history.push(`/favorites`)
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -346,13 +361,13 @@ export default withRouter(function ({ history }) {
     
         history.push(`/favorites`)
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
 
     async function handleOnFav(id, comeFrom) { 
-
         try {
         const token = sessionStorage.token   
 
@@ -364,7 +379,8 @@ export default withRouter(function ({ history }) {
     
         history.push(`/${comeFrom}`)
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -383,7 +399,8 @@ export default withRouter(function ({ history }) {
         history.push(`/chats`)
 
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -404,7 +421,8 @@ export default withRouter(function ({ history }) {
         history.push(`/chat/${idChat}`)
 
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -424,7 +442,8 @@ export default withRouter(function ({ history }) {
         history.push(`/chats`)
 
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -447,7 +466,8 @@ export default withRouter(function ({ history }) {
         
         history.push(`/chat/${idChat}`)
         }catch(error){
-            console.log(error)
+            setError(error)   
+            history.push("/error")
         }
   
     }
@@ -470,7 +490,8 @@ export default withRouter(function ({ history }) {
         history.push(`/chat/${idChat}`)
 
         }catch(error){
-            console.log(error)
+            setError(error.message)   
+            history.push("/error")
         }
   
     }
@@ -481,18 +502,21 @@ export default withRouter(function ({ history }) {
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
         <Route exact path="/" render={() => <><Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister}/><Footer/></>}/> 
-        <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/></>}/> 
-        <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
+        <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/> <Footer/></>}/> 
+        <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/> <Footer/></>}/>  
         <Route path="/search" render={() => <><Search onSearch={handleSearch} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile} onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}
-                                                      onToFavorites={handleToFavorites} onFav={handleOnFav} onToChats={handleToChats}/></>}/> 
-        <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} user={user} onCreateChat={handleCreateChat} onToPubliProfile={handleToPubliProfile}/></>}/> 
+                                                      onToFavorites={handleToFavorites} onFav={handleOnFav} onToChats={handleToChats}/> <Footer/></>}/> 
+        <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} user={user} onCreateChat={handleCreateChat} onToPubliProfile={handleToPubliProfile} onFav={handleOnFav}/> <Footer/></>}/> 
         <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
-        <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
-        <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
-        <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment}/></>}/>
-        <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/></>}/>
-        <Route path="/chats" render={() => <><Header onBack={handleGoBack}/><Chats chats={chats} user={user} onDeleteChat={handleDeleteChat} onChat={handleToChat}/></>}/>
-        <Route path="/chat/:chatId" render={() => <><Header onBack={handleGoBack}/><Messages chat={chat} user={user} OnCreateMessage={handleCreateMessage}/></>}/> 
+        <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/> <Footer/></>}/>
+        <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/> <Footer/></>}/>
+        <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment} onFav={handleOnFav}/><Footer/></>}/>
+        <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/> <Footer/></>}/>
+        <Route path="/chats" render={() => <><Header onBack={handleGoBack}/><Chats chats={chats} user={user} onDeleteChat={handleDeleteChat} onChat={handleToChat}/> <Footer/></>}/>
+        <Route path="/chat/:chatId" render={() => <><Header onBack={handleGoBack}/><Messages chat={chat} user={user} OnCreateMessage={handleCreateMessage}/> <Footer/></>}/> 
+        <Route path="/error" render={() => <><Feedback error={error} onBack={handleGoBack}/></>}/>
+
+        
     </>
 })
 {/* <Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />

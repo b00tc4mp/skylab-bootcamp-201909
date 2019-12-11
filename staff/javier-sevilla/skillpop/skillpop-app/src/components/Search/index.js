@@ -4,7 +4,7 @@ import AdsResults from '../AdsResults'
 // import { Link } from 'react-router-dom'
 
 export default function({ onSearch, onLogout, ads, adDetail, onProfile, onToCreateAd, onToPubliProfile, onToFavorites, onFav, onToChats }) {
-    return      <section className="search">
+    return  <><section className="search">
         <div className="search__header">
             <nav>
                 <div id="menuToggle">
@@ -61,7 +61,7 @@ export default function({ onSearch, onLogout, ads, adDetail, onProfile, onToCrea
         </div>
         <div className="title__landing">
             <h2>Productos cerca de ti</h2>
-        </div>
-        <AdsResults ads={ads} adDetail={adDetail} onFav={onFav} /> 
+        </div> 
     </section>
+     <AdsResults ads={ads} adDetail={adDetail} onFav={onFav} /> </> 
 }
