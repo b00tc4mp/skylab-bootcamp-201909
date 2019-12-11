@@ -10,7 +10,7 @@ describe('logic - add lesson', () => {
 
     let userId, name, surname, email, username, password, date, timeStart, timeEnd, role = "admin" /* date, timeStart, timeEnd, team, activity */
 
-    beforeEach(async () => {debugger
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
