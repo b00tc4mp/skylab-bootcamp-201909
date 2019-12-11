@@ -80,7 +80,7 @@ export default withRouter(function ({ history }) {
             //setError('')
             await registerUser(name, surname, email, username, password )
 
-            //history.push('/login')
+            history.push('/login')
         
 
         } catch (error) {
