@@ -11,12 +11,13 @@ import ModifyAd from '../ModifyAd'
 import CreateAd from '../CreateAd'
 import Favorites from '../Favorites'
 import Chats from '../Chats'
+import Messages from '../Messages'
 
 import Footer from '../Footer'
 import PublicProfile from '../PublicProfile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
-         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs, toggleFavAd, retrieveChats} from '../../logic'
+         createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs, toggleFavAd, retrieveChats, retrieveChat, addMessage, removeChat, createChat} from '../../logic'
 
 import queryString from 'query-string'
 
@@ -29,6 +30,7 @@ export default withRouter(function ({ history }) {
     const [idPublic, setIdPublic] = useState([])
     const [comments, setComments] = useState([])
     const [chats, setChats] = useState([])
+    const [chat, setChat] = useState([])
 
     //history.pathname.split('/')
 
@@ -107,9 +109,10 @@ export default withRouter(function ({ history }) {
         try {
             const token = sessionStorage.token
             const ad = await retrieveAd(token, adId)
-            const { name } = await retrievePublicUser(ad.user)
+            const { name, id } = await retrievePublicUser(ad.user)
 
             ad.name = name
+            ad.idPublic = id
 
             setAdId(adId)
             setAd(ad)
@@ -313,7 +316,6 @@ export default withRouter(function ({ history }) {
         }catch(error){
             console.log(error)
         }
-
   
     }
 
@@ -386,6 +388,94 @@ export default withRouter(function ({ history }) {
   
     }
 
+    async function handleToChat(idChat) { 
+
+        try {
+        const token = sessionStorage.token   
+        
+        const chat = await retrieveChat(token, idChat)
+        const user = await retrieveUser(token)
+
+        chat.idChat = idChat
+
+        setUser(user)
+        setChat(chat)   
+    
+        history.push(`/chat/${idChat}`)
+
+        }catch(error){
+            console.log(error)
+        }
+  
+    }
+
+    async function handleDeleteChat(idChat) { 
+
+        try {
+        const token = sessionStorage.token   
+        
+        await removeChat(token, idChat)
+        const chats = await retrieveChats(token)
+        const user = await retrieveUser(token)
+
+        setUser(user)
+        setChats(chats)   
+    
+        history.push(`/chats`)
+
+        }catch(error){
+            console.log(error)
+        }
+  
+    }
+
+    async function handleCreateMessage(message, idChat) { 
+        try {
+        if (message != "") {
+            const token = sessionStorage.token 
+  
+            const idMessage = await addMessage(token, idChat, message)
+
+            const chat = await retrieveChat(token, idChat)
+
+            chat.idChat = idChat
+
+            setUser(user)
+            setChat(chat)   
+
+        }
+        
+        history.push(`/chat/${idChat}`)
+        }catch(error){
+            console.log(error)
+        }
+  
+    }
+
+    async function handleCreateChat(idPublic) { 
+
+        try {
+        const token = sessionStorage.token   
+
+        const idChat = await createChat(token, idPublic)
+        
+        const chat = await retrieveChat(token, idChat)
+        const user = await retrieveUser(token)
+
+        chat.idChat = idChat
+
+        setUser(user)
+        setChat(chat)   
+    
+        history.push(`/chat/${idChat}`)
+
+        }catch(error){
+            console.log(error)
+        }
+  
+    }
+
+
     const { token } = sessionStorage
 
     return <>
@@ -395,13 +485,14 @@ export default withRouter(function ({ history }) {
         <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/></>}/>  
         <Route path="/search" render={() => <><Search onSearch={handleSearch} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile} onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}
                                                       onToFavorites={handleToFavorites} onFav={handleOnFav} onToChats={handleToChats}/></>}/> 
-        <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} /></>}/> 
+        <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} user={user} onCreateChat={handleCreateChat} onToPubliProfile={handleToPubliProfile}/></>}/> 
         <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
         <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/></>}/>
         <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/></>}/>
         <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment}/></>}/>
         <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/></>}/>
-        <Route path="/chats" render={() => <><Header onBack={handleGoBack}/><Chats chats={chats} user={user}/></>}/>
+        <Route path="/chats" render={() => <><Header onBack={handleGoBack}/><Chats chats={chats} user={user} onDeleteChat={handleDeleteChat} onChat={handleToChat}/></>}/>
+        <Route path="/chat/:chatId" render={() => <><Header onBack={handleGoBack}/><Messages chat={chat} user={user} OnCreateMessage={handleCreateMessage}/></>}/> 
     </>
 })
 {/* <Route path="/register" render={() => token ? <Redirect to="/board" /> : <Register onRegister={handleRegister} onBack={handleGoBack} />} />

@@ -11,7 +11,7 @@ export default function ({ ad: { id, title, price, isFav }, adDetail, onFav, com
             <img className="item__image" src={`${API_URL}/ads/load/${id}?timestamp=${Date.now()}`}/>
             <div className="item__pf">
                 <span className="item__price">{price}€</span>
-                <span className="item__fav-submit"onClick={event => {
+                <span className="item__fav-submit" onClick={event => {
                 event.preventDefault()
                 event.stopPropagation()
 

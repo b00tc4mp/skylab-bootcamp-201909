@@ -19,5 +19,9 @@ module.exports = {
     addComment: require('./add-comment'),
     retrieveFavs: require('./retrieve-favs'),
     toggleFavAd: require('./toggle-fav-ad'),
-    retrieveChats: require('./retrieve-chats')
+    retrieveChats: require('./retrieve-chats'),
+    retrieveChat: require('./retrieve-chat'),
+    addMessage: require('./add-message'),
+    removeChat: require('./remove-chat'),
+    createChat: require('./create-chat')
 }
