@@ -3,15 +3,15 @@ const { validate, errors: { NotFoundError, CredentialsError, ConflictError } } =
 // const { env: { REACT_APP_API_URL: API_URL } } = process
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (token, idAd) {
+module.exports = function (token, idChat) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
-    validate.string(idAd)
-    validate.string.notVoid('idAd', idAd)
+    validate.string(idChat)
+    validate.string.notVoid('idChat', idChat)
 
     return (async () => {
-        const res = await call(`${API_URL}/ads/${idAd}`, {
+        const res = await call(`${API_URL}/chats/${idChat}`, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${token}` }
         })

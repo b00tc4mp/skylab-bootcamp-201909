@@ -29,7 +29,7 @@ export default function ({comments, ads, user: {id, name}, adDetail, OnCreateCom
                     <button className="comments__submit"><i className="fas fa-arrow-circle-right"></i></button>
                 </form>
             </div>
-            <ul class="resultComments">
+            <ul className="resultComments">
                 {comments && comments.map(comment => <li className="resultComments__item" key={comment.id}><CommentItem comment={comment} name={name}/></li>)}
             </ul>
     </section>
