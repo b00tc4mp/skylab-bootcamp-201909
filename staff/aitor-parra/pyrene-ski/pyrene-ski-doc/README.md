@@ -11,7 +11,7 @@ The Pyrene Ski App is a web tool tu be used by a school of ski. It allows an adm
 
 ### Use Cases
 
-![Use Cases](images/ps-usecases_ver0.png)
+![Use Cases](images/ps-usecases.png)
 
 ### Activity Diagram
 
@@ -36,13 +36,17 @@ The Pyrene Ski App is a web tool tu be used by a school of ski. It allows an adm
 
 ![Code Coverage](images/coverage.png)
 
-### Screenshots
+### Mockup Screenshots
 
-![Screenshots Login](images/PS_mockup_landing_register.png)
-![Screenshots Register](images/PS_mockup_login_lessonlist.png)
-![Screenshots Home](images/PS_mockup_team_teamcreate.png)
-![Screenshots Home](images/PS_mockup_removeteam_addlesson.png)
-![Screenshots Home](images/PS_mockup_delete_lesson.png)
+![Screenshots Landing Register ](images/ps_mu_landing_register.png)
+![Screenshots Login Lesson List](images/ps_mu_login_boardadmin.png)
+![Screenshots Team List Create Team](images/ps_mu_teamlist_createteam.png)
+![Screenshots Lesson List Add Lesson](images/ps_mu_addlesson_lessonlist.png)
+![Screenshots Board Client Book Lesson](images/ps_mu_boardclient_booklesson.png)
+
+### App Screeenshots
+
+
 
 ## Future Version Features
 
