@@ -4,6 +4,8 @@ module.exports = {
     createGame: require('./create-game'),
     deleteGame: require ('./delete-game'),
     joinGame: require('./join-game'),
+    leaveGame: require('./leave-game'),
+    passTurn: require('./pass-turn'),
     playCard: require('./play-card'),
     registerUser: require('./register-user'),
     retrieveCard: require('./retrieve-card'),

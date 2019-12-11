@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { useParams } from 'react-router'
 import './index.sass'
-import { retrieveGame, retrieveUser, playCard } from '../../logic'
+import { retrieveGame, retrieveUser, playCard, passTurn, leaveGame } from '../../logic'
 import Context from '../Context'
 import GameZone from '../GameZone'
 import Card from '../Card'
@@ -103,11 +103,21 @@ export default function ({ history }) {
     function handleGoHome () { history.push('/') }
 
     async function handlePassTurn (gameId, token) {
-
+        try {
+            await passTurn(gameId, token)
+        } catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
+            history.push('/')
+        }
     }
 
     async function handleExitGame (gameId, token) {
-
+        try {
+            await leaveGame (gameId, token)
+        } catch ({ message }) {
+            setFeed({ title: "🦖 There was an error:", message })
+            history.push('/')
+        }
     }
 
     return <section className="game-panel">
