@@ -4,7 +4,7 @@ import AdItem from '../AdItem'
 import CommentItem from '../CommentItem'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({comments, ads, user: {id, name}, adDetail, OnCreateComment}) {
+export default function ({comments, ads, user: {id, name}, adDetail, OnCreateComment, onFav}) {
     return <section className='publiProfile'>
             <div className="publiProfile__head">
                 <img className="publiProfile__image" src={`${API_URL}/users/load/${id}?timestamp=${Date.now()}`}/>
@@ -12,7 +12,7 @@ export default function ({comments, ads, user: {id, name}, adDetail, OnCreateCom
             </div>
             <h2 className="publiProfile__titlead">ADS</h2>
             <ul className="results">
-                {ads && ads.map(ad => <li className="results__item" key={ad.id}><AdItem ad={ad} adDetail={adDetail} /></li>)}
+                {ads && ads.map(ad => <li className="results__item" key={ad.id}><AdItem ad={ad} adDetail={adDetail} onFav={onFav} comeFrom={`publicprofile/${id}`}/></li>)}
             </ul>
             <div className="comments">
                  <h2 className="comments__title">Comments:</h2>
