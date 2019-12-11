@@ -22,7 +22,7 @@ module.exports = function (userId, cards) {
         _cards.forEach(card => {
             user.cards.push(card._id.toString())
         })
-
+        user.lastReward = new Date()
         await user.save()
     })()
 }
