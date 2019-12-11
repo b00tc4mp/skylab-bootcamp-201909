@@ -13,7 +13,7 @@ export default function({onSearchFriends, friends, deleteFriend, onFriendDetail}
     </section>
 
     <ul className="friends__list">
-        { friends.map(friend => <li className="searchf__link" key={friend.id}  ><Friend friend={friend} deleteFriend={deleteFriend} onFriendDetail={onFriendDetail} /></li>)}
+        { friends.map(friend => <li className="friends__link" key={friend.id}  ><Friend friend={friend} deleteFriend={deleteFriend} onFriendDetail={onFriendDetail} /></li>)}
     </ul>
 </section>
 }

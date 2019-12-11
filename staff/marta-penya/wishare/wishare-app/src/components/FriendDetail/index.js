@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './index.sass'
 import { retrieveFriend } from '../../logic'
+import Feedback from '../Feedback'
 const API_URL = process.env.REACT_APP_API_URL
 
-export default function ({ id, onMyFriends, saveWish, onChatRoom }) {
+export default function ({ id, onMyFriends, saveWish, onChatRoom, error }) {
     const [friend, setFriend] = useState({})
     const [friendId, setFriendId] = useState()
 
@@ -31,7 +32,7 @@ export default function ({ id, onMyFriends, saveWish, onChatRoom }) {
             <button className="friend-detail__back" onClick={event => { event.preventDefault(); onChatRoom(friendId) }}> ChatRoom </button>
             <button className="friend-detail__back" onClick={event => { event.preventDefault(); onMyFriends() }}> Back </button>
         </section>
-
+        {error && < Feedback message={error} />}
         <section className="friend-detail__user">
             <h2 className="friend-detail__name">{name} {surname}</h2>
             <img className="friend-detail__image" src={`${API_URL}/users/profileimage/${friendId}?timestamp=${Date.now()}`} alt="profile picture" />
@@ -44,8 +45,8 @@ export default function ({ id, onMyFriends, saveWish, onChatRoom }) {
 
         <section className="friend-detail__wishes">
             <h2 className="friend-detail__title">{name}'s Wishes</h2>
+                {wishes && wishes.length < 1 && <p className="mywishes__nowish"> {name} has no wishes added</p>}
             <ul className="friend-detail__list">
-                {!wishes && <p className="mywishes__nowish"> {name} has no wishes added</p>}
                 {wishes && wishes.map(wish => <li className="friend-detail__wish" key={wish.id}>
                     <div className="friend-detail__detail">
                         <img className="friend-detail__wimage" src={`${API_URL}/wishes/${friendId}/wish/${wish.id.toString()}?timestamp=${Date.now()}`} />

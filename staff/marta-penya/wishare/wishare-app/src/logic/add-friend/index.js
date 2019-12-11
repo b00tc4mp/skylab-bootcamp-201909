@@ -5,7 +5,7 @@ const API_URL = process.env.REACT_APP_API_URL
 /**
  * Add a friend to the friend list of the user
  * 
- * @param {string} id of the user
+ * @param {string} token of the user
  * @param {string} friendId of the friend that the user wants to remove 
  * 
  */

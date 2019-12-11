@@ -15,7 +15,7 @@ const call = require('../../utils/call')
 * @returns {Promise} - user.  
 */
 
-module.exports = function (token, day, month, year, password, description) {
+module.exports = function (token, year , month, day, password, description) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
@@ -47,7 +47,7 @@ module.exports = function (token, day, month, year, password, description) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({day, month, year, password, description})
+            body: JSON.stringify({year, month, day, password, description})
         })
 
         if(res.status === 200) return

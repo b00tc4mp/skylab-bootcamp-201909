@@ -447,7 +447,7 @@ export default withRouter(function ({ history }) {
 			<Route path='/myprofile' render={() => token ? <MyProfile user={user} onEditProfile={handleOnEditProfile} /> : <Redirect to='/' />} />
 			<Route path='/editprofile' render={() => token ? <EditProfile onMyProfile={handleOnMyProfile} onModify={handleModify} /> : <Redirect to='/' />} />
 			<Route path='/editwish' render={() => token ? <EditWish onEditWish={handleEditWish} onMyWishes={handleOnMyWishes} /> : <Redirect to='/' />} />
-			<Route path='/friend/:id' render={props => token ? <FriendDetail id={props.match.params.id} friend={friend} onMyFriends={handleOnMyFriends} saveWish={handleSaveWish} onChatRoom={handleChatRoom} /> : <Redirect to='/' />} />
+			<Route path='/friend/:id' render={props => token ? <FriendDetail id={props.match.params.id} error={error} friend={friend} onMyFriends={handleOnMyFriends} saveWish={handleSaveWish} onChatRoom={handleChatRoom} /> : <Redirect to='/' />} />
 			<Route path='/chat/:id' render={props => token ? <Chat id={props.match.params.id} chat={chat} onBack={handleFriendDetail} onSendMessage={handleSendMessage} /> : <Redirect to='/' />} />
 		</>
 	)

@@ -25,9 +25,6 @@ module.exports = new Schema({
         type: Date,
         required: true
     },
-    image: {
-        type: String
-    },
     description: {
         type: String
     },
