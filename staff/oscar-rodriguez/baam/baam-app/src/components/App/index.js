@@ -13,12 +13,12 @@ import Game from '../Game'
 import JoinGame from '../JoinGame'
 import WaitPartner from '../WaitPartner'
 import Context from '../Context'
-import EndGame from '../EndGame'
+
 
 import {
     retrieveUser, registerUser, authenticateUser, createGame,
     deleteGame, joinGame, retrieveGame, addPlayerHand,
-    retrieveUserCards, retrieveRandomCards, updateUserCards
+    retrieveRandomCards, updateUserCards
 } from '../../logic'
 
 
@@ -59,6 +59,8 @@ export default withRouter(function ({ history }) {
             if (gameId) {
                 try {
                     const game = await retrieveGame(gameId, token)
+                    const user = await retrieveUser(token)
+                    const currentPlayer = game.players.findIndex (player => player.user.id === user.id)
                 } catch ({ message }) {
                     setFeed({ title: "🦖 There was an error:", message })
                 }
@@ -114,7 +116,6 @@ export default withRouter(function ({ history }) {
             const { gameId, playerId } = await createGame(token)
 
             sessionStorage.gameId = gameId
-
             setViewSelectHandPanel(!hand)
         }
         catch ({ message }) {
@@ -131,7 +132,7 @@ export default withRouter(function ({ history }) {
 
             delete sessionStorage.gameId
 
-            setViewWaitPartnerPanel(true)
+            setViewWaitPartnerPanel(false)
 
         } catch ({ message }) {
             setFeed({ title: "🦖 There was an error:", message })
