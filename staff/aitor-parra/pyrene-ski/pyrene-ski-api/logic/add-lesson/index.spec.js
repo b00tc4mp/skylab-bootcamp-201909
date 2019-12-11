@@ -5,10 +5,10 @@ const addLesson = require('.')
 const { random } = Math
 const { database, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 
-describe('logic - add lesson', () => {
+describe('logic - add lesson', () => {debugger
     before(() => database.connect(DB_URL_TEST))
 
-    let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd, team, activity
+    let userId, name, surname, email, username, password, role = "admin" /* date, timeStart, timeEnd, team, activity */
 
     beforeEach(async () => {debugger
         name = `name-${random()}`
@@ -24,9 +24,9 @@ describe('logic - add lesson', () => {
         
         userId = user.id
         
-/*      const team = await Lesson.create({ teamName, teamEmail, teamPhone, teamActivity })
+/*         const team = await Lesson.create({ teamName, teamEmail, teamPhone, teamActivity })
 
-        teamId = team.id  teamId,*/
+        teamId = team.id  teamId */
 
         date = `date-${random()}`
         timeStart = `timeStart-${random()}`

@@ -5,7 +5,7 @@ const retrieveLessons = require('.')
 const { random } = Math
 const { database, ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')
 
-describe('logic - retrieve lessons', () => {
+describe.only('logic - retrieve lessons', () => {
     before(() => database.connect(DB_URL_TEST))
 
     let id, name, surname, email, username, password, role, lessonIds, dates, timeStarts, timeEnds, teams, activities
