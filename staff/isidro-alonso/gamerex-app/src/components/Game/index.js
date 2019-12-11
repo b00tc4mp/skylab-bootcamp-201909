@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { retrieveGame } from '../../logic'
+import { retrieveGame, addComment, retrieveComments } from '../../logic'
+import Feedback from '../Feedback'
 const API_URL = process.env.REACT_APP_API_URL
 
 export default withRouter(function ({ history }) {
@@ -10,6 +11,12 @@ export default withRouter(function ({ history }) {
     const [favourite, setFavourite] = useState()
     const [sell, setSell] = useState()
     const [exchange, setExchange] = useState()
+
+    const [body, setBody] = useState()
+
+    const [comments, setComments] = useState()
+
+    const [error, setError] = useState('')
 
     function showFav() {
         if (favourite) return <p className="game-detail__favourite"><img src="img/favourite.png" alt="favourite" /> My favourite</p>
@@ -25,7 +32,7 @@ export default withRouter(function ({ history }) {
 
     const { location: { pathname } } = history
     const gameId = pathname.substr(10)
-    
+
     useEffect(() => {
         const { token } = sessionStorage;
 
@@ -39,13 +46,30 @@ export default withRouter(function ({ history }) {
                 setSell(sell)
                 setExchange(exchange)
 
+                const comments = await retrieveComments(token, gameId)
+
+                setComments(comments)
             }
         })()
-    }, [sessionStorage.token])
+    }, [sessionStorage.token, comments])
+
+    async function handleNewComment(body) {
+        const { token } = sessionStorage;
+        if (token) {
+            try {
+
+                await addComment(token, gameId, body)
+
+            } catch (error) {
+                setError(error.message.toString())
+            }
+        }
+    }
 
     const image = `${API_URL}/games/load/${gameId}?timestamp=${Date.now()}`
 
     return <section className="game-detail">
+        {error && <Feedback message={error} />}
         <h1 className="game-detail__title">{title}</h1>
         <section className="game-detail__item">
             <img className="game-detail__img" src={image} alt="game" />
@@ -55,8 +79,17 @@ export default withRouter(function ({ history }) {
             {showExch()}
             <h1 className="game-detail__title">Comment if you are interested!</h1>
             <span className="game-detail__chat">
-                <form id="commentform">
-                    <textarea className="chat__textcomment" rows="5" cols="30" name="comment" form="commentform" placeholder="Leave your comment here..."></textarea>
+                <section className="chat__comments">{comments}<hr /></section>
+                {/* {comments.join('<br>')} */}
+                {/* {comments.map(comment => <section className="chat__comments">{comment}</section>)} */}
+                <form id="commentform" onSubmit={e => {
+                    e.preventDefault()
+
+                    handleNewComment(body)
+
+                    setBody('')
+                }}>
+                    <textarea className="chat__textcomment" rows="5" cols="30" name="comment" form="commentform" value={body} placeholder="Leave your comment here..." onChange={event => setBody(event.target.value)}></textarea>
                     <button className="chat__send">Send comment</button>
                 </form>
             </span>

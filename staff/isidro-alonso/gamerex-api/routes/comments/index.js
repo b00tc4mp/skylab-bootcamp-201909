@@ -28,11 +28,11 @@ router.post('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/:id', jsonBodyParser, (req, res) => {
+router.get('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { params: { id } } = req
+        const { params: { gameId }, id } = req
 
-        retrieveComments(id)
+        retrieveComments(gameId, id)
             .then(comments => res.json(comments))
             .catch(error => {
                 const { message } = error
