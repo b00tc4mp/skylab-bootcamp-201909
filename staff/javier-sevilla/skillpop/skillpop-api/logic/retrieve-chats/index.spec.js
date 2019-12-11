@@ -36,13 +36,13 @@ describe('logic - retrieveChats', () => {
         const user2 = await User.create({ name, surname, city, address, email, password: hash })
         id2 = user2.id
 
-        const chat1 = await Chat.create({ users: [ObjectId(id1)], messages: [] })
+        const chat1 = await Chat.create({ users: [ObjectId(id1), ObjectId(id2)], messages: [] })
         chatId1 = chat1.id
 
-        const chat2 = await Chat.create({ users: [ObjectId(id1)], messages: [] })
+        const chat2 = await Chat.create({ users: [ObjectId(id1), ObjectId(id2)], messages: [] })
         chatId2 = chat2.id
 
-        const chat3 = await Chat.create({ users: [ObjectId(id2)], messages: [] })
+        const chat3 = await Chat.create({ users: [ObjectId(id2), ObjectId(id2)], messages: [] })
         chatId3 = chat2.id
 
         chatsArray = [chatId1, chatId2]
@@ -50,12 +50,10 @@ describe('logic - retrieveChats', () => {
 
     it('should return a correct chat', async() => {
         const chats = await retrieveChats(id1)
-        debugger
 
         chats.forEach(chat => {
             expect(chat).to.exist
             expect(chat.id).to.be.oneOf(chatsArray)
-            expect(chat.users.toString()).to.equal(id1)
 
         })
     })
