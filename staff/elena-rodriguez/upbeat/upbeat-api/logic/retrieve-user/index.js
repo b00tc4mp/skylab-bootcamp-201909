@@ -2,6 +2,19 @@ const { validate, errors: { NotFoundError, ContentError } } = require('upbeat-ut
 const { ObjectId, models: { User } } = require('upbeat-data')
 const bcrypt = require('bcryptjs')
 
+/**
+* Retrieve user
+* 
+* @param {string} id
+* 
+* @throws {ContentError} If id hasn't got the correct format
+* 
+* @throws {NotFoundError} If doesn't find the user with the id
+* 
+* @return {Promise}
+* @return {Object} Returns the complete user
+*/
+
 module.exports = function (id) {
     validate.string(id)
     validate.string.notVoid('id', id)

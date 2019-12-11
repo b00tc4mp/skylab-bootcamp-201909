@@ -1,6 +1,17 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('upbeat-util')
 const { ObjectId, models: { User } } = require('upbeat-data')
 
+/**
+* retrieve favs
+* 
+* @param {string} id
+* 
+* @throws {ContentError} If id hasn't got the correct format
+* 
+* @throws {NotFoundError} If doesn't find the user with the id
+* 
+* @return {Array} Array that contains all the data of the favorites.
+*/
 
 module.exports = function (id) {
     

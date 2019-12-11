@@ -6,12 +6,12 @@ const retrieveChat = require('.')
 const { errors: { NotFoundError, ContentError } } = require('upbeat-util')
 const { ObjectId, database, models: { User, Chat, Message } } = require('upbeat-data')
 
-describe('logic - retrieve-complete-user', () => {
+describe.only('logic - retrieve-complete-user', () => {
     before(() => database.connect(TEST_DB_URL))
 
     const users = []
     const ids = []
-    let id1, id2, id3, chatId, username, email, password, message1, message2, messages
+    let id1, id2, chatId, username, email, password, message1, message2, messages
 
 
     beforeEach(async() => {
@@ -33,7 +33,7 @@ describe('logic - retrieve-complete-user', () => {
         const data = await User.insertMany(users)
         id1 = data[0].id
         id2 = data[1].id
-        id3 = data[2].id
+    
         const chat = await Chat.create({ users: [ObjectId(id2), ObjectId(id1)], messages: [] })
         chatId = chat.id
 

@@ -1,6 +1,14 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('upbeat-util')
 const { ObjectId, models: { User } } = require('upbeat-data')
 
+/**
+* Toggle fav
+* 
+* @param {string} userId
+* @param {string} favId
+* 
+*/
+
 module.exports = function (userId, favId) {
     validate.string(userId)
     validate.string.notVoid('userId', userId)

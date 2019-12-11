@@ -8,7 +8,7 @@ export default function ({ username, onDetail }) {
     const [control, setControl]= useState(Math.random())
     const { token } = sessionStorage
 
-    async function handleToggleFavs(favId) {debugger
+    async function handleToggleFavs(favId) {
         try {
             await toggleFavs(token, favId)
             setControl(!control)
@@ -20,9 +20,9 @@ export default function ({ username, onDetail }) {
     useEffect(()=>{
         try{
             if(token){
-                (async ()=>{debugger
+                (async ()=>{
                     const { favs } = await retrieveFavs(token) 
-                    debugger
+                    
                     setFavs(favs)
                 })()
             }

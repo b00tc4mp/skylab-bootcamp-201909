@@ -16,10 +16,7 @@ module.exports = function (id, token, username, email, description, upcomings, l
         validate.string(email)
         validate.string.notVoid('e-mail', email)
     }
-    // if (password) {
-    //     validate.string(password)
-    //     validate.string.notVoid('password', password)
-    // }
+  
     if (description) {
         validate.string(description)
         validate.string.notVoid('description', description)
@@ -35,11 +32,6 @@ module.exports = function (id, token, username, email, description, upcomings, l
         validate.string.notVoid('location', location)
     }
 
-    
-    
-    // const [, payload,] = token.split('.')
-    // const {sub} = JSON.parse(atob(payload))
-    // const id = sub
 
     return (async () => {
         const res = await call(`${API_URL}/users/profile`, {

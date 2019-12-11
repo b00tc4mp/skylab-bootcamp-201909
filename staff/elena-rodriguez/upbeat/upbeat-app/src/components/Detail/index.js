@@ -28,7 +28,7 @@ export default function ({ musician , favs, onToggleFavs}) {
                <i className="far fa-heart" id={favs.includes(id) ? "fav" : ""}></i>
             </div>
             <p className="user-content__description">{description}</p>
-            {links && <><h2 className='user-content__subtitle'>More about me:</h2><a className="user-content__links"
+            {links && <><h2 className='user-content__subtitle'>More info here:</h2><a className="user-content__links"
                 href={links} target="_blank"><i className="fas fa-link"></i></a></>} 
     
             
@@ -38,7 +38,6 @@ export default function ({ musician , favs, onToggleFavs}) {
             <h2 className='user-content__subtitle'>Contact me: </h2>
             <div className="contact-icons">
                 <a href={"mailto:" + email}><i className="far fa-envelope"></i></a>
-                <button className="chat"><i className="far fa-comments"></i></button>
             </div>
         </div>
         <Link className="go-back" to="/"> Go back</Link>

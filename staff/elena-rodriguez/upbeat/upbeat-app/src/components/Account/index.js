@@ -2,7 +2,7 @@ import React from 'react'
 // import { retrieveMusician } from '../../logic/'
 import { Link } from 'react-router-dom'
 
-export default function ({ user }) {debugger
+export default function ({ user }) {
 
 
     const { username, description, rol, format, email, image, links, upcomings, location} = user
@@ -29,12 +29,7 @@ export default function ({ user }) {debugger
                 href={links} target="_blank"><i className="fas fa-link"></i></a></>} 
             <h2 className='user-content__subtitle'>Upcoming performances:</h2>
             <p className="user-content__activities">{upcomings}
-            </p>
-            <h2 className='user-content__subtitle'>Contact me: </h2>
-            <div className="contact-icons">
-                <a href={"mailto:" + email}><i className="far fa-envelope"></i></a>
-                <button className="chat"><i className="far fa-comments"></i></button>
-            </div>
+            </p>       
         </div>
         <Link className="go-back" to="/"> Go back</Link>
     </section>}</>

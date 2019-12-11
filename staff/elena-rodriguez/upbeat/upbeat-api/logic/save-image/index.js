@@ -28,7 +28,7 @@ module.exports = function(id, file, filename) {
         imgPath = path.join(__dirname, `../../public/data/users/${id}/${filename}`)
         route = path.join(__dirname, `../../public/data/users/${id}/`)
         try {
-            debugger
+    
             const user = await User.findById(id)
             user.image = `http://localhost:8000/data/users/${id}/${filename}`
             await user.save()

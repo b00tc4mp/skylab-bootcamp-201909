@@ -24,7 +24,7 @@ describe('logic - register user', () => {
         email = `email-${random()}@mail.com`
         password = `password-${random()}`
         rol = rols[Math.floor(Math.random() * rols.length)]
-        location = location = `location-${random()}`
+        location = `location-${random()}`
         instruments = [instrumentsList[Math.floor(Math.random() * instrumentsList.length)]]
         groups = groupsList[Math.floor(Math.random() * groupsList.length)]
         if (rol === 'solo') format = new Solo({ instruments })
@@ -36,7 +36,7 @@ describe('logic - register user', () => {
 
     it('should succeed on correct credentials', async () => {
 
-        const response = await registerUser(username, email, password, rol, instruments, groups)
+        const response = await registerUser(username, email, password, rol, instruments, groups, location)
 
         expect(response).to.be.undefined
 
@@ -60,12 +60,12 @@ describe('logic - register user', () => {
 
     describe('when user already exists', () => {
 
-        beforeEach(() => User.create({ username, email, password, rol, instruments, groups}))
+        beforeEach(() => User.create({ username, email, password, rol, instruments, groups, location}))
 
 
         it('should fail on already existing user', async () => {
             try {
-                await registerUser(username, email, password, rol, instruments, groups)
+                await registerUser(username, email, password, rol, instruments, groups, location)
 
                 throw Error('should not reach this point')
             } catch (error) {
@@ -79,7 +79,7 @@ describe('logic - register user', () => {
         })
     })
 
-    it('should fail on incorrect username, email, password, latitude, longitude or expression type and content', () => {
+    it('should fail on incorrect username, email, password,  or expression type and content', () => {
 
         expect(() => registerUser(1)).to.throw(TypeError, '1 is not a string')
         expect(() => registerUser(true)).to.throw(TypeError, 'true is not a string')
@@ -123,36 +123,9 @@ describe('logic - register user', () => {
 
         expect(() => registerUser(username, email, password, '')).to.throw(ContentError, 'rol is empty or blank')
         expect(() => registerUser(username, email, password, ' \t\r')).to.throw(ContentError, 'rol is empty or blank')
-        rol = 'solo'
-        expect(() => registerUser(username, email, password, rol, 1)).to.throw(TypeError, '1 is not a Array')
-        expect(() => registerUser(username, email, password, rol, true)).to.throw(TypeError, 'true is not a Array')
-        //expect(() => registerUser(username, email, password, rol, [])).to.throw(TypeError, ' is not a Array')
-        expect(() => registerUser(username, email, password, rol, {})).to.throw(TypeError, '[object Object] is not a Array')
-        expect(() => registerUser(username, email, password, rol, undefined)).to.throw(TypeError, 'undefined is not a Array')
-        expect(() => registerUser(username, email, password, rol, null)).to.throw(TypeError, 'null is not a Array')
-
-
-        rol = 'groups'
-        expect(() => registerUser(username, email, password, rol, instruments, 1)).to.throw(TypeError, '1 is not a string')
-        expect(() => registerUser(username, email, password, rol, instruments, true)).to.throw(TypeError, 'true is not a string')
-        expect(() => registerUser(username, email, password, rol, instruments, [])).to.throw(TypeError, ' is not a string')
-        expect(() => registerUser(username, email, password, rol, instruments, {})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => registerUser(username, email, password, rol, instruments, undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => registerUser(username, email, password, rol, instruments, null)).to.throw(TypeError, 'null is not a string')
-
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, 'a')).to.throw(TypeError, 'a is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, true)).to.throw(TypeError, 'true is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, [])).to.throw(TypeError, ' is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, {})).to.throw(TypeError, '[object Object] is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, undefined)).to.throw(TypeError, 'undefined is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, null)).to.throw(TypeError, 'null is not a number')
-
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, 'a')).to.throw(TypeError, 'a is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, true)).to.throw(TypeError, 'true is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, [])).to.throw(TypeError, ' is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, {})).to.throw(TypeError, '[object Object] is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, undefined)).to.throw(TypeError, 'undefined is not a number')
-        // expect(() => registerUser(username, email, password, rol, instruments, groups, latitude, null)).to.throw(TypeError, 'null is not a number')
+        
+     
+       
 
     })
 

@@ -2,6 +2,23 @@ const { validate, errors: { ConflictError } } = require('upbeat-util')
 const { models: { User, Solo, Groups } } = require('upbeat-data')
 const bcrypt = require('bcryptjs')
 
+/**
+* Register user
+* 
+* @param {string} username
+* @param {string} email 
+* @param {string} password
+* @param {string} rol
+* @param {array} instruments 
+* @param {string} groups
+* @param {string} location
+* 
+* @throws {ConflictError} If exist another user with the same username.
+* 
+* @return {Promise}
+* 
+*/
+
 module.exports = function (username, email, password, rol, instruments, groups, location) {
     validate.string(username)
     validate.string.notVoid('username', username)
@@ -31,15 +48,14 @@ module.exports = function (username, email, password, rol, instruments, groups, 
         validate.matches('groups', groups, 'band', 'choir', 'modernEnsemble', 'orchestra', 'classicChamber')
     }
   
-    // validate.number(latitude)
-    // validate.number(longitude)
-
+  
 
     return (async () => {
         let user = await User.findOne({ username })
 
         if (user) throw new ConflictError(`user with username ${username} already exists`)
 
+        
         const hash = await bcrypt.hash(password, 10)
         let format = {}
 

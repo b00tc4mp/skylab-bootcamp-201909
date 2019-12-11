@@ -1,6 +1,28 @@
 const { validate, errors: { ConflictError, NotFoundError } } = require('upbeat-util')
 const { ObjectId, models: { User } } = require('upbeat-data')
 
+
+
+/**
+* modify user
+* 
+* @param {string} id
+* @param {string} username
+* @param {string} email
+* @param {string} password 
+* @param {string} description 
+* @param {string} image 
+* @param {string} links
+* @param {string} upcomings 
+* @param {string} location 
+* 
+* @throws {ContentError} If id hasn't got the correct format
+* 
+* @throws {NotFoundError} If doesn't find the user with the id
+* 
+* @return {Promise}
+*/
+
 module.exports = function (id, username, email, password, description, image, links, upcomings, location ) {
     validate.string(id)
     validate.string.notVoid('id', id)

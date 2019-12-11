@@ -4,6 +4,18 @@ const { validate, errors: { CredentialsError } } = require('upbeat-util')
 const API_URL = process.env.REACT_APP_API_URL
 //const API_URL = "http://localhost:8000"
 
+/**
+* Authenticate user
+* 
+* @param {string} email
+* @param {string} password
+* 
+* @throws {CredentialsError} If username or password doesn't match with the correct credentials
+* 
+* @return {Promise}
+* @return {string}  id Returns the user id
+*/
+
 module.exports = function (email, password) {
     validate.string(email)
     validate.string.notVoid('e-mail', email)

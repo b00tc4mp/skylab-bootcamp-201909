@@ -25,7 +25,7 @@ export default withRouter(function ({ history }) {
 
     useEffect(() => {
          
-        debugger
+        
         (async () => {
             if (token) {
                 
@@ -33,11 +33,6 @@ export default withRouter(function ({ history }) {
                 setUsername(user.username)
                 setUser(user)
 
-
-                // if(musicianId !== undefined) {
-                // const musician = await retrieveMusician(musicianId)
-                // setMusician(musician)
-                // }
 
             }
         })()
@@ -72,7 +67,7 @@ export default withRouter(function ({ history }) {
 
     
 
-    async function handleSearch(query) {debugger
+    async function handleSearch(query) {
         
 
         try {
@@ -117,7 +112,7 @@ export default withRouter(function ({ history }) {
             setFavs(favs) 
             setRender(!render)
             
-            //if (history.location.pathname === '/favs') history.push('/favs')
+          
         }
          catch (error) {
             console.error(error)
@@ -158,7 +153,7 @@ export default withRouter(function ({ history }) {
         history.push('/search') 
     }
 
-    async function handleEdit(id, username, email, description, upcomings, location, links) { debugger
+    async function handleEdit(id, username, email, description, upcomings, location, links) { 
         
         try { 
 
@@ -181,7 +176,7 @@ export default withRouter(function ({ history }) {
     async function handleAccount(token) {
 
         try {
-            debugger
+            
             const user = await retrieveUser(token)
             
         }
@@ -209,7 +204,7 @@ export default withRouter(function ({ history }) {
         
         <Route path="/detail/:id" render={() => token && user? <><Header /><Detail onToggleFavs = {handleToggleFavs} musician={musician} favs = {user.favs} /><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> : <Redirect to= "/" />} />
         
-        <Route path="/edit" render={() => token? <><Header /><EditProfile  user={user} onEdit={handleEdit}/> <Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch} /> </>: <Redirect to= "/" />}/>
+        <Route path="/edit" render={() => token && user ? <><Header /><EditProfile  user={user} onEdit={handleEdit}/> <Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch} /> </>: <Redirect to= "/" />}/>
         
         <Route path="/account" render={() => token && user ? <><Header /><Account onAccount={handleAccount} user={user}/><Footer onLogout={handleLogout} onEdit={handleGoToEdit} onAccount={handleGoToAccount} onFavs={handleFavs} onSearch={handleGoToSearch}/> </> :  <Redirect to= "/" />  }/>        
     </>

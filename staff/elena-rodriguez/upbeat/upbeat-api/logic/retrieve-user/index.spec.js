@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 describe('logic - retrieve user', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id , username, email, password, rol, rols, location format
+    let id , username, email, password, rol, rols, location, format
     rols = ['solo', 'groups']
     instrumentsList = ['drums', 'guitar', 'piano', 'violin', 'bass', 'cello', 'clarinet', 'double-bass', 'flute', 'oboe', 'saxophone', 'trombone', 'trumpet', 'ukelele', 'viola', 'voice']
     groupsList = ['band', 'choir', 'modernEnsemble', 'orchestra', 'classicChamber']
