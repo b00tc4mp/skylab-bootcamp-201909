@@ -431,7 +431,7 @@ export default withRouter(function ({ history }) {
 
     async function handleCreateMessage(message, idChat) { 
         try {
-        if (message != "") {
+        if (message !== "") {
             const token = sessionStorage.token 
   
             const idMessage = await addMessage(token, idChat, message)
