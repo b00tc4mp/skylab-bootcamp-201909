@@ -375,8 +375,6 @@ export default withRouter(function ({ history }) {
         const chats = await retrieveChats(token)
         const user = await retrieveUser(token)
 
-            
-        debugger
         setUser(user)
         setChats(chats)   
     
