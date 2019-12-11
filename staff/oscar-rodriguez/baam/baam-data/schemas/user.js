@@ -25,6 +25,13 @@ module.exports = new Schema ({
     lastAccess: {
         type: Date
     },
+    lastReward: {
+        type: Date
+    },
+    daysConnected: {
+        type: Number,
+        default: 0
+    },
     stats: {
         wins: { type: Number, default: 0},
         ties: { type: Number, default: 0},
