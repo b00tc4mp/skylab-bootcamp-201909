@@ -4,7 +4,7 @@
 
 ## Introduction:
 
-The Pyrene Ski App is a web tool for a ski club and school. It allows an administrator account to create teams (teachers) and ski lessons, and offer them to registered clients accounts to be booked online. Lessons are linked to teams The club administrator can insert lesson times related to teachers in the calendar, and outside clients can search for a specific schedule and teacher in the same calendar, being able to book and pay for that teacher and lesson.
+The Pyrene Ski App is a web tool tu be used by a school of ski. It allows an administrator account to create teams (teachers) and ski lessons, setting dates, shedules and activities. Lessons are offered to registered clients accounts to be booked online. This app come up to cover a real need from a school and club of ski, Club d’Esquí Pyrene , http://clubesquipyrene.com/ , established in the Catalan Pyrenes. 
 
 
 ## Functional Description
