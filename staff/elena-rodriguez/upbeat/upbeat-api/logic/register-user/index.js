@@ -50,7 +50,7 @@ module.exports = function (username, email, password, rol, instruments, groups, 
         }
 
         user =  await User.create({ username, email, password: hash, rol, format, location })
-        debugger
+        
         rol === 'solo' ? 
         user.image = `http://localhost:8000/data/users/default/solo.jpg` 
         : user.image = `http://localhost:8000/data/users/default/groups.jpg`

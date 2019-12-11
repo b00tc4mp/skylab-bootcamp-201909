@@ -1,5 +1,5 @@
 const {Schema, ObjectId} = require('mongoose')
-const Links = require('./links')
+// const Links = require('./links')
 const { validators: { isEmail } } = require('upbeat-util')
 
 module.exports = new Schema ({
@@ -42,7 +42,9 @@ module.exports = new Schema ({
         type: String
     },
 
-    links : [Links],
+    links : {
+        type: String
+    },
 
     favs: {
         type: [ObjectId],

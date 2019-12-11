@@ -158,11 +158,11 @@ export default withRouter(function ({ history }) {
         history.push('/search') 
     }
 
-    async function handleEdit(id, username, email, description, upcomings, location) { 
+    async function handleEdit(id, username, email, description, upcomings, location, links) { debugger
         
         try { 
 
-            await editProfile(id, token, username, email, description, upcomings, location)
+            await editProfile(id, token, username, email, description, upcomings, location, links)
             const user = await retrieveUser(token)
             setUser(user)
             setRender(!render)

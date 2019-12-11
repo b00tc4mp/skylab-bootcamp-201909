@@ -27,7 +27,8 @@ module.exports = function (id, username, email, password, description, image, li
         validate.string.notVoid('image', image)
     }
     if (links) {
-        validate.instanceOf(Object, links)
+        validate.string(links)
+        validate.string.notVoid('links', links)
        
     }
 

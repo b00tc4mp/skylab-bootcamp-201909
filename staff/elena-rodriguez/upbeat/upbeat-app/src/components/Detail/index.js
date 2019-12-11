@@ -28,10 +28,10 @@ export default function ({ musician , favs, onToggleFavs}) {
                <i className="far fa-heart" id={favs.includes(id) ? "fav" : ""}></i>
             </div>
             <p className="user-content__description">{description}</p>
-            <h2 className='user-content__subtitle'>Some of my work:</h2>
-            <a className="user-content__links"
-                href="http://tallerdemusics.com/festival-talent/viernes-29-de-junio/oriol-colome/" target="_blank">
-                Taller De Músics</a>
+            {links && <><h2 className='user-content__subtitle'>More about me:</h2><a className="user-content__links"
+                href={links} target="_blank"><i className="fas fa-link"></i></a></>} 
+    
+            
             <h2 className='user-content__subtitle'>Upcoming performances:</h2>
             <p className="user-content__activities">{upcomings}
             </p>

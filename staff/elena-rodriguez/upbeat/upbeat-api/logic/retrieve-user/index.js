@@ -16,9 +16,9 @@ module.exports = function (id) {
 
         await user.save()
 
-        const { username, email, rol, format, location, description, image, links, upcomings, favs } = user.toObject()
-        debugger
-        return {  id, username, email, rol, format, location, description, image, links, upcomings, favs }
+        const { username, email, rol, format, location, description, image, upcomings, favs , links} = user.toObject()
+        
+        return {  id, username, email, rol, format, location, description, image, upcomings, favs , links}
         
     })()
 }

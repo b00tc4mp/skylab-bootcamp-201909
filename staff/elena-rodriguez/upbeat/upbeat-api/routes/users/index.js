@@ -54,7 +54,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
     }
 })
 
-router.get('/', tokenVerifier, (req, res) => {
+router.get('/', tokenVerifier, (req, res) => {debugger
     try {
         const { id } = req
 
@@ -119,7 +119,7 @@ router.delete('/:id', tokenVerifier, jsonBodyParser, (req, res) => {
 })
 
 
-router.patch('/profile', tokenVerifier, jsonBodyParser, (req, res) => { 
+router.patch('/profile', tokenVerifier, jsonBodyParser, (req, res) => { debugger
     
     try {
         const { id , body: { username, email, password, description, image, links, upcomings, location } } = req

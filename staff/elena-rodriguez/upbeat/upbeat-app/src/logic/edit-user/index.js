@@ -3,7 +3,7 @@ const { validate, errors: {  NotFoundError, ConflictError } } = require('upbeat-
 // const { env: { REACT_APP_API_URL: API_URL } } = process
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (id, token, username, email, description, upcomings, location) {
+module.exports = function (id, token, username, email, description, upcomings, location, links) {
     validate.string(token)
     validate.string.notVoid('token', token)
 
@@ -34,6 +34,8 @@ module.exports = function (id, token, username, email, description, upcomings, l
         validate.string(location)
         validate.string.notVoid('location', location)
     }
+
+    
     
     // const [, payload,] = token.split('.')
     // const {sub} = JSON.parse(atob(payload))
@@ -46,7 +48,7 @@ module.exports = function (id, token, username, email, description, upcomings, l
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ username, email, description, upcomings, location })
+            body: JSON.stringify({ username, email, description, upcomings, location, links })
         })
 
         if (res.status === 200) return

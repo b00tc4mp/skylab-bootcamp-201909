@@ -2,7 +2,7 @@ import React from 'react'
 // import { retrieveMusician } from '../../logic/'
 import { Link } from 'react-router-dom'
 
-export default function ({ user }) {
+export default function ({ user }) {debugger
 
 
     const { username, description, rol, format, email, image, links, upcomings, location} = user
@@ -24,10 +24,9 @@ export default function ({ user }) {
             { rol === "groups" && <img className="user-content__img" src={image ? image : "images/default/groups.jpg"}/>}
             </div>
             <p className="user-content__description">{description}</p>
-            <h2 className='user-content__subtitle'>Some of my work:</h2>
-            <a className="user-content__links"
-                href="http://tallerdemusics.com/festival-talent/viernes-29-de-junio/oriol-colome/" target="_blank">
-                Taller De Músics</a>
+            
+            {links && <><h2 className='user-content__subtitle'>More about me:</h2><a className="user-content__links"
+                href={links} target="_blank"><i className="fas fa-link"></i></a></>} 
             <h2 className='user-content__subtitle'>Upcoming performances:</h2>
             <p className="user-content__activities">{upcomings}
             </p>
