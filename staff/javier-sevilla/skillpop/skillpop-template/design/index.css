@@ -134,6 +134,40 @@ body {
   font-size: 3rem;
 }
 
+.feedback {
+  display: flex;
+  justify-content: center;
+  width: 99%;
+  height: 500px;
+  margin: 1%;
+  background-color: #5c5c5c17;
+}
+.feedback__div {
+  width: 80%;
+  height: 50%;
+  margin: 10%;
+  background-color: #233180;
+  border-radius: 15px;
+}
+.feedback__goback-button {
+  text-decoration: none;
+  background-color: transparent;
+  border-style: none;
+  cursor: pointer;
+  margin-top: 6%;
+  margin-left: 5%;
+  color: #0c0b0b;
+  font-size: 2.5rem;
+  color: white;
+}
+.feedback__message {
+  margin-top: 30%;
+  margin-left: 6%;
+  margin-right: 6%;
+  font-size: 15px;
+  color: white;
+}
+
 .landing {
   display: flex;
   flex-direction: column;

@@ -47,7 +47,6 @@ describe('logic - search ads', () => {
                 price: random(),
                 date: new Date
             }
-z
             insertions.push(Ad.create(ad).then(ad => adIds.push(ad.id)))
 
             titles.push(ad.title)
@@ -68,7 +67,7 @@ z
 
     it('should succeed list ads by query', async () => {
         const query = 'guitar'
-        const ads = await searchAds(query)
+        const ads = await searchAds(id, query)
 
         expect(ads).to.exist
         expect(ads).to.have.lengthOf(10)
@@ -101,7 +100,7 @@ z
 
     it('should succeed list ads by blank query', async () => {
         const query = ' '
-        const ads = await searchAds(query)
+        const ads = await searchAds(id, query)
 
         expect(ads).to.exist
         expect(ads).to.have.lengthOf(20)
@@ -129,10 +128,40 @@ z
 
     it('should not found results', async () => {
         const query = 'asdsadasdsad'
-        const ads = await searchAds(query)
+        const ads = await searchAds(id, query)
 
         expect(ads).to.have.lengthOf(0)
 
+    })
+
+    it('should fail on wrong user id', async () => {
+        const id = '012345678901234567890123'
+        const query = ' '
+
+        try {
+            await searchAds(id,query)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(NotFoundError)
+            expect(error.message).to.equal(`user with id ${id} not found`)
+        }
+    })
+
+        it('should fail on invalid user id', async () => {
+        const id = '--'
+        const query = ' '
+
+        try {
+            await searchAds(id,query)
+
+            throw Error('should not reach this point')
+        } catch (error) {
+            expect(error).to.exist
+            expect(error).to.be.an.instanceOf(ContentError)
+            expect(error.message).to.equal(`${id} is not a valid id`)
+        }
     })
 
     after(() => Promise.all([User.deleteMany(), Ad.deleteMany()]).then(database.disconnect))
