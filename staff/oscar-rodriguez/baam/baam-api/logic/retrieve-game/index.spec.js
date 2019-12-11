@@ -7,7 +7,7 @@ chai.use(chaiSubset)
 const { random, floor } = Math
 const retrieveGame = require('.')
 const { errors: { NotFoundError, ContentError } } = require('baam-util')
-const { ObjectId, database, models: { User, Game , Player} } = require('baam-data')
+const { ObjectId, database, models: { User, Game , Player, Card} } = require('baam-data')
 
 describe('logic - retrieve game', () => {
 
@@ -16,34 +16,68 @@ describe('logic - retrieve game', () => {
     let gameId, userId, playerId
 
     beforeEach(async () => {
-        await Promise.all([Game.deleteMany()])
+        await Promise.all([Game.deleteMany(), User.deleteMany(), Player.deleteMany(), Card.deleteMany()])
+
+        hand = []
+
+        for (let i = 0; i < 5; i++) {
+            let name = `name-${random()}`
+            let description = `description-${random()}`
+            let image = `image-${random()}`
+            let price = random()
+            let col = ObjectId().toString()
+            let effect = `effect-${random()}`
+            let effectValue = random()
+            let target = `target-${random()}`
+            
+            const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
+        
+            hand.push(card.id)
+        }
 
         let name = `name-${random()}`
         let surname = `surname-${random()}`
         let email = `email-${random()}@mail.com`
         let nickname = `nickname-${random()}`
         let password = `password-${random()}`
+        let stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
 
-        const user = await User.create({ name, surname, email, nickname, password })
-
-        userId = user.id
+        const user1 = await User.create({ name, surname, email, nickname, password, stats})
+        userId = user1.id
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        nickname = `nickname-${random()}`
+        password = `password-${random()}`
+        stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
+        const user2 = await User.create({ name, surname, email, nickname, password, stats})
 
         const newPlayer1 = new Player({
-            user: user._id,
+            user: user1.id,
             lifePoints: 5,
-            hand: [ObjectId().toString(),ObjectId().toString()],
-            tempZone: {card: ObjectId().toString(), duration: random()},
-            discards: [ObjectId().toString(),ObjectId().toString()],
+            hand,
+            tempZone: {card: hand[0], duration: random()},
+            discards: [hand[0],hand[1]],
             modifier: false,
             attack: 1,
             defense: 0,
             lastAccess: new Date()
         })
+
         playerId = newPlayer1.id
+        
         const newPlayer2 = new Player({
-            user: ObjectId(),
+            user: user2.id,
             lifePoints: 5,
-            hand: [ObjectId().toString(),ObjectId().toString()],
+            hand,
             tempZone: null,
             discards: [ObjectId().toString(),ObjectId().toString()],
             modifier: false,
@@ -74,9 +108,20 @@ describe('logic - retrieve game', () => {
         expect(game.currentPlayer).to.be.a('number')
         expect([0,1]).to.include(game.currentPlayer)
 
+        expect(game.players[0].tempZone.card.id).to.exist
+        expect(game.players[0].tempZone.card._id).to.not.exist
+
+        expect(game.players[0].discards[0].id).to.exist
+        expect(game.players[0].discards[0]._id).to.not.exist
+
+        expect(game.players[0].hand[0].id).to.exist
+        expect(game.players[0].hand[0]._id).to.not.exist
+
+        expect(game.players[1].hand[0]).to.equal(undefined)
+
     })
 
-    it('should fail on valid playerId, which is NOT in the game', async () => {
+    it('should fail on valid userId, which is NOT in the game', async () => {
         const wrong = ObjectId().toString()
         try {
             await retrieveGame(gameId, wrong)
