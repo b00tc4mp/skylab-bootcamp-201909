@@ -30,9 +30,9 @@ router.post('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
 
 router.get('/:gameId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        const { params: { gameId }, id } = req
+        const { params: { gameId } } = req
 
-        retrieveComments(gameId, id)
+        retrieveComments(gameId)
             .then(comments => res.json(comments))
             .catch(error => {
                 const { message } = error
