@@ -39,18 +39,35 @@ describe('logic - play card', () => {
             i < 4 && hand.push(card.id)
         }
 
-        //****** CREATE USER  */
-
+        //****** CREATE USERS  */
         let name = `name-${random()}`
         let surname = `surname-${random()}`
         let email = `email-${random()}@mail.com`
         let nickname = `nickname-${random()}`
         let password = `password-${random()}`
+        let stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
 
-        const user = await User.create({ name, surname, email, nickname, password, cards })
+        const user1 = await User.create({ name, surname, email, nickname, password, cards , stats})
+
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        nickname = `nickname-${random()}`
+        password = `password-${random()}`
+        stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
+        const user2 = await User.create({ name, surname, email, nickname, password, cards , stats})
+
         //****** CREATE PLAYERS AND GAME */
         const newPlayer1 = new Player({
-            user: user._id,
+            user: user1._id,
             lifePoints: parseInt(INITIAL_PLAYER_LIFE),
             hand,
             tempZone: {card: ObjectId().toString(), duration: 2},
@@ -61,10 +78,10 @@ describe('logic - play card', () => {
             lastAccess: new Date()
         })
 
-        userId = user.id
+        userId = user1.id
 
         const newPlayer2 = new Player({
-            user: ObjectId(),
+            user: user2._id,
             lifePoints: parseInt(INITIAL_PLAYER_LIFE),
             hand: [],
             tempZone: null,
@@ -467,17 +484,17 @@ describe('logic - play card', () => {
         }
     })
 
-    it('should fail on wrong player id', async () => {
-        const player = '012345678901234567890123'
+    it('should fail on wrong user id', async () => {
+        const user = '012345678901234567890123'
 
         try {
-            await playCard(gameId, player, cardId)
+            await playCard(gameId, user, cardId)
 
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
             expect(error).to.be.an.instanceOf(CredentialsError)
-            expect(error.message).to.equal(`Is not the ${player} turn. Can't play the card`)
+            expect(error.message).to.equal(`Is not the ${user} turn. Can't play the card`)
         }
     })
 
