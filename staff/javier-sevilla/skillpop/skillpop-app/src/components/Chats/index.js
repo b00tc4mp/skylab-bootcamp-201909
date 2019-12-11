@@ -3,7 +3,6 @@ import './index.sass'
 import ChatItem from '../ChatItem'
 
 export default function ({chats, user}) {
-    debugger
     return <section className='messages'>
         <h1 className="messages__title">Messages</h1>
         <h2 className="messages__subtitle">My Chats</h2>
