@@ -180,11 +180,11 @@ export default withRouter(function ({ history }) {
             <Route exact path="/" render={() => token ? <Redirect to="/home" /> : <Landing onGoToRegister={handleGoToRegister} onLogin={handleLogin} />} />
             <Route path="/register" render={() => token ? <Redirect to="/home" /> : <Register onBack={handleGoToLanding} onRegister={handleRegister} />} />
             <Route path="/home" render={() => token ?
-                <Home user={user} onLogout={handleLogout} onShowCards={handleGoShowCards} onGetNewCards={handleGoGetNewCards} onStartGame={handleGoStartGame} />
+                <Home user={user} onLogout={handleLogout} onShowCards={handleGoShowCards} onGetNewCards={handleGoGetNewCards} onStartGame={handleGoStartGame}/>
                 :
                 <Redirect to="/" />} />
             <Route path="/cards" render={() => token ? <YourCards user={user} onLogout={handleLogout} onGetNewCards={handleGoGetNewCards} onHome={handleGoToLanding} /> : <Redirect to="/" />} />
-            <Route path="/newcards" render={() => token ? <NewCards onLogout={handleLogout} onHome={handleGoToLanding} /> : <Redirect to="/" />} />
+            <Route path="/newcards" render={() => token ? <NewCards onLogout={handleLogout} onHome={handleGoToLanding} history={history}/> : <Redirect to="/" />} />
             <Route path="/newgame" render={() => token ? <Game user={user} onLogout={handleLogout} onCreate={handleGoToCreateGame} onJoin={handleGoToJoinGame} onHome={handleGoToLanding} /> : <Redirect to="/" />} />
             {join && token && <JoinGame onJoin={handleJoinGame} onClose={handleCloseJoinWindow} />}
             {hand && <SelectHand user={user} onSelect={handleSelectHand} game={gameId} />}
