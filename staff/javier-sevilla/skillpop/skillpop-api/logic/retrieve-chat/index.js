@@ -22,10 +22,16 @@ module.exports = function(id, chatId) {
         chat.id = chat._id.toString()
         delete chat._id
 
+        const idPublic = chat.users.find(user => user != id)
+        const userPublic = await User.findById(idPublic)
+        chat.idPublic = idPublic
+        chat.userPublic = userPublic
+
         chat.messages.forEach(message => {
             message.id = message._id.toString()
             delete message._id
-            message.nameDestUser=chat.nameDestUser 
+            message.idPublic = idPublic
+            message.namePublic = userPublic.name
         })
 
         return chat.messages

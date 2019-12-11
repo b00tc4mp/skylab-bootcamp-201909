@@ -7,10 +7,6 @@ module.exports =  new Schema({
         require: true,
         ref: 'User'
         },
-    nameDestUser: {
-        type: String,
-        required: true
-    },
     messages: [Message],
     date: {
         type: Date,
