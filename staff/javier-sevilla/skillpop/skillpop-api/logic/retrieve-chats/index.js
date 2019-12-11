@@ -9,7 +9,6 @@ module.exports = function(id) {
 
 
     return (async() => {
-        debugger
         const user = await User.findById(id)
         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
@@ -18,9 +17,9 @@ module.exports = function(id) {
         const chats = await Chat.find({ "users": { $in: [id] } }, { __v: 0 }).lean()
 
             for (let i=0; i < chats.length; i++) {
-                let idPublic = chats[i].users.find(user => user != id)
+                let idPublic = chats[i].users.find(us => us != ObjectId(id)).toString()
                 let userPublic = await User.findById(idPublic)
-                chats[i].idPublic = idPublic
+                chats[i].idPublic = idPublic.toString()
                 chats[i].namePublic = userPublic.name
                 chats[i].messages.forEach(message => {
                     message.id = message._id.toString()

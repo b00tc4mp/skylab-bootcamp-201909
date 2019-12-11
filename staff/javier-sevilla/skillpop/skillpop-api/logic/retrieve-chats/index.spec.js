@@ -50,6 +50,7 @@ describe('logic - retrieveChats', () => {
 
     it('should return a correct chat', async() => {
         const chats = await retrieveChats(id1)
+        debugger
 
         chats.forEach(chat => {
             expect(chat).to.exist
@@ -82,8 +83,8 @@ describe('logic - retrieveChats', () => {
         expect(() => retrieveChats({})).to.throw(TypeError, '[object Object] is not a string')
         expect(() => retrieveChats(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveChats(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => retrieveChats('')).to.throw(ContentError, 'userId is empty or blank')
-        expect(() => retrieveChats(' \t\r')).to.throw(ContentError, 'userId is empty or blank')
+        expect(() => retrieveChats('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveChats(' \t\r')).to.throw(ContentError, 'id is empty or blank')
 
     })
 

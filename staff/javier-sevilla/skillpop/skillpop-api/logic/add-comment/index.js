@@ -7,6 +7,10 @@ module.exports = function(id, idCommment, body) {
     validate.string.notVoid('id', id)
     if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
 
+    validate.string(idCommment)
+    validate.string.notVoid('idCommment', idCommment)
+    if (!ObjectId.isValid(idCommment)) throw new ContentError(`${idCommment} is not a valid idCommment`)
+
     validate.string(body)
     validate.string.notVoid('body', body)
 

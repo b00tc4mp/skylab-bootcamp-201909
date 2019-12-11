@@ -10,7 +10,7 @@ const salt = 10
 
 arrayRandom()
 
-describe.only('logic - retrieve ad', () => {
+describe('logic - retrieve ad', () => {
     before(() => database.connect(TEST_DB_URL))
 
     let id, name, surname, city, address, email, password
@@ -70,7 +70,7 @@ describe.only('logic - retrieve ad', () => {
 
     it('should succeed on correct user and ad ', async () => {
         const idAd = adIds.random()
-        const ad = await retrieveAd(idAd)
+        const ad = await retrieveAd(id, idAd)
 
         expect(ad).to.exist
 
@@ -99,11 +99,10 @@ describe.only('logic - retrieve ad', () => {
 
     describe('when wrong id', () => {
         it('should fail on inexisting idAd', async () => {
-            debugger
             const idAd = '5de55c50dbb04e0464865933'
 
             try {
-                await retrieveAd(idAd)
+                await retrieveAd(id, idAd)
 
                 throw new Error('should not reach this point')
             } catch (error) {
@@ -124,8 +123,18 @@ describe.only('logic - retrieve ad', () => {
         expect(() => retrieveAd(undefined)).to.throw(TypeError, 'undefined is not a string')
         expect(() => retrieveAd(null)).to.throw(TypeError, 'null is not a string')
 
-        expect(() => retrieveAd('')).to.throw(ContentError, 'idAd is empty or blank')
-        expect(() => retrieveAd(' \t\r')).to.throw(ContentError, 'idAd is empty or blank')
+        expect(() => retrieveAd('')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => retrieveAd(' \t\r')).to.throw(ContentError, 'id is empty or blank')
+
+        expect(() => retrieveAd(id, 1)).to.throw(TypeError, '1 is not a string')
+        expect(() => retrieveAd(id, true)).to.throw(TypeError, 'true is not a string')
+        expect(() => retrieveAd(id, [])).to.throw(TypeError, ' is not a string')
+        expect(() => retrieveAd(id, {})).to.throw(TypeError, '[object Object] is not a string')
+        expect(() => retrieveAd(id, undefined)).to.throw(TypeError, 'undefined is not a string')
+        expect(() => retrieveAd(id, null)).to.throw(TypeError, 'null is not a string')
+
+        expect(() => retrieveAd(id, '')).to.throw(ContentError, 'idAd is empty or blank')
+        expect(() => retrieveAd(id, ' \t\r')).to.throw(ContentError, 'idAd is empty or blank')
     })
 
 
