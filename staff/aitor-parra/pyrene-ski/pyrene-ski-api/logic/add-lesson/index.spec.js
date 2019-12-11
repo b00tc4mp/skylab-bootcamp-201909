@@ -5,10 +5,10 @@ const addLesson = require('.')
 const { random } = Math
 const { database, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 
-describe('logic - add lesson', () => {debugger
+describe('logic - add lesson', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let userId, name, surname, email, username, password, role = "admin" /* date, timeStart, timeEnd, team, activity */
+    let userId, name, surname, email, username, password, date, timeStart, timeEnd, role = "admin" /* date, timeStart, timeEnd, team, activity */
 
     beforeEach(async () => {debugger
         name = `name-${random()}`
@@ -23,20 +23,23 @@ describe('logic - add lesson', () => {debugger
         const user = await User.create({ name, surname, email, username, password, role })
         
         userId = user.id
-        
-/*         const team = await Lesson.create({ teamName, teamEmail, teamPhone, teamActivity })
+        teamName = `teamName-${random()}`
+        teamEmail = `teamMail-${random()}@mail.com`
+        teamPhone = `teamPhone-${random()}`
+        teamActivity = `teamActivity-${random()}`
 
-        teamId = team.id  teamId */
+        const team = await Team.create({user: userId, teamName, teamEmail, teamPhone, teamActivity})
 
+        teamId = team.id
         date = `date-${random()}`
         timeStart = `timeStart-${random()}`
         timeEnd = `timeEnd-${random()}`
-        team = `team-${random()}`
-        activity = `activity-${random()}`
+
+
     })
 
     it('should succeed on correct user and lesson data', async () => { 
-        const lessonId = await addLesson(userId, date, timeStart, timeEnd, team, activity)
+        const lessonId = await addLesson(userId, date, timeStart, timeEnd, teamId)
 
         expect(lessonId).to.exist
         expect(lessonId).to.be.a('string')
@@ -49,8 +52,9 @@ describe('logic - add lesson', () => {debugger
         expect(lesson.date).to.equal(date)
         expect(lesson.timeStart).to.equal(timeStart)
         expect(lesson.timeEnd).to.equal(timeEnd)
-        expect(lesson.team).to.equal(team)
-        expect(lesson.activity).to.equal(activity)
+        expect(lesson.teamId.toString()).to.equal(teamId)
+        //expect(lesson.teamName).to.equal(teamName)
+        //expect(lesson.teamActivity).to.equal(teamActivity)
 
     })
 

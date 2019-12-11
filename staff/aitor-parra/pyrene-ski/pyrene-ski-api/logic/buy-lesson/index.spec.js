@@ -6,7 +6,7 @@ const addLesson = require('.')
 const { random } = Math
 const { database, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 
-describe('logic - add lesson', () => {
+describe('logic - buy lesson', () => {
     before(() => database.connect(DB_URL_TEST))
 
     let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd

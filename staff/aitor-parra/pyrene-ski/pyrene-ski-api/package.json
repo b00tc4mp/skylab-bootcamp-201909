@@ -8,7 +8,7 @@
     "debug": "node inspect .",
     "test": "npx mocha logic/*/*.spec.js",
     "test-debug": "npx mocha inspect logic/*/*.spec.js",
-    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js"
+    "test:coverage": "npx nyc --reporter=html --reporter=text mocha logic/**/*.spec.js --exclude: logic/buy-lesson/*.spec.js"
   },
   "author": "Aitor1979",
   "license": "ISC",
@@ -28,3 +28,5 @@
     "nyc": "^14.1.1"
   }
 }
+
+

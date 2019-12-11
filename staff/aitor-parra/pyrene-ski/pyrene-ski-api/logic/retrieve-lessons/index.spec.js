@@ -3,33 +3,44 @@ const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
 const retrieveLessons = require('.')
 const { random } = Math
-const { database, ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')
+const { database, ObjectId, models: { User, Lesson, Team } } = require('pyrene-ski-data')
 
-describe.only('logic - retrieve lessons', () => {
+describe('logic - retrieve lessons', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let id, name, surname, email, username, password, role, lessonIds, dates, timeStarts, timeEnds, teams, activities
+    let id, name, surname, email, username, password, role = "admin", lessonIds, dates, timeStarts, timeEnds, teamNames, teamActivities, teamId
 
-    beforeEach(async () => { 
+    beforeEach(async () => { debugger
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
         username = `username-${random()}`
         password = `password-${random()}`
-        role = 'admin'
+        role = "admin"
 
         await Promise.all([User.deleteMany(), Lesson.deleteMany()])
 
         const user = await User.create({ name, surname, email, username, password, role })
 
-        id = user.id
+        userId = user.id
+        teamName = `teamName-${random()}`
+        teamEmail = `teamMail-${random()}@mail.com`
+        teamPhone = `teamPhone-${random()}`
+        teamActivity = `teamActivity-${random()}`
+
+        const team = await Team.create({user: userId, teamName, teamEmail, teamPhone, teamActivity})
+
+        team_Id = team.id
+        teamName = team.teamName
+        teamActivity = team.teamActivity
 
         lessonIds = []
         dates = []
         timeStarts = []
         timeEnds = []
-        teams = []
-        activities = []
+        teamIds = []
+        // teamNames = []
+        // teamActivities = []
  
         const insertions = []
 
@@ -39,17 +50,20 @@ describe.only('logic - retrieve lessons', () => {
                 date: `date-${random()}`,
                 timeStart: `timeStart-${random()}`,
                 timeEnd: `timeEnd-${random()}`,
-                team : `team-${random()}`,
-                activity: `activity-${random()}`
+                teamId: team_Id
+                // teamName : `team-${random()}`,
+                // teamActivity: `activity-${random()}`
             }
 
             insertions.push(Lesson.create(lesson).then(lesson => lessonIds.push(lesson.id)))
 
+            
             dates.push(lesson.date)
             timeStarts.push(lesson.timeStart)
             timeEnds.push(lesson.timeEnd)
-            teams.push(lesson.team)
-            activities.push(lesson.activity)
+            teamIds.push(lesson.teamId)
+            // teamNames.push(lesson.teamName)
+            // teamActivities.push(lesson.teamActivity)
 
         }
 
@@ -59,8 +73,9 @@ describe.only('logic - retrieve lessons', () => {
                 date: `date-${random()}`,
                 timeStart: `timeStart-${random()}`,
                 timeEnd: `timeEnd-${random()}`,
-                team : `team-${random()}`,
-                activity: `activity-${random()}`
+                teamId: team_Id
+                // teamName : `teamName-${random()}`,
+                // teamActivity: `teamActivity-${random()}`
             }))
 
         await Promise.all(insertions)
@@ -96,14 +111,16 @@ describe.only('logic - retrieve lessons', () => {
             expect(lesson.timeEnd).to.have.length.greaterThan(0)
             //expect(lesson.timeEnd).be.oneOf(timeEnds)
 
-            expect(lesson.team).to.exist
-            expect(lesson.team).to.be.a('string')
-            expect(lesson.team).to.have.length.greaterThan(0)
-            //expect(lesson.team).be.oneOf(teams)
+            expect(lesson.teamId.toString()).to.equal(teamId)
 
-            expect(lesson.activity).to.exist
-            expect(lesson.activity).to.be.a('string')
-            expect(lesson.activity).to.have.length.greaterThan(0)
+            // expect(lesson.team).to.exist
+            // expect(lesson.team).to.be.a('string')
+            // expect(lesson.team).to.have.length.greaterThan(0)
+            // //expect(lesson.team).be.oneOf(teams)
+
+            // expect(lesson.activity).to.exist
+            // expect(lesson.activity).to.be.a('string')
+            // expect(lesson.activity).to.have.length.greaterThan(0)
             //expect(lesson.activity).be.oneOf(activities)
         })
     })

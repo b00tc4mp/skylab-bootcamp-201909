@@ -11,7 +11,7 @@ arrayRandom()
 describe('logic - delete lesson', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let id, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd, team , activity
+    let id, name, surname, email, username, password, role = "admin"
 
     beforeEach(async () => {
         name = `name-${random()}`
