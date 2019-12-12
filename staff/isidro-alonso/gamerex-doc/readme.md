@@ -10,11 +10,26 @@
 
 ## Functional Description
 
+The users can:
+- Register as users (obviously)
+- Update their profile information
+- Add or update an image for their profiles
+- Add games to his collection
+- Update or change the information or the selling and exchange options about the games they have
+- Update photos of the game they have
+- Mark their favourite games
+- Mark the games they want to sell or exchange with other users
+- Contact with other users about the games they want
+
 ### Use Cases
 
 ![Use Cases](img/use-cases.png)
 
 ## Technical Description
+
+### Blocks
+
+![Blocks](img/blocks.png)
 
 ### Data Model
 
@@ -27,3 +42,7 @@
 ### Navigation
 
 ![Navigation](wireframes/navigation.png)
+
+## Technologies
+
+HTML, CSS, Javascript, ReactJS, Node.js, Express and MongoDB.
