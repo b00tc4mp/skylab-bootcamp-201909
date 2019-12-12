@@ -1,19 +1,18 @@
-require('dotenv').config()
-const { env: { TEST_DB_URL, INITIAL_PLAYER_LIFE } } = process
-const chai = require('chai')
-const { expect } = chai
-const chaiSubset = require('chai-subset')
-chai.use(chaiSubset)
+const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
+const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
+const INITIAL_PLAYER_LIFE = process.env.REACT_APP_INITIAL_PLAYER_LIFE
+
 const { random } = Math
 const passTurn = require('.')
 const { errors: { NotFoundError, ContentError, CredentialsError } } = require('baam-util')
 const { ObjectId, database, models: { Card, User, Game, Player } } = require('baam-data')
+const jwt = require ('jsonwebtoken')
 
 describe('logic - pass turn', () => {
 
-    before(() => database.connect(TEST_DB_URL))
+    beforeAll(() => database.connect(TEST_DB_URL))
 
-    let userId, gameId, cardId
+    let token, gameId
 
     beforeEach(async () => {
 
@@ -35,7 +34,6 @@ describe('logic - pass turn', () => {
             let card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
 
             cards.push(card._id)
-            cardId = card.id
             i < 4 && hand.push(card.id)
         }
 
@@ -52,6 +50,7 @@ describe('logic - pass turn', () => {
         }
 
         const user1 = await User.create({ name, surname, email, nickname, password, cards , stats})
+        
 
         name = `name-${random()}`
         surname = `surname-${random()}`
@@ -78,7 +77,7 @@ describe('logic - pass turn', () => {
             lastAccess: new Date()
         })
 
-        userId = user1.id
+        token = jwt.sign({sub: user1.id}, TEST_SECRET)
 
         const newPlayer2 = new Player({
             user: user2._id,
@@ -103,14 +102,14 @@ describe('logic - pass turn', () => {
         gameId = game.id
     })
 
-    it ('should succed on changing turn and decreassing 1 lifePoint when user pass', async()=> {
+    it('should succed on changing turn and decreassing 1 lifePoint when user pass', async()=> {
         
-        await passTurn(gameId, userId)
+        await passTurn(gameId, token)
 
         const _game = await Game.findById(gameId)
 
-        expect(_game.currentPlayer).to.equal(1)
-        expect(_game.players[0].lifePoints).to.equal(parseInt(INITIAL_PLAYER_LIFE)-1)
+        expect(_game.currentPlayer).toBe(1)
+        expect(_game.players[0].lifePoints).toBe(parseInt(INITIAL_PLAYER_LIFE)-1)
 
     })
 
@@ -118,55 +117,53 @@ describe('logic - pass turn', () => {
         const game = '012345678901234567890123'
 
         try {
-            await passTurn(game, userId, cardId)
+            await passTurn(game, token)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`game with id ${game} not found`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(NotFoundError)
+            expect(error.message).toBe(`game with id ${game} not found`)
         }
     })
 
     it('should fail on wrong user id', async () => {
         const user = '012345678901234567890123'
 
+        const badToken = jwt.sign ({sub: user}, TEST_SECRET)
         try {
-            await passTurn(gameId, user, cardId)
+            await passTurn(gameId, badToken)
 
             throw Error('should not reach this point')
         } catch (error) {
-            expect(error).to.exist
-            expect(error).to.be.an.instanceOf(CredentialsError)
-            expect(error.message).to.equal(`Is not the ${user} turn. Can't play the card`)
+            expect(error).toBeDefined()
+            expect(error).toBeInstanceOf(CredentialsError)
+            expect(error.message).toBe(`Is not the ${user} turn. Can't play the card`)
         }
     })
 
     it('should fail on incorrect type and content', () => {
-        expect(() => passTurn(1)).to.throw(TypeError, '1 is not a string')
-        expect(() => passTurn(true)).to.throw(TypeError, 'true is not a string')
-        expect(() => passTurn([])).to.throw(TypeError, ' is not a string')
-        expect(() => passTurn({})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => passTurn(undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => passTurn(null)).to.throw(TypeError, 'null is not a string')
-        expect(() => passTurn('wrong')).to.throw(ContentError, `wrong is not a valid id`)
+        expect(() => passTurn(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => passTurn(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => passTurn([])).toThrow(TypeError, ' is not a string')
+        expect(() => passTurn({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => passTurn(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => passTurn(null)).toThrow(TypeError, 'null is not a string')
 
+        expect(() => passTurn('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => passTurn(' \t\r')).toThrow(ContentError, 'id is empty or blank')
 
-        expect(() => passTurn('')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => passTurn(' \t\r')).to.throw(ContentError, 'id is empty or blank')
-
-        expect(() => passTurn(gameId,1)).to.throw(TypeError, '1 is not a string')
-        expect(() => passTurn(gameId,true)).to.throw(TypeError, 'true is not a string')
-        expect(() => passTurn(gameId,[])).to.throw(TypeError, ' is not a string')
-        expect(() => passTurn(gameId,{})).to.throw(TypeError, '[object Object] is not a string')
-        expect(() => passTurn(gameId,undefined)).to.throw(TypeError, 'undefined is not a string')
-        expect(() => passTurn(gameId,null)).to.throw(TypeError, 'null is not a string')
-        expect(() => passTurn(gameId,'wrong')).to.throw(ContentError, `wrong is not a valid id`)
-
-        expect(() => passTurn(gameId,'')).to.throw(ContentError, 'id is empty or blank')
-        expect(() => passTurn(gameId,' \t\r')).to.throw(ContentError, 'id is empty or blank')
+        expect(() => passTurn(gameId,1)).toThrow(TypeError, '1 is not a string')
+        expect(() => passTurn(gameId,true)).toThrow(TypeError, 'true is not a string')
+        expect(() => passTurn(gameId,[])).toThrow(TypeError, ' is not a string')
+        expect(() => passTurn(gameId,{})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => passTurn(gameId,undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => passTurn(gameId,null)).toThrow(TypeError, 'null is not a string')
+        
+        expect(() => passTurn(gameId,'')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => passTurn(gameId,' \t\r')).toThrow(ContentError, 'id is empty or blank')
     })
 
-    after(() => Promise.all([Card.deleteMany(), User.deleteMany(), Game.deleteMany(), Player.deleteMany()])
+    afterAll(() => Promise.all([Card.deleteMany(), User.deleteMany(), Game.deleteMany(), Player.deleteMany()])
         .then(database.disconnect))
 })

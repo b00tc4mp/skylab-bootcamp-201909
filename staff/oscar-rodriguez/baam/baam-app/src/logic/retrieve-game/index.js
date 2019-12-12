@@ -14,7 +14,7 @@ module.exports = function (gameId, token) {
             method: 'GET',
             headers: { Authorization: `Bearer ${token}` }
         })
-
+        
         if (res.status === 200) return JSON.parse(res.body)
 
         if (res.status === 401) throw new CredentialsError (JSON.parse(res.body).message)

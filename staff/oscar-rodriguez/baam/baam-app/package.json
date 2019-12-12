@@ -16,7 +16,7 @@
     "test": "react-scripts test --runInBand --no-cache",
     "test:debug": "react-scripts inspect test --runInBand --no-cache",
     "eject": "react-scripts eject",
-    "test:coverage": "react-scripts test --coverage --watchAll"
+    "test:coverage": "react-scripts test --coverage --watchAll --runInBand"
   },
   "eslintConfig": {
     "extends": "react-app"

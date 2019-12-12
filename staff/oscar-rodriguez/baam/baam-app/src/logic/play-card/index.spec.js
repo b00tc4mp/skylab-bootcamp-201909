@@ -1,7 +1,7 @@
 const TEST_DB_URL = process.env.REACT_APP_TEST_DB_URL
 const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
 const INITIAL_PLAYER_LIFE = process.env.REACT_APP_INITIAL_PLAYER_LIFE
-const { random } = Math
+const { random, floor } = Math
 const playCard = require('.')
 const { errors: { NotFoundError, ContentError, CantAttackError, CredentialsError, ConflictError } } = require('baam-util')
 const { ObjectId, database, models: { Card, User, Game, Player } } = require('baam-data')
@@ -11,16 +11,15 @@ describe('logic - play card', () => {
 
     beforeAll(() => database.connect(TEST_DB_URL))
 
-    let userId, token, gameId, cardId
+    let userId, token, gameId, cardId, hand
 
     beforeEach(async () => {
 
-        await Promise.all([Card.deleteMany(), Game.deleteMany(), User.deleteMany(), Player.deleteMany()])
+        await Promise.all([Game.deleteMany(), User.deleteMany(), Player.deleteMany(), Card.deleteMany()])
 
-        let cards = [], hand = []
+        hand = []
 
-        /****** CREATE CARDS */
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 4; i++) {
             let name = `name-${random()}`
             let description = `description-${random()}`
             let image = `image-${random()}`
@@ -29,46 +28,56 @@ describe('logic - play card', () => {
             let effect = `effect-${random()}`
             let effectValue = random()
             let target = `target-${random()}`
-
-            let card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
-
-            cards.push(card._id)
-            cardId = card.id
-            i < 4 && hand.push(card.id)
+            
+            const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
+        
+            hand.push(card.id)
         }
-
-        //****** CREATE USER  */
 
         let name = `name-${random()}`
         let surname = `surname-${random()}`
         let email = `email-${random()}@mail.com`
         let nickname = `nickname-${random()}`
         let password = `password-${random()}`
+        let stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
 
-        const user = await User.create({ name, surname, email, nickname, password, cards })
-        //****** CREATE PLAYERS AND GAME */
+        const user1 = await User.create({ name, surname, email, nickname, password, stats})
+        token = jwt.sign({sub: user1.id}, TEST_SECRET)
+        userId = user1.id
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        nickname = `nickname-${random()}`
+        password = `password-${random()}`
+        stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
+        const user2 = await User.create({ name, surname, email, nickname, password, stats})
+
         const newPlayer1 = new Player({
-            user: user._id,
-            lifePoints: parseInt(INITIAL_PLAYER_LIFE),
+            user: user1.id,
+            lifePoints: 5,
             hand,
-            tempZone: {card: ObjectId().toString(), duration: 2},
-            discards: [],
+            tempZone: {card: hand[0], duration: random()},
+            discards: [hand[0],hand[1]],
             modifier: false,
             attack: 1,
             defense: 0,
             lastAccess: new Date()
         })
-
-        userId = user.id
-
-        token = jwt.sign ({sub: userId}, TEST_SECRET)
-
+        
         const newPlayer2 = new Player({
-            user: ObjectId(),
-            lifePoints: parseInt(INITIAL_PLAYER_LIFE),
-            hand: [],
+            user: user2.id,
+            lifePoints: 5,
+            hand,
             tempZone: null,
-            discards: [],
+            discards: [hand[0],hand[1]],
             modifier: false,
             attack: 1,
             defense: 0,
@@ -82,7 +91,6 @@ describe('logic - play card', () => {
         }
 
         const game = await Game.create(newGame)
-
         gameId = game.id
     })
 
@@ -216,7 +224,7 @@ describe('logic - play card', () => {
         let target = `target-${random()}`
 
         const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
-        await card.save()
+        cardId = card.id
         const game = await Game.findById(gameId)
         
         game.players[0].hand.push(card.id)
@@ -436,14 +444,13 @@ describe('logic - play card', () => {
     })
 
     it('should fail on wrong game id', async () => {
-        const game = '012345678901234567890123'
+        const game = ObjectId().toString()
 
         try {
             await playCard(game, token, cardId)
 
             throw Error('should not reach this point')
         } catch (error) {
-            debugger
             expect(error).toBeDefined()
             expect(error).toBeInstanceOf(NotFoundError)
             expect(error.message).toBe(`game with id ${game} not found`)
@@ -491,7 +498,6 @@ describe('logic - play card', () => {
             throw Error('should not reach this point')
         } catch (error) {
             expect(error).toBeDefined()
-            debugger
             expect(error).toBeInstanceOf(Error)
             expect(error.message).toBe(`${userId} doesn't own the card ${card} on his hand`)
         }
