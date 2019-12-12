@@ -18,7 +18,7 @@ Once user is logged, will be able to get new cards, examine his cards collection
 
 when starting a game, the player choose a 6 cards hand from his collection. Cards type can't be repeat in the hand.
 
-There are Attack, Defending, Blocking, Healthing and Sabotaje types of cards.
+There are Attack, Defending, Blocking and Healthing types of cards.
 
     * Play Rules:
         * Every Player starts with 5 life points and 6 cards hand
@@ -38,9 +38,26 @@ To make more interesting the game, user will recieve diary rewards. On every con
  
 ![Use Cases](./use-cases.png)
 
+### Activities
+
+![Activities](./activities.png)
+
 ## Technical Description
 
 ### Data Model
 
 ![Data Model](./data-model.png)
 
+### API Coverage
+
+![API Coverage](./test-coverage.png)
+
+## TODO
+
+- Design diferent collections appeareance
+- Implement Sabotaje Cards
+- Implement Handicap
+- Collect Weekly rewards
+- Let Tief a card to the opopent when win the game
+- Ranking
+- Add friends to play with

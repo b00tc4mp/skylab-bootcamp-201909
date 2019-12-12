@@ -3,48 +3,81 @@ const TEST_SECRET = process.env.REACT_APP_TEST_SECRET
 const { random, floor } = Math
 const retrieveGame = require('.')
 const { errors: { NotFoundError, ContentError } } = require('baam-util')
-const { ObjectId, database, models: { User, Game , Player} } = require('baam-data')
+const { ObjectId, database, models: { User, Game , Player, Card} } = require('baam-data')
 const jwt = require('jsonwebtoken')
 
 describe('logic - retrieve game', () => {
 
     beforeAll(() => database.connect(TEST_DB_URL))
 
-    let gameId, token, userId, playerId
+    let gameId, token, userId, playerId, hand
 
     beforeEach(async () => {
-        await Promise.all([Game.deleteMany()])
+        await Promise.all([Game.deleteMany(), User.deleteMany(), Player.deleteMany(), Card.deleteMany()])
+
+        hand = []
+
+        for (let i = 0; i < 5; i++) {
+            let name = `name-${random()}`
+            let description = `description-${random()}`
+            let image = `image-${random()}`
+            let price = random()
+            let col = ObjectId().toString()
+            let effect = `effect-${random()}`
+            let effectValue = random()
+            let target = `target-${random()}`
+            
+            const card = await Card.create({ name, description, image, price, col, effect, effectValue, target })
+        
+            hand.push(card.id)
+        }
 
         let name = `name-${random()}`
         let surname = `surname-${random()}`
         let email = `email-${random()}@mail.com`
         let nickname = `nickname-${random()}`
         let password = `password-${random()}`
+        let stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
 
-        const user = await User.create({ name, surname, email, nickname, password })
+        const user1 = await User.create({ name, surname, email, nickname, password, stats})
+        token = jwt.sign({sub: user1.id}, TEST_SECRET)
 
-        userId = user.id
-
-        token = jwt.sign({sub: userId}, TEST_SECRET)
+        name = `name-${random()}`
+        surname = `surname-${random()}`
+        email = `email-${random()}@mail.com`
+        nickname = `nickname-${random()}`
+        password = `password-${random()}`
+        stats = {
+            wins: random(),
+            loses: random(),
+            ties: random()
+        }
+        const user2 = await User.create({ name, surname, email, nickname, password, stats})
 
         const newPlayer1 = new Player({
-            user: user._id,
+            user: user1.id,
             lifePoints: 5,
-            hand: [ObjectId().toString(),ObjectId().toString()],
-            tempZone: {card: ObjectId().toString(), duration: random()},
-            discards: [ObjectId().toString(),ObjectId().toString()],
+            hand,
+            tempZone: {card: hand[0], duration: random()},
+            discards: [hand[0],hand[1]],
             modifier: false,
             attack: 1,
             defense: 0,
             lastAccess: new Date()
         })
+
         playerId = newPlayer1.id
+        
         const newPlayer2 = new Player({
-            user: ObjectId(),
+            user: user2.id,
             lifePoints: 5,
-            hand: [ObjectId().toString(),ObjectId().toString()],
+            hand,
             tempZone: null,
-            discards: [ObjectId().toString(),ObjectId().toString()],
+            discards: [hand[0],hand[1]],
             modifier: false,
             attack: 1,
             defense: 0,
@@ -126,5 +159,5 @@ describe('logic - retrieve game', () => {
         expect(() => retrieveGame(gameId, '')).toThrow(ContentError, 'playerId is empty or blank')
         expect(() => retrieveGame(gameId, ' \t\r')).toThrow(ContentError, 'playerId is empty or blank')
     })
-    afterAll(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(database.disconnect))
+    afterAll(() => Promise.all([Game.deleteMany(), User.deleteMany(), Player.deleteMany(), Card.deleteMany()]).then(database.disconnect))
 })

@@ -15,6 +15,7 @@
         min-height: 50vh
         border-radius: 2%
         margin: 0 3% 0 3%
+        padding: 2%
         display: flex
         justify-content: center
         align-items: center
@@ -25,7 +26,8 @@
             transform: rotateX(-180deg)
         &:hover .card-back
             transform: rotateX(0deg)
-            
+        &--disabled
+            opacity: .5
         &--small
             background-image: unset
             border: 1px solid whitesmoke
@@ -40,6 +42,7 @@
         flex-direction: column
         justify-content: space-around
         align-items: center
+    
 .home-footer
     position: absolute
     bottom: 0
@@ -76,6 +79,8 @@
     left: 0
     display: flex
     align-items: center
+    justify-content: center
+    padding: 2%
     //background-image: url('../../img/backcard.png')
     //background-position: 50% 50%
     //background-size: cover
@@ -92,4 +97,3 @@
         &:hover
             font-size: 8.5vh
             color: whitesmoke
-            

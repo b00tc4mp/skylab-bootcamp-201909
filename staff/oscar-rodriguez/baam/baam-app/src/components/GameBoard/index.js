@@ -43,7 +43,7 @@ export default function ({ history }) {
                             setEnemy(_enemy)
                             let lastAccess = new Date (_game.players[_enemy].lastAccess).getTime()
                             let timeStamp = new Date ().getTime()
-                            if ((timeStamp - lastAccess) > 100000 ) {
+                            if ((timeStamp - lastAccess) > 20000 ) {
                                 throw Error (`ups, ${_game.players[_enemy].user.nickname} has left the game`)
                             }}
                         else {

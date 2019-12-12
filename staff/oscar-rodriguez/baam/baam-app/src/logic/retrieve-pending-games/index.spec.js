@@ -10,7 +10,7 @@ describe('logic - retrieve pending games', () => {
     let nickname1, nickname2, game1Id, game2Id
 
     beforeEach(async () => {
-        await Promise.all([Game.deleteMany()])
+        await Promise.all([Game.deleteMany(),Player.deleteMany(),User.deleteMany()])
 
         let name = `name-${random()}`
         let surname = `surname-${random()}`
@@ -103,5 +103,5 @@ describe('logic - retrieve pending games', () => {
         expect (games.length).toBe(0)
     })
 
-    afterAll(() => Promise.all([User.deleteMany(), Game.deleteMany()]).then(database.disconnect))
+    afterAll(() => Promise.all([Game.deleteMany(),Player.deleteMany(),User.deleteMany()]).then(database.disconnect))
 })

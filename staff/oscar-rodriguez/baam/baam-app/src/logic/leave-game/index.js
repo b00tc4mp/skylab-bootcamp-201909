@@ -17,7 +17,6 @@ module.exports = function (gameId, token) {
                 Authorization: `Bearer ${token}`
             }
         })
-
         if (res.status === 200) return JSON.parse(res.body)
 
         if (res.status === 400) throw new ContentError(JSON.parse(res.body).message)

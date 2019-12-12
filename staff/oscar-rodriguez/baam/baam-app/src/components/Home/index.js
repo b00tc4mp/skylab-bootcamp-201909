@@ -8,6 +8,8 @@ export default function ({ onLogout, onShowCards, onGetNewCards, onStartGame }) 
 
     const [user, setUser] = useState()
     const {feed, setFeed} = useContext(Context)
+    const [reward, setReward] = useState(false)
+    
 
     useEffect(() => {
         
@@ -17,6 +19,11 @@ export default function ({ onLogout, onShowCards, onGetNewCards, onStartGame }) 
                 try {
                     const user = await retrieveUser(token)
                     setUser(user)
+
+                    const now = new Date ()
+                    const lastReward = new Date(user.lastReward)
+                    if ((now - lastReward) > 86400000) setReward (true)
+                    debugger
                 } catch ({ message }) {
                     setFeed({ title: "🦖 There was an error:", message })
                 }
@@ -47,12 +54,18 @@ export default function ({ onLogout, onShowCards, onGetNewCards, onStartGame }) 
                 <h2>Your cards</h2>
             </div>
         </section>
-        <section className="home__option" onClick={event => onGetNewCards()}>
-            <div class="card-front"></div>
-            <div class="card-back">
-                <h2>Get new cards</h2>
-            </div>
-        </section>
+        {reward ? <section className="home__option" onClick={event => onGetNewCards()}>
+                        <div class="card-front"></div>
+                        <div class="card-back">
+                            <h2>Get new cards</h2>
+                        </div>
+                    </section>
+                    :
+                    <section className="home__option home__option--disabled">
+                        <div className="card-front"></div>
+                        <div className="card-back"> Come back tomorrow to get a new Card!</div>
+                    </section>
+        }
         <section className="home__option" onClick={event => onStartGame()}>
             <div class="card-front"></div>
             <div class="card-back">
