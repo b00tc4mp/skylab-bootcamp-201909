@@ -7,8 +7,7 @@ Tired of having to think what to give and then not like it?
 With WiShare that torment is over. Through this application you can create wish lists so that any of your network can see what gifts you would like to receive as well as, you can visit the profile of your friends to see their wish list and be able to choose the best gift, you can also save it in the "Pending Wishes" list so you don't lose it and have all the information at hand. 
 You can also connect to your friend's ChatRoom where all their friends will be, so you can coordinate when buying a gift, share expenses, give surprises, etc.
 
-![WiShare](https://media.giphy.com/media/ECtuHAGUrcITK/giphy.gif)
-![WiShare](https://media.giphy.com/media/kKo2x2QSWMNfW/giphy.gif)
+![WiShare](https://acegif.com/wp-content/uploads/gift-44.gif)
 
 ## Functional Description
 
@@ -52,9 +51,12 @@ HTML5, SASS, CSS3.
 
 ![Code Coverage](./images/codecoveragereducido.png)
 
+![Code Coverage](./images/codecoverage2.jpg)
+
 
 ## TODO
 
 - Friends Request
 - Private WishList
 - Delete account
+- Desktop design
