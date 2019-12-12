@@ -117,11 +117,11 @@ router.delete('/:id', tokenVerifier, (req, res) => {
 
 
 router.post('/uploadimage',tokenVerifier, (req, res) => {
-    debugger
+    
     const { id } = req
   
     const busboy = new Busboy({ headers: req.headers })
-    debugger
+    
     busboy.on('file', async (fieldname, file, filename, encoding, mimetype) => {
         filename = 'profile'
 
@@ -174,9 +174,9 @@ router.get('/', (req, res) => {
 
 router.get('/search/:query', jsonBodyParser, (req, res) => {
     try {
-        debugger
+        
         const { params: { query } } = req
-        debugger
+        
         searchUsers(query)
             .then(users => res.json(users))
             .catch(error => {

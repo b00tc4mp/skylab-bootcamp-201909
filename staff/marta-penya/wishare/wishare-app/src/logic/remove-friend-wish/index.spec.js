@@ -62,11 +62,11 @@ describe('logic - save friend wish', () => {
         user.savedWishes.push({user: friendId, wish: wish})
         
         await user.save() 
-        debugger
+        
     })
 
     it('should succeed on correct wish friend removing', async () => {
-        debugger
+        
         const response = await removeFriendWish(token, friendId, wishId)
 
         expect(response).toBeUndefined()

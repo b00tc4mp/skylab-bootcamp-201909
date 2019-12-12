@@ -47,7 +47,7 @@ describe('logic - retrieve users', () => {
 
     it('should succeed on correct retrieving users', async () => {
         const users = await retrieveUsers()
-        debugger
+
         expect(users).to.exist
         expect(users).to.have.length
 

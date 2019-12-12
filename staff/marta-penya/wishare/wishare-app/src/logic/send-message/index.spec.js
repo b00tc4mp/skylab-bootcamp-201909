@@ -64,7 +64,6 @@ describe('logic - sendMessage', () => {
 
     it('should return a correct chat', async() => {
 
-        debugger
         const messageId = await sendMessage( token, id, text)
 
         const chat = await Chat.findOne({ "owner": ObjectId(id) })

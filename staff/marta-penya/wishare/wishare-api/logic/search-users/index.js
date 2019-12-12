@@ -15,7 +15,6 @@ const { validate, errors: {NotFoundError} } = require('wishare-util')
     validate.string.notVoid('query', query)
 
     return (async () => {
-        debugger
 
         let users = await User.find({ "email" : {$regex : `.*${query}*`} },  {password: 0, __v: 0}).lean()
 

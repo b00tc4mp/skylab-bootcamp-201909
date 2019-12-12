@@ -48,7 +48,7 @@ describe('logic - search users', () => {
     })
 
     it('should succeed on correct retrieving users', async () => {
-        debugger
+
         const friends = await searchUsers(email1)
         expect(friends).toBeDefined()
         expect(friends).toHaveLengthGreaterThan(0)

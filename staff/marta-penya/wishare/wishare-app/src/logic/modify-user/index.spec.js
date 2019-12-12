@@ -155,7 +155,7 @@ describe('logic - modify user', () => {
         const id = '012345678901234567890123'
 
         const token = jwt.sign({ sub: id }, TEST_SECRET)
-        debugger
+
         try {   
             await modifyUser(token, day, month, year, password, description)
 

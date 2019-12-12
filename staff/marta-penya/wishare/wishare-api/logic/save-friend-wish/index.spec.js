@@ -65,7 +65,7 @@ describe('logic - save friend wish', () => {
     })
 
     it('should succeed on correct friend adding', async () => {
-        debugger
+        
         const response = await saveFriendWish(id, friendId, wishId)
 
         expect(response).to.be.undefined

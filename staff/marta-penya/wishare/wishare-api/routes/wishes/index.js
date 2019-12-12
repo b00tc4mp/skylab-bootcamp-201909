@@ -52,7 +52,7 @@ router.get('/:id', (req, res) => {
 router.patch('/:wishId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
         const { id, params: { wishId }, body: { title, link, price, description } } = req
-        debugger
+        
         modifyWish(id, wishId, title, link, price, description)
             .then(() =>
                 res.end()

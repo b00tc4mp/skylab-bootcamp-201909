@@ -47,7 +47,7 @@ describe('logic - retrieve friends', () => {
     })
 
     it('should succeed on correct user id', async () => {
-        debugger
+
         const friend = await retrieveFriend(token, friendId)
 
         expect(friend).toBeDefined()

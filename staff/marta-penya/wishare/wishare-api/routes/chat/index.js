@@ -59,7 +59,7 @@ router.get('/:userId', tokenVerifier, (req, res) => {
 //send a message on chat
 router.post('/message/:userId', tokenVerifier, jsonBodyParser, (req, res) => {
     try {
-        debugger
+
         const { id, body: { text }, params: { userId } } = req
 
         sendMessage(id, userId, text)

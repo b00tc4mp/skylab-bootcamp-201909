@@ -62,7 +62,6 @@ describe('logic - retrieve friend wish', () => {
     })
 
     it('should succeed on correct friend adding', async () => {
-        debugger
 
         const savedWishes = await retrieveFriendWish(id)
 

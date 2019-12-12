@@ -66,7 +66,7 @@ describe.only('logic - blocked wish', () => {
     it('should succeed on retrieveing user wishes', async () => {
 
         const user = await User.findById(friendId)
-        debugger
+        
         const _wish = user.wishes.find(wish => wish.id === wishId)
 
         blocked = _wish.blocked

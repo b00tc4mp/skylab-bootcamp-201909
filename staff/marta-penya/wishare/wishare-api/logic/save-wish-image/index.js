@@ -27,7 +27,7 @@ module.exports = function (id, wishId, file, filename) {
 
     
     return (async () => {
-        debugger
+        
         const user = await User.findById(id)
         if (!user) throw new Error(`user with id ${id} not found`)
 

@@ -77,11 +77,11 @@ describe('logic - retrieve chat', () => {
     it('should return a correct chat', async() => {
 
         const _chat = await retrieveChat(token, id)
-        debugger
+        
         expect(_chat).toBeDefined()
         expect(_chat.owner.name).toBe(ownerName)
         expect(_chat.owner._id).toBe(id)
-        debugger
+        
         expect(_chat.users.toString()).toContain(users)
 
         const _messages = _chat.message
