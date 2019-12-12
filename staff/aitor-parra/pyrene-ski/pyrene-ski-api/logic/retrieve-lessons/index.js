@@ -1,6 +1,17 @@
 const { validate, errors: { ContentError, ConflictError, NotFoundError} } = require('pyrene-ski-util')
 const { ObjectId, models: { User, Lesson  } } = require('pyrene-ski-data')
 
+/**
+ * Retrieve lessons
+ * 
+ * @param {string} id 
+ * 
+ * @throws {NotFoundError} validate user with param id to exist
+ * @throws {ContentError} validate param value id is a valid id
+ * 
+ * @return {Array} lessons
+ */
+
 module.exports = function(id){
     validate.string(id)
     validate.string.notVoid('id', id)

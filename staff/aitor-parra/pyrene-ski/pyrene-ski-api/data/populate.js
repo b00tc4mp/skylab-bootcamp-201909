@@ -16,7 +16,7 @@ const { env: { DB_URL } } = process;
             surname: 'admin79',
             email: 'admin@mail.com',
             username: 'admin79',
-            password: '79',
+            password: '123',
             role: 'admin',
             teams:[],
             lessons:[],

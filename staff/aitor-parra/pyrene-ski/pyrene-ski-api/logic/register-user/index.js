@@ -1,6 +1,21 @@
 const { validate, errors: { ConflictError } } = require('pyrene-ski-util')
 const { models: { User } } = require('pyrene-ski-data')
 
+/**
+ * Register user
+ * 
+ * @param {string} name 
+ * @param {string} surname 
+ * @param {string} email 
+ * @param {string} username 
+ * @param {string} password 
+ * @param {string} role 
+ * @param {Object} teams 
+ * @param {Object} lessons 
+ * 
+ * @return {Promise}
+ */
+
 module.exports = function (name, surname, email, username, password, role, teams, lessons) {
     validate.string(name)
     validate.string.notVoid('name', name)

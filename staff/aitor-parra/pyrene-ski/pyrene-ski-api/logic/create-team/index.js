@@ -1,6 +1,20 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('pyrene-ski-util')
 const { ObjectId, models: { User, Team } } = require('pyrene-ski-data')
 
+/**
+ * Create a team 
+ * 
+ * @param {string} id 
+ * @param {string} teamName 
+ * @param {string} teamEmail 
+ * @param {string} teamPhone 
+ * @param {string} teamActivity 
+ * 
+ * @throws {NotFoundError} validate user with param id to exist
+ * 
+ * @return {string} team id
+ */
+
 module.exports = function(id, teamName, teamEmail, teamPhone, teamActivity) {
     validate.string(id)
     validate.string.notVoid('id', id)
