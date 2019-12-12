@@ -1,5 +1,5 @@
 const { validate, errors: { NotFoundError, ContentError, CredentialsError } } = require('baam-util')
-const { ObjectId, models: { Game} } = require('baam-data')
+const { ObjectId, models: { Game, User } } = require('baam-data')
 
 module.exports = function (gameId, userId) {
 
@@ -23,6 +23,22 @@ module.exports = function (gameId, userId) {
             throw new CredentialsError(`Is not the ${userId} turn. Can't play the card`)
         
         game.players[currentPlayer].lifePoints--
+
+        if (game.players[currentPlayer].lifePoints <= 0) {
+
+            const enemy = (game.currentPlayer + 1) % 2
+            game.winner = enemy
+            game.status = 'END'
+
+            let user1 = await User.findById(game.players[currentPlayer].user)
+            let user2 = await User.findById(game.players[enemy].user)
+
+            user1.stats.loses++
+            user2.stats.wins++
+
+            await user1.save()
+            await user2.save()
+        } 
 
         game.currentPlayer = (game.currentPlayer + 1) % 2
 
