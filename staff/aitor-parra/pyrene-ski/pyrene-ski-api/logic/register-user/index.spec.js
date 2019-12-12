@@ -103,7 +103,6 @@ describe('logic - register user', () => {
         expect(() => registerUser(name, surname, email, username, ' \t\r')).to.throw(ContentError, 'password is empty or blank')
     })
 
-    // TODO other cases
 
     after(() => User.deleteMany().then(database.disconnect))
 })

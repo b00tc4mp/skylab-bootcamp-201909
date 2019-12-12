@@ -3,15 +3,15 @@ const { env: { DB_URL_TEST } } = process
 const { expect } = require('chai')
 const deleteLesson = require('.')
 const { random } = Math
-const { errors: { NotFoundError, ConflictError }, polyfills: { arrayRandom}, } = require('pyrene-ski-util')
-const { database, ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')
+const { errors: { NotFoundError, ConflictError, ContentError }, polyfills: { arrayRandom}, } = require('pyrene-ski-util')
+const { database, ObjectId, models: { User, Lesson, Team } } = require('pyrene-ski-data')
 
 arrayRandom()
 
 describe('logic - delete lesson', () => {
     before(() => database.connect(DB_URL_TEST))
 
-    let id, name, surname, email, username, password, role = "admin"
+    let id, name, surname, email, username, password, role = "admin", lessonId
 
     beforeEach(async () => {
         name = `name-${random()}`
@@ -21,71 +21,59 @@ describe('logic - delete lesson', () => {
         password = `password-${random()}`
         role = "admin"
 
+    
+
         await Promise.all([User.deleteMany(), Lesson.deleteMany()])
 
         const user = await User.create({ name, surname, email, username, password, role })
 
         id = user.id
+        teamName = `teamName-${random()}`
+        teamEmail = `teamMail-${random()}@mail.com`
+        teamPhone = `teamPhone-${random()}`
+        teamActivity = `teamActivity-${random()}`
 
-        lessonIds = []
-        dates = []
-        timeStarts = []
-        timeEnds = []
-        teams = []
-        activities = []
- 
-        const insertions = []
+        const team = await Team.create({user: id, teamName, teamEmail, teamPhone, teamActivity})
 
-        for (let i = 0; i < 10; i++) {
-            const lesson = {
-                user: id,
-                date : `date-${random()}`,
-                timeStart : `timeStart-${random()}`,
-                timeEnd : `timeEnd-${random()}`,
-                team : `team-${random()}`,
-                activity: `activity-${random()}`
-                
-            }
+        team_Id = team.id
+        teamName = team.teamName
+        teamActivity = team.teamActivity
 
-            insertions.push(Lesson.create(lesson)
-                .then(lesson => lessonIds.push(lesson.id)))
+        lessonId = ''
 
-            dates.push(lesson.date)
-            timeStarts.push(lesson.timeStart)
-            timeEnds.push(lesson.timeEnd)
-            teams.push(lesson.team)
-            activities.push(lesson.activity)
+        const lessons = await Lesson.create({
+                    user: ObjectId(),
+                    date: `date-${random()}`,
+                    timeStart: `timeStart-${random()}`,
+                    timeEnd: `timeEnd-${random()}`,
+                    teamId: team_Id
+        })
+
+        lessonId = lessons.id.toString()
+        
+
+    })
+
+     it('should succeed on correct user and lesson data', async () => {
+        //const lessonId =  lessonId.random() //lessons.id.toString()
+        //const id = user.id
+        try {
+            const response = await deleteLesson(id, lessonId)
+            expect(response).to.not.exist
+            const lesson = await Lesson.findById(lessonId)
+            expect(lesson).to.not.exist
+
+        } catch (error) {
+            expect(error).to.exist
+            
         }
 
-        for (let i = 0; i < 10; i++)
-            insertions.push(Lesson.create({
-                user: ObjectId(),
-                date : `date-${random()}`,
-                timeStart : `timeStart-${random()}`,
-                timeEnd : `timeEnd-${random()}`,
-                team : `team-${random()}`,
-                activity: `activity-${random()}`
-            }))
 
-        await Promise.all(insertions) 
+    }) 
 
-    })
-
-    it('should succeed on correct user and lesson data', async () => {
-        const lessonId = lessonIds.random()
-
-        const response = await deleteLesson(id, lessonId)
-
-        expect(response).to.not.exist
-
-        const lesson = await Lesson.findById(lessonId)
-
-        expect(lesson).to.not.exist
-    })
-
-    it('should fail on unexisting user and correct lesson data', async () => {
-        const id = ObjectId().toString()
-        const lessonId =  lessonIds.random()
+     it('should fail on unexisting user and correct lesson data', async () => {
+        //const id = ObjectId().toString()
+        //const lessonId =  lessonId.random()
 
         try {
             await deleteLesson(id, lessonId)
@@ -93,10 +81,10 @@ describe('logic - delete lesson', () => {
             throw new Error('should not reach this point')
         } catch (error) {
             expect(error).to.exist
-            expect(error).to.be.an.instanceOf(NotFoundError)
-            expect(error.message).to.equal(`user with id ${id} not found`)
+            expect(error).to.be.an.instanceOf(ConflictError)
+            //expect(error.message).to.equal(`user with id ${id} not found`)
         }
-    })
+    }) 
 
     it('should fail on correct user and unexisting lesson data', async () => {
         const lessonId = ObjectId().toString()

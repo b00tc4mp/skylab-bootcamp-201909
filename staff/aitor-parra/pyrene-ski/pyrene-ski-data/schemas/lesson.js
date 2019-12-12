@@ -25,14 +25,5 @@ module.exports = new Schema({
         required: true,
         ref: 'Team'
         }  
-
-/*     team: {
-        type: String,
-        required: true
-    },
-
-    activity: {
-        type: String,
-        required: true */
     
 })

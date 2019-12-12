@@ -1,7 +1,18 @@
 const { validate, errors: { NotFoundError, ContentError } } = require('pyrene-ski-util')
 const { ObjectId, models: { User, Team, Lesson } } = require('pyrene-ski-data')
 
-module.exports = function(userId, date, timeStart, timeEnd, teamId) {
+module.exports = 
+
+/**
+ * 
+ * @param {*} userId 
+ * @param {*} date 
+ * @param {*} timeStart 
+ * @param {*} timeEnd 
+ * @param {*} teamId 
+ */
+
+function(userId, date, timeStart, timeEnd, teamId) {
 
     validate.string(userId)
     validate.string.notVoid('userId', userId)
