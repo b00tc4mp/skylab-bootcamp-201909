@@ -23,19 +23,23 @@ export default function ({ onLogout, onGetNewCards, user, onHome }) {
     }, [])
 
     return <section class="your-cards">
-        <div class="upper-menu">
-            <div class="upper-menu__container">
-                <a class="upper-menu__item" href="#" onClick={event => {
-                    event.preventDefault()
-                    onGetNewCards()
-                }}><div>Get New Cards!</div></a>
+        {user &&
+        <div className="upper-menu">
+            <div className="upper-menu__container">
+                <div className="upper-menu__item">wins: {user.stats.wins}</div>
+                <div className="upper-menu__item">ties: {user.stats.ties}</div>
+                <div className="upper-menu__item">loses: {user.stats.loses}</div>
             </div>
-            {user && <div className="upper-menu__container">
+            <div className="upper-menu__container">
+                <div className="upper-menu__item">💰: {user.coins}</div>
+            </div>
+            <div className="upper-menu__container">
                 <div className="upper-menu__item">Hello {user.nickname}</div>
-                <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onLogout() }}>Log out</a>
+                <a href="#" className="upper-menu__item" onClick={event => onLogout()}>Log out</a>
                 <a href="#" className="upper-menu__item" onClick={event => { event.preventDefault(); onHome() }}>HOME</a>
-            </div>}
+            </div>
         </div>
+        }
         <div class="your-cards__title">YOUR CARDS:</div>
         <div class="your-cards__container">
             <div class="your-cards__card-list">
