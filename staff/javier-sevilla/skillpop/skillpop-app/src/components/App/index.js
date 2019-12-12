@@ -379,13 +379,20 @@ export default withRouter(function ({ history, location}) {
 
         if (comeFrom === 'favorites' ) {
             const ads = await retrieveFavs(token)
+             setAds(ads) 
         } else if (comeFrom === 'search') {
             const ads = await searchAds(token, query)
-        }else {
+             setadsSearch(ads) 
+        }else if (comeFrom === 'ad') {
+            const ad = await retrieveAd(token, id)
+            setAds(ad) 
+            comeFrom = `ad/${id}`
+         }else {
             const ads = await retrieveAds(token)
+            setAds(ads) 
         }
         
-        setAds(ads)  
+        
     
         history.push(`/${comeFrom}`)
         }catch(error){
