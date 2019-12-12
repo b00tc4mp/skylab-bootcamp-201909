@@ -86,5 +86,18 @@ Below are all the use cases that a user can perform.
 ### Data Model
 ![Data Model](./images/sk-data-model.png)
 
+### Blocks
+![Data Model](./images/blocks.png)
+
+### Components
+![Data Model](./images/components.png)
+
+### Code Coverage
+![Data Model](./images/coverage.png)
+
+### Technologies
+
+Javascript, ReactJS, Node.js, Express, MongoDB, Mongoose, SASS. Testing: Jest & Mocha/Chai
+
 
 
