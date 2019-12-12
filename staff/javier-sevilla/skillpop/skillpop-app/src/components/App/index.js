@@ -16,15 +16,16 @@ import Feedback from '../Feedback'
 
 import Footer from '../Footer'
 import PublicProfile from '../PublicProfile'
-import { Route, withRouter, Redirect } from 'react-router-dom'
+import { Route, withRouter, Redirect, useLocation} from 'react-router-dom'
 import { authenticateUser, registerUser, retrieveUser, searchAds, retrieveAd, retrievePublicUser, retrieveAds, removeAd, modifyAd, saveImageAd, modifyUser, saveImageProfile, 
          createAd, retrievePublicAds, retrieveComments, addComment, retrieveFavs, toggleFavAd, retrieveChats, retrieveChat, addMessage, removeChat, createChat} from '../../logic'
 
-import queryString from 'query-string'
+import qs from 'querystringify'
 
 
-export default withRouter(function ({ history }) {
+export default withRouter(function ({ history, location}) {
     const [ads, setAds] = useState([])
+    const [adsSearch, setadsSearch] = useState([])
     const [adId, setAdId] = useState([])
     const [ad, setAd] = useState([])
     const [user, setUser] = useState([])
@@ -33,6 +34,8 @@ export default withRouter(function ({ history }) {
     const [chats, setChats] = useState([])
     const [chat, setChat] = useState([])
     const [error, setError] = useState([])
+    const [query, setQuery] = useState([])
+    const [render, setRender] = useState(true)
     
     //history.pathname.split('/')
 
@@ -43,15 +46,22 @@ export default withRouter(function ({ history }) {
             if (token) {
 
                 const user = await retrieveUser(token)
-
-                // const ads = await retrieveAds(token)
-                const ads = await searchAds(token, " ")
-
-                setAds(ads)   
                 setUser(user)
+                
+                const [,query] = location.search.split('?q=')
+                setQuery(query)
+
+                // if (query) {
+                //     const ads = await searchAds(token, query)
+                //     setAds(ads)   
+                // }
+
+                const ads = await searchAds(token, query)
+                setadsSearch(ads)   
+
             }
         })()
-    }, [sessionStorage.token])
+    }, [sessionStorage.token, location.search])
 
 
     function handleGoBack() { 
@@ -84,7 +94,6 @@ export default withRouter(function ({ history }) {
     async function handleLogin(email, password) {
         try {
             const token = await authenticateUser(email, password)
-            console.log(token)
             sessionStorage.token = token
             
 
@@ -97,12 +106,8 @@ export default withRouter(function ({ history }) {
 
     async function handleSearch(query) {
         try {
-            // const token = sessionStorage.token
-            const ads = await searchAds(token, query)
 
-            setAds(ads)
-
-            history.push("/search")
+            history.push(`/search?q=${query}`)
 
         } catch (error) {
             setError(error)   
@@ -334,7 +339,6 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleToFavorites() { 
-        
         try {
         const token = sessionStorage.token   
 
@@ -372,10 +376,16 @@ export default withRouter(function ({ history }) {
         const token = sessionStorage.token   
 
         await toggleFavAd(token, id)
-        
-        const ads = await retrieveAds(token)
 
-        setAds(ads)   
+        if (comeFrom === 'favorites' ) {
+            const ads = await retrieveFavs(token)
+        } else if (comeFrom === 'search') {
+            const ads = await searchAds(token, query)
+        }else {
+            const ads = await retrieveAds(token)
+        }
+        
+        setAds(ads)  
     
         history.push(`/${comeFrom}`)
         }catch(error){
@@ -501,19 +511,19 @@ export default withRouter(function ({ history }) {
 
     return <>
         {/* <Route exact path="/" render={() => <Header onBack={handleGoBack}/>} /> */}
-        <Route exact path="/" render={() => <><Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister}/><Footer/></>}/> 
-        <Route path="/register" render={() => <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/> <Footer/></>}/> 
-        <Route path="/login" render={() => <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/> <Footer/></>}/>  
-        <Route path="/search" render={() => <><Search onSearch={handleSearch} onLogout={handleLogout} ads={ads} adDetail={handleAdDetail} onProfile={handleProfile} onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}
-                                                      onToFavorites={handleToFavorites} onFav={handleOnFav} onToChats={handleToChats}/> <Footer/></>}/> 
-        <Route path="/ad/:adId" render={() => <><Header onBack={handleGoBack}/><Detail ad={ad} user={user} onCreateChat={handleCreateChat} onToPubliProfile={handleToPubliProfile} onFav={handleOnFav}/> <Footer/></>}/> 
-        <Route path="/profile" render={() => <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></>}/> 
-        <Route path="/update/:adId" render={() => <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/> <Footer/></>}/>
-        <Route path="/newad" render={() => <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/> <Footer/></>}/>
-        <Route path="/publicprofile/:id" render={() => <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment} onFav={handleOnFav}/><Footer/></>}/>
-        <Route path="/favorites" render={() => <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/> <Footer/></>}/>
-        <Route path="/chats" render={() => <><Header onBack={handleGoBack}/><Chats chats={chats} user={user} onDeleteChat={handleDeleteChat} onChat={handleToChat}/> <Footer/></>}/>
-        <Route path="/chat/:chatId" render={() => <><Header onBack={handleGoBack}/><Messages chat={chat} user={user} OnCreateMessage={handleCreateMessage}/> <Footer/></>}/> 
+        <Route exact path="/" render={() => token ? <Redirect to="/search" /> : <><Landing onLogin={handleGoToLogin} onRegister={handleGoToRegister}/><Footer/></>}/> 
+        <Route path="/register" render={() => token ? <Redirect to="/search" /> : <><Header onBack={handleGoBack}/>  <Register onRegister={handleRegister}/> <Footer/></>}/> 
+        <Route path="/login" render={() => token ?  <Redirect to="/search" /> : <><Header onBack={handleGoBack}/> <Login onLogin={handleLogin}/> <Footer/></>}/>  
+        <Route path="/search" render={ props => token ? <><Search query={query} onSearch={handleSearch} onLogout={handleLogout} ads={adsSearch} adDetail={handleAdDetail} onProfile={handleProfile} onToCreateAd={handleToCreateAd} onToPubliProfile={handleToPubliProfile}
+                                                      onToFavorites={handleToFavorites} onFav={handleOnFav} onToChats={handleToChats}/> <Footer/></> : <Redirect to='/' />}/> 
+        <Route path="/ad/:adId" render={() => token ? <><Header onBack={handleGoBack}/><Detail ad={ad} user={user} onCreateChat={handleCreateChat} onToPubliProfile={handleToPubliProfile} onFav={handleOnFav}/> <Footer/></> : <Redirect to='/' />}/> 
+        <Route path="/profile" render={() => token ? <><Header onBack={handleGoBack}/><Profile ads={ads} user={user} adDetail={handleAdDetail} onDeleteAd={handleDeleteAd} onToUpdateAd={handleToUpdateAd} onUpdateUser={handleUpdateUser}/></> : <Redirect to='/' /> }/> 
+        <Route path="/update/:adId" render={() => token ? <><Header onBack={handleGoBack}/><ModifyAd ad={ad} onUpdateAd={handleOnUpdateAd}/> <Footer/></> : <Redirect to='/' />}/>
+        <Route path="/newad" render={() => token ? <><Header onBack={handleGoBack}/><CreateAd onCreateAd={handleCreateAd}/> <Footer/></> : <Redirect to='/' />}/>
+        <Route path="/publicprofile/:id" render={() => token ? <><Header onBack={handleGoBack}/> <PublicProfile comments={comments} ads={ads} user={user} adDetail={handleAdDetail} OnCreateComment={handleCreateComment} onFav={handleOnFav}/><Footer/></> : <Redirect to='/' />}/>
+        <Route path="/favorites" render={() => token ? <><Header onBack={handleGoBack}/><Favorites ads={ads} adDetail={handleAdDetail} onFav={handleOnFav}/> <Footer/></> : <Redirect to='/' />}/>
+        <Route path="/chats" render={() => token ? <><Header onBack={handleGoBack}/><Chats chats={chats} user={user} onDeleteChat={handleDeleteChat} onChat={handleToChat}/> <Footer/></> : <Redirect to='/' />}/>
+        <Route path="/chat/:chatId" render={() => token ? <><Header onBack={handleGoBack}/><Messages chat={chat} user={user} OnCreateMessage={handleCreateMessage}/> <Footer/></> : <Redirect to='/' />}/> 
         <Route path="/error" render={() => <><Feedback error={error} onBack={handleGoBack}/></>}/>
 
         
