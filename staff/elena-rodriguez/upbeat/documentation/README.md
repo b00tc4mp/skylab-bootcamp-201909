@@ -35,11 +35,6 @@ Users can:
 
 ## Technical Description
 
-### Blocks
-
-![Alt text](components.png)
-
-
 ### Data model
 
 ![Alt text](datamodel1.jpg)
