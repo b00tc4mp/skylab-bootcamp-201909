@@ -1,5 +1,6 @@
 # PYRENE-SKI 
 
+
 ![](images/skiordie.gif)
 
 ## Introduction and motivation:
@@ -42,6 +43,9 @@ Client can:
 
 ![Blocks](images/ps-block-diagram.png)
 
+### React Components
+
+
 ### Components
 
 ![Components](images/ps-components-diagram.png)
@@ -72,12 +76,13 @@ Javascript, ReactJS, Node,js, MongoDB & Mongoose
 
 ## TODO
 
-01. Strenghth API test.
+01. Strength API test.
 02. Strength APP test.
 03. Team delete feature.
 04. Client feature to book a lesson.
 05. Client feature to pay a booked lesson. 
-06. Calendat implementation.
+06. Calendar implementation.
+07. ...
 
 ## Credits
 
