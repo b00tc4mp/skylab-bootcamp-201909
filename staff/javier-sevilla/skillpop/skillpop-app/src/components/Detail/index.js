@@ -12,7 +12,7 @@ export default function ({ ad: { id, title, description, price, name, idPublic, 
                 event.preventDefault()
                 event.stopPropagation()
 
-                onFav(id, `ad/${id}`)
+                onFav(id, `ad`)
                 }}> {isFav ? <i className="fas fa-heart"></i> : <i className="far fa-heart"></i>} </span>
         </div>
         <h2 className="detailAd__title">{title}</h2>
