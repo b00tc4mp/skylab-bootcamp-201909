@@ -1,7 +1,5 @@
 require('dotenv').config()
 const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST } } = process
-debugger
-//const { expect } = require('chai')
 const registerUser = require('.')
 const { random } = Math
 const { errors: { ContentError } } = require('pyrene-ski-util')
@@ -43,7 +41,7 @@ describe('logic - register user', () => {
     describe('when user already exists', () => {
         beforeEach(() => User.create({ name, surname, email, username, password, role }))
 
-        it('should fail on already existing user', async () => {debugger
+        it('should fail on already existing user', async () => {
             try {
                 await registerUser(name, surname, email, username, password, role)
 
@@ -59,7 +57,7 @@ describe('logic - register user', () => {
         })
     })
 
-    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {debugger
+    it('should fail on incorrect name, surname, email, password, or expression type and content', () => {
         expect(() => registerUser(1)).toThrow(TypeError, '1 is not a string')
         expect(() => registerUser(true)).toThrow(TypeError, 'true is not a string')
         expect(() => registerUser([])).toThrow(TypeError, ' is not a string')
@@ -104,7 +102,6 @@ describe('logic - register user', () => {
         expect(() => registerUser(name, surname, email, username, ' \t\r')).toThrow(ContentError, 'password is empty or blank')
     })
 
-    // TODO other cases
 
     afterAll(() => User.deleteMany().then(database.disconnect))
 })

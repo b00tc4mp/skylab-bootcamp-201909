@@ -18,9 +18,3 @@ return <>
         </>
 }
 
-
-/*
-
-<Link className="booking-list booking-list__addLesson" to="/add-lesson">Add new Lesson</Link>
-
-*/

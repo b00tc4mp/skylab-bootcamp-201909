@@ -33,14 +33,3 @@ return <section className="add-lesson">
 
 }
 
-
-
-
-
-
-/* <h2 className="add-lesson__goback"><a href="/" onClick={event => {
-        event.preventDefault()
-
-        onBack()
-
-}}>Go Back</a></h2> */

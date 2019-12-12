@@ -16,7 +16,5 @@ return <>
     {lessons.map(lesson => <li className="lesson-list__item" key={lesson.id}>{ <Lesson lesson={lesson} onDeleteLesson={onDeleteLesson} /> }</li>)}
     </ul>
 
-
-
 </>
     } 

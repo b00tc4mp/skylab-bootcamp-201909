@@ -6,11 +6,11 @@ const API_URL = process.env.REACT_APP_API_URL
 module.exports = function (token, teamId) {
     validate.string(token)
     validate.string.notVoid('token', token)
-    //if (!ObjectId.isValid(id)) throw new ContentError(`${id} is not a valid id`)
+
 
     validate.string(teamId)
     validate.string.notVoid('team id', teamId)
-    //if (!ObjectId.isValid(teamId)) throw new ContentError(`${teamId} is not a valid teamId`)
+
 
     return (async () => {
         const res = await call(`${API_URL}/teams/${teamId}`, {

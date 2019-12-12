@@ -15,14 +15,5 @@ return <section className="board client">
         <h3 className="client__logout"><a href="/logout" onClick={event => { event.preventDefault(); onLogout()}}>Logout</a></h3>
     
     </section>
-    
-    
-    
+
 }
-
-
-/* 
-
-<h3 className="client__lessonlist"><a href="/lessonlist" onClick={event => { event.preventDefault(); onLessonList() }}>Lesson list</a></h3>
-
-*/

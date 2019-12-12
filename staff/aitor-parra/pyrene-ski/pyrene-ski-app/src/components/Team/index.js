@@ -10,11 +10,3 @@ export default function ({ team: { id, teamName, teamEmail, teamPhone, teamActiv
 
     </div>
 }
-
-/*
-{error && <Feedback message={error} />}
-
-{teamActivity == 'ski' ? '⛷' : '🏂'}
-{{teamActivity} == 'ski' ? '⛷' : '🏂'}
-
-*/

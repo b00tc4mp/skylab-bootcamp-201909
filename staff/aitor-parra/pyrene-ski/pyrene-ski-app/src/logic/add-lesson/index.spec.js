@@ -10,7 +10,7 @@ describe('logic - add lesson', () => {
 
     let userId, name, surname, email, username, password, role = "admin", date, timeStart, timeEnd, team, activity
 
-    beforeEach(async () => {debugger
+    beforeEach(async () => {
         name = `name-${random()}`
         surname = `surname-${random()}`
         email = `email-${random()}@mail.com`
@@ -23,10 +23,6 @@ describe('logic - add lesson', () => {
         const user = await User.create({ name, surname, email, username, password, role })
         
         userId = user.id
-        
-/*      const team = await Lesson.create({ teamName, teamEmail, teamPhone, teamActivity })
-
-        teamId = team.id  teamId,*/
 
         date = `date-${random()}`
         timeStart = `timeStart-${random()}`

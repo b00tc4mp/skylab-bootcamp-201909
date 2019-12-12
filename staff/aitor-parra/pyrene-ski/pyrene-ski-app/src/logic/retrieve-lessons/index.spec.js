@@ -1,6 +1,6 @@
 require('dotenv').config()
 const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST } } = process
-//const { expect } = require('chai')
+
 const retrieveLessons = require('.')
 const { random } = Math
 const { database, ObjectId, models: { User, Lesson } } = require('pyrene-ski-data')

@@ -1,6 +1,5 @@
 require('dotenv').config()
 const { env: { REACT_APP_DB_URL_TEST: DB_URL_TEST } } = process
-//const { expect } = require('chai')
 const retrieveTeams = require('.')
 const { random } = Math
 const { database, ObjectId, models: { User, Team } } = require('pyrene-ski-data')
@@ -100,7 +99,6 @@ describe('logic - retrieve teams', () => {
         })
     })
 
-    // TODO other test cases
 
     after(() => Promise.all([User.deleteMany(), Team.deleteMany()]).then(database.disconnect))
 })

@@ -18,12 +18,6 @@ module.exports = function (token) {
         if (res.status === 200) {
             const teams = JSON.parse(res.body)
 
-/*             tasks.forEach(task => {
-                task.date = new Date(task.date)
-
-                task.lastAccess = new Date(task.lastAccess)
-            }) */
-
             return teams
         }
 

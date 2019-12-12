@@ -18,14 +18,8 @@ export default function() {
         </section>
 
         <section className="landing">
-        <h3 className="landing__options">{/* Please, proceed to */} <Link  className="landing__login" to="/login">LOGIN</Link> or <Link className="landing__register" to="/register" >REGISTER</Link></h3>
+        <h3 className="landing__options"> <Link  className="landing__login" to="/login">LOGIN</Link> or <Link className="landing__register" to="/register" >REGISTER</Link></h3>
         </section>
-
-       {/*  <figure className="picture">
-            <img className="picture__image" src="./images/7Np69-pW-1380x690.jpeg" alt="snow_mountain_landscape"/>
-
-        </figure> */}
-
 
     </section>
 }
