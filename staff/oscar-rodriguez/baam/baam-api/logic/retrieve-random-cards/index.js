@@ -26,11 +26,9 @@ module.exports = function (size) {
     return (async () => {
         let cards = await Card.find().lean()
         if (cards.length === 0) throw new NotFoundError(`there are no cards at Database!`)
-        debugger
         cards = shuffle(cards)
         cards = shuffle(cards)
         cards = shuffle(cards)
-        debugger
         size = size < cards.length ? size : cards.length
 
         cards = cards.slice(0, size)

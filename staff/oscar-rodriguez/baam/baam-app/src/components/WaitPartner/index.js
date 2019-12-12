@@ -15,7 +15,6 @@ export default function ({ onClose, gameId, history, onChangeStatus }) {
                     const { token } = sessionStorage
                     const game = await retrieveGame(gameId, token)
                     if (game.status === 'READY' && game.players[1].hand.length > 0){
-                        debugger
                         onChangeStatus(gameId)
                     } 
                 } catch ({ message }) {
@@ -32,7 +31,6 @@ export default function ({ onClose, gameId, history, onChangeStatus }) {
         <div className="waiting__container">
             <div className="waiting__close" onClick={event => {
                 event.preventDefault()
-                debugger
                 onClose(gameId)
             }}>✖︎</div>
             <img className="waiting__img" src="../img/waiting.gif"></img><h1 className="waiting__title"> Waiting your oponent to join... </h1><img className="waiting__img" src="../img/waiting.gif"></img>

@@ -23,7 +23,6 @@ export default function ({ onLogout, onShowCards, onGetNewCards, onStartGame }) 
                     const now = new Date ()
                     const lastReward = new Date(user.lastReward)
                     if ((now - lastReward) > 86400000) setReward (true)
-                    debugger
                 } catch ({ message }) {
                     setFeed({ title: "🦖 There was an error:", message })
                 }

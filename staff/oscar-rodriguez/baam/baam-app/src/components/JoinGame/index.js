@@ -17,7 +17,6 @@ export default function ({ onJoin, onClose}) {
                     const games = await retrievePendingGames ()
                     setGames(games)
                 } catch ({message}) {
-                    debugger
                     setFeed({ title: "🦖 There was an error:", message })
                 } 
             })()

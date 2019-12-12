@@ -160,7 +160,6 @@ export default withRouter(function ({ history }) {
 
     async function handleSelectHand(gameId, hand) {
         try {
-            debugger
             const { token } = sessionStorage
             await addPlayerHand(gameId, token, hand)
             setViewSelectHandPanel(false)

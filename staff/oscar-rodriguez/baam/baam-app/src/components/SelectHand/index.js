@@ -18,7 +18,6 @@ export default function ({game, onSelect}) {
                 try {
                     if (cards.length === 0) {
                         setCards(await retrieveUserCards(token))
-                        debugger
                     }
                 } catch ({message}) {
                     setFeed({ title: "🦖 There was an error:", message })
@@ -28,7 +27,6 @@ export default function ({game, onSelect}) {
     }, [setCards, setFeed, render])
 
     function deleteCard (card) {
-        debugger
         let index = hand.findIndex(_card=>_card.id === card)
 
         cards.push(hand[index])

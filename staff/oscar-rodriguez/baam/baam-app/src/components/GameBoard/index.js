@@ -47,7 +47,6 @@ export default function ({ history }) {
                                 throw Error (`ups, ${_game.players[_enemy].user.nickname} has left the game`)
                             }}
                         else {
-                            debugger
                             if (_game.winner === _current) {
                                 setEndMessage({
                                     title : "CONGRATULATIONS! YOU WIN!!",
@@ -92,7 +91,6 @@ export default function ({ history }) {
         try {
             event.preventDefault()
             const card = JSON.parse(event.dataTransfer.getData("card"))
-            debugger
             await playCard (gameId, token, card.id)
         } catch ({ message }) {
             setFeed({ title: "🦖 There was an error:", message })

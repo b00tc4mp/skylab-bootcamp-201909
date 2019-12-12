@@ -31,7 +31,7 @@ describe('logic - retrieve random cards', () => {
 
     it('should succeed on correct card id', async () => {
         const cards = await retrieveRandomCards(2)
-        debugger
+
         expect(cards).toBeDefined()
         expect(cards).toBeInstanceOf(Array)
         expect(cards.length).toBe(2)
@@ -43,7 +43,7 @@ describe('logic - retrieve random cards', () => {
 
     it('should return as max as existing cards on longer size sent', async () => {
         const cards = await retrieveRandomCards(20)
-        debugger
+
         expect(cards).toBeDefined()
         expect(cards).toBeInstanceOf(Array)
         expect(cards.length).toBe(10)
