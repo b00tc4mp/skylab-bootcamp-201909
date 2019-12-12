@@ -9,7 +9,6 @@ You can also connect to your friend's ChatRoom where all their friends will be, 
 
 ![WiShare](https://media.giphy.com/media/ECtuHAGUrcITK/giphy.gif)
 ![WiShare](https://media.giphy.com/media/kKo2x2QSWMNfW/giphy.gif)
-![WiShare](https://media2.giphy.com/media/3b8Pdwc16cWp8lFJOK/giphy.gif)
 
 ## Functional Description
 
@@ -28,9 +27,11 @@ Users can:
 ### Use Cases
 
 ![Use Cases](./images/usecases-wishare.png)
+
 ### Flow
 
 ![Activities](./images/activities-wishare.png)
+
 ## Technical Description
 
 ### Blocks

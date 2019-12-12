@@ -59,7 +59,7 @@ export default function ({ id, onMyFriends, saveWish, onChatRoom, error }) {
                         {wish.given && <p className="friend-detail__given"> GIVEN GIFT!! </p>}
                     </div>
                     <div className="friend-detail__btn">
-                        <button className="friend-detail__save" onClick={event => { event.preventDefault(); saveWish(wish.id, id) }}>Save wish</button>
+                    {!wish.given && <button className="friend-detail__save" onClick={event => { event.preventDefault(); saveWish(wish.id, id) }}>Save wish</button>}
                     </div>
                 </li>)}
             </ul>
