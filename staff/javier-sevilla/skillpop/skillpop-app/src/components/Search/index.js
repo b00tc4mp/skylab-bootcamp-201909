@@ -3,7 +3,7 @@ import './index.sass'
 import AdsResults from '../AdsResults'
 // import { Link } from 'react-router-dom'
 
-export default function({ onSearch, onLogout, ads, adDetail, onProfile, onToCreateAd, onToPubliProfile, onToFavorites, onFav, onToChats }) {
+export default function({ onSearch, onLogout, ads, adDetail, onProfile, onToCreateAd, onToPubliProfile, onToFavorites, onFav, onToChats, query }) {
     return  <><section className="search">
         <div className="search__header">
             <nav>
@@ -54,7 +54,7 @@ export default function({ onSearch, onLogout, ads, adDetail, onProfile, onToCrea
 
                     onSearch(query)
                 }}>
-                <input className="search__criteria" type="text" name="query" placeholder="criteria"/>
+                <input className="search__criteria" type="text" name="query" placeholder="criteria" defaultValue={query}/>
                 <button className="search__submit">🔍</button>
             </form>
             <img className="search__logo" src="./images/sklogo.png" alt=""/>
