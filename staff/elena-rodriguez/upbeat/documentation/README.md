@@ -37,7 +37,7 @@ Users can:
 
 ### Blocks
 
-![Alt text](Blocks.jpg)
+![Alt text](components.png)
 
 
 ### Data model
