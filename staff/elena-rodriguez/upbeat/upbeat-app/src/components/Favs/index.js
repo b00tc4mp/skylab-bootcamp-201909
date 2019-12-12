@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 
+
 import Results from '../Results'
 import {retrieveFavs, toggleFavs} from '../../logic'
 
@@ -34,6 +35,7 @@ export default function ({ username, onDetail }) {
         <section className="search">
             <p className='greeting'>Hello, {username}! Your favorites:  </p>
             <Results control={control} setControl={setControl}results={favs} onDetail = {onDetail} onToggleFavs={handleToggleFavs} />
+    
         </section>
     </>
 }
