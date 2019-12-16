@@ -68,6 +68,16 @@ Client can:
 
 ## App Screeenshots
 
+![Screenshots Landing ](images/ps_ss_landing.png)
+![Screenshots Landing ](images/ps_ss_login.png)
+![Screenshots Landing ](images/ps_ss_register.png)
+![Screenshots Landing ](images/ps_ss_boardadmin.png)
+![Screenshots Landing ](images/ps_ss_teamlist.png)
+![Screenshots Landing ](images/ps_ss_createteam.png)
+![Screenshots Landing ](images/ps_ss_lessonlist.png)
+![Screenshots Landing ](images/ps_ss_addlesson.png)
+![Screenshots Landing ](images/ps_ss_boardclient.png)
+![Screenshots Landing ](images/ps_ss_booklessonlist.png)
 
 ## Technologies
 
