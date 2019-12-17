@@ -10,7 +10,7 @@ const jsonBodyParser = bodyParser.json()
 
 const router = Router()
 
-router.post('/', jsonBodyParser, (req, res) => {
+router.post('/', jsonBodyParser, (req, res) => {debugger
     const { body: { name, surname, email, username, password } } = req
 
     try {
