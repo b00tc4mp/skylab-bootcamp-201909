@@ -9,8 +9,7 @@ Let's figth!
 
 ## Functional Description
 
-User starts on Server side rendering landign page. That's because we want our game can be well positioned on searchers by SEO.
-On landing page, user can register, login, on read game description and rules.
+User starts on landign page. where can register, login, and read game description and rules.
 
 First time user register and log, he will recieve a random initial welcoming amount of cards.
 
