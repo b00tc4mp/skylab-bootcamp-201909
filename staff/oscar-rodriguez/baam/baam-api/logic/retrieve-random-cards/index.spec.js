@@ -33,6 +33,7 @@ describe('logic - retrieve random cards', () => {
     })
 
     it('should succeed on correct card id', async () => {
+        const cards = await retrieveRandomCards(2)
         expect(cards).to.exist
         expect(cards).to.be.an.instanceOf(Array)
         expect(cards.length).to.equal(2)
