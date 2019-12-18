@@ -2,7 +2,10 @@ const { validate, errors: { NotFoundError, ContentError } } = require('baam-util
 const call = require ('../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (size) {
+
+//module.exports = function (size) {
+export default function (size) {
+    
     validate.number(size)
     if (size <= 0) throw new ContentError('please, size must be greater than 0')
 

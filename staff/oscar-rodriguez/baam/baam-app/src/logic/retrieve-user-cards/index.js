@@ -2,7 +2,9 @@ const { validate, errors: { NotFoundError, CredentialsError } } = require('baam-
 const API_URL = process.env.REACT_APP_API_URL
 const call = require ('../utils/call')
 
-module.exports = function (token) {
+//module.exports = function (token) {
+export default function (token) {
+
     validate.string(token)
     validate.string.notVoid('id', token)
 

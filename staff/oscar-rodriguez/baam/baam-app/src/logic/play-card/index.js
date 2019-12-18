@@ -2,7 +2,8 @@ const { validate, errors: { NotFoundError, CantAttackError, CredentialsError } }
 const call = require ('../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (gameId, token, cardId) {
+//module.exports = function (gameId, token, cardId) {
+export default function (gameId, token, cardId) {
 
     validate.string(gameId)
     validate.string.notVoid('id', gameId)

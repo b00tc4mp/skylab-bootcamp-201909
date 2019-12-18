@@ -2,7 +2,8 @@ const { errors: { ContentError } } = require('baam-util')
 const call = require ('../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function () {
+//module.exports = function () {
+export default function () {    
     
     return (async () => {
         const res = await call (`${API_URL}/games/pending`, {

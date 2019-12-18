@@ -1,14 +1,17 @@
 const { validate, errors: { CredentialsError } } = require('baam-util')
 const API_URL = process.env.REACT_APP_API_URL
-const call = require ('../utils/call')
+// const call = require ('../utils/call')
+import call from '../utils/call' //eslint-disable-line
 
-module.exports = function (nickname, password) {
+//module.exports = function (nickname, password) {
+export default function (nickname, password) {
     validate.string(nickname)
     validate.string.notVoid('nickname', nickname)
     validate.string(password)
     validate.string.notVoid('password', password)
 
     return (async () => {
+        console.log('call', call)
         const res = await call(`${API_URL}/users/auth`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

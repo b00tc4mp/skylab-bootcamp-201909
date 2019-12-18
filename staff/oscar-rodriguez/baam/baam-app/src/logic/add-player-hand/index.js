@@ -3,7 +3,8 @@ const HAND_LENGTH = process.env.REACT_APP_HAND_LENGTH
 const API_URL = process.env.REACT_APP_API_URL
 const call = require('../utils/call')
 
-module.exports = function (gameId, token, hand) {
+//module.exports = function (gameId, token, hand) {
+export default function (gameId, token, hand) {
     validate.string(gameId)
     validate.string.notVoid('id', gameId)
 

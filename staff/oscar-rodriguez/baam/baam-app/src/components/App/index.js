@@ -22,6 +22,9 @@ import {
 } from '../../logic'
 
 
+console.log('LLLLLL', authenticateUser)
+
+
 export default withRouter(function ({ history }) {
     const [user, setUser] = useState()
     const [feed, setFeed] = useState()
@@ -94,14 +97,16 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleLogin(nickname, password) {
+        console.log('XXXXXX -->', authenticateUser)
         try {
             const token = await authenticateUser(nickname, password)
             sessionStorage.token = token
 
             history.push('/home')
         }
-        catch ({ message }) {
-            setFeed({ title: "🦖 There was an error:", message })
+        catch (error) {
+            console.error(error)
+            setFeed({ title: "🦖 There was an error:", message: error.message })
         }
     }
 

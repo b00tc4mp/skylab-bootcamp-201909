@@ -2,7 +2,8 @@ const { validate, errors: { ConflictError } } = require('baam-util')
 const call = require('../utils/call')
 const API_URL = process.env.REACT_APP_API_URL
 
-module.exports = function (name, surname, email, nickname, password) {
+//module.exports = function (name, surname, email, nickname, password) {
+export default function (name, surname, email, nickname, password) {
     validate.string(name)
     validate.string.notVoid('name', name)
     validate.string(surname)

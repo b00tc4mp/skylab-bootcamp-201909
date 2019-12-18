@@ -2,7 +2,8 @@ const { validate, errors: { NotFoundError, ContentError, CredentialsError } } = 
 const API_URL = process.env.REACT_APP_API_URL
 const call = require('../utils/call')
 
-module.exports = function (token, cards) {
+//module.exports = function (token, cards) {
+export default function (token, cards) {
 
     validate.string(token)
     validate.string.notVoid('id', token)
