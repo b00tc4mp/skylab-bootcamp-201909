@@ -97,7 +97,6 @@ export default withRouter(function ({ history }) {
     }
 
     async function handleLogin(nickname, password) {
-        console.log('XXXXXX -->', authenticateUser)
         try {
             const token = await authenticateUser(nickname, password)
             sessionStorage.token = token

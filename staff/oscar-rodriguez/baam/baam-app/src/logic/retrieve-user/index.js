@@ -1,6 +1,7 @@
 const { validate, errors: { NotFoundError, CredentialsError } } = require('baam-util')
 const API_URL = process.env.REACT_APP_API_URL
-const call = require ('../utils/call')
+import call from '../utils/call' //eslint-disable-line
+//const call = require ('../utils/call')
 
 //module.exports = function (token) {
 export default function (token) {
