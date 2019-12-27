@@ -126,7 +126,7 @@ describe('logic - retrieve ad', () => {
                 expect(error).toBeInstanceOf(NotFoundError)
 
                 const { message } = error
-                expect(message).toBe(`ad with id ${id} not found`)
+                expect(message).toBe(`ad with id ${idAd} not found`)
             }
         })
     })
