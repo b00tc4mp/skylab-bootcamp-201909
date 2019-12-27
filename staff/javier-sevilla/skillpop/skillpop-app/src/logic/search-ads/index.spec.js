@@ -10,7 +10,7 @@ const salt = 10
 
 arrayRandom()
 
-describe('logic - retrieve ad', () => {
+describe('logic - search ads', () => {
     beforeAll(() => database.connect(TEST_DB_URL))
 
     let token, id, name, surname, city, address, email, password
@@ -74,7 +74,7 @@ describe('logic - retrieve ad', () => {
 
     it('should succeed on correct user and ad ', async () => {
         const query = 'guitar'
-        const ads = await searchAds(query)
+        const ads = await searchAds(token, query)
 
         expect(ads).toBeDefined()
         expect(ads).toHaveLength(2)
@@ -107,7 +107,7 @@ describe('logic - retrieve ad', () => {
 
     it('should succeed on correct user and ad ', async () => {
         const query = ' '
-        const ads = await searchAds(query)
+        const ads = await searchAds(token, query)
         debugger
 
         expect(ads).toBeDefined()
@@ -135,9 +135,22 @@ describe('logic - retrieve ad', () => {
 
     it('should not found results', async () => {
         const query = 'asdsadasdsad'
-        const ads = await searchAds(query)
+        const ads = await searchAds(token, query)
 
         expect(ads).toHaveLength(0)
+
+    })
+
+    it('should fail on incorrect token', () => {
+        expect(() => searchAds(1)).toThrow(TypeError, '1 is not a string')
+        expect(() => searchAds(true)).toThrow(TypeError, 'true is not a string')
+        expect(() => searchAds([])).toThrow(TypeError, ' is not a string')
+        expect(() => searchAds({})).toThrow(TypeError, '[object Object] is not a string')
+        expect(() => searchAds(undefined)).toThrow(TypeError, 'undefined is not a string')
+        expect(() => searchAds(null)).toThrow(TypeError, 'null is not a string')
+
+        expect(() => searchAds('')).toThrow(ContentError, 'id is empty or blank')
+        expect(() => searchAds(' \t\r')).toThrow(ContentError, 'id is empty or blank')
 
     })
 
