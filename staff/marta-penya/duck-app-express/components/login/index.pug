@@ -1,0 +1,14 @@
+extends ../view/index 
+
+include ../feedback/index
+
+block body
+    section.view.login
+        div.login__div
+            form.login__form(method="post" action=path)
+                input.login__input(type="text" name="email" placeholder="email" required="")
+                input.login__input(type="password" name="password" placeholder="password" required="")
+                button.login__button  Login
+                button.login__goregistrer  Go to Register
+                if error
+                    +feedbacK(error)

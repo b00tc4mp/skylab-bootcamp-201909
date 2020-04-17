@@ -1,0 +1,43 @@
+.header
+    display: flex
+    justify-content: center
+    background-image: url(https://www.desktopbackground.org/t/2015/12/10/1055168_rubber-ducks-illustration-vector-art-graphics_1024x1325_h.jpg)
+    background-size: contain
+    &__div
+        display: flex
+        width: 100%
+        justify-items: center
+        justify-content: space-evenly
+        flex-wrap: wrap
+    &__title
+        color: white 
+        align-self: center
+        font-size: 2.5em
+        width: 80%   
+    &__image
+        width: 20%
+    &__div
+        display: flex
+        justify-content: space-around
+        align-items: baseline
+        width: 50%
+        margin-bottom: 1.2rem
+    &__button
+        border-radius: 20px
+        background: MintCream 
+        border: 2px solid black
+        font-size: 1.25em 
+        font-weight: bold
+        height: 2rem
+    &__user
+        color: white
+        font-size: 1.5em
+        text-align: right
+
+@media (min-width: 768px)
+    .header
+        width: 100%
+
+@media (min-width: 1024px)
+    .header__title
+        font-size: 5em

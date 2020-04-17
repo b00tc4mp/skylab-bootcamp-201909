@@ -1,0 +1,17 @@
+extends ../view/index 
+
+block body
+    div.view.detail
+        section.result.view
+            div.detail-list
+                h2.detail-list__title=item.title
+                img.detail-list__image(src=item.image)
+                p.detail-list__description=item.description
+                a.detail-list__store(href=item.link) Go to Store
+                p.detail-list__price=item.price
+                a.detail-list__button(href=backPath) Go back
+                span
+                    form(method="post" action=favPath)
+                        input(type="hidden" name="id" value=item.id)
+                        button.item-list__buttonfav(type="submit")
+                            img.item-list__fav(src=(item.isFav? "https://image.flaticon.com/icons/svg/1469/1469575.svg" : "https://image.flaticon.com/icons/svg/1469/1469600.svg"))
