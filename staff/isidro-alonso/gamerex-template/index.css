@@ -1,0 +1,434 @@
+body {
+  background-color: #FFFFBB;
+  margin: 0px auto;
+  min-width: 320px;
+  max-width: 100%;
+  vertical-align: middle;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+  margin: 5px;
+}
+
+.hide {
+  display: none;
+}
+
+header {
+  background-color: #8097FF;
+  margin: 0px auto;
+  min-width: 318px;
+  max-width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header button {
+  border: none;
+  background: none;
+}
+
+header:hover {
+  background: #9fb0ff;
+}
+
+.user-list {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+}
+.user-list__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+.user-item {
+  background-color: #8097FF;
+  border-radius: 0.3em;
+  max-width: 310px;
+  margin: 10px;
+  padding: 20px 10px 5px 10px;
+}
+.user-item__username {
+  color: #333;
+  font-weight: bold;
+  font-size: 1em;
+}
+.user-item__img {
+  border-radius: 0.3em;
+  width: 90%;
+}
+
+.user-item:hover {
+  background: #9fb0ff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.login__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+.login__field {
+  border: 2px solid #333;
+  border-radius: 0.3em;
+  width: 280px;
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 10px;
+}
+.login__submit {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.login__submit:hover {
+  background: #9fb0ff;
+}
+.login__gotoregister {
+  color: #333;
+  font-size: 1.5em;
+}
+.login__gotoregister a {
+  color: #8097FF;
+  text-decoration: none;
+}
+.login__gotoregister a:hover {
+  color: #9fb0ff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.register__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+.register__field {
+  border: 2px solid #333;
+  border-radius: 0.3em;
+  width: 280px;
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 10px;
+}
+.register__addimg {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.register__addimg:hover {
+  background: #9fb0ff;
+}
+.register__submit {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.register__submit:hover {
+  background: #9fb0ff;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.search__field {
+  border: 2px solid #333;
+  border-radius: 0.3em;
+  width: 280px;
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 10px;
+}
+.search__button {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.search__button:hover {
+  background: #9fb0ff;
+}
+
+.user-profile__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+.user-profile__item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.user-profile__img {
+  border-radius: 0.3em;
+  width: 90%;
+  max-width: 310px;
+  float: left;
+}
+.user-profile__location {
+  color: #333;
+  font-size: 1em;
+}
+.user-profile__email {
+  color: #333;
+  font-size: 1em;
+}
+.user-profile__numofgames {
+  color: #333;
+  font-size: 1em;
+}
+.user-profile__update {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.user-profile__update:hover {
+  background: #9fb0ff;
+}
+.user-profile__logout {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.user-profile__logout:hover {
+  background: #9fb0ff;
+}
+
+.game-list {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+}
+
+.game-item {
+  background-color: #8097FF;
+  border-radius: 0.3em;
+  max-width: 310px;
+  margin: 10px;
+  padding: 20px 10px 5px 10px;
+}
+.game-item a {
+  text-decoration: none;
+}
+.game-item__title {
+  color: #333;
+  font-weight: bold;
+  font-size: 1em;
+}
+.game-item__platform {
+  color: #333;
+  font-size: 1em;
+}
+.game-item__img {
+  border-radius: 0.3em;
+  width: 90%;
+}
+.game-item__add {
+  color: #333;
+  font-size: 4em;
+}
+
+.game-item:hover {
+  background: #9fb0ff;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.updateprofile__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+.updateprofile__field {
+  border: 2px solid #333;
+  border-radius: 0.3em;
+  width: 280px;
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 10px;
+}
+.updateprofile__addimg {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.updateprofile__addimg:hover {
+  background: #9fb0ff;
+}
+.updateprofile__submit {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.updateprofile__submit:hover {
+  background: #9fb0ff;
+}
+
+.game-detail__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+.game-detail__item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.game-detail__platform {
+  color: #333;
+  font-weight: bold;
+  font-size: 1em;
+}
+.game-detail__item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.game-detail__img {
+  border-radius: 0.3em;
+  width: 90%;
+  max-width: 310px;
+  float: left;
+}
+.game-detail__location {
+  color: #333;
+  font-size: 1em;
+}
+.game-detail__chat {
+  border: 1px solid #333;
+  width: 300px;
+  height: 400px;
+}
+.game-detail__edit {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.game-detail__edit:hover {
+  background: #9fb0ff;
+}
+.game-detail__remove {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.game-detail__remove:hover {
+  background: #9fb0ff;
+}
+.game-detail__gotoregister {
+  color: #333;
+  font-size: 1.5em;
+}
+.game-detail__gotoregister a {
+  color: #8097FF;
+  text-decoration: none;
+}
+.game-detail__gotoregister a:hover {
+  color: #9fb0ff;
+}
+
+.game-newedit__title {
+  color: #8097FF;
+  font-size: 1.5em;
+  text-align: center;
+}
+.game-newedit__subtitle {
+  color: #333;
+  font-size: 1.5em;
+  text-align: center;
+}
+.game-newedit__field {
+  border: 2px solid #333;
+  border-radius: 0.3em;
+  width: 280px;
+  font-size: 1.5em;
+  padding: 10px;
+  margin: 10px;
+}
+.game-newedit__addimg {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.game-newedit__addimg:hover {
+  background: #9fb0ff;
+}
+.game-newedit__submit {
+  border: none;
+  background: #8097FF;
+  border-radius: 0.3em;
+  padding: 20px;
+  margin: 10px;
+  font-size: 1.5em;
+}
+.game-newedit__submit:hover {
+  background: #9fb0ff;
+}
+
+input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+}
+
+/*# sourceMappingURL=index.css.map */
