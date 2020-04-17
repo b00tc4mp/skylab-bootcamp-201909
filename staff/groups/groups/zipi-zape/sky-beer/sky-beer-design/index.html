@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SkyBeer Codeursssh..</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Big+Shoulders+Text|Staatliches&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/80c46885ed.js"></script>
+</head>
+<body>
+    <header class="header">
+        <img class="header__logo"src="./img/logo.png">
+        <h1 class="header__title">SkyBeer APP</h1>
+        <div class="header__burguer"><i class="fas fa-bars"></i></div>
+            <ul class="header__menu menu">
+                <li class="menu__beers">BEERS</li>
+                <li class="menu__community">COMMUNITY</li>
+                <li class="menu__search"><form>
+                        <input type="search" name="query" placeholder="search" class="query">
+                        <div class="button"><i class="fas fa-search"></i></div>
+                    </form>
+                </li>
+                <li class="menu__invest">INVEST</li>
+            </ul>
+        </nav>
+        <div class="header__login">
+            <div class="icon"><i class="far fa-user"></i><span class="icon__text">LOG IN</span></div><!-- should appear LOG OUT && USER PAGE when logged-->
+        </div>
+    </header>
+    <div class="header__back"></div><!--Empty div to manage header fixed position-->
+    <section class="login">
+        <section class="sign-in">
+            <h2 class="login__title">Sign In</h2>
+            <form class="sign-in__form">
+                <label for="username">Username: <input type="email" class="sign-in__name" name="username" placeholder="Enter your email"></label>
+                <label for="password">Password: <input type="password" class="sign-in__name" name="password"></label>
+                <a href="#" class="link">Forgot your password?</a>
+                <button class="sign-in__button">Sign In</button>
+            </form>
+        </section>
+        <section class="sign-up">
+            <h2 class="login__title">Create a new account</h2>
+            <p class="sign-up__text">Register and create an account to manage your favourite beers and keep in contact with your beer-friends!</p>
+            <form class="sign-up__form">
+                <label for="name">Name: <input type="text" class="sign-up__name" name="name"></label>
+                <label for="surname">Surname: <input type="text" class="sign-up__name" name="surname"></label>
+                <label for="username">Username: <input type="email" class="sign-up__name" name="username" placeholder="Enter your email"></label>
+                <label for="password">Password: <input type="password" class="sign-up__name" name="password"></label>
+                <button class="sign-up__button">Sign Up</button>
+            </form>
+        </section>
+    </section>
+    <main class="main">
+        <section class="main__welcome welcome">
+            <section class="welcome__beers beers">
+                <article class="beers__random-beer random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 1</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+                <article class="beers__random-beer random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 2</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+                <article class="beers__random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 3</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+                <article class="beers__random-beer">
+                    <div class="random-beer__inside">
+                        <h2 class="random-beer__title">Beer 4</h2>
+                        <img class="random-beer__img" src="img/beer1.png">
+                        <p class="random-beer__text">Description of the beer</p>
+                    </div>
+                </article>
+            </section>
+            <article class="welcome__ranking ranking">
+                <div class="ranking__description">TOP RANK</div>
+                <div class="ranking__title ranking--top1">BEER 1</div>
+                <div class="ranking__title ranking--top2">BEER 2</div>
+                <div class="ranking__title ranking--top3">BEER 3</div>
+            </article>
+        </section>
+        <section class="main__speech speech">
+            <div class="speech__bg"></div>
+            <div class="speech__title">TITULO DEL SPEECH</div>
+            <div class="speech__description">TOL ROLLO</div>
+        </section>
+        <article class="main_brewdog brewdog">
+            <div class="brewdog__description">VISIT BREWDOG'S</div>
+            <div class="brewdog__title">BREWDOG PUNK</div>
+            <div class="brewdog__button">GO TO STORE</div>
+        </article>
+        <section class="main__video video">
+            <video class="video__background" autoplay muted loop>
+                <source src="./vid/video.mp4" type="video/mp4">
+            </video>
+            <div class="video__title">ENJOY THE BEER</div>
+            <div class="video__description">To beer or not to beer, easy question..</div>
+        </section>
+    </main>
+    
+    <section class="main__beerdetail beerdetail">
+        <h2 class="beerdetail__title">PUNK IPA</h2>
+        <div class="beerdetail__iteminfo iteminfo">
+            <img class="iteminfo__image" src="./img/punk_ipa.png">
+            <div class="iteminfo__container container"> 
+                <p class="container__description">Punk IPA is the beer that kick-started it. This light, golden classic has been subverted with new world hops to create an explosion of flavour. Bursts of caramel and tropical fruit with an all-out riot of grapefruit, pineapple and lychee, precede a spiky bitter finish. This is the beer that started it all - and it’s not done yet...</p>
+                <span class="container__price">3,5€</span>
+                <div class="container__others others">
+                    <a class="others__store" href="https://www.brewdog.com">Go to store</a>
+                    <a class="others__back" href="#">Go back</a>
+                </div>
+            </div>  
+        </div>
+        <span class="beerdetail__brewers-tips">30</span>
+        <div class="beerdetail__moreinfo moreinfo">
+            <span class="moreinfo__abv">5.6</span>
+            <span class="moreinfo__ibu">40.0</span>
+            <span class="moreinfo__ebc">30</span>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div>About Us</div>
+        <div>Privacy Policy</div>
+        <div>Contact us</div>
+        <div>Conditions</div>
+        <div class="footer__copyright"> zipizape productions ©2019 </div>
+        <div> -- social media icons -- </div>        
+    </footer>
+</body>
+</html>

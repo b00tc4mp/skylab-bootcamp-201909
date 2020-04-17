@@ -1,0 +1,22 @@
+.brewdog
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    flex-wrap: wrap
+    min-width: 100vw
+    height: 20rem
+    z-index: 100
+    background-image: url("img/brewdog.jpg")
+    background-position: 30%
+    background-size: cover
+
+        
+    &__title
+        @extend %title
+
+    &__description
+        @extend %description
+
+    &__button
+        @extend %button

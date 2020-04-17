@@ -1,0 +1,76 @@
+.login
+    position: absolute
+    z-index: 10
+    top: 15vh
+    left: 0
+    width: 100vw
+    min-height: 50vh
+    background-color: #2c2c2c
+    transition: 1s height ease
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-around
+    align-items: center
+    &__title
+        display: flex
+        justify-content: center
+        width: 100%
+        font-size: 120%
+        padding-bottom: 2%
+        font-family: 'Staatliches'
+        color: whitesmoke
+
+.sign-in
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    padding: 2%
+    align-items: center
+    @media only screen and (max-width:1023px)
+        width: 100vw
+        height: 40%
+    @media only screen and (min-width:1024px)
+        width: 30%
+        height: 70%
+    &__form
+        display: flex
+        flex-direction: column
+        color: whitesmoke
+        width: 90%
+        @media only screen and (max-width:1023px)
+            align-items: center 
+        @media only screen and (min-width:1024px)
+            align-items: flex-end   
+        & label, button
+            margin: 1%
+
+.sign-up
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+    justify-content: space-evenly
+    padding: 2%
+    align-items: center
+    @media only screen and (max-width:1023px)
+        width: 100vw
+        height: 60%
+    @media only screen and (min-width:1024px)
+        width: 50%
+        height: 70%
+        border-left: 1px solid white
+
+    &__text
+        color: whitesmoke
+        width: 45%
+        text-align: left
+
+    &__form
+        display: flex
+        flex-direction: column
+        color: whitesmoke
+        width: 45%
+        align-items: flex-end
+        
+        & label, button
+            margin: 1%
