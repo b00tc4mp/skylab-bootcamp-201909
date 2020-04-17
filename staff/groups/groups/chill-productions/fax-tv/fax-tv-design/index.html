@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>faxTV</title>
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://kit.fontawesome.com/80c46885ed.js"></script> 
+</head>
+<body>
+    <div class="container">
+        <main class="main">
+            <header class="header">
+                <nav class="main__nav nav" role="navigations">
+                        <div class="nav__logo"><p class="company-name">faxTV</p></div>
+                        <div class="nav__search">
+                            <input type="search" name="search" placeholder="Search..." class="input__search">
+                        </div>
+                        <ul class="nav__menu menu">
+                            <li class="menu__item" onclick="">
+                                <i class="fas fa-user-circle"></i>
+                                <i class="fas fa-ellipsis-v"></i>
+                                <ul class="menu_sub">
+                                    <li class="menu_sub__item">Favorites</li>
+                                    <li class="menu_sub__item">My rating</li>
+                                    <li class="menu_sub__item"><i class="fas fa-power-off"></i> Log Out</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+            </header>
+            <div class="main__results hidden">
+                <ul class="results">
+                    <li class="results__item item">
+                        <div class="item__img">
+                            <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                            <!-- <i class="far fa-heart"></i> -->
+                        </div>
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    <li class="results__item item">
+                        <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" class="item__poster" alt="Film">
+                        <p class="item__title">Before sunrise</p>
+                        <p class="item__year">1995</p>
+                    </li>
+                    
+                </ul>
+            </div>
+            <div class="details _hidden">
+                <h1 class="details__title">Before sunris <span class="details__year">(1993)</span></h1>
+                <img src="https://image.tmdb.org/t/p/original/khKJwHxgXSpDl3iKGJ5S15I8ABI.jpg" alt="Film" class="details__img">
+                <div class="details__rating rating">
+                    <span class="rating__score">7.9</span>
+                    <button class="rating__button">Vote</button>
+                </div>
+                <div class="details__overview overview">
+                    <h2 class="details__subtitle">Synopsis/Plot</h2>
+                    <p class="overview__text">
+                        On his way to Vienna, American Jesse meets Céline, a student returning to Paris. After long conversations forge
+                        a surprising connection between them, Jesse convinces Celine to get off the train with him in Vienna. Since his
+                        flight to the U.S. departs the next morning and he has no money for lodging, they wander the city together, taking
+                        in the experiences of Vienna and each other.
+                    </p>
+                </div>
+                <p class="details__director"><span class="details__subtitle">Director</span> Tim Miller</p>
+                <div class="details__cast">
+                    <h2 class="details__subtitle">Cast</h2>
+                    <ul class="cast">
+                        <li class="cast__name">Linda Hamilton</li>
+                        <li class="cast__name">Natalia Reyes</li>
+                        <li class="cast__name">Gabriel Lluna</li>
+                        <li class="cast__name">Arnold Schwarzenagger</li>
+                        <li class="cast__name">Brett Azar</li>
+                    </ul>
+                </div>
+            </div>
+            <section class="error hidden">
+                <div class="error__gif-container">
+                    <iframe src="https://giphy.com/embed/3o6ZsXFlVD1yHgxusE" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                </div>
+                <p class="error__message">
+                    Film not found
+                </p>
+            </section>
+        </main>
+        <section class="login hidden">
+            <form class="login__form">
+                <!-- <div class="login__logo">
+                    <img class="login__img" src="images/faxTV_sinfondo.png" alt="faxTV">
+                </div> -->
+                <input type="email" name="email" placeholder="Email" class="login__input email">
+                <input type="password" name="password" placeholder="Password" class="login__input password">
+                <button class="login__btn btn-main">Log In</button>
+                <p class="login__or">or</p>
+                <a class="login__btn">Register</a>
+            </form>
+        </section>
+        <section class="register hidden">
+            <form class="register__form">
+                <input type="text" name="name" placeholder="Name" class="register__input name">
+                <input type="text" name="surname" placeholder="Surname" class="register__input surname">
+                <input type="email" name="email" placeholder="Email" class="register__input email">
+                <input type="password" name="password" placeholder="Password" class="register__input password">
+                <button class="register__btn btn-main">Register</button>
+                <p class="register__or">or</p>
+                <a class="register__btn">Log In</a>
+            </form>
+        </section>
+        <footer class="footer">
+            <p class="footer__copy-right">Copyright © 2019 Chill Productions. All rights reserved.</p>
+        </footer>
+        
+    </div>
+</body>
+</html>

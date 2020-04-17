@@ -1,0 +1,55 @@
+.results
+    .item
+        @extend %flex-center
+        flex-direction: column
+        padding: .75rem
+        border-radius: 5px
+        &__link
+            position: relative
+        &__poster
+            width: 300px
+            border-radius: 5px
+            box-shadow: 0px 0px 2px #000000
+            z-index: -10
+        &__title
+            font-weight: bold
+            text-align: center
+        &__year
+            text-align: center
+            font-size: .75rem
+        .mov__fav
+            display: none
+            position: absolute
+            font-size: 7rem
+            top: 50%
+            left: 50%
+            transform: translate(-50%, -50%)
+            visibility: hidden
+            opacity: 0
+            transition: visibility 0s, opacity 0.5s linear
+        &__details
+            display: none
+            position: absolute
+            width: 100%
+            font-size: 2rem
+            text-align: center
+            color: #fff
+            bottom: 0
+            left: 50%
+            transform: translate(-50%, -50%)
+            visibility: hidden
+            opacity: 0
+            transition: visibility 0s, opacity 0.5s linear
+        &__link:hover > .mov__fav
+            display: block
+            visibility: visible
+            opacity: 1
+            color: red
+        &__link:hover > .item__details
+            display: block
+            visibility: visible
+            opacity: 1
+            background-color: var(--main-color)
+        &:hover
+            cursor: pointer
+            background-color: var(--main-color)

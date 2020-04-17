@@ -1,0 +1,53 @@
+.nav
+    display: grid
+    grid-template-areas: "name search option"
+    grid-template-columns: 1fr 1fr 60px
+    grid-gap: .5rem
+    background-color: var(--main-color)
+    padding: 1rem
+    color: #fff
+    &__logo
+        grid-area: name
+        .company-name
+            display: flex
+            justify-content: flex-start
+            font-weight: bold
+    &__search
+        grid-area: search
+        @extend %flex-center
+        .input__search
+            border: 0
+            padding: .25rem
+            border-radius: 5px
+            background: url(https://www.pinclipart.com/picdir/middle/485-4851736_free-png-search-icon-search-icon-free-download.png) no-repeat scroll 7px 7px
+            background-size: 14px 14px
+            background-color: #fff
+            padding-left:30px
+    .menu
+        grid-area: option
+        @extend %flex-center
+        list-style: none
+        padding: 0
+        &__item
+            cursor: pointer
+            .menu_sub
+                display: none
+                z-index: 10
+                position: absolute
+                list-style: none
+                padding: 0
+                background-color: var(--main-color)
+                visibility: hidden
+                opacity: 0
+                min-width: 8rem
+                transition: all 0.5 ease
+                right: 20px
+                border: 1px solid #fff
+                &__item
+                    padding: 5px
+                    border-bottom: 1px solid #fff
+
+        &__item:hover > .menu_sub
+            display: block
+            opacity: 1
+            visibility: visible

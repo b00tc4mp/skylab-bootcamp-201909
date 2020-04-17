@@ -1,0 +1,58 @@
+.register
+    @extend %flex-center
+    flex-direction: column
+    background: url("https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Philips_PM5544.svg/1200px-Philips_PM5544.svg.png") no-repeat center center fixed
+    background-size: cover
+    min-height: 100vh
+    &__form
+        display: flex
+        flex-direction: column
+        padding: 1rem
+    &__logo
+        position: relative
+    &__img
+        width: 150px
+        z-index: -10
+    &__title
+        position: absolute
+        top: 5rem
+        left: 25px
+    &__input
+        margin-bottom: 10px
+        padding: 10px
+        border: 1px solid #c6bdbd
+        font-size: 1rem
+    .name, .surname
+        background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/User_font_awesome.svg/1024px-User_font_awesome.svg.png) no-repeat scroll 7px 7px
+        background-size: 20px 20px
+        background-color: #fff
+        padding-left:30px
+    .email
+        background: url(https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Ic_mail_outline_black_48px.svg/1024px-Ic_mail_outline_black_48px.svg.png) no-repeat scroll 7px 7px
+        background-size: 20px 20px
+        background-color: #fff
+        padding-left:30px
+    .password
+        background: url(https://storage.needpix.com/rsynced_images/padlock-2873246_1280.png) no-repeat scroll 7px 7px
+        background-size: 20px 20px
+        background-color: #fff
+        padding-left:30px
+    &__btn
+        background-color:#fff
+        padding: .5rem
+        box-shadow: 0px 0px 5px 1px #515adf
+        border-radius: 10px
+        cursor: pointer
+        font-weight: bold
+        text-align: center
+    .btn-main
+        background-color: var(--main-color)
+        color: #fff
+    &__or
+        @extend %flex-center
+        text-align: center
+        margin: 5px auto
+        background-color: #fff
+        width: 30px
+        height: 30px
+        border-radius: 50%

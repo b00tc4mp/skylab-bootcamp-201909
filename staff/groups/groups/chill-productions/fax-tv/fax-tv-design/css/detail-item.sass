@@ -1,0 +1,61 @@
+.details
+    display: grid
+    grid-template-areas: "title title" "poster rating" "overview overview" "director director" "cast cast"
+    padding: 1rem
+    gap: 10px
+    font-size: .75rem
+    &__title
+        grid-area: title
+        font-size: 1.5rem
+    &__year
+        color: #828282
+        font-size: 1rem
+    &__img
+        grid-area: poster
+        width: 100px
+        margin: 0 auto
+        border-radius: 5px
+    .rating
+        grid-area: rating
+        @extend %flex-center
+        &__score
+            @extend %flex-center
+            background-color: var(--main-color)
+            margin: 10px
+            color: #fff
+            width: 30px
+            height: 30px
+            font-weight: bold
+            border-radius: 5px
+        &__button
+            border: 1px solid var(--main-color)
+            padding: .25rem 0.5rem
+            height: 30px
+            background-color: #fff
+            border-radius: 5px
+            box-shadow: 0px 0px 2px #000
+        &__button:hover
+            background-color: var(--main-color)
+            color: #fff
+            cursor: pointer
+    .overview
+        grid-area: overview
+        &__title
+            font-size: 1rem
+            margin-bottom: .5rem
+        &__text
+    &__director
+        grid-area: director
+        
+    .details__subtitle
+        font-size: 1rem
+        font-weight: bold
+    .cast
+        grid-area: cast
+@media only screen and (min-width: 768px)
+    .details
+        grid-template-areas: "title title" "poster rating" "poster overview" "poster director" "poster cast"
+        &__img
+            width: 200px
+        .rating
+            justify-content: flex-start 

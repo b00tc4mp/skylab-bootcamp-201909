@@ -1,0 +1,65 @@
+.nav
+    display: grid
+    grid-template-areas: "name weather" "search option"
+    grid-gap: .5rem
+    background-color: var(--main-color)
+    padding: 1rem
+    color: #fff
+    &__logo
+        grid-area: name
+        font-size: 1.5rem
+        text-shadow: 0 0 5px #000000
+    &__a
+        text-decoration: none
+        color: #ffffff
+        .company-name
+            display: flex
+            justify-content: flex-start
+            font-weight: bold
+    &__weather
+        grid-area: weather
+        @extend %flex-center
+        i
+            font-size: 1.5rem
+            
+    .menu
+        grid-area: option
+        @extend %flex-center
+        list-style: none
+        padding: 0
+        &__item
+            cursor: pointer
+            i
+                font-size: 1.5rem
+            .menu_sub
+                display: none
+                z-index: 10
+                position: absolute
+                list-style: none
+                padding: 0
+                background-color: var(--main-color)
+                visibility: hidden
+                opacity: 0
+                min-width: 8rem
+                transition: all 0.5 ease
+                right: 20px
+                border: 1px solid #fff
+                &__item
+                    padding: 5px
+                    border-bottom: 1px solid #fff
+                    color: #fff
+                    .link
+                        color: #fff
+                        text-decoration: none
+            .fa-user-circle
+                margin-right: 1rem
+
+        &__item:hover > .menu_sub
+            display: block
+            opacity: 1
+            visibility: visible
+
+@media( min-width: 768px)
+    .nav
+        grid-template-areas: "name weather search option"
+        grid-template-columns: 100px 50px  1fr 60px

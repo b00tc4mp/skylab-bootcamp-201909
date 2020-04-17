@@ -1,0 +1,30 @@
+:root 
+    --main-color: #515adf
+*
+    box-sizing: border-box
+    margin: 0
+body
+    font-family: "Calibri"
+.container
+    display: flex
+    flex-flow: column
+    min-height: 100vh
+    
+@import styles/flex-center
+@import ./components/login
+@import ./components/register
+@import ./components/header
+@import ./components/search
+@import ./components/results
+@import ./components/result-item
+@import ./components/detail
+//@import ./components/detail-tvshow
+@import ./components/feedback
+@import ./components/footer
+
+.main
+    display: flex
+    flex-direction: column
+    flex-grow: 1
+.hidden
+    display: none
