@@ -1,0 +1,38 @@
+.champion
+    display: flex
+    justify-content: center
+    flex-wrap: wrap
+    width: 70%
+    margin: 0.5rem auto
+    position: relative
+    height: 100vh
+    overflow: auto
+    &__ancore
+        text-decoration: none
+        color: snow
+    &__ancore:hover
+        text-decoration: none
+        text-decoration-color: snow
+    &__content
+        margin-right: 5rem
+        list-style: none
+    &__info
+        position: absolute
+        z-index: -1
+        text-align: center
+    &__image
+        opacity: 1
+        transition: opacity 800ms
+    &__image:hover
+        opacity: 0.2
+        transition: opacity 800ms
+    &__tags
+        list-style: none
+.champion::-webkit-scrollbar 
+    background: #ea11ff11
+.champion::-webkit-scrollbar-thumb 
+    background: #ecaaaa11
+    border-radius: 4px
+.item-list__fav 
+    width: 1.5rem
+    height: 1.5rem

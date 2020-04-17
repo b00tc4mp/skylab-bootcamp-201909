@@ -1,0 +1,419 @@
+@import url("https://fonts.googleapis.com/css?family=Exo+2&display=swap");
+body {
+  background: linear-gradient(to bottom, black, black, black, #57d5a0);
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.tresh {
+  color: white;
+  font-family: Arial;
+  overflow: auto;
+  margin: 0;
+}
+
+.fire {
+  background: linear-gradient(to bottom, #5a0200, #fcf68a);
+  color: white;
+  font-family: Arial;
+  overflow: auto;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.header__logo {
+  height: 15rem;
+  position: absolute;
+}
+.header__title {
+  text-shadow: 0.2rem 0.1rem 0.5em #57d5a0, 0.2rem 0.1rem 0.5em #337b5d, 0.2rem 0.1rem 0.5em #57d5a0;
+}
+.header__div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-left: 11rem;
+}
+.header__div2 {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+.header__signout {
+  color: white;
+  font-size: 1rem;
+  background-color: black;
+  border: none;
+}
+
+.user__name {
+  width: 30%;
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-around;
+  width: 80vw;
+  border: solid 0.2rem #57d5a0;
+  border-bottom-right-radius: 1rem;
+  background-color: black;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  padding: 0.5rem;
+}
+.navigation__item {
+  list-style: none;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: none;
+}
+.landing__video {
+  padding: 0.5rem;
+  background-color: #808080a8;
+  border: solid 0.2rem #57d5a0;
+  box-shadow: 0 0 10px 4px #57d5a0;
+}
+
+.register {
+  width: 35vw;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  display: none;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+}
+.register__title {
+  text-align: center;
+}
+.register__field {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  font-size: 1.5rem;
+  border: solid 0.2rem #57d5a0;
+  border-bottom-right-radius: 1rem;
+  background-color: black;
+}
+.register__submit {
+  width: 7rem;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  border-bottom-right-radius: 1rem;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  border: none;
+  background: none;
+}
+
+.login {
+  width: 35vw;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  flex-direction: column;
+  display: none;
+}
+.login__form {
+  display: flex;
+  justify-content: baseline;
+}
+.login__title {
+  text-align: center;
+}
+.login__field {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  font-size: 1.5rem;
+  border: solid 0.2rem #57d5a0;
+  border-bottom-right-radius: 1rem;
+  background-color: black;
+}
+.login__submit {
+  width: 7rem;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  border-bottom-right-radius: 1rem;
+  margin: 0 auto;
+  font-size: 1.5rem;
+  border: none;
+  background: none;
+}
+
+.search {
+  width: 35vw;
+  padding: 0.5rem;
+  margin: 0.5rem auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.search__title {
+  text-align: center;
+}
+.search__form {
+  display: flex;
+  justify-content: baseline;
+}
+.search__field {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 0 10px 4px #57d5a0;
+  color: white;
+  font-size: 1.5rem;
+  border: solid 0.2rem #57d5a0;
+  border-bottom-right-radius: 1rem;
+  background-color: black;
+}
+.search__submit {
+  width: 3rem;
+  margin: 0 auto;
+  background: none;
+  border: none;
+}
+.search .fa-search {
+  font-size: 1.5rem;
+  color: whitesmoke;
+}
+
+.feedback {
+  margin: 0.5rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+.feedback__message {
+  width: 20rem;
+  height: 4rem;
+}
+
+.background {
+  background-image: url(https://images4.alphacoders.com/275/thumb-1920-275146.jpg);
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.2;
+  position: absolute;
+  z-index: -2;
+  display: none;
+}
+
+.champion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 70%;
+  margin: 0.5rem auto;
+  position: relative;
+  display: none;
+}
+.champion__ancore {
+  text-decoration: none;
+  color: snow;
+}
+.champion__ancore:hover {
+  text-decoration: none;
+  text-decoration-color: snow;
+}
+.champion__content {
+  margin-right: 5rem;
+  list-style: none;
+}
+.champion__info {
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+}
+.champion__image {
+  opacity: 1;
+  transition: opacity 800ms;
+}
+.champion__image:hover {
+  opacity: 0.2;
+  transition: opacity 800ms;
+}
+
+.detail {
+  margin: 0.5rem auto;
+  width: 60vw;
+  height: 90vh;
+  display: none;
+}
+.detail__content {
+  display: flex;
+}
+.detail__image {
+  border-radius: 1.2rem;
+}
+.detail__info {
+  padding-left: 1.5rem;
+}
+.detail__id {
+  font-size: 5rem;
+  margin: 0;
+}
+.detail__title {
+  font-size: 2rem;
+  margin-top: 0.5rem;
+}
+.detail__description {
+  width: 100%;
+  text-align: justify;
+  margin-top: 3rem;
+  font-size: 1.3rem;
+}
+
+.spells {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+.spells__image {
+  margin: 0.3rem;
+  border: 0.15rem solid goldenrod;
+  border-radius: 0.3rem;
+}
+
+.summoner-detail {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-image: url(https://img.freepik.com/foto-gratis/escenario-hexagonal-luz-neon-purpura_33739-266.jpg?size=626&ext=jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 1em;
+  width: 100%;
+  height: 110vh;
+}
+.summoner-detail__info {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.summoner-detail__icon {
+  border-radius: 100px;
+  height: 60%;
+  align-self: center;
+  border: 2px solid gold;
+  margin-right: 2rem;
+}
+.summoner-detail__profile {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.summoner-detail__nickname {
+  color: snow;
+  margin: 0;
+  font-size: 2.5em;
+  text-shadow: 0.2rem 0.1rem 0.5em gold, 0.2rem 0.1rem 0.5em gold, 0.2rem 0.1rem 0.5em gold;
+}
+.summoner-detail__level {
+  color: snow;
+  margin: 0;
+  font-size: 1.5rem;
+}
+.summoner-detail__elo {
+  color: gold;
+  margin: 0;
+  font-size: 1.5rem;
+}
+.summoner-detail__champions {
+  width: 50%;
+  display: flex;
+  padding-bottom: 3rem;
+}
+.summoner-detail__list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  list-style: none;
+  width: 100%;
+}
+.summoner-detail__champion {
+  display: flex;
+}
+.summoner-detail__container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 3rem;
+}
+.summoner-detail__name {
+  color: white;
+  font-size: 1.5em;
+  margin: 0;
+}
+.summoner-detail__image {
+  border-radius: 120px;
+  width: 10em;
+  height: 10em;
+}
+.summoner-detail__points {
+  color: gold;
+  font-size: 1.5em;
+  margin: 0;
+}
+
+.mastery-seven {
+  background-image: url(https://i.pinimg.com/originals/af/76/b5/af76b5b63cbfd7d66a6ceb7392f3803e.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.mastery-six {
+  background-image: url(https://i.pinimg.com/originals/1a/33/ab/1a33ab0abdb651b19bdde7264ca23f1b.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.mastery-five {
+  background-image: url(https://i.pinimg.com/originals/d1/1b/c3/d11bc3670e427a00182b71e6f1726ac7.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.mastery-none {
+  background-image: url(https://i.pinimg.com/originals/42/bb/bf/42bbbf0d43f06c2f3912d50f5b957503.gif);
+  background-position: center;
+  background-size: cover;
+  padding: 1rem;
+}
+
+.footer {
+  display: flex;
+  background-color: black;
+  height: 100%;
+  justify-content: center;
+}
+.footer__container {
+  height: 100%;
+}
+.footer__title {
+  color: snow;
+  font-size: 1rem;
+}
+
+/*# sourceMappingURL=index.css.map */
