@@ -1,0 +1,150 @@
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+   }
+  
+  
+body {
+    font-family: 'Lato', sans-serif;
+  background-color: white; 
+  height: 100vh;
+  width: 100vw;
+  background-color: bisque;
+}
+  
+header {
+  padding-top: 2%;
+  padding-left: 3%;
+  background-image: url("http://ilovethetotspot.com/wp-content/uploads/2018/11/Winter-Snow-Flakes-Winter.jpg");
+  background-size: 100vw;
+}
+
+.header-top {
+    display: block;
+    justify-content: center;
+    text-align: center;
+    }
+  
+.header-top__title {
+    font-size: 50px;
+}
+  
+.header-top__slogan {
+    font-size: 24px;
+    padding-left: 6px;
+  
+}
+
+.menu {
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    border-bottom: 1px solid black;
+    padding: 0 1rem;
+}
+    
+.menu-nav {
+    margin-top:1%;
+    justify-content: space-evenly;
+    display: flex;
+    padding: 5px;
+}
+    
+.menu__item {
+    margin-right: 10px;
+    font-size: 20px;
+    list-style: none;
+    color: black;
+}
+    
+    
+.menu__form {
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+
+}
+    
+.menu__form-search {
+    background-color: #ffffffe0;
+    width: 15vw;
+    height: 3vh;
+}
+
+.menu__form-button {
+    width: 40px;
+    background-color: bisque;
+    margin-left: 6px;
+    border-radius: 20%;
+}
+
+main {
+    padding: 2rem;
+    height: 70%;
+}
+
+.item__title{
+    font-size: 20px;
+} 
+
+.item__container {
+    align-items: center;
+    margin: 1%;
+    height: 100%;
+    display: inline-grid;
+    grid-template-rows: 60% 40%;
+    grid-template-columns: 30% 70%;
+    
+}
+
+.image__link {
+    text-align: center;
+}
+
+.item__image {
+    width: 45%;
+    height: auto;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.item__description {
+    font-size: 20px;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.item__price {
+    font-size: 25px;
+    text-align: center; 
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+
+}
+
+.item__button {
+    border: 1px solid white;
+    background-color: darkred;
+    color: white;
+    font-size: 20px;
+    width: 100px;
+    height: 40px;
+    grid-column-start: 2;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 2;
+}
+
+footer {
+
+    text-align: center;
+}
