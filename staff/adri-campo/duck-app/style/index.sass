@@ -1,0 +1,287 @@
+@import panel
+* 
+    box-sizing: border-box
+
+body
+    margin: 0
+    font-family: 'Quicksand', sans-serif
+   
+.header
+    position: sticky
+    top: 0
+    background-color: white
+    padding: .4rem
+    border-bottom: 2px solid black
+    min-width: 80%
+
+
+.nav
+    display: grid
+    grid-template-columns: 1fr 2fr 1fr
+    grid-template-rows: 1fr 1fr
+    grid-template-areas: "title title imagelogo" "search search imagelogo"
+    background-color: rgb(247, 245, 127)
+    padding: 1%
+    border: black solid 3px
+    
+
+    &__title
+        grid-area: title
+        display: flex
+        font-weight: bold
+        font-size: 1.2rem
+        justify-content: center
+      
+
+    &__imagelogo
+        grid-area: imagelogo
+        @extend %flex-center
+  
+
+        .duckimg
+            width: 100%
+            max-width: 200px
+            margin: 0
+            
+    &__search
+        grid-area: search
+        display: flex
+        justify-content: center
+        
+
+        .searchspace
+            border: none
+            border-bottom: .15rem solid black
+            background-color: rgb(241, 241, 191)
+            height: 4vw
+            width: 30vw
+
+        .searchicon
+            border: none
+            border-bottom: .15rem solid black
+            cursor: pointer
+            background-color: rgb(241, 241, 191)
+            height: 4vw
+
+.feedback
+    @extend %flex-center
+    flex-direction: column
+    margin-bottom: 3%
+
+.main 
+    @extend %flex-center 
+    overflow: auto
+    flex-direction: column
+    font-weight: bold
+    
+
+.list
+    @extend %flex-center 
+    flex-wrap: wrap
+    background-color: white
+    width: 100%
+    gap: .5rem
+    list-style: none
+    padding-left: 0
+
+.duckinfo
+
+    &__title 
+        grid-area: title
+        @extend %flex-center
+        font-size: 13px
+       
+
+    &__price
+        grid-area: price
+        @extend %flex-center
+        align-content: flex-end
+        
+        
+.pricetag
+    color: green
+    border: solid green 3px
+    border-radius: 5rem
+    font-size: 1rem
+    padding: .5rem
+    background-color:  rgb(241, 241, 191)
+            
+.duckinfo__img
+    grid-area: img
+    @extend %flex-center    
+    width: 100%
+    max-width: 250px //20vw
+    margin-bottom: 10px
+    margin: 0 auto
+    border: 3px solid rgb(221, 129, 23)
+    border-radius: 15rem
+    
+.duckinfo__description  
+    grid-area: description
+    font-size: 13px
+    font-weight: normal
+    
+
+
+    
+.login
+    display: flex
+    align-items: center
+    flex-direction: column
+    margin-left: 2%
+
+    &__loginForm
+        display: flex
+        align-items: center
+        flex-direction: column
+       
+    &__registerButton
+        margin-top: 2%
+        margin-bottom: 10%
+        border: solid grey 3px
+        border-radius: 2rem
+        height: 2rem
+        width: 7rem
+        font-weight: bold   
+   
+.loginButton
+    margin-top: 8%
+    margin-bottom: 4%
+    border: solid grey 3px
+    border-radius: 2rem
+    height: 2rem
+    width: 7rem
+    font-weight: bold
+
+.username
+    border: solid grey 2px 
+
+.usersurname
+    border: solid grey 2px 
+
+.userpassword
+    border: solid grey 2px
+
+.useremail
+    border: solid grey 2px
+
+
+.registration
+    display: flex
+    align-items: center
+    flex-direction: column
+    margin-left: 2%
+
+    &__register
+        display: flex
+        align-items: center
+        flex-direction: column
+    
+    &__goBackButton
+        margin-top: 2%
+        margin-bottom: 10%
+        border: solid grey 3px
+        border-radius: 2rem
+        height: 2rem
+        width: 7rem
+        font-weight: bold 
+
+.confirmationButton
+    margin-top: 8%
+    margin-bottom: 4%
+    border: solid grey 3px
+    border-radius: 2rem
+    height: 2rem
+    width: 7rem
+    font-weight: bold
+
+
+.details__img
+    @extend %flex-center    
+    width: 100%
+    max-width: 250px
+    margin-bottom: 10px
+    margin: 0 auto
+    border: 3px solid rgb(221, 129, 23)
+    border-radius: 15rem
+
+
+.footer
+    display: flex
+    justify-content: flex-start 
+    background-color:  rgb(247, 245, 127)
+    padding: .5rem
+    border-top: 2px solid black
+    font-weight: bold
+    font-size: 18px
+
+.footer_copyright
+
+
+.button
+    display: flex
+    justify-content: center
+    border: solid grey 3px
+    border-radius: 2rem
+    height: 1.5rem
+    width: 5rem
+    align-items: center
+    font-weight: bold
+    margin-left: 20%
+
+.gridduck
+    display: grid
+    grid-template-columns: 2fr 1fr
+    grid-template-areas: "title price" "img img" "description description" 
+    padding: .75rem 
+
+
+.hidden
+    display: none
+    
+
+
+
+@media only screen and (min-width:768px)
+    .nav
+        grid-template-columns: 1fr 2fr 1fr
+        grid-template-rows: 1fr 1fr
+        grid-template-areas: "title title imagelogo" "search search imagelogo"
+        background-color: skyblue
+        padding: 1%
+        border: black solid 3px
+
+        &__title
+            font-size: 2.5rem
+
+        &__search
+            
+            .searchspace
+                background-color: rgb(151, 212, 216)
+            .searchicon
+                background-color: rgb(151, 212, 216)
+
+    .footer
+            background-color: skyblue
+
+@media only screen and (min-width:1024px)
+    .nav
+        grid-template-columns: 1fr 2fr 1fr
+        grid-template-rows: 1fr 1fr
+        grid-template-areas: "title title imagelogo" "search search imagelogo"
+        background-color: orange
+        padding: 1%
+        border: black solid 3px
+
+        &__title
+            font-size: 3rem
+
+        &__search
+            
+            .searchspace
+                background-color: rgb(245, 179, 125)
+            .searchicon
+                background-color: rgb(245, 179, 125)
+
+    .footer
+            background-color: orange
