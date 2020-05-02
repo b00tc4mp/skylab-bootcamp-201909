@@ -8,7 +8,7 @@ const { database, models: { User, Task } } = require('tasks-data')
 describe('logic - create task', () => {
     before(() => database.connect(TEST_DB_URL))
 
-    let id, name, surname, email, username, password, title, description
+    let id, name, surname, email, username, password, title, description, price
 
     beforeEach(async () => {
         name = `name-${random()}`
