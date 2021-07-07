@@ -1,0 +1,31 @@
+.search {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 10vh;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.search__form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.search__input {
+  border-radius: 20px;
+}
+
+.search__button {
+  border-radius: 20px;
+  background: MintCream;
+  border: 2px solid black;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+/*# sourceMappingURL=search.css.map */

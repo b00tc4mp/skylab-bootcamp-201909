@@ -1,0 +1,37 @@
+.footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+  background-image: url(https://www.desktopbackground.org/t/2015/12/10/1055168_rubber-ducks-illustration-vector-art-graphics_1024x1325_h.jpg);
+  background-size: contain;
+  width: 100%;
+  justify-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  position: fixed;
+  bottom: 0;
+}
+
+.footer__title {
+  color: white;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  font-size: 1.25em;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    width: 100%;
+  }
+  .footer__title {
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
+    font-size: 1.8em;
+  }
+}
+/*# sourceMappingURL=footer.css.map */

@@ -1,0 +1,35 @@
+.duck-detail {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  width: 70vw;
+}
+
+.duck-detail__title {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.duck-detail__description {
+  font-size: .9rem;
+}
+
+.duck-detail__image {
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  max-width: 99vw;
+}
+
+.duck-detail__back {
+  width: 3rem;
+  color: whitesmoke;
+  background-color: #44af46;
+  border-radius: .1rem;
+  outline: none;
+  border: 1px solid white;
+}
+/*# sourceMappingURL=duck-detail.css.map */
